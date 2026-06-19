@@ -4,6 +4,8 @@ import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, useInView } from 'framer-motion';
+import { Shield, Lock, Fingerprint, Activity, Clock, Globe } from 'lucide-react';
+import { Spotlight } from "@/components/ui/spotlight";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,10 +79,11 @@ const LargePayments = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full bg-black py-20 sm:py-28 md:py-40 lg:py-56 overflow-hidden"
+      className="relative w-full bg-black py-20 sm:py-28 md:py-40 overflow-hidden"
     >
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[1000px] aspect-square rounded-full bg-gradient-to-br from-[#C694F9]/10 to-[#F5A7C4]/5 blur-[150px] md:blur-[200px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[1000px] aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent blur-[150px] md:blur-[200px]" />
       </div>
 
       <div className="container relative mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px]">
@@ -93,7 +96,7 @@ const LargePayments = () => {
               style={{ perspective: '1000px' }}
             >
               <div className="relative w-full max-w-[380px] sm:max-w-[420px] md:max-w-[450px] mx-auto">
-                <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-[#C694F9]/25 to-[#F5A7C4]/15 rounded-[40px] sm:rounded-[56px] blur-2xl sm:blur-3xl" />
+                <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-white/10 to-transparent rounded-[40px] sm:rounded-[56px] blur-2xl sm:blur-3xl" />
                 
                 <div className="relative bg-gradient-to-br from-[#141414] to-[#0a0a0a] rounded-[28px] sm:rounded-[36px] md:rounded-[40px] p-6 sm:p-8 md:p-10 border border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
                   <div className="text-center space-y-6 sm:space-y-8 md:space-y-10">
@@ -101,7 +104,7 @@ const LargePayments = () => {
                       <p className="text-white/50 text-xs sm:text-sm mb-2 sm:mb-3 font-medium">You're sending</p>
                       <h3 
                         className="font-black text-white tracking-tighter text-[9vw] sm:text-[7vw] md:text-[5vw] lg:text-[3.5rem] xl:text-[4rem]"
-                        style={{ fontFamily: 'var(--font-syne)' }}
+
                       >
                         <AnimatedCounter target={1000000} duration={2.5} />
                       </h3>
@@ -110,10 +113,10 @@ const LargePayments = () => {
 
                     <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-5">
                       <div className="flex items-center gap-2 sm:gap-3">
-                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-[#C694F9] to-[#94A1F9] shadow-[0_0_20px_rgba(198,148,249,0.35)]" />
+                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-zinc-100 to-neutral-500 shadow-[0_15px_30px_rgba(255,255,255,0.1)]" />
                         <span className="text-white/70 text-xs sm:text-sm font-medium">You</span>
                       </div>
-                      <div className="flex-1 h-[2px] bg-gradient-to-r from-[#C694F9]/60 via-white/30 to-[#94A1F9]/60 relative rounded-full max-w-[100px] sm:max-w-[120px]">
+                      <div className="flex-1 h-[2px] bg-gradient-to-r from-zinc-400/60 via-white/30 to-[#a3a3a3]/60 relative rounded-full max-w-[100px] sm:max-w-[120px]">
                         <motion.div 
                           animate={{ x: [0, 80, 0] }}
                           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
@@ -122,7 +125,7 @@ const LargePayments = () => {
                       </div>
                       <div className="flex items-center gap-2 sm:gap-3">
                         <span className="text-white/70 text-xs sm:text-sm font-medium">Alex</span>
-                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-[#F5A7C4] to-[#C694F9] shadow-[0_0_20px_rgba(245,167,196,0.35)]" />
+                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-neutral-200 to-neutral-500 shadow-[0_15px_30px_rgba(255,255,255,0.1)]" />
                       </div>
                     </div>
 
@@ -137,7 +140,7 @@ const LargePayments = () => {
                       </div>
                     </div>
 
-                    <button className="w-full h-12 sm:h-14 md:h-16 rounded-full bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] text-black font-black text-xs sm:text-sm md:text-base uppercase tracking-wide sm:tracking-wider flex items-center justify-center gap-2 sm:gap-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(198,148,249,0.25)]">
+                    <button className="w-full h-12 sm:h-14 md:h-16 rounded-full bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 text-black font-black text-xs sm:text-sm md:text-base uppercase tracking-wide sm:tracking-wider flex items-center justify-center gap-2 sm:gap-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(255,255,255,0.1)]">
                       Confirm & Send
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5">
                         <path d="M5 12h14m-7-7 7 7-7 7" />
@@ -151,16 +154,16 @@ const LargePayments = () => {
 
           <div ref={titleRef} className="w-full lg:w-1/2 order-1 lg:order-2 text-center lg:text-left">
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-5 sm:mb-6 md:mb-8">
-              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#F5A7C4] shadow-[0_0_10px_#F5A7C4]" />
+              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#e5e5e5] shadow-[0_0_10px_#e5e5e5]" />
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Enterprise</span>
             </div>
             
             <h2 
               className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8"
-              style={{ fontFamily: 'var(--font-syne)' }}
+
             >
-              <span className="block bg-gradient-to-r from-[#C694F9] to-[#F5A7C4] bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Large</span>
-              <span className="block bg-gradient-to-r from-[#F5A7C4] to-[#94A1F9] bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Payments</span>
+              <span className="block bg-gradient-to-r from-zinc-100 to-neutral-400 bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Large</span>
+              <span className="block bg-gradient-to-r from-[#e5e5e5] to-[#a3a3a3] bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Payments</span>
             </h2>
             
             <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 md:mb-10 leading-relaxed">

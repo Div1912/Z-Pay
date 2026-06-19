@@ -42,8 +42,9 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Redirect logged-in users away from auth pages (except update-password)
-  if (user && isAuthPage && !isUpdatePasswordPage) {
+  // Redirect logged-in users away from auth pages (except update-password and verify-email)
+  const isVerifyEmailPage = request.nextUrl.pathname.startsWith('/auth/verify-email');
+  if (user && isAuthPage && !isUpdatePasswordPage && !isVerifyEmailPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);

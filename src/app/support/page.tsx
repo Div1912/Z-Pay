@@ -11,15 +11,15 @@ export default function SupportPage() {
   const faqs = [
     {
       question: "How fast are the transactions?",
-      answer: "Transactions on EXPO are settled within 3-5 seconds thanks to the Stellar consensus protocol. This includes currency conversion and pathfinding."
+      answer: "Transactions on ZPAY are settled within 3-5 seconds thanks to the Stellar consensus protocol. This includes currency conversion and pathfinding."
     },
     {
       question: "What are the fees?",
       answer: "We charge a flat 0.1% fee on all cross-border transactions. There are no hidden exchange rate markups or monthly maintenance fees."
     },
     {
-      question: "Is EXPO available in my country?",
-      answer: "EXPO is currently available in over 50 countries across North America, Europe, and parts of Asia and Africa. We are constantly expanding our anchor network."
+      question: "Is ZPAY available in my country?",
+      answer: "ZPAY is currently available in over 50 countries across North America, Europe, and parts of Asia and Africa. We are constantly expanding our anchor network."
     },
     {
       question: "How do I connect my bank account?",
@@ -46,7 +46,7 @@ export default function SupportPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
             {[
               { icon: MessageSquare, title: "Live Chat", desc: "Average response time: 2 mins", action: "Start Chat" },
-              { icon: Mail, title: "Email Support", desc: "support@expo.finance", action: "Send Email" },
+              { icon: Mail, title: "Email Support", desc: "support@Zp.finance", action: "Send Email" },
               { icon: Phone, title: "Phone Support", desc: "Available for Pro users", action: "View Numbers" }
             ].map((item, i) => (
               <motion.div
@@ -88,7 +88,7 @@ export default function SupportPage() {
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="max-w-md">
                 <h2 className="text-3xl font-bold font-syne mb-4 tracking-tighter">Need a custom solution?</h2>
-                <p className="text-white/60 mb-8">Our enterprise team can help you build custom payment flows and integrate EXPO into your existing infrastructure.</p>
+                <p className="text-white/60 mb-8">Our enterprise team can help you build custom payment flows and integrate ZPAY into your existing infrastructure.</p>
                 <button className="px-8 h-14 rounded-full bg-white text-black font-black uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-3">
                   Contact Sales <ExternalLink className="w-4 h-4" />
                 </button>

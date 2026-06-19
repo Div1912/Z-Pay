@@ -1,4 +1,4 @@
-name: ExpoPay CI/CD
+name: Zpay CI/CD
 
 on:
   push:

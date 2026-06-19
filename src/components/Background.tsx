@@ -45,7 +45,7 @@ export function Background() {
           {/* Mouse tracking orb */}
           <motion.div
             style={{ x: springX, y: springY }}
-            className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-[#C694F9]/40 blur-[100px] md:blur-[150px]"
+            className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-[#D4AF37]/40 blur-[100px] md:blur-[150px]"
           />
 
           {/* Slow floating orb */}
@@ -56,7 +56,7 @@ export function Background() {
               scale: [1, 1.1, 1]
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-1/3 right-1/4 w-[35vw] max-w-[400px] aspect-square rounded-full bg-[#94A1F9]/30 blur-[80px] md:blur-[120px]"
+            className="absolute bottom-1/3 right-1/4 w-[35vw] max-w-[400px] aspect-square rounded-full bg-[#27272a]/30 blur-[80px] md:blur-[120px]"
           />
         </div>
       )}

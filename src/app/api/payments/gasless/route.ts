@@ -53,8 +53,8 @@ export async function POST(request: Request) {
     let recipientAddress = recipient;
     let recipientProfile: any = null;
 
-    if (recipient.includes('@expo') || !recipient.startsWith('G')) {
-      const username = recipient.replace('@expo', '');
+    if (recipient.includes('@Zp') || !recipient.startsWith('G')) {
+      const username = recipient.replace('@Zp', '');
       const { data: recProfile } = await supabaseAdmin
         .from('profiles')
         .select('*')
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
     const xlmAmount = (parseFloat(amount) * xlmRate).toFixed(7);
 
     const senderName = senderProfile.universal_id || 'unknown';
-    const recipientName = recipientProfile?.universal_id || recipient.replace('@expo', '');
+    const recipientName = recipientProfile?.universal_id || recipient.replace('@Zp', '');
     let memo = purpose || note || '';
     memo = `${memo}|${senderName}>${recipientName}`.substring(0, 28);
 
@@ -143,7 +143,7 @@ export async function POST(request: Request) {
       amount_sent: parseFloat(amount),
       currency: sourceCurrency,
       xlm_amount: parseFloat(xlmAmount),
-      message: 'Transaction fee sponsored by ExpoPay ⚡',
+      message: 'Transaction fee sponsored by Zpay ⚡',
     });
   } catch (error: any) {
     await logError('gasless_payment_failed', error, { route: ROUTE, user_id: user.id });

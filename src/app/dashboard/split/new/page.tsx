@@ -23,7 +23,7 @@ function UserAvatar({ url, name, size = 10 }: { url?: string | null; name: strin
         backgroundImage: url ? `url(${url})` : undefined,
         background: url ? undefined : "linear-gradient(135deg, rgba(198,148,249,0.25), rgba(148,161,249,0.15))",
         borderColor: url ? "rgba(255,255,255,0.1)" : "rgba(198,148,249,0.3)",
-        color: "#C694F9",
+        color: "#D4AF37",
       }}
     >
       {!url && (name[0]?.toUpperCase() || "?")}
@@ -46,11 +46,11 @@ export default function NewSplitPage() {
   const debounceRefs = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
 
   const resolveUser = useCallback(async (i: number, val: string) => {
-    const clean = val.replace("@expo", "").trim();
+    const clean = val.replace("@Zp", "").trim();
     if (!clean || clean.length < 2) return;
     setResolving(i);
     try {
-      const res = await fetch(`/api/expo/resolve?username=${encodeURIComponent(clean)}`);
+      const res = await fetch(`/api/zpay/resolve?username=${encodeURIComponent(clean)}`);
       if (res.ok) {
         const data = await res.json();
         setParticipants(prev => prev.map((p, idx) => idx === i ? {
@@ -108,7 +108,7 @@ export default function NewSplitPage() {
 
   const handleStep2 = () => {
     const valid = participants.every(p => p.universal_id.trim());
-    if (!valid || participants.length === 0) { setError("Add at least one friend with a valid @expo ID"); return; }
+    if (!valid || participants.length === 0) { setError("Add at least one friend with a valid @Zp ID"); return; }
     // Always compute equal split here so step 3 review shows correct amounts
     if (splitType === "equal") distributeEqually();
     setError(""); setStep(3);
@@ -145,7 +145,7 @@ export default function NewSplitPage() {
           total_amount: total,
           currency,
           participants: finalParticipants.map(p => ({
-            universal_id: p.universal_id.replace("@expo", "").trim(),
+            universal_id: p.universal_id.replace("@Zp", "").trim(),
             amount_owed:  parseFloat(p.amount_owed),
           })),
         }),
@@ -182,7 +182,7 @@ export default function NewSplitPage() {
         </button>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-0.5">
-            <Users className="w-4 h-4 text-[#C694F9]" />
+            <Users className="w-4 h-4 text-[#D4AF37]" />
             <h1 className="text-xl font-black uppercase tracking-tight" style={{ fontFamily: 'var(--font-syne)' }}>
               Split Bill
             </h1>
@@ -191,7 +191,7 @@ export default function NewSplitPage() {
         </div>
         <div className="text-right">
           <p className="text-[10px] font-black uppercase tracking-widest text-white/20">Step</p>
-          <p className="text-2xl font-black text-[#C694F9]">{step}<span className="text-white/20 text-sm">/3</span></p>
+          <p className="text-2xl font-black text-[#D4AF37]">{step}<span className="text-white/20 text-sm">/3</span></p>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ export default function NewSplitPage() {
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-full"
+                className="absolute inset-0 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-full"
               />
             )}
           </div>
@@ -217,7 +217,7 @@ export default function NewSplitPage() {
         {step === 1 && (
           <motion.div key="s1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} className="space-y-6">
             <div className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-white/[0.02] p-6 space-y-5">
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#C694F9]/5 rounded-full blur-3xl" />
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-3xl" />
 
               <div className="space-y-2 relative z-10">
                 <label className="text-[10px] font-black uppercase tracking-[0.25em] text-white/35 block">What&apos;s the bill for?</label>
@@ -225,7 +225,7 @@ export default function NewSplitPage() {
                   value={title}
                   onChange={e => setTitle(e.target.value)}
                   placeholder="Dinner at Punjab Grill, Road trip fuel…"
-                  className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-4 font-bold text-base focus:outline-none focus:border-[#C694F9]/40 focus:bg-white/[0.07] placeholder:text-white/15 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-4 font-bold text-base focus:outline-none focus:border-[#D4AF37]/40 focus:bg-white/[0.07] placeholder:text-white/15 transition-all"
                 />
               </div>
 
@@ -237,7 +237,7 @@ export default function NewSplitPage() {
                     value={totalAmount}
                     onChange={e => setTotalAmount(e.target.value)}
                     placeholder="0.00"
-                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-4 font-black text-4xl focus:outline-none focus:border-[#C694F9]/40 focus:bg-white/[0.07] placeholder:text-white/10 transition-all pr-24"
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-4 font-black text-4xl focus:outline-none focus:border-[#D4AF37]/40 focus:bg-white/[0.07] placeholder:text-white/10 transition-all pr-24"
                   />
                   <div className="absolute right-5 top-1/2 -translate-y-1/2 text-right">
                     <p className="font-black text-sm text-white/30">XLM</p>
@@ -251,7 +251,7 @@ export default function NewSplitPage() {
                   value={note}
                   onChange={e => setNote(e.target.value)}
                   placeholder="Add a note…"
-                  className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-3 font-medium text-sm focus:outline-none focus:border-[#C694F9]/40 placeholder:text-white/15 transition-all"
+                  className="w-full bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-3 font-medium text-sm focus:outline-none focus:border-[#D4AF37]/40 placeholder:text-white/15 transition-all"
                 />
               </div>
             </div>
@@ -261,7 +261,7 @@ export default function NewSplitPage() {
             <motion.button
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
               onClick={handleStep1}
-              className="w-full h-16 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#C694F9]/25 flex items-center justify-center gap-2"
+              className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#D4AF37]/25 flex items-center justify-center gap-2"
             >
               Continue <span className="text-white/60">→</span>
             </motion.button>
@@ -278,10 +278,10 @@ export default function NewSplitPage() {
                 <button key={type} onClick={() => setSplitType(type)}
                   className="relative flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm uppercase tracking-wider transition-all">
                   {splitType === type && (
-                    <motion.div layoutId="split-type" className="absolute inset-0 bg-gradient-to-r from-[#C694F9]/20 to-[#94A1F9]/10 rounded-xl border border-[#C694F9]/30"
+                    <motion.div layoutId="split-type" className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/20 to-[#27272a]/10 rounded-xl border border-[#D4AF37]/30"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.4 }} />
                   )}
-                  <span className={cn("relative z-10 flex items-center gap-2 transition-colors", splitType === type ? "text-[#C694F9]" : "text-white/30")}>
+                  <span className={cn("relative z-10 flex items-center gap-2 transition-colors", splitType === type ? "text-[#D4AF37]" : "text-white/30")}>
                     {type === "equal" ? <Equal className="w-4 h-4" /> : <Sliders className="w-4 h-4" />}
                     {type === "equal" ? "Equal" : "Custom"}
                   </span>
@@ -291,20 +291,20 @@ export default function NewSplitPage() {
 
             {splitType === "equal" && totalAmount && (
               <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                className="bg-[#C694F9]/5 border border-[#C694F9]/15 rounded-2xl px-5 py-4 space-y-3">
+                className="bg-[#D4AF37]/5 border border-[#D4AF37]/15 rounded-2xl px-5 py-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Each person pays (incl. you)</p>
-                    <p className="font-black text-2xl text-[#C694F9] mt-0.5">{perPerson} <span className="text-sm text-white/30">XLM</span></p>
+                    <p className="font-black text-2xl text-[#D4AF37] mt-0.5">{perPerson} <span className="text-sm text-white/30">XLM</span></p>
                   </div>
-                  <div className="w-10 h-10 rounded-2xl bg-[#C694F9]/10 border border-[#C694F9]/20 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-[#C694F9]" />
+                  <div className="w-10 h-10 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-[#D4AF37]" />
                   </div>
                 </div>
                 <div className="flex gap-3 text-[10px] font-black uppercase tracking-wider">
                   <span className="text-white/40">You pay your own share ({perPerson} XLM)</span>
                   <span className="text-white/20">·</span>
-                  <span className="text-[#C694F9]/70">You collect {(participants.length > 0 ? (parseFloat(totalAmount) - parseFloat(totalAmount) / (participants.length + 1)) : 0).toFixed(2)} XLM from friends</span>
+                  <span className="text-[#D4AF37]/70">You collect {(participants.length > 0 ? (parseFloat(totalAmount) - parseFloat(totalAmount) / (participants.length + 1)) : 0).toFixed(2)} XLM from friends</span>
                 </div>
               </motion.div>
             )}
@@ -316,10 +316,10 @@ export default function NewSplitPage() {
                   className="flex gap-2 items-center">
                   <div className={cn(
                     "flex-1 bg-white/[0.03] border rounded-2xl px-4 py-3 flex items-center gap-3 transition-all",
-                    p.resolved ? "border-[#C694F9]/30 bg-[#C694F9]/5" : "border-white/[0.08] focus-within:border-[#C694F9]/30"
+                    p.resolved ? "border-[#D4AF37]/30 bg-[#D4AF37]/5" : "border-white/[0.08] focus-within:border-[#D4AF37]/30"
                   )}>
                     {resolving === i ? (
-                      <Loader2 className="w-8 h-8 text-[#C694F9] animate-spin shrink-0" />
+                      <Loader2 className="w-8 h-8 text-[#D4AF37] animate-spin shrink-0" />
                     ) : p.resolved && p.avatar_url ? (
                       <UserAvatar url={p.avatar_url} name={p.display_name || p.universal_id} />
                     ) : p.resolved ? (
@@ -331,7 +331,7 @@ export default function NewSplitPage() {
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[#C694F9]/60 font-black text-sm">@</span>
+                        <span className="text-[#D4AF37]/60 font-black text-sm">@</span>
                         <input
                           value={p.universal_id}
                           onChange={e => handleParticipantInput(i, e.target.value)}
@@ -348,7 +348,7 @@ export default function NewSplitPage() {
                   </div>
 
                   {splitType === "custom" && (
-                    <div className="w-28 bg-white/[0.03] border border-white/[0.08] rounded-2xl px-3 py-3 flex items-center gap-1 focus-within:border-[#C694F9]/30 transition-all">
+                    <div className="w-28 bg-white/[0.03] border border-white/[0.08] rounded-2xl px-3 py-3 flex items-center gap-1 focus-within:border-[#D4AF37]/30 transition-all">
                       <input
                         type="number"
                         value={p.amount_owed}
@@ -379,7 +379,7 @@ export default function NewSplitPage() {
 
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
               onClick={handleStep2}
-              className="w-full h-16 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#C694F9]/25 flex items-center justify-center gap-2">
+              className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#D4AF37]/25 flex items-center justify-center gap-2">
               Review Split <span className="text-white/60">→</span>
             </motion.button>
           </motion.div>
@@ -390,7 +390,7 @@ export default function NewSplitPage() {
           <motion.div key="s3" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} className="space-y-6">
 
             <div className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-white/[0.02] p-6 space-y-5">
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] opacity-60" />
+              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#27272a] opacity-60" />
 
               <div className="flex justify-between items-start">
                 <div>
@@ -398,7 +398,7 @@ export default function NewSplitPage() {
                   {note && <p className="text-white/40 text-sm mt-1">{note}</p>}
                 </div>
                 <div className="text-right">
-                  <p className="font-black text-2xl text-[#C694F9]">{totalAmount}</p>
+                  <p className="font-black text-2xl text-[#D4AF37]">{totalAmount}</p>
                   <p className="text-[10px] text-white/30 font-black uppercase">XLM</p>
                 </div>
               </div>
@@ -412,7 +412,7 @@ export default function NewSplitPage() {
                     <div className="flex items-center gap-3">
                       <UserAvatar url={p.avatar_url} name={p.display_name || p.universal_id} />
                       <div>
-                        <p className="font-bold text-sm">@{p.universal_id.replace("@expo", "")}</p>
+                        <p className="font-bold text-sm">@{p.universal_id.replace("@Zp", "")}</p>
                         {p.display_name && <p className="text-[10px] text-white/30">{p.display_name}</p>}
                       </div>
                     </div>
@@ -455,7 +455,7 @@ export default function NewSplitPage() {
 
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
               onClick={handleSubmit} disabled={loading}
-              className="w-full h-16 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#C694F9]/25 disabled:opacity-50 flex items-center justify-center gap-3">
+              className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#D4AF37]/25 disabled:opacity-50 flex items-center justify-center gap-3">
               {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> Sending Requests…</> : <><Zap className="w-5 h-5" /> Send Split Requests</>}
             </motion.button>
           </motion.div>

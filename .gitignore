@@ -40,3 +40,6 @@ next-env.d.ts
 # Environment variables
 .env
 .env.*
+mcp-server/node_modules/
+target/
+node_modules/

@@ -63,11 +63,11 @@ async function signAndSubmit(
 // STAKING CONTRACT  (Phase 2)
 // ════════════════════════════════════════════════════════════════════════════
 
-/** Stake EXPO tokens. Returns { txHash, stakeId } */
+/** Stake ZPAY tokens. Returns { txHash, stakeId } */
 export async function stakeExpo(
   stakerSecret:  string,
   stakerAddress: string,
-  amount:        bigint,   // in stroops (1 EXPO = 10_000_000 stroops)
+  amount:        bigint,   // in stroops (1 ZPAY = 10_000_000 stroops)
   durationDays:  30 | 60 | 90
 ): Promise<{ txHash: string; stakeId: number }> {
   const keypair = StellarSdk.Keypair.fromSecret(stakerSecret);
@@ -177,7 +177,7 @@ export async function depositToPool(
   return { txHash: hash, positionId };
 }
 
-/** Withdraw XLM + EXPO rewards. Returns { txHash, xlmAmount, expoReward } */
+/** Withdraw XLM + ZPAY rewards. Returns { txHash, xlmAmount, expoReward } */
 export async function withdrawFromPool(
   depositorSecret:  string,
   depositorAddress: string,

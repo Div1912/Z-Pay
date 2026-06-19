@@ -87,12 +87,12 @@ function RingMini({ pct, color, size = 60 }: { pct: number; color: string; size?
 }
 
 const CARD_DETAILS: Record<string, { description: string; tips: string[] }> = {
-  "Total Users":    { description: "Unique accounts that have claimed a @expo Universal ID and activated a Stellar wallet.", tips: ["Share your referral link to grow faster", "Each user gets a Stellar testnet wallet on signup", "Target: 30+ for Black Belt"] },
+  "Total Users":    { description: "Unique accounts that have claimed a @Zp Universal ID and activated a Stellar wallet.", tips: ["Share your referral link to grow faster", "Each user gets a Stellar testnet wallet on signup", "Target: 30+ for Black Belt"] },
   "DAU (7d avg)":   { description: "Distinct users active in the last 7 days — includes signups and payment senders.", tips: ["Send payment campaigns to drive DAU", "Each new signup counts as a DAU event", "Goal: >10 DAU consistently"] },
   "Txns (30d)":     { description: "Total P2P and merchant payment transactions processed in the last 30 days.", tips: ["Encourage split bills to multiply tx count", "Merchant payments count separately", "Each gasless tx also counts here"] },
   "Volume (30d)":   { description: "Total XLM value settled on Stellar in the last 30 days across all payment types.", tips: ["Volume grows with higher-value payments", "Merchant UPI bridge boosts XLM usage", "Staking deposits are tracked separately"] },
   "Retention":      { description: "% of users from earlier cohorts who remained active — measures platform stickiness.", tips: ["Send email reminders to inactive users", "Vault staking increases retention naturally", "Escrow contracts keep users engaged"] },
-  "Gasless Txs ⚡": { description: "Payments where ExpoPay sponsored the XLM network fee via fee_bump_transaction.", tips: ["Enable the ⚡ toggle on the Send page", "Platform wallet must have XLM balance", "Sponsor address shows as fee_source on-chain"] },
+  "Gasless Txs ⚡": { description: "Payments where Zpay sponsored the XLM network fee via fee_bump_transaction.", tips: ["Enable the ⚡ toggle on the Send page", "Platform wallet must have XLM balance", "Sponsor address shows as fee_source on-chain"] },
   "All-time Txns":  { description: "Total lifetime transactions ever recorded on this platform across all users.", tips: ["Historical record — never decreases", "Includes failed/voided transactions too", "Exportable for audit purposes"] },
   "Security Score": { description: "Security checklist completion: 8 of 13 production security controls implemented.", tips: ["Hash app_pin with bcrypt before mainnet", "Add rate limiting to auth endpoints", "Encrypt stellar_secret at rest"] },
 };
@@ -124,8 +124,8 @@ export default function MetricsDashboard() {
   if (loading && !summary) return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] gap-4">
       <div className="relative w-14 h-14">
-        <div className="absolute inset-0 rounded-full border-2 border-[#C694F9]/20 animate-ping" />
-        <Loader2 className="absolute inset-3 w-8 h-8 text-[#C694F9] animate-spin" />
+        <div className="absolute inset-0 rounded-full border-2 border-[#D4AF37]/20 animate-ping" />
+        <Loader2 className="absolute inset-3 w-8 h-8 text-[#D4AF37] animate-spin" />
       </div>
       <p className="text-white/40 text-[11px] font-semibold uppercase tracking-widest">Loading Analytics…</p>
     </div>
@@ -134,11 +134,11 @@ export default function MetricsDashboard() {
 
   const last14 = daily.slice(-14);
   const chartValues = last14.map(d => chartTab === "dau" ? d.dau : chartTab === "volume" ? d.volume : d.transactions);
-  const chartColor = chartTab === "dau" ? "#C694F9" : chartTab === "volume" ? "#facc15" : "#4ade80";
+  const chartColor = chartTab === "dau" ? "#D4AF37" : chartTab === "volume" ? "#facc15" : "#4ade80";
 
   const kpis = summary ? [
-    { key: "Total Users",    value: summary.total_users,           icon: Users,      color: "#C694F9", pct: Math.min(100, Math.round((summary.total_users / 30) * 100)), sparkData: daily.slice(-14).map(d => d.dau), unit: "users",   sub: `${summary.active_users_30d} active 30d` },
-    { key: "DAU (7d avg)",   value: summary.active_users_7d,       icon: Activity,   color: "#94A1F9", pct: Math.min(100, Math.round((summary.active_users_7d / Math.max(summary.total_users,1)) * 100)), sparkData: daily.slice(-14).map(d => d.dau), unit: "users", sub: `${Math.round(summary.retention_rate)}% retention` },
+    { key: "Total Users",    value: summary.total_users,           icon: Users,      color: "#D4AF37", pct: Math.min(100, Math.round((summary.total_users / 30) * 100)), sparkData: daily.slice(-14).map(d => d.dau), unit: "users",   sub: `${summary.active_users_30d} active 30d` },
+    { key: "DAU (7d avg)",   value: summary.active_users_7d,       icon: Activity,   color: "#27272a", pct: Math.min(100, Math.round((summary.active_users_7d / Math.max(summary.total_users,1)) * 100)), sparkData: daily.slice(-14).map(d => d.dau), unit: "users", sub: `${Math.round(summary.retention_rate)}% retention` },
     { key: "Txns (30d)",     value: summary.transactions_30d,      icon: TrendingUp, color: "#4ade80", pct: Math.min(100, Math.round((summary.transactions_30d / Math.max(summary.total_transactions,1)) * 100)), sparkData: daily.slice(-14).map(d => d.transactions), unit: "txns", sub: `${summary.transactions_7d} this week` },
     { key: "Volume (30d)",   value: summary.volume_30d,            icon: BarChart2,  color: "#facc15", pct: 100, sparkData: daily.slice(-14).map(d => d.volume), unit: "XLM", sub: "Stellar testnet" },
     { key: "Retention",      value: summary.retention_rate,        icon: Calendar,   color: "#f87171", pct: summary.retention_rate, sparkData: [], unit: "%", sub: "Platform stickiness" },
@@ -162,7 +162,7 @@ export default function MetricsDashboard() {
               <span className="text-[10px] font-semibold text-green-400">LIVE</span>
             </div>
           </div>
-          <p className="text-white/30 text-xs font-medium">Updated {refreshed.toLocaleTimeString()} · ExpoPay Platform</p>
+          <p className="text-white/30 text-xs font-medium">Updated {refreshed.toLocaleTimeString()} · Zpay Platform</p>
         </div>
         <button onClick={fetchData} disabled={loading}
           className="flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all disabled:opacity-50 text-white/70 hover:text-white">
@@ -257,7 +257,7 @@ export default function MetricsDashboard() {
                       {kpi.key === "Retention" && summary && (
                         <div className="grid grid-cols-2 gap-2">
                           {[
-                            { l: "30d Active", v: summary.active_users_30d, c: "#C694F9" },
+                            { l: "30d Active", v: summary.active_users_30d, c: "#D4AF37" },
                             { l: "7d Active",  v: summary.active_users_7d,  c: "#4ade80" },
                             { l: "Total Users",v: summary.total_users,      c: "#facc15" },
                             { l: "Rate",       v: `${summary.retention_rate}%`, c: "#f87171" },
@@ -357,11 +357,11 @@ export default function MetricsDashboard() {
                   <div key={u.universal_id} className="space-y-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-base w-5 shrink-0">{["🥇","🥈","🥉"][i] ?? `#${i+1}`}</span>
-                      <span className="font-semibold text-sm text-[#C694F9] flex-1 truncate">{u.universal_id}@expo</span>
+                      <span className="font-semibold text-sm text-[#D4AF37] flex-1 truncate">{u.universal_id}@Zp</span>
                       <span className="text-xs font-bold text-white/50 shrink-0">{u.tx_count} txs</span>
                     </div>
                     <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                      <motion.div className="h-full rounded-full" style={{background:`linear-gradient(to right, #C694F9, #94A1F9)`}}
+                      <motion.div className="h-full rounded-full" style={{background:`linear-gradient(to right, #D4AF37, #27272a)`}}
                         initial={{width:0}} animate={{width:`${pct}%`}} transition={{delay:0.2+i*0.05,duration:0.8}} />
                     </div>
                   </div>
@@ -380,16 +380,16 @@ export default function MetricsDashboard() {
                 <motion.div key={u.universal_id} initial={{opacity:0,x:16}} animate={{opacity:1,x:0}} transition={{delay:i*0.05}}
                   className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-all">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-                    style={{background:"#C694F9" + "22", border:"1px solid #C694F920", color:"#C694F9"}}>
+                    style={{background:"#D4AF37" + "22", border:"1px solid #D4AF3720", color:"#D4AF37"}}>
                     {(u.full_name || u.universal_id || "?")[0].toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm truncate text-white">{u.full_name || u.universal_id}</p>
-                    <p className="text-[10px] text-white/35 font-medium">{u.universal_id}@expo</p>
+                    <p className="text-[10px] text-white/35 font-medium">{u.universal_id}@Zp</p>
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-[10px] text-white/35">{new Date(u.created_at).toLocaleDateString()}</p>
-                    <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{background:"#C694F918",color:"#C694F9"}}>
+                    <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{background:"#D4AF3718",color:"#D4AF37"}}>
                       {u.preferred_currency || "XLM"}
                     </span>
                   </div>

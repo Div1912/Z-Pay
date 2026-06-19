@@ -1,4 +1,4 @@
--- ExpoPay SPLIT Feature Migration
+-- Zpay SPLIT Feature Migration
 -- Run this in your Supabase SQL Editor
 
 CREATE TABLE IF NOT EXISTS split_bills (

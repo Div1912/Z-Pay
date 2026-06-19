@@ -86,7 +86,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex h-[50vh] items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#C694F9]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#D4AF37]" />
       </div>
     );
   }
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ fontFamily: 'var(--font-syne)' }}>
-            Arbiter <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C694F9] to-[#F5A7C4]">Console</span>
+            Arbiter <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#FBBF24]">Console</span>
           </h1>
           <p className="text-zinc-400 text-sm mt-1">Review and force-resolve escalated escrow disputes.</p>
         </div>
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                 <div className="flex-1 space-y-4">
                   <div>
                     <h3 className="text-lg font-bold">{contract.title}</h3>
-                    <p className="text-2xl font-black text-[#C694F9] mt-1">{contract.amount} {contract.currency}</p>
+                    <p className="text-2xl font-black text-[#D4AF37] mt-1">{contract.amount} {contract.currency}</p>
                   </div>
                   
                   <div className="flex items-center gap-2 text-xs text-zinc-400">

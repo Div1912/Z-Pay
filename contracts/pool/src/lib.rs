@@ -3,7 +3,7 @@ use soroban_sdk::{contract, contractimpl, contracttype, token, Address, Env, sym
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const LEDGERS_PER_DAY: u64 = 17280;
-// Base reward: 0.05 EXPO per XLM per day = 500 in basis-points-per-day units
+// Base reward: 0.05 ZPAY per XLM per day = 500 in basis-points-per-day units
 // Actual reward = deposit_xlm * BASE_REWARD_BPS_PER_DAY * elapsed_days / 10000
 const BASE_REWARD_BPS_PER_DAY: u64 = 50; // 0.5% per day (demo rate — adjustable)
 
@@ -24,7 +24,7 @@ pub enum DataKey {
     PositionCount,    // u64
     ExpoToken,        // Address — reward token
     Admin,            // Address
-    RewardPool,       // i128 — EXPO available for rewards
+    RewardPool,       // i128 — ZPAY available for rewards
     TotalDeposited,   // i128 — total XLM in pool
 }
 
@@ -49,7 +49,7 @@ impl PoolContract {
         env.storage().instance().extend_ttl(500, 500);
     }
 
-    /// Admin deposits EXPO tokens to fund rewards.
+    /// Admin deposits ZPAY tokens to fund rewards.
     pub fn fund_rewards(env: Env, amount: i128) {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
         admin.require_auth();
@@ -64,7 +64,7 @@ impl PoolContract {
     }
 
     /// Deposit XLM into the pool. Returns position_id.
-    /// Depositor keeps earning EXPO rewards every ledger.
+    /// Depositor keeps earning ZPAY rewards every ledger.
     pub fn deposit(env: Env, depositor: Address, xlm_amount: i128) -> u64 {
         depositor.require_auth();
         if xlm_amount <= 0 { panic!("Amount must be positive"); }
@@ -105,7 +105,7 @@ impl PoolContract {
         position_id
     }
 
-    /// Withdraw XLM + earned EXPO rewards.
+    /// Withdraw XLM + earned ZPAY rewards.
     pub fn withdraw(env: Env, depositor: Address, position_id: u64) -> (i128, i128) {
         depositor.require_auth();
 
@@ -120,7 +120,7 @@ impl PoolContract {
         let elapsed  = now.saturating_sub(pos.start_ledger);
         let days     = elapsed / LEDGERS_PER_DAY;
 
-        // EXPO reward = xlm_amount * BASE_REWARD_BPS_PER_DAY * days / 10000
+        // ZPAY reward = xlm_amount * BASE_REWARD_BPS_PER_DAY * days / 10000
         let expo_reward: i128 = (pos.xlm_amount
             .saturating_mul(BASE_REWARD_BPS_PER_DAY as i128)
             .saturating_mul(days as i128)) / 10000;
@@ -130,11 +130,11 @@ impl PoolContract {
         let actual_reward = if expo_reward > pool { pool } else { expo_reward };
 
         // Return XLM to depositor (tracked internally — actual XLM held by contract)
-        // EXPO reward from reward pool
+        // ZPAY reward from reward pool
         if actual_reward > 0 {
             let expo_token: Address = env.storage().instance().get(&DataKey::ExpoToken).unwrap();
-            let expo = token::Client::new(&env, &expo_token);
-            expo.transfer(&env.current_contract_address(), &depositor, &actual_reward);
+            let zpay = token::Client::new(&env, &expo_token);
+            zpay.transfer(&env.current_contract_address(), &depositor, &actual_reward);
 
             env.storage().instance().set(&DataKey::RewardPool, &(pool - actual_reward));
         }
@@ -160,7 +160,7 @@ impl PoolContract {
             .expect("Position not found")
     }
 
-    /// Preview accrued EXPO reward for an active position.
+    /// Preview accrued ZPAY reward for an active position.
     pub fn preview_reward(env: Env, position_id: u64) -> i128 {
         env.storage().instance().extend_ttl(100, 100);
         let pos: Position = env.storage().instance()

@@ -1,8 +1,8 @@
-# ExpoPay Security Policy
+# Zpay Security Policy
 
 ## Security Posture
 
-ExpoPay is currently deployed on Stellar Testnet. This document outlines implemented and planned security measures.
+Zpay is currently deployed on Stellar Testnet. This document outlines implemented and planned security measures.
 
 ## ✅ Implemented
 
@@ -37,7 +37,7 @@ ExpoPay is currently deployed on Stellar Testnet. This document outlines impleme
 - [ ] **Encrypt `stellar_secret` at rest** — AES-256-GCM with `ENCRYPTION_KEY` env var planned
 
 ### Rate Limiting
-- [ ] **Auth endpoints** — `/api/auth/*`, `/api/expo/claim` (target: 10 req/min per IP)
+- [ ] **Auth endpoints** — `/api/auth/*`, `/api/zpay/claim` (target: 10 req/min per IP)
 - [ ] **Admin endpoints** — `/api/admin/resolve` (target: 5 req/min per admin)
 - [ ] **Payment endpoints** — `/api/payments/send`, `/api/payments/gasless`
 

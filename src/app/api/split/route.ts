@@ -61,7 +61,7 @@ export async function POST(request: Request) {
   }
 
   // Resolve all participant profiles
-  const universalIds = participants.map((p: any) => p.universal_id.replace('@expo', '').trim());
+  const universalIds = participants.map((p: any) => p.universal_id.replace('@Zp', '').trim());
   const { data: participantProfiles } = await supabaseAdmin
     .from('profiles')
     .select('id, universal_id, stellar_address')
@@ -100,7 +100,7 @@ export async function POST(request: Request) {
   // Insert participants
   const participantRows = participants.map((p: any) => {
     const profile = participantProfiles.find(
-      (pr: any) => pr.universal_id === p.universal_id.replace('@expo', '').trim()
+      (pr: any) => pr.universal_id === p.universal_id.replace('@Zp', '').trim()
     );
     return {
       split_id: split.id,
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
   // Send in-app notifications AND email alerts to all participants
   for (const profile of participantProfiles) {
     const amountOwed = participants.find(
-      (p: any) => p.universal_id.replace('@expo', '').trim() === profile.universal_id
+      (p: any) => p.universal_id.replace('@Zp', '').trim() === profile.universal_id
     )?.amount_owed;
 
     // Insert in-app notification via Supabase (real-time channel)
@@ -133,7 +133,7 @@ export async function POST(request: Request) {
       user_id: profile.id,
       type: 'split_request',
       title: `Split Request: ${title}`,
-      message: `${creatorProfile.universal_id}@expo added you to a split. You owe ${amountOwed} ${currency}.`,
+      message: `${creatorProfile.universal_id}@Zp added you to a split. You owe ${amountOwed} ${currency}.`,
       data: { split_id: split.id },
       read: false,
     })).catch(() => {}); // non-blocking

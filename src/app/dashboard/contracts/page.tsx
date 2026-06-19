@@ -90,8 +90,8 @@ function PinModal({ isOpen, onClose, onSubmit, loading, title }: {
         className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-[2rem] p-8 space-y-6"
       >
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 mx-auto bg-[#C694F9]/20 rounded-2xl flex items-center justify-center mb-4">
-            <Lock className="w-8 h-8 text-[#C694F9]" />
+          <div className="w-16 h-16 mx-auto bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center mb-4">
+            <Lock className="w-8 h-8 text-[#D4AF37]" />
           </div>
           <h2 className="text-2xl font-black uppercase">{title}</h2>
           <p className="text-zinc-500 text-sm">Enter PIN to authorize</p>
@@ -108,7 +108,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, title }: {
               value={pin[index]}
               onChange={(e) => handlePinChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-14 h-14 text-center text-2xl font-black bg-white/5 border-2 border-white/10 rounded-xl focus:border-[#C694F9] focus:outline-none"
+              className="w-14 h-14 text-center text-2xl font-black bg-white/5 border-2 border-white/10 rounded-xl focus:border-[#D4AF37] focus:outline-none"
               disabled={loading}
             />
           ))}
@@ -121,7 +121,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, title }: {
           <Button
             onClick={() => onSubmit(pin.join(''))}
             disabled={loading || pin.some(d => d === '')}
-            className="flex-1 h-14 bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-black rounded-xl"
+            className="flex-1 h-14 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black rounded-xl"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirm'}
           </Button>
@@ -211,7 +211,7 @@ export default function ContractsPage() {
     try {
       const [contractsRes, profileRes] = await Promise.all([
         fetch('/api/contracts'),
-        fetch('/api/expo/profile')
+        fetch('/api/zpay/profile')
       ]);
       const contractsData = await contractsRes.json();
       const profileData = await profileRes.json();
@@ -229,14 +229,14 @@ export default function ContractsPage() {
   }, [fetchContracts]);
 
   const resolveRecipient = useCallback(async (username: string) => {
-    const cleanUsername = username.replace('@expo', '').trim();
+    const cleanUsername = username.replace('@Zp', '').trim();
     if (!cleanUsername) {
       setReceiverProfile(null);
       return;
     }
     setResolving(true);
     try {
-      const res = await fetch(`/api/expo/resolve?username=${cleanUsername}`);
+      const res = await fetch(`/api/zpay/resolve?username=${cleanUsername}`);
       if (res.ok) {
         const data = await res.json();
         setReceiverProfile(data);
@@ -401,7 +401,7 @@ export default function ContractsPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#C694F9]" />
+        <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
         <p className="text-zinc-500 font-black text-xs uppercase tracking-widest">Loading Contracts</p>
       </div>
     );
@@ -416,7 +416,7 @@ export default function ContractsPage() {
         </div>
         <Button 
           onClick={() => setShowCreate(!showCreate)}
-          className="h-14 w-full md:w-auto bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-black rounded-xl gap-2"
+          className="h-14 w-full md:w-auto bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black rounded-xl gap-2"
         >
           <Plus className="w-5 h-5" /> New Contract
         </Button>
@@ -424,7 +424,7 @@ export default function ContractsPage() {
 
       <div className="grid grid-cols-4 gap-4 p-4 glass-card rounded-2xl">
         <div className="text-center">
-          <p className="text-2xl font-black text-[#C694F9]">{contracts.filter(c => c.status === 'released').length}</p>
+          <p className="text-2xl font-black text-[#D4AF37]">{contracts.filter(c => c.status === 'released').length}</p>
           <p className="text-xs text-zinc-500 uppercase tracking-wider">Completed</p>
         </div>
         <div className="text-center border-x border-white/10">
@@ -451,8 +451,8 @@ export default function ContractsPage() {
           >
             <div className="glass-card p-6 md:p-8 rounded-[2rem] space-y-6">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-[#C694F9]/20 rounded-xl flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-[#C694F9]" />
+                <div className="w-12 h-12 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-[#D4AF37]" />
                 </div>
                 <div>
                   <h2 className="text-xl font-black uppercase">New Escrow Contract</h2>
@@ -466,7 +466,7 @@ export default function ContractsPage() {
                   <div className="relative">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-600" />
                     <Input
-                      placeholder="username@expo"
+                      placeholder="username@Zp"
                       className="bg-white/5 border-white/10 pl-12 h-14 rounded-xl"
                       value={freelancerUsername}
                       onChange={(e) => setFreelancerUsername(e.target.value)}
@@ -474,9 +474,9 @@ export default function ContractsPage() {
                     {resolving && <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 animate-spin text-zinc-500" />}
                   </div>
                   {receiverProfile && (
-                    <div className="flex items-center gap-3 p-3 bg-[#C694F9]/10 rounded-xl border border-[#C694F9]/20">
+                    <div className="flex items-center gap-3 p-3 bg-[#D4AF37]/10 rounded-xl border border-[#D4AF37]/20">
                       <div
-                        className="w-10 h-10 bg-[#C694F9]/20 rounded-lg flex items-center justify-center font-black text-[#C694F9] bg-cover bg-center overflow-hidden"
+                        className="w-10 h-10 bg-[#D4AF37]/20 rounded-lg flex items-center justify-center font-black text-[#D4AF37] bg-cover bg-center overflow-hidden"
                         style={{ backgroundImage: receiverProfile.avatar_url ? `url(${receiverProfile.avatar_url})` : undefined }}
                       >
                         {!receiverProfile.avatar_url && (receiverProfile.display_name?.[0] || receiverProfile.username?.[0])}
@@ -486,7 +486,7 @@ export default function ContractsPage() {
                           {receiverProfile.display_name || receiverProfile.username}
                           <BadgeCheck className="w-4 h-4 text-blue-500" />
                         </p>
-                        <p className="text-xs text-zinc-500">{receiverProfile.username}@expo</p>
+                        <p className="text-xs text-zinc-500">{receiverProfile.username}@Zp</p>
                       </div>
                     </div>
                   )}
@@ -532,7 +532,7 @@ export default function ContractsPage() {
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Description (Optional)</label>
                   <textarea
                     placeholder="Describe the work to be done..."
-                    className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-sm resize-none focus:border-[#C694F9] focus:outline-none"
+                    className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-sm resize-none focus:border-[#D4AF37] focus:outline-none"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
@@ -562,7 +562,7 @@ export default function ContractsPage() {
                   <Button 
                     onClick={handleCreate}
                     disabled={creating || !freelancerUsername || !amount || !title}
-                    className="w-full sm:flex-1 h-14 bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-black rounded-xl"
+                    className="w-full sm:flex-1 h-14 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black rounded-xl"
                   >
                     {creating ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create & Fund Contract'}
                   </Button>
@@ -603,7 +603,7 @@ export default function ContractsPage() {
                       <div>
                         <p className="font-black text-lg">{contract.title}</p>
                         <p className="text-sm text-zinc-500">
-                          {isPayer ? `To: ${contract.freelancer_universal_id}@expo` : `From: ${contract.payer_universal_id}@expo`}
+                          {isPayer ? `To: ${contract.freelancer_universal_id}@Zp` : `From: ${contract.payer_universal_id}@Zp`}
                         </p>
                         <p className="text-[10px] text-zinc-600 mt-1">
                           Created {format(new Date(contract.created_at), 'MMM d, yyyy')}
@@ -683,7 +683,7 @@ export default function ContractsPage() {
                         <p className="text-orange-500/70">
                           You disputed this contract after the freelancer had already delivered the work.
                           Self-refund is blocked to prevent abuse. Contact{' '}
-                          <a href="mailto:support@expopay.app" className="underline">support@expopay.app</a>
+                          <a href="mailto:support@zpay.app" className="underline">support@zpay.app</a>
                           {' '}with your evidence.
                         </p>
                       </div>

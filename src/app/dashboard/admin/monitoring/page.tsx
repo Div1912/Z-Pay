@@ -140,7 +140,7 @@ export default function MonitoringDashboard() {
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
           {newLogCount > 0 && (
-            <span className="absolute -top-2 -right-2 w-5 h-5 bg-[#C694F9] rounded-full text-[9px] font-black flex items-center justify-center text-black">
+            <span className="absolute -top-2 -right-2 w-5 h-5 bg-[#D4AF37] rounded-full text-[9px] font-black flex items-center justify-center text-black">
               {newLogCount}
             </span>
           )}
@@ -223,7 +223,7 @@ export default function MonitoringDashboard() {
             onClick={() => { setLevelFilter(lvl); fetchLogs(lvl); }}
             className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
               levelFilter === lvl
-                ? "bg-[#C694F9]/20 border border-[#C694F9]/30 text-[#C694F9]"
+                ? "bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#D4AF37]"
                 : "bg-white/5 border border-white/10 text-white/40 hover:text-white"
             }`}
           >
@@ -236,7 +236,7 @@ export default function MonitoringDashboard() {
       <div className="space-y-2">
         {loading && filteredLogs.length === 0 && (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-6 h-6 animate-spin text-[#C694F9]" />
+            <Loader2 className="w-6 h-6 animate-spin text-[#D4AF37]" />
           </div>
         )}
         {!loading && filteredLogs.length === 0 && (

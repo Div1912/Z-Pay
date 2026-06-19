@@ -13,7 +13,7 @@ export default function PoolDepositPage() {
   const [success, setSuccess] = useState<any>(null);
 
   const parsedAmount  = parseFloat(amount) || 0;
-  // Est. daily EXPO = amount * 0.5% per day
+  // Est. daily ZPAY = amount * 0.5% per day
   const dailyExpo     = (parsedAmount * 50) / 10000;
   const monthlyExpo   = dailyExpo * 30;
 
@@ -48,8 +48,8 @@ export default function PoolDepositPage() {
         <div>
           <h2 className="text-2xl font-black uppercase">Deposited! 💧</h2>
           <p className="text-white/50 text-sm mt-2">{success.message}</p>
-          <p className="text-[#C694F9] font-black mt-3">
-            ~{dailyExpo.toFixed(4)} EXPO / day accruing
+          <p className="text-[#D4AF37] font-black mt-3">
+            ~{dailyExpo.toFixed(4)} ZPAY / day accruing
           </p>
         </div>
         <a
@@ -61,7 +61,7 @@ export default function PoolDepositPage() {
         </a>
         <button
           onClick={() => router.push("/dashboard/savings")}
-          className="w-full max-w-xs h-12 bg-gradient-to-r from-blue-500 to-[#C694F9] rounded-2xl font-black text-sm uppercase tracking-wider"
+          className="w-full max-w-xs h-12 bg-gradient-to-r from-blue-500 to-[#D4AF37] rounded-2xl font-black text-sm uppercase tracking-wider"
         >
           Back to Vault
         </button>
@@ -79,8 +79,8 @@ export default function PoolDepositPage() {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-black uppercase" style={{ fontFamily: 'var(--font-syne)' }}>EXPO Yield Pool</h1>
-          <p className="text-white/40 text-xs font-bold uppercase tracking-widest">Deposit XLM → Earn EXPO</p>
+          <h1 className="text-2xl font-black uppercase" style={{ fontFamily: 'var(--font-syne)' }}>ZPAY Yield Pool</h1>
+          <p className="text-white/40 text-xs font-bold uppercase tracking-widest">Deposit XLM → Earn ZPAY</p>
         </div>
       </div>
 
@@ -89,8 +89,8 @@ export default function PoolDepositPage() {
         <p className="text-[10px] font-black uppercase tracking-widest text-white/30">How It Works</p>
         {[
           { icon: "1️⃣", text: "Deposit any amount of XLM — no minimum, no lock up." },
-          { icon: "2️⃣", text: "Your XLM earns EXPO token rewards every day (~0.5%/day)." },
-          { icon: "3️⃣", text: "Withdraw anytime — get your XLM back + all accrued EXPO." },
+          { icon: "2️⃣", text: "Your XLM earns ZPAY token rewards every day (~0.5%/day)." },
+          { icon: "3️⃣", text: "Withdraw anytime — get your XLM back + all accrued ZPAY." },
         ].map((step, i) => (
           <div key={i} className="flex items-start gap-3">
             <span className="text-lg shrink-0">{step.icon}</span>
@@ -129,11 +129,11 @@ export default function PoolDepositPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">Per Day</p>
-              <p className="font-black text-xl text-[#C694F9]">{dailyExpo.toFixed(4)} <span className="text-xs text-white/30">EXPO</span></p>
+              <p className="font-black text-xl text-[#D4AF37]">{dailyExpo.toFixed(4)} <span className="text-xs text-white/30">ZPAY</span></p>
             </div>
             <div>
               <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">Per Month</p>
-              <p className="font-black text-xl text-[#C694F9]">{monthlyExpo.toFixed(3)} <span className="text-xs text-white/30">EXPO</span></p>
+              <p className="font-black text-xl text-[#D4AF37]">{monthlyExpo.toFixed(3)} <span className="text-xs text-white/30">ZPAY</span></p>
             </div>
           </div>
           <p className="text-[10px] text-white/30 font-bold">*Variable rate. Based on current reward pool size.</p>
@@ -143,7 +143,7 @@ export default function PoolDepositPage() {
       {/* Tax disclaimer */}
       <div className="bg-yellow-500/5 border border-yellow-500/15 rounded-2xl px-4 py-3">
         <p className="text-[10px] text-yellow-400/70 font-bold leading-relaxed">
-          ⚠️ EXPO rewards are taxable at 30% as VDA income under Indian law. Not a guaranteed return.
+          ⚠️ ZPAY rewards are taxable at 30% as VDA income under Indian law. Not a guaranteed return.
         </p>
       </div>
 
@@ -159,7 +159,7 @@ export default function PoolDepositPage() {
         id="pool-deposit-submit"
         onClick={handleDeposit}
         disabled={loading || !amount}
-        className="w-full h-14 bg-gradient-to-r from-blue-500 to-[#C694F9] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-blue-500/20 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full h-14 bg-gradient-to-r from-blue-500 to-[#D4AF37] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-blue-500/20 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading
           ? <><Loader2 className="w-5 h-5 animate-spin" /> Depositing...</>

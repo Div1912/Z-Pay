@@ -12,7 +12,7 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { Logo } from "@/components/Logo";
+import { Logo } from "@/components/ui/Logo";
 
 /* ─── Types ─────────────────────────────────────────────────────── */
 interface Profile {
@@ -111,7 +111,7 @@ function Toggle({
       onClick={() => onChange(!checked)}
       className={`relative inline-flex shrink-0 items-center w-14 h-7 rounded-md outline-none focus:outline-none transition-all duration-300 ${
         checked
-          ? "bg-[#C694F9] shadow-[0_0_12px_rgba(198,148,249,0.4)]"
+          ? "bg-[#D4AF37] shadow-[0_0_12px_rgba(198,148,249,0.4)]"
           : "bg-white/10"
       }`}
     >
@@ -200,7 +200,7 @@ export default function SettingsPage() {
     if (prefs.showBalance !== undefined) setShowBalance(prefs.showBalance);
     if (prefs.twoFactor !== undefined) setTwoFactor(prefs.twoFactor);
 
-    fetch("/api/expo/profile")
+    fetch("/api/zpay/profile")
       .then((r) => r.json())
       .then((d) => {
     if (d?.universal_id) {
@@ -220,7 +220,7 @@ export default function SettingsPage() {
   const handleSaveInfo = async () => {
     setSavingInfo(true);
     try {
-      const res = await fetch("/api/expo/profile", {
+      const res = await fetch("/api/zpay/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ full_name: editName }),
@@ -278,7 +278,7 @@ export default function SettingsPage() {
       }
 
       // Also update the profile table to keep them in sync
-      await fetch("/api/expo/profile", {
+      await fetch("/api/zpay/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: newEmail }),
@@ -301,7 +301,7 @@ export default function SettingsPage() {
     if (!/^\d+$/.test(newPin)) { toast.error("PIN must contain only numbers"); return; }
     setSavingPin(true);
     try {
-      const res = await fetch("/api/expo/profile", {
+      const res = await fetch("/api/zpay/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ app_pin: newPin }),
@@ -344,7 +344,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 animate-spin text-[#C694F9]" />
+        <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
       </div>
     );
   }
@@ -401,7 +401,7 @@ export default function SettingsPage() {
               <button
                 onClick={handlePinChange}
                 disabled={savingPin}
-                className="w-full h-12 rounded-xl bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
               >
                 {savingPin ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4" /> Save PIN</>}
               </button>
@@ -442,7 +442,7 @@ export default function SettingsPage() {
                   <button
                     onClick={handleSendEmailOtp}
                     disabled={savingEmail}
-                    className="w-full h-12 rounded-xl bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                    className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
                   >
                     {savingEmail ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send OTP"}
                   </button>
@@ -469,7 +469,7 @@ export default function SettingsPage() {
                     <button
                       onClick={handleVerifyEmailOtp}
                       disabled={savingEmail}
-                      className="flex-1 h-11 rounded-xl bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                      className="flex-1 h-11 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
                     >
                       {savingEmail ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify & Save"}
                     </button>
@@ -502,7 +502,7 @@ export default function SettingsPage() {
       <Section
         id="userinfo"
         icon={User}
-        iconColor="#C694F9"
+        iconColor="#D4AF37"
         title="User Information"
         subtitle={profile?.full_name || profile?.email || "Manage your profile"}
         active={active === "userinfo"}
@@ -511,7 +511,7 @@ export default function SettingsPage() {
       >
         {/* Avatar placeholder */}
         <div className="flex items-center gap-4 pb-4 border-b border-white/5">
-          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C694F9] to-[#94A1F9] flex items-center justify-center text-2xl font-black shadow-lg bg-cover bg-center" style={{ backgroundImage: profile?.avatar_url ? `url(${profile.avatar_url})` : undefined }}>
+          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#27272a] flex items-center justify-center text-2xl font-black shadow-lg bg-cover bg-center" style={{ backgroundImage: profile?.avatar_url ? `url(${profile.avatar_url})` : undefined }}>
             {!profile?.avatar_url && (profile?.full_name?.[0]?.toUpperCase() || "U")}
             <label className="absolute -bottom-1 -right-1 w-7 h-7 bg-zinc-800 border-2 border-[#121212] rounded-full flex items-center justify-center cursor-pointer hover:bg-zinc-700 transition-colors">
               <Camera className="w-3.5 h-3.5 text-white/80" />
@@ -538,7 +538,7 @@ export default function SettingsPage() {
 
                     toast.loading("Uploading photo...");
                     try {
-                      const res = await fetch("/api/expo/profile", {
+                      const res = await fetch("/api/zpay/profile", {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ avatar_url: dataUrl }),
@@ -564,8 +564,8 @@ export default function SettingsPage() {
             <p className="font-bold">{profile?.full_name || "—"}</p>
             <p className="text-zinc-500 text-sm">{profile?.email}</p>
             {profile?.universal_id && (
-              <p className="text-[#C694F9] text-xs font-bold mt-0.5">
-                {profile.universal_id}@expo
+              <p className="text-[#D4AF37] text-xs font-bold mt-0.5">
+                {profile.universal_id}@Zp
               </p>
             )}
           </div>
@@ -607,7 +607,7 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => setShowEmailModal(true)}
-                className="text-[10px] font-black uppercase tracking-widest text-[#C694F9] hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-[#C694F9]/10"
+                className="text-[10px] font-black uppercase tracking-widest text-[#D4AF37] hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-[#D4AF37]/10"
               >
                 Change
               </button>
@@ -619,7 +619,7 @@ export default function SettingsPage() {
         <button
           onClick={handleSaveInfo}
           disabled={savingInfo}
-          className="w-full h-12 rounded-xl bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-bold text-sm transition-all flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm transition-all flex items-center justify-center gap-2"
         >
           {savingInfo ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -635,7 +635,7 @@ export default function SettingsPage() {
       <Section
         id="notifications"
         icon={Bell}
-        iconColor="#F5A7C4"
+        iconColor="#FBBF24"
         title="Notifications & Emails"
         subtitle="Choose what you hear about"
         active={active === "notifications"}
@@ -671,7 +671,7 @@ export default function SettingsPage() {
       <Section
         id="security"
         icon={Shield}
-        iconColor="#94A1F9"
+        iconColor="#27272a"
         title="Privacy & Security"
         subtitle="Control your data and access"
         active={active === "security"}
@@ -832,7 +832,7 @@ export default function SettingsPage() {
           <button
             onClick={() => {
               toast('Frequently Asked Questions', {
-                description: '1. How to send money?\nGo to Send and enter an Expo ID.\n2. How to withdraw?\nUse the Merchant feature.',
+                description: '1. How to send money?\nGo to Send and enter an Zpay ID.\n2. How to withdraw?\nUse the Merchant feature.',
                 duration: 10000,
               });
             }}
@@ -847,19 +847,19 @@ export default function SettingsPage() {
           </button>
 
           <button
-            onClick={() => window.location.href = "mailto:support@expo.app"}
+            onClick={() => window.location.href = "mailto:support@Zp.app"}
             className="w-full p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex items-center gap-3"
           >
             <Mail className="w-5 h-5 text-zinc-400 shrink-0" />
             <div className="text-left">
               <p className="font-semibold text-sm">Contact Support</p>
-              <p className="text-zinc-500 text-xs">Email us at support@expo.app</p>
+              <p className="text-zinc-500 text-xs">Email us at support@Zp.app</p>
             </div>
             <ChevronRight className="w-4 h-4 text-zinc-600 ml-auto" />
           </button>
 
           <button
-            onClick={() => window.location.href = "mailto:bugs@expo.app?subject=Bug%20Report"}
+            onClick={() => window.location.href = "mailto:bugs@Zp.app?subject=Bug%20Report"}
             className="w-full p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex items-center gap-3"
           >
             <AlertCircle className="w-5 h-5 text-zinc-400 shrink-0" />
@@ -886,7 +886,7 @@ export default function SettingsPage() {
                 <Star
                   className={`w-8 h-8 ${
                     star <= feedbackRating
-                      ? "text-[#F5A7C4] fill-[#F5A7C4]"
+                      ? "text-[#FBBF24] fill-[#FBBF24]"
                       : "text-white/20"
                   }`}
                 />
@@ -898,12 +898,12 @@ export default function SettingsPage() {
             onChange={(e) => setFeedbackText(e.target.value)}
             placeholder="Tell us what you think…"
             rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C694F9]/40 resize-none"
+            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#D4AF37]/40 resize-none"
           />
           <button
             onClick={handleFeedback}
             disabled={sendingFeedback}
-            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#C694F9] to-[#94A1F9] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#27272a] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
           >
             {sendingFeedback ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -947,7 +947,7 @@ export default function SettingsPage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        EXPO · v1.0.0 · Built on Stellar
+        ZPAY · v1.0.0 · Built on Stellar
       </motion.p>
     </div>
   );

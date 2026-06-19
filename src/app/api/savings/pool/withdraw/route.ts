@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       tx_hash:     txHash,
       xlm_back:    xlmBack,
       expo_earned: expoEarned,
-      message:     `Withdrew ${xlmBack} XLM + ${expoEarned.toFixed(4)} EXPO rewards`,
+      message:     `Withdrew ${xlmBack} XLM + ${expoEarned.toFixed(4)} ZPAY rewards`,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || 'Withdrawal failed' }, { status: 500 });

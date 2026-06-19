@@ -22,7 +22,7 @@ export default function ProfilePage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("/api/expo/profile")
+    fetch("/api/zpay/profile")
       .then(res => res.json())
       .then(data => {
         setProfile(data);
@@ -38,7 +38,7 @@ export default function ProfilePage() {
 
   const copyId = () => {
     if (profile?.universal_id) {
-      navigator.clipboard.writeText(`${profile.universal_id}@expo`);
+      navigator.clipboard.writeText(`${profile.universal_id}@Zp`);
       setCopiedId(true);
       setTimeout(() => setCopiedId(false), 2000);
     }
@@ -102,7 +102,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </div>
-              <p className="text-[10px] text-zinc-600 uppercase tracking-widest">⚠️ Never share your secret key with anyone. ExpoPay will never ask for it.</p>
+              <p className="text-[10px] text-zinc-600 uppercase tracking-widest">⚠️ Never share your secret key with anyone. Zpay will never ask for it.</p>
             </motion.div>
           </motion.div>
         )}
@@ -137,7 +137,7 @@ export default function ProfilePage() {
                 className={`w-full h-12 rounded-xl font-bold text-sm transition-all ${
                   twoFactor
                     ? "bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20"
-                    : "bg-[#C694F9] hover:bg-[#C694F9]/90 text-black"
+                    : "bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black"
                 }`}
               >
                 {twoFactor ? "Disable 2FA" : "Enable 2FA"}
@@ -176,7 +176,7 @@ export default function ProfilePage() {
                 {!profile?.avatar_url && <span className="text-3xl sm:text-4xl font-black text-blue-500">{profile?.universal_id?.[0].toUpperCase()}</span>}
               </div>
               <div className="space-y-1 min-w-0 w-full">
-                <h3 className="text-2xl sm:text-4xl font-black tracking-tight uppercase leading-none truncate">{profile?.universal_id}@expo</h3>
+                <h3 className="text-2xl sm:text-4xl font-black tracking-tight uppercase leading-none truncate">{profile?.universal_id}@Zp</h3>
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs flex items-center justify-center sm:justify-start gap-2 truncate">
                   <Mail className="w-3 h-3 shrink-0" /> <span className="truncate">{profile?.email}</span>
                 </p>
@@ -185,10 +185,10 @@ export default function ProfilePage() {
 
             <div className="grid gap-6">
               <div className="space-y-3">
-                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 ml-1">EXPO Universal ID</label>
+                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 ml-1">ZPAY Universal ID</label>
                 <div className="group relative flex items-center justify-between p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all gap-4">
                   <div className="min-w-0 flex-1">
-                    <span className="font-black text-blue-500 text-lg tracking-tight uppercase truncate block w-full">{profile?.universal_id}@expo</span>
+                    <span className="font-black text-blue-500 text-lg tracking-tight uppercase truncate block w-full">{profile?.universal_id}@Zp</span>
                   </div>
                   <button onClick={copyId} className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors shrink-0">
                     <AnimatePresence mode="wait">
@@ -305,7 +305,7 @@ export default function ProfilePage() {
 
       <div className="text-center pt-8">
           <p className="text-[10px] text-zinc-600 font-black uppercase tracking-[0.3em]">
-            EXPO Protocol © 2024 • Distributed Identity Layer
+            ZPAY Protocol © 2024 • Distributed Identity Layer
           </p>
       </div>
     </div>

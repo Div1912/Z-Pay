@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Plus, PiggyBank, Users, Repeat, CreditCard, TrendingUp } from 'lucide-react';
+import { Spotlight } from "@/components/ui/spotlight";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,25 +15,25 @@ const features = [
     icon: ArrowUpRight,
     title: "Transfer",
     description: "Send money instantly to anyone, anywhere in the world.",
-    color: "#C694F9",
+    color: "#d4d4d8",
   },
   {
     icon: Plus,
     title: "Request",
     description: "Request payments with a simple shareable link.",
-    color: "#F5A7C4",
+    color: "#e5e5e5",
   },
   {
     icon: PiggyBank,
     title: "Savings",
     description: "Grow your wealth with high-yield DeFi savings.",
-    color: "#94A1F9",
+    color: "#a3a3a3",
   },
   {
     icon: Users,
     title: "Split",
     description: "Split bills effortlessly with your group.",
-    color: "#C694F9",
+    color: "#d4d4d8",
   },
 ];
 
@@ -109,6 +110,7 @@ export default function QuickActions() {
       ref={sectionRef}
       className="relative bg-black overflow-hidden py-20 sm:py-28 md:py-36 lg:py-40"
     >
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-0 w-[50vw] max-w-[600px] aspect-square rounded-full bg-purple-600/10 blur-[150px] md:blur-[200px]" />
         <div className="absolute bottom-0 left-0 w-[45vw] max-w-[500px] aspect-square rounded-full bg-blue-600/10 blur-[130px] md:blur-[180px]" />
@@ -121,15 +123,14 @@ export default function QuickActions() {
             <div className="w-full lg:w-1/2 lg:sticky lg:top-28">
               <div ref={titleRef} className="mb-8 sm:mb-10 md:mb-12">
                 <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-4 sm:mb-6">
-                  <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#C694F9] shadow-[0_0_10px_#C694F9]" />
+                  <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-zinc-300 shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Features</span>
                 </div>
                 <h2 
                   className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6 uppercase"
-                  style={{ fontFamily: 'var(--font-syne)' }}
                 >
                   <span className="block text-white text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Quick</span>
-                  <span className="block bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Actions</span>
+                  <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Actions</span>
                 </h2>
                 <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl font-medium max-w-md leading-relaxed">
                   All major actions are just a tap away. Frictionless payments for the modern age.
@@ -145,8 +146,8 @@ export default function QuickActions() {
                         onClick={() => router.push('/auth/signup')}
                         className="feature-card group relative p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-500 cursor-pointer overflow-hidden"
                       >
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#C694F9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#C694F9] to-[#94A1F9] opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-zinc-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-zinc-100 to-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                       
                       <div className="relative flex items-center gap-4 sm:gap-5">
                         <div 
@@ -156,7 +157,7 @@ export default function QuickActions() {
                           <Icon className="w-5 sm:w-6 h-5 sm:h-6" style={{ color: feature.color }} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-white font-black text-base sm:text-lg mb-0.5 sm:mb-1 uppercase tracking-tight" style={{ fontFamily: 'var(--font-syne)' }}>
+                          <h3 className="text-white font-black text-base sm:text-lg mb-0.5 sm:mb-1 uppercase tracking-tight">
                             {feature.title}
                           </h3>
                           <p className="text-white/40 text-xs sm:text-sm font-medium leading-relaxed">
@@ -179,7 +180,7 @@ export default function QuickActions() {
                 className="relative w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px]"
                 style={{ perspective: '1000px' }}
               >
-                <div className="absolute -inset-12 sm:-inset-16 md:-inset-20 bg-gradient-to-b from-[#C694F9]/20 via-[#F5A7C4]/10 to-transparent rounded-[80px] sm:rounded-[100px] blur-[80px] sm:blur-[100px] opacity-60" />
+                <div className="absolute -inset-12 sm:-inset-16 md:-inset-20 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[80px] sm:blur-[100px] opacity-60" />
                 
                 <div className="relative w-full aspect-[9/19.5] rounded-[36px] sm:rounded-[42px] md:rounded-[48px] overflow-hidden bg-[#050505] border-[5px] sm:border-[6px] md:border-[7px] border-[#151515] shadow-[0_40px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.05)]">
                   <div className="absolute top-2.5 sm:top-3 md:top-3.5 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-full z-50" />
@@ -205,7 +206,7 @@ export default function QuickActions() {
                         <p className="text-white/50 text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">Total Balance</p>
                         <div className="flex items-baseline gap-0.5 sm:gap-1 mb-3 sm:mb-4 md:mb-5">
                           <span className="text-white/50 font-black text-base sm:text-lg md:text-xl">$</span>
-                          <h3 className="text-[24px] sm:text-[28px] md:text-[32px] font-black text-white tracking-tighter" style={{ fontFamily: 'var(--font-syne)' }}>12,450.00</h3>
+                          <h3 className="text-[24px] sm:text-[28px] md:text-[32px] font-black text-white tracking-tighter">12,450.00</h3>
                         </div>
                         <div className="flex gap-1.5 sm:gap-2">
                           <div className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 text-[8px] sm:text-[9px] md:text-[10px] font-black flex items-center gap-0.5 sm:gap-1">
@@ -219,10 +220,10 @@ export default function QuickActions() {
 
                     <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-5 sm:mb-6 md:mb-8">
                       {[
-                        { icon: ArrowUpRight, label: "Send", color: "#C694F9" },
-                        { icon: Plus, label: "Add", color: "#F5A7C4" },
-                        { icon: Repeat, label: "Swap", color: "#94A1F9" },
-                        { icon: CreditCard, label: "Pay", color: "#C694F9" },
+                        { icon: ArrowUpRight, label: "Send", color: "#d4d4d8" },
+                        { icon: Plus, label: "Add", color: "#e5e5e5" },
+                        { icon: Repeat, label: "Swap", color: "#a3a3a3" },
+                        { icon: CreditCard, label: "Pay", color: "#d4d4d8" },
                       ].map((item, i) => {
                         const Icon = item.icon;
                         return (
@@ -259,7 +260,7 @@ export default function QuickActions() {
                           className="flex items-center justify-between p-2.5 sm:p-3 md:p-3.5 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.05]"
                         >
                           <div className="flex items-center gap-2 sm:gap-2.5 md:gap-3">
-                            <div className="w-8 sm:w-9 md:w-10 aspect-square rounded-full bg-gradient-to-br from-[#C694F9]/20 to-[#94A1F9]/20 flex items-center justify-center text-[8px] sm:text-[9px] md:text-[10px] font-black text-white border border-white/10">
+                            <div className="w-8 sm:w-9 md:w-10 aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-[8px] sm:text-[9px] md:text-[10px] font-black text-white border border-white/10">
                               {tx.initials}
                             </div>
                             <p className="text-[9px] sm:text-[10px] md:text-[11px] font-black text-white uppercase tracking-tight">{tx.name}</p>

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const TIERS = [
   { days: 30, reward: "1.25%", apr: "~15% APR", icon: "🥉", color: "border-blue-500/30   bg-blue-500/5   text-blue-400" },
-  { days: 60, reward: "3.00%", apr: "~18% APR", icon: "🥈", color: "border-[#C694F9]/30 bg-[#C694F9]/5 text-[#C694F9]" },
+  { days: 60, reward: "3.00%", apr: "~18% APR", icon: "🥈", color: "border-[#D4AF37]/30 bg-[#D4AF37]/5 text-[#D4AF37]" },
   { days: 90, reward: "6.00%", apr: "~24% APR", icon: "🥇", color: "border-green-500/30 bg-green-500/5 text-green-400", best: true },
 ];
 
@@ -61,13 +61,13 @@ export default function StakePage() {
         <a
           href={`https://stellar.expert/explorer/testnet/tx/${success.tx_hash}`}
           target="_blank" rel="noopener noreferrer"
-          className="text-[#C694F9] text-sm font-bold underline underline-offset-2"
+          className="text-[#D4AF37] text-sm font-bold underline underline-offset-2"
         >
           View on Stellar Explorer →
         </a>
         <button
           onClick={() => router.push("/dashboard/savings")}
-          className="w-full max-w-xs h-12 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black text-sm uppercase tracking-wider"
+          className="w-full max-w-xs h-12 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider"
         >
           Back to Vault
         </button>
@@ -85,7 +85,7 @@ export default function StakePage() {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-black uppercase" style={{ fontFamily: 'var(--font-syne)' }}>Stake EXPO</h1>
+          <h1 className="text-2xl font-black uppercase" style={{ fontFamily: 'var(--font-syne)' }}>Stake ZPAY</h1>
           <p className="text-white/40 text-xs font-bold uppercase tracking-widest">Lock & Earn rewards</p>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default function StakePage() {
       {/* Amount input */}
       <section className="space-y-3">
         <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Amount to Stake</p>
-        <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 focus-within:border-[#C694F9]/50 transition-all">
+        <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 focus-within:border-[#D4AF37]/50 transition-all">
           <input
             id="stake-amount"
             type="number"
@@ -135,7 +135,7 @@ export default function StakePage() {
             placeholder="0.00"
             className="bg-transparent flex-1 font-black text-3xl focus:outline-none placeholder:text-white/10"
           />
-          <span className="font-black text-white/30 text-base shrink-0">EXPO</span>
+          <span className="font-black text-white/30 text-base shrink-0">ZPAY</span>
         </div>
       </section>
 
@@ -148,12 +148,12 @@ export default function StakePage() {
         >
           <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Summary</p>
           <div className="space-y-2">
-            <Row label="You stake"       value={`${parsedAmount} EXPO`} />
+            <Row label="You stake"       value={`${parsedAmount} ZPAY`} />
             <Row label="Lock period"     value={`${selectedDays} days`} />
             <Row label="Reward rate"     value={tier.reward} highlight />
-            <Row label="Est. reward"     value={`+${estimatedGain.toFixed(4)} EXPO`} green />
+            <Row label="Est. reward"     value={`+${estimatedGain.toFixed(4)} ZPAY`} green />
             <div className="h-px bg-white/5" />
-            <Row label="Total payout"    value={`${totalPayout.toFixed(4)} EXPO`} bold />
+            <Row label="Total payout"    value={`${totalPayout.toFixed(4)} ZPAY`} bold />
           </div>
         </motion.section>
       )}
@@ -177,11 +177,11 @@ export default function StakePage() {
         id="stake-submit"
         onClick={handleStake}
         disabled={loading || !amount}
-        className="w-full h-14 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#C694F9]/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full h-14 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#D4AF37]/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading
           ? <><Loader2 className="w-5 h-5 animate-spin" /> Staking on Stellar...</>
-          : <><Lock className="w-5 h-5" /> Stake {amount || "0"} EXPO</>
+          : <><Lock className="w-5 h-5" /> Stake {amount || "0"} ZPAY</>
         }
       </button>
     </div>
@@ -194,7 +194,7 @@ function Row({ label, value, highlight, green, bold }: any) {
       <span className="text-sm text-white/50 font-bold">{label}</span>
       <span className={cn(
         "font-black text-sm",
-        highlight ? "text-[#C694F9]" : green ? "text-green-400" : bold ? "text-white" : "text-white/80"
+        highlight ? "text-[#D4AF37]" : green ? "text-green-400" : bold ? "text-white" : "text-white/80"
       )}>
         {value}
       </span>

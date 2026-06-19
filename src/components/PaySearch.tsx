@@ -32,7 +32,7 @@ function Avatar({ url, name, size = "md" }: { url?: string | null; name: string;
       className={cn(
         dim,
         "shrink-0 rounded-2xl flex items-center justify-center font-black uppercase overflow-hidden bg-cover bg-center",
-        !url && "bg-gradient-to-br from-[#C694F9]/30 to-[#94A1F9]/30 border border-[#C694F9]/20 text-[#C694F9]",
+        !url && "bg-gradient-to-br from-[#D4AF37]/30 to-[#27272a]/30 border border-[#D4AF37]/20 text-[#D4AF37]",
         text
       )}
       style={{ backgroundImage: url ? `url(${url})` : undefined }}
@@ -54,11 +54,11 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
   const router = useRouter();
 
   const search = useCallback(async (q: string) => {
-    const clean = q.replace(/@expo/gi, "").trim();
+    const clean = q.replace(/@Zp/gi, "").trim();
     if (!clean) { setResults([]); return; }
     setSearching(true);
     try {
-      const res = await fetch(`/api/expo/resolve?username=${encodeURIComponent(clean)}`);
+      const res = await fetch(`/api/zpay/resolve?username=${encodeURIComponent(clean)}`);
       if (res.ok) {
         const data = await res.json();
         setResults([{
@@ -104,7 +104,7 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
     setShowDropdown(false);
     setIsFocused(false);
     inputRef.current?.blur();
-    router.push(`/dashboard/send?to=${encodeURIComponent(username)}@expo`);
+    router.push(`/dashboard/send?to=${encodeURIComponent(username)}@Zp`);
   };
 
   const handleFocus = () => { setIsFocused(true); setShowDropdown(true); };
@@ -121,23 +121,23 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
         className={cn(
           "relative flex items-center gap-3 px-4 h-14 sm:h-16 rounded-2xl border transition-all duration-300",
           isFocused
-            ? "bg-white/[0.07] border-[#C694F9]/40 shadow-[0_0_30px_-5px_rgba(198,148,249,0.25)]"
+            ? "bg-white/[0.07] border-[#D4AF37]/40 shadow-[0_0_30px_-5px_rgba(198,148,249,0.25)]"
             : "bg-white/[0.04] border-white/[0.08] hover:border-white/20 hover:bg-white/[0.06]"
         )}
       >
-        <Search className={cn("w-5 h-5 shrink-0 transition-colors duration-300", isFocused ? "text-[#C694F9]" : "text-white/35")} />
+        <Search className={cn("w-5 h-5 shrink-0 transition-colors duration-300", isFocused ? "text-[#D4AF37]" : "text-white/35")} />
         <input
           ref={inputRef}
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={handleFocus}
-          placeholder="Search by Expo ID or name…"
+          placeholder="Search by Zpay ID or name…"
           className="flex-1 bg-transparent text-white placeholder:text-white/30 text-base font-medium outline-none"
         />
         <AnimatePresence mode="wait">
           {searching && query ? (
             <motion.div key="spin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Loader2 className="w-4 h-4 text-[#C694F9] animate-spin" />
+              <Loader2 className="w-4 h-4 text-[#D4AF37] animate-spin" />
             </motion.div>
           ) : query ? (
             <motion.button
@@ -182,12 +182,12 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
                         <span className="font-bold text-white truncate">{r.display_name}</span>
                         {r.verified && <BadgeCheck className="w-4 h-4 text-blue-400 shrink-0" />}
                       </div>
-                      <p className="text-sm text-white/40 truncate">{r.username}@expo</p>
+                      <p className="text-sm text-white/40 truncate">{r.username}@Zp</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <span className="text-xs font-bold text-white/30 uppercase">{r.preferred_currency}</span>
-                      <div className="w-8 h-8 rounded-xl bg-[#C694F9]/10 border border-[#C694F9]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowUpRight className="w-4 h-4 text-[#C694F9]" />
+                      <div className="w-8 h-8 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowUpRight className="w-4 h-4 text-[#D4AF37]" />
                       </div>
                     </div>
                   </button>
@@ -215,7 +215,7 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-white/80 truncate text-sm">{p.display_name}</p>
-                      <p className="text-xs text-white/30 truncate">{p.username}@expo</p>
+                      <p className="text-xs text-white/30 truncate">{p.username}@Zp</p>
                     </div>
                     <Clock className="w-3.5 h-3.5 text-white/20 shrink-0" />
                   </button>

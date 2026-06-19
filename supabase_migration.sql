@@ -1,5 +1,5 @@
 -- ============================================================
--- ExpoPay — Complete Supabase Schema Migration
+-- Zpay — Complete Supabase Schema Migration
 -- Run this in: Supabase Dashboard → SQL Editor → New Query
 -- ============================================================
 

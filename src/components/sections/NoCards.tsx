@@ -54,7 +54,7 @@ const NoCards = () => {
           >
             <div className="w-[280px] h-[440px] bg-[#0A0A0A] relative flex flex-col justify-between p-8">
               <div className="flex justify-between items-start">
-                <div className="text-white/40 text-[10px] uppercase tracking-widest leading-none">EXPO</div>
+                <div className="text-white/40 text-[10px] uppercase tracking-widest leading-none">ZPAY</div>
                 <div className="w-8 h-5 bg-white/5 rounded-sm"></div>
               </div>
               <div className="rotate-90 origin-left translate-x-12 -translate-y-8">
@@ -88,7 +88,7 @@ const NoCards = () => {
           >
             <div className="w-[280px] h-[440px] bg-[#0F0F0F] relative flex flex-col justify-between p-8">
               <div className="flex justify-between items-start">
-                <div className="text-white/40 text-[10px] uppercase tracking-widest leading-none">EXPO</div>
+                <div className="text-white/40 text-[10px] uppercase tracking-widest leading-none">ZPAY</div>
                 <div className="w-8 h-5 bg-white/10 rounded-sm"></div>
               </div>
               <div className="rotate-90 origin-left translate-x-12 -translate-y-8">
@@ -121,7 +121,7 @@ const NoCards = () => {
             <div className="w-[300px] h-[470px] bg-gradient-to-br from-[#1A1A1A] to-[#010101] relative flex flex-col justify-between p-10 overflow-hidden">
               <div className="flex justify-between items-start relative z-10">
                 <div className="flex flex-col">
-                  <span className="text-white text-xs font-bold tracking-[0.2em] uppercase">EXPO</span>
+                  <span className="text-white text-xs font-bold tracking-[0.2em] uppercase">ZPAY</span>
                 </div>
                 <div className="w-10 h-8 bg-gradient-to-br from-white/20 to-white/5 rounded-md border border-white/10 flex items-center justify-center overflow-hidden">
                   <div className="grid grid-cols-2 gap-[1px] w-full h-full p-1 opacity-50">

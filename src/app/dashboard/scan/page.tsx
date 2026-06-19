@@ -12,7 +12,7 @@ export default function ScanPage() {
   const [error, setError] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [detectedType, setDetectedType] = useState<'expo' | 'upi' | null>(null);
+  const [detectedType, setDetectedType] = useState<'zpay' | 'upi' | null>(null);
   const [detectedData, setDetectedData] = useState<any>(null);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function ScanPage() {
     setScanning(false);
 
     if (decodedText.toLowerCase().startsWith('upi://') || 
-        (decodedText.includes('@') && !decodedText.includes('@expo'))) {
+        (decodedText.includes('@') && !decodedText.includes('@Zp'))) {
       const parsed = parseUPIQRCode(decodedText);
       if (parsed.isValid) {
         setDetectedType('upi');
@@ -70,26 +70,26 @@ export default function ScanPage() {
 
     try {
       const data = JSON.parse(decodedText);
-      if (data.type === "payment" && data.expo) {
-        setDetectedType('expo');
+      if (data.type === "payment" && data.zpay) {
+        setDetectedType('zpay');
         setDetectedData(data);
         return;
       }
     } catch (e) {
-      if (decodedText.includes("@expo") || decodedText.startsWith("G")) {
-        setDetectedType('expo');
-        setDetectedData({ expo: decodedText, amount: null, note: null });
+      if (decodedText.includes("@Zp") || decodedText.startsWith("G")) {
+        setDetectedType('zpay');
+        setDetectedData({ zpay: decodedText, amount: null, note: null });
         return;
       }
     }
 
-    setError("Unrecognized QR Code Format. Scan an EXPO or UPI QR.");
+    setError("Unrecognized QR Code Format. Scan an ZPAY or UPI QR.");
   };
 
   const handleProceedExpo = () => {
     if (!detectedData) return;
     const params = new URLSearchParams();
-    const username = detectedData.expo?.replace("@expo", "@expo") || detectedData;
+    const username = detectedData.zpay?.replace("@Zp", "@Zp") || detectedData;
     params.set("to", username);
     if (detectedData.amount) params.set("amount", detectedData.amount);
     if (detectedData.note) params.set("note", detectedData.note);
@@ -138,20 +138,20 @@ export default function ScanPage() {
           >
             <div className="text-center space-y-4">
               <div className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center ${
-                detectedType === 'upi' ? 'bg-green-500/20' : 'bg-[#C694F9]/20'
+                detectedType === 'upi' ? 'bg-green-500/20' : 'bg-[#D4AF37]/20'
               }`}>
                 {detectedType === 'upi' ? (
                   <Store className="w-10 h-10 text-green-500" />
                 ) : (
-                  <Send className="w-10 h-10 text-[#C694F9]" />
+                  <Send className="w-10 h-10 text-[#D4AF37]" />
                 )}
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">
-                  {detectedType === 'upi' ? 'UPI MERCHANT DETECTED' : 'EXPO USER DETECTED'}
+                  {detectedType === 'upi' ? 'UPI MERCHANT DETECTED' : 'ZPAY USER DETECTED'}
                 </p>
                 <h2 className="text-2xl font-black">
-                  {detectedType === 'upi' ? detectedData?.merchantName : (detectedData?.expo || detectedData)}
+                  {detectedType === 'upi' ? detectedData?.merchantName : (detectedData?.zpay || detectedData)}
                 </h2>
                 {detectedType === 'upi' && (
                   <p className="text-zinc-500 text-sm">{detectedData?.merchantUpiId}</p>
@@ -171,7 +171,7 @@ export default function ScanPage() {
                 className={`w-full h-16 font-black text-lg rounded-2xl ${
                   detectedType === 'upi' 
                     ? 'bg-green-500 hover:bg-green-600 text-black' 
-                    : 'bg-[#C694F9] hover:bg-[#C694F9]/90 text-black'
+                    : 'bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black'
                 }`}
               >
                 {detectedType === 'upi' ? 'PAY MERCHANT' : 'SEND TO USER'}
@@ -221,7 +221,7 @@ export default function ScanPage() {
                     <div className="text-center px-8">
                       <h3 className="text-xl font-black tracking-tight mb-2 uppercase">Scan Any QR</h3>
                       <p className="text-zinc-400 text-sm font-bold uppercase tracking-widest leading-relaxed">
-                        EXPO IDs or UPI merchant QRs
+                        ZPAY IDs or UPI merchant QRs
                       </p>
                     </div>
                     <Button 
@@ -293,7 +293,7 @@ export default function ScanPage() {
           </Button>
         </div>
         <p className="text-[10px] text-zinc-600 text-center font-black uppercase tracking-[0.2em]">
-          Supports EXPO Universal IDs & Indian UPI QRs
+          Supports ZPAY Universal IDs & Indian UPI QRs
         </p>
       </div>
     </div>

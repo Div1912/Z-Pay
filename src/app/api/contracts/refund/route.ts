@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         error: `You disputed this contract after the freelancer had already delivered the work. 
 To prevent abuse, you cannot self-refund in this case. 
-An arbiter will review the evidence and decide. Contact support@expopay.app with your dispute reason.`
+An arbiter will review the evidence and decide. Contact support@zpay.app with your dispute reason.`
       }, { status: 403 });
     }
   }

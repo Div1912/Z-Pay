@@ -46,14 +46,14 @@ export default function SplitDetailPage() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-      <Loader2 className="w-8 h-8 animate-spin text-[#C694F9]" />
+      <Loader2 className="w-8 h-8 animate-spin text-[#D4AF37]" />
     </div>
   );
 
   if (!data) return (
     <div className="text-center py-20">
       <p className="text-white/40 font-bold">Split not found</p>
-      <Link href="/dashboard/split" className="text-[#C694F9] text-sm font-black mt-4 inline-block">← Back to Splits</Link>
+      <Link href="/dashboard/split" className="text-[#D4AF37] text-sm font-black mt-4 inline-block">← Back to Splits</Link>
     </div>
   );
 
@@ -85,7 +85,7 @@ export default function SplitDetailPage() {
             Created {format(new Date(split.created_at), 'MMM d, yyyy')}
             {" · "}
             <span className={cn(
-              split.status === 'completed' ? "text-green-400" : "text-[#C694F9]"
+              split.status === 'completed' ? "text-green-400" : "text-[#D4AF37]"
             )}>
               {split.status}
             </span>
@@ -113,7 +113,7 @@ export default function SplitDetailPage() {
       {/* Main card */}
       <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl overflow-hidden">
         {/* Amount header */}
-        <div className="p-6 bg-gradient-to-br from-[#C694F9]/5 to-[#94A1F9]/5 border-b border-white/5">
+        <div className="p-6 bg-gradient-to-br from-[#D4AF37]/5 to-[#27272a]/5 border-b border-white/5">
           <p className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-1">Total Bill</p>
           <div className="flex items-baseline gap-2">
             <span className="text-4xl font-black">{split.total_amount}</span>
@@ -125,7 +125,7 @@ export default function SplitDetailPage() {
           <div className="mt-4 space-y-2">
             <div className="flex justify-between text-xs font-bold text-white/40">
               <span>{paidCount}/{totalCount} paid</span>
-              <span className="text-[#C694F9]">{collectedSoFar.toFixed(2)} / {split.total_amount} {split.currency}</span>
+              <span className="text-[#D4AF37]">{collectedSoFar.toFixed(2)} / {split.total_amount} {split.currency}</span>
             </div>
             <div className="h-2 bg-white/5 rounded-full overflow-hidden">
               <motion.div
@@ -136,7 +136,7 @@ export default function SplitDetailPage() {
                   "h-full rounded-full",
                   progress === 100
                     ? "bg-green-500"
-                    : "bg-gradient-to-r from-[#C694F9] to-[#94A1F9]"
+                    : "bg-gradient-to-r from-[#D4AF37] to-[#27272a]"
                 )}
               />
             </div>
@@ -211,15 +211,15 @@ export default function SplitDetailPage() {
             exit={{ opacity: 0, y: 20 }}
             className="space-y-4"
           >
-            <div className="bg-[#C694F9]/5 border border-[#C694F9]/20 rounded-2xl px-5 py-4 flex items-center justify-between">
+            <div className="bg-[#D4AF37]/5 border border-[#D4AF37]/20 rounded-2xl px-5 py-4 flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Your Share</p>
-                <p className="font-black text-2xl text-[#C694F9] mt-0.5">
+                <p className="font-black text-2xl text-[#D4AF37] mt-0.5">
                   {parseFloat(myEntry?.amount_owed || 0).toFixed(2)}
                   <span className="text-xs text-white/30 ml-1">{split.currency}</span>
                 </p>
               </div>
-              <Users className="w-8 h-8 text-[#C694F9]/30" />
+              <Users className="w-8 h-8 text-[#D4AF37]/30" />
             </div>
 
             {error && (
@@ -236,7 +236,7 @@ export default function SplitDetailPage() {
               id="split-pay-btn"
               onClick={handlePay}
               disabled={paying}
-              className="w-full h-16 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] rounded-2xl font-black uppercase tracking-wider text-lg shadow-2xl shadow-[#C694F9]/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+              className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-lg shadow-2xl shadow-[#D4AF37]/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
             >
               {paying ? (
                 <><Loader2 className="w-5 h-5 animate-spin" /> Paying on Stellar...</>

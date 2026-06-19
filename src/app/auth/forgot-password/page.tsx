@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Background } from "@/components/Background";
-import { Logo } from "@/components/Logo";
+import { Logo } from "@/components/ui/Logo";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#C694F9]/30 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-hidden">
       <Background />
 
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 sm:px-6 md:px-12 py-4 bg-transparent">
@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <span className="block whitespace-nowrap">RESET</span>
-              <span className="block text-[#C694F9] whitespace-nowrap">PASSWORD</span>
+              <span className="block text-[#D4AF37] whitespace-nowrap">PASSWORD</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   type="email"
                   placeholder="name@example.com"
-                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#C694F9]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required

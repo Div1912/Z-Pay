@@ -1,16 +1,16 @@
 <div align="center">
 
-<img width="380" alt="ExpoPay logo" src="https://github.com/user-attachments/assets/101d4866-070b-410b-a6ca-fdbce03a7cc2" />
+<img width="380" alt="Zpay logo" src="https://github.com/user-attachments/assets/101d4866-070b-410b-a6ca-fdbce03a7cc2" />
 
-# ExpoPay — Global Payment Router
+# Zpay — Global Payment Router
 
 **Cross-border payments, escrow, group bills, and on-chain savings — all on Stellar.**
 
-ExpoPay turns wallet addresses into human-readable Universal IDs (`alice@expo`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
+Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
 
-[**Live demo →**](https://exporouter.site) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/ExpoPay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; 
+[**Live demo →**](https://exporouter.site) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Zpay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; 
 
-[**Latest Release →**](https://github.com/Div1912/ExpoPay/releases/latest) ![V1.0.0](https://img.shields.io/github/v/release/Div1912/ExpoPay?label=release&color=blueviolet)
+[**Latest Release →**](https://github.com/Div1912/Zpay/releases/latest) ![V1.0.0](https://img.shields.io/github/v/release/Div1912/Zpay?label=release&color=blueviolet)
 
 [**MVP Video →**](https://youtu.be/nHyg3oPxe0Q)
 
@@ -36,11 +36,11 @@ ExpoPay turns wallet addresses into human-readable Universal IDs (`alice@expo`),
 
 ## Highlights
 
-- **Universal IDs** — send to `alice@expo` instead of a 56-char Stellar public key.
+- **Universal IDs** — send to `alice@Zp` instead of a 56-char Stellar public key.
 - **Instant P2P** — XLM/USDC/INR P2P transfers settled on Stellar in ~3 seconds.
 - **Escrow with arbiter** — Soroban contract handles fund/deliver/release/dispute/resolve. Two-step arbiter override pays the freelancer even when the on-chain `release` is locked.
-- **Split bills** — equal or custom-share bill splitting across `@expo` users, with per-participant payment tracking and notifications.
-- **On-chain Vault** — fixed-term EXPO staking (30/60/90 days, up to 6%) plus a no-lock XLM yield pool that mints EXPO rewards daily. Live accrual UI, compound projection, and a real-time earnings ticker.
+- **Split bills** — equal or custom-share bill splitting across `@Zp` users, with per-participant payment tracking and notifications.
+- **On-chain Vault** — fixed-term ZPAY staking (30/60/90 days, up to 6%) plus a no-lock XLM yield pool that mints ZPAY rewards daily. Live accrual UI, compound projection, and a real-time earnings ticker.
 - **Indian UPI bridge** — pay any UPI QR with crypto; merchant receives INR.
 - **Cross-currency FX** — XLM ↔ USDC ↔ INR/USD/EUR/GBP with locked-window quotes.
 - **Inactivity guard, transaction PINs, on-chain audit trail** — every action emits a Stellar tx hash you can verify on Stellar Expert.
@@ -65,7 +65,7 @@ Scan any UPI QR or pick a demo merchant. The platform converts XLM/USDC to INR a
 
 ### 3 · P2P send
 
-Send to `bob@expo` instead of `GAB6F…`. Cross-currency sends show a live FX quote with a locked window.
+Send to `bob@Zp` instead of `GAB6F…`. Cross-currency sends show a live FX quote with a locked window.
 
 <img width="610" alt="Send money to Universal ID" src="https://github.com/user-attachments/assets/f2e427a8-8c75-4761-9dc9-191b6bf0fef2" />
 
@@ -89,7 +89,7 @@ Lock funds in a Soroban contract, mark delivered, release on completion. If some
 
 ### 6 · Split bills *(new)*
 
-Create a bill, pick `@expo` participants, choose **Equal** or **Custom shares**, and the app tracks who's paid and who hasn't. Each participant pays from their own balance with a single tap; the split updates in real time for everyone.
+Create a bill, pick `@Zp` participants, choose **Equal** or **Custom shares**, and the app tracks who's paid and who hasn't. Each participant pays from their own balance with a single tap; the split updates in real time for everyone.
 
 ![Create new split](./screenshots/split-new.png)
 
@@ -109,7 +109,7 @@ Two products in one tab. Live earnings ticker, animated stake progress, and a bu
 
 #### Staking
 
-Lock EXPO for 30, 60, or 90 days for **1.25% / 3.00% / 6.00%** flat reward (≈15 / 18 / 24% APR). Each active stake card shows current value, time remaining, accrued reward (animated 1 Hz), and a one-tap claim when the lock expires.
+Lock ZPAY for 30, 60, or 90 days for **1.25% / 3.00% / 6.00%** flat reward (≈15 / 18 / 24% APR). Each active stake card shows current value, time remaining, accrued reward (animated 1 Hz), and a one-tap claim when the lock expires.
 
 ![Vault overview with tier cards](./screenshots/vault-overview.png)
 
@@ -125,7 +125,7 @@ Drag the slider for amount, tap a tier — see what auto-rolling that tier yield
 
 #### XLM Yield Pool
 
-Deposit XLM with **no lock-up**, earn EXPO at 0.5% per XLM per day (~18% APR). Withdraw anytime; rewards accrue linearly and are paid out in EXPO from the pool's reward bucket on withdrawal.
+Deposit XLM with **no lock-up**, earn ZPAY at 0.5% per XLM per day (~18% APR). Withdraw anytime; rewards accrue linearly and are paid out in ZPAY from the pool's reward bucket on withdrawal.
 
 ![XLM yield pool tab](./screenshots/vault-pool.png)
 
@@ -137,7 +137,7 @@ Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test sui
 
 ### Advanced Feature: Fee Sponsorship (Gasless Transactions)
 
-ExpoPay implements **Stellar fee_bump_transaction** so the platform sponsors XLM network fees, enabling users to send payments with **0 XLM fee**.
+Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM network fees, enabling users to send payments with **0 XLM fee**.
 
 **Implementation:** [`src/lib/fee-bump.ts`](./src/lib/fee-bump.ts) · [`src/app/api/payments/gasless/route.ts`](./src/app/api/payments/gasless/route.ts)
 
@@ -145,7 +145,7 @@ ExpoPay implements **Stellar fee_bump_transaction** so the platform sponsors XLM
 1. User's inner transaction (signed with their key) is built server-side
 2. Platform wraps it in `fee_bump_transaction` (signed with `PLATFORM_SECRET_KEY`)
 3. On-chain `fee_source` = platform wallet; user pays **zero XLM in fees**
-4. Send page shows a **Gasless ⚡** toggle; confirmation shows *"Fee sponsored by ExpoPay"*
+4. Send page shows a **Gasless ⚡** toggle; confirmation shows *"Fee sponsored by Zpay"*
 
 **Proof:** 
 
@@ -254,7 +254,7 @@ graph TD
     subgraph Stellar ["Stellar Blockchain (Testnet)"]
         Horizon["Horizon RPC<br/>(Ledger & Balances)"]
         Soroban["Soroban Smart Contracts<br/>(Escrow, Pool, Staking)"]
-        Asset["Stellar Assets<br/>(XLM, EXPO, USDC)"]
+        Asset["Stellar Assets<br/>(XLM, ZPAY, USDC)"]
     end
 
     subgraph External ["External Services"]
@@ -307,13 +307,13 @@ Three contracts are deployed and used in production:
 
 | Function | Description | Inter-contract call |
 |---|---|---|
-| `create` | Create an escrow with EXPO `token_id` | — |
-| `fund` | Client locks EXPO tokens in escrow | ✅ Client → Escrow |
+| `create` | Create an escrow with ZPAY `token_id` | — |
+| `fund` | Client locks ZPAY tokens in escrow | ✅ Client → Escrow |
 | `deliver` | Freelancer marks work as delivered | — |
-| `release` | Client releases EXPO to freelancer | ✅ Escrow → Freelancer |
-| `refund` | Cancel and refund EXPO to client | ✅ Escrow → Client |
+| `release` | Client releases ZPAY to freelancer | ✅ Escrow → Freelancer |
+| `refund` | Cancel and refund ZPAY to client | ✅ Escrow → Client |
 | `dispute` | Either party raises a dispute | — |
-| `resolve` | Arbiter distributes EXPO to winner *(superseded — see note below)* | ✅ Escrow → Winner |
+| `resolve` | Arbiter distributes ZPAY to winner *(superseded — see note below)* | ✅ Escrow → Winner |
 | `get` | Query escrow state | — |
 
 **Arbiter resolution note.** The current testnet build is a pre-`resolve` revision. Arbiter outcomes are handled in the API by:
@@ -324,8 +324,8 @@ Three contracts are deployed and used in production:
 
 | Function | Description |
 |---|---|
-| `init` | Set the EXPO token address and admin (one-time) |
-| `stake` | Lock EXPO for 30/60/90 days, returns `stake_id` |
+| `init` | Set the ZPAY token address and admin (one-time) |
+| `stake` | Lock ZPAY for 30/60/90 days, returns `stake_id` |
 | `unstake` | Burn the stake position, payout = principal + reward |
 | `get_stake` | Query a single stake by id |
 | `get_pool_balance` | View remaining reward pool |
@@ -337,11 +337,11 @@ Reward math: linear, flat-rate `reward = amount × bps / 10000` over the lock du
 
 | Function | Description |
 |---|---|
-| `init` | Set EXPO reward token + admin |
+| `init` | Set ZPAY reward token + admin |
 | `deposit` | Lock XLM, returns `position_id` |
-| `withdraw` | Return principal + EXPO accrued |
+| `withdraw` | Return principal + ZPAY accrued |
 | `get_position` | Query a deposit |
-| `fund_rewards` | Admin tops up the EXPO reward bucket |
+| `fund_rewards` | Admin tops up the ZPAY reward bucket |
 
 Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD_BPS_PER_DAY × elapsed_days / 10000` with `BASE_REWARD_BPS_PER_DAY = 50` (≈18% APR).
 
@@ -350,14 +350,14 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 | Contract | Address |
 |---|---|
 | Escrow | `CAGMD6PBDSOSB2NDOE5ZGYCWH74EOBJFHM627WTGLZZF66DBRUFWYSPT` |
-| EXPO Token | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
+| ZPAY Token | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
 | Staking & Pool | Set via `STAKING_CONTRACT_ID` / `POOL_CONTRACT_ID` env vars |
 
 ### Inter-contract call proof
 
 - **Tx Hash:** `d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76`
 - **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76)
-- **Ledger:** `667150` · **Type:** `invoke_host_function` (escrow `create` calling EXPO token `transfer`)
+- **Ledger:** `667150` · **Type:** `invoke_host_function` (escrow `create` calling ZPAY token `transfer`)
 
 ---
 
@@ -375,12 +375,12 @@ All routes use Supabase session cookies (`getUser()` server-side). Routes that m
 ### Universal ID & wallet
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/expo/profile` | Get user profile |
-| GET | `/api/expo/balance` | Wallet balances (XLM, EXPO, …) |
-| GET | `/api/expo/resolve?username=…` | Resolve `@expo` ID to a Stellar address |
-| POST | `/api/expo/claim` | Claim a Universal ID and create wallet |
-| GET | `/api/expo/check` / `check-phone` | Availability checks |
-| POST | `/api/expo/pin` | Set or change the 4-digit PIN |
+| GET | `/api/zpay/profile` | Get user profile |
+| GET | `/api/zpay/balance` | Wallet balances (XLM, ZPAY, …) |
+| GET | `/api/zpay/resolve?username=…` | Resolve `@Zp` ID to a Stellar address |
+| POST | `/api/zpay/claim` | Claim a Universal ID and create wallet |
+| GET | `/api/zpay/check` / `check-phone` | Availability checks |
+| POST | `/api/zpay/pin` | Set or change the 4-digit PIN |
 
 ### Escrow contracts
 | Method | Endpoint | Description |
@@ -405,10 +405,10 @@ All routes use Supabase session cookies (`getUser()` server-side). Routes that m
 | Method | Endpoint | Description |
 |---|---|---|
 | GET | `/api/savings/positions` | All stakes + pool positions, with live current-value, accrued rewards, time remaining, summary aggregates |
-| POST | `/api/savings/stake` | Stake EXPO for 30/60/90 days |
+| POST | `/api/savings/stake` | Stake ZPAY for 30/60/90 days |
 | POST | `/api/savings/unstake` | Unstake matured position; pays principal + reward |
 | POST | `/api/savings/pool/deposit` | Deposit XLM into the yield pool |
-| POST | `/api/savings/pool/withdraw` | Withdraw XLM principal + accrued EXPO |
+| POST | `/api/savings/pool/withdraw` | Withdraw XLM principal + accrued ZPAY |
 
 ### Merchant (UPI bridge)
 | Method | Endpoint | Description |
@@ -514,7 +514,7 @@ NEXT_PUBLIC_TOKEN_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2H
 
 # Email (optional, for notifications)
 RESEND_API_KEY=...
-NOTIFY_FROM_EMAIL="ExpoPay <noreply@yourdomain>"
+NOTIFY_FROM_EMAIL="Zpay <noreply@yourdomain>"
 
 # App
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -537,8 +537,8 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ```bash
 # 1. Clone & install
-git clone https://github.com/Div1912/ExpoPay.git
-cd ExpoPay
+git clone https://github.com/Div1912/Zpay.git
+cd Zpay
 bun install        # or: npm install
 
 # 2. Configure env
@@ -581,11 +581,11 @@ There's also `scripts/deploy.ts` for batch deployment and `scripts/fund-rewards.
 ## Project structure
 
 ```
-ExpoPay/
+Zpay/
 ├── contracts/
 │   ├── escrow/      # Soroban escrow contract
-│   ├── staking/     # Fixed-term EXPO staking
-│   └── pool/        # XLM deposit pool with EXPO rewards
+│   ├── staking/     # Fixed-term ZPAY staking
+│   └── pool/        # XLM deposit pool with ZPAY rewards
 ├── scripts/
 │   ├── deploy.ts        # Bulk-deploy all contracts
 │   └── fund-rewards.ts  # Top up reward pools
@@ -594,7 +594,7 @@ ExpoPay/
 │   │   ├── api/
 │   │   │   ├── admin/{contracts,resolve}/   # Arbiter actions
 │   │   │   ├── contracts/{deliver,dispute,fund,refund,release}/
-│   │   │   ├── expo/{balance,check,check-phone,claim,pin,profile,resolve}/
+│   │   │   ├── zpay/{balance,check,check-phone,claim,pin,profile,resolve}/
 │   │   │   ├── fx/quote/
 │   │   │   ├── merchant/{history,pay,quote}/
 │   │   │   ├── payments/{history,send}/
@@ -663,7 +663,7 @@ What's still on the hardening backlog (call out in any prod deploy):
 - [x] Soroban escrow (create/fund/deliver/release/dispute/refund)
 - [x] Indian UPI merchant bridge
 - [x] Split bills with on-chain settlement
-- [x] EXPO staking + XLM yield pool
+- [x] ZPAY staking + XLM yield pool
 - [x] Compound projection UI
 - [ ] Auto-compound opt-in (on-chain auto-restake)
 - [ ] Stake streaks (consecutive completions → reward multiplier)
@@ -679,7 +679,7 @@ What's still on the hardening backlog (call out in any prod deploy):
 
 All notable changes, version history, and published binaries are tracked on the **GitHub Releases** page:
 
-👉 **[View all releases →](https://github.com/Div1912/ExpoPay/releases)**
+👉 **[View all releases →](https://github.com/Div1912/Zpay/releases)**
 
 You can also subscribe to new releases via GitHub's **Watch → Custom → Releases** option on the repository page to get notified whenever a new version ships.
 
@@ -691,7 +691,7 @@ You can also subscribe to new releases via GitHub's **Watch → Custom → Relea
 - [Soroban Smart Contracts](https://soroban.stellar.org/)
 - [Supabase Docs](https://supabase.com/docs)
 - [Next.js Docs](https://nextjs.org/docs)
-- [Release notes](https://github.com/Div1912/ExpoPay/releases)
+- [Release notes](https://github.com/Div1912/Zpay/releases)
 
 ---
 

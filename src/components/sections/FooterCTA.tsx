@@ -6,6 +6,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import Marquee from 'react-fast-marquee';
+import { ArrowUpRight } from 'lucide-react';
+import { Spotlight } from "@/components/ui/spotlight";
+import { Logo } from "@/components/ui/Logo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,8 +42,12 @@ const FooterCTA = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden bg-black">
-      <div className="absolute inset-0 z-0 pointer-events-none">
+    <section 
+      ref={sectionRef}
+      className="relative w-full bg-black py-20 sm:py-28 md:py-40 overflow-hidden"
+    >
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      <div className="absolute inset-0 pointer-events-none">
         <div 
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120vw] max-w-[1400px] h-[500px] sm:h-[600px] md:h-[700px] rounded-full opacity-25"
           style={{
@@ -61,9 +68,9 @@ const FooterCTA = () => {
           >
             <h2 
               className="font-black leading-[0.85] tracking-tight mb-5 sm:mb-6 md:mb-8"
-              style={{ fontFamily: 'var(--font-syne)' }}
+
             >
-              <span className="block bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] bg-clip-text text-transparent text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">
+              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">
                 Get
               </span>
               <span className="block text-white text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">
@@ -79,7 +86,7 @@ const FooterCTA = () => {
             viewport={{ once: true }}
             className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-lg mb-8 sm:mb-10 md:mb-14"
           >
-            Fast, secure, and borderless payments—powered by EXPO on Stellar.
+            Fast, secure, and borderless payments—powered by ZPAY on Stellar.
           </motion.p>
 
           <motion.div
@@ -91,7 +98,7 @@ const FooterCTA = () => {
           >
             <Link
               href="/auth/signup"
-              className="group relative flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full bg-white px-6 sm:px-8 md:px-12 transition-all duration-300 hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full bg-[#D4AF37] px-6 sm:px-8 md:px-12 transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="text-sm sm:text-base font-black text-black flex items-center gap-2 sm:gap-3 uppercase tracking-wide sm:tracking-wider">
                 Create Account
@@ -125,26 +132,26 @@ const FooterCTA = () => {
           {[...Array(5)].map((_, i) => (
             <div key={i} className="flex items-center gap-6 sm:gap-8 md:gap-12 mx-6 sm:mx-8 md:mx-12">
               <span 
-                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.03] uppercase tracking-tighter whitespace-nowrap"
-                style={{ fontFamily: 'var(--font-syne)' }}
+                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.12] uppercase tracking-tighter whitespace-nowrap"
+
               >
-                EXPO
+                ZPAY
               </span>
-              <span className="text-white/[0.08] text-2xl sm:text-3xl md:text-4xl">•</span>
+              <span className="text-white/[0.2] text-2xl sm:text-3xl md:text-4xl">•</span>
               <span 
-                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.03] uppercase tracking-tighter whitespace-nowrap"
-                style={{ fontFamily: 'var(--font-syne)' }}
+                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.12] uppercase tracking-tighter whitespace-nowrap"
+
               >
                 PAYMENTS
               </span>
-              <span className="text-white/[0.08] text-2xl sm:text-3xl md:text-4xl">•</span>
+              <span className="text-white/[0.2] text-2xl sm:text-3xl md:text-4xl">•</span>
               <span 
-                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.03] uppercase tracking-tighter whitespace-nowrap"
-                style={{ fontFamily: 'var(--font-syne)' }}
+                className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[12rem] font-black text-white/[0.12] uppercase tracking-tighter whitespace-nowrap"
+
               >
                 STELLAR
               </span>
-              <span className="text-white/[0.08] text-2xl sm:text-3xl md:text-4xl">•</span>
+              <span className="text-white/[0.2] text-2xl sm:text-3xl md:text-4xl">•</span>
             </div>
           ))}
         </Marquee>
@@ -160,8 +167,8 @@ const FooterCTA = () => {
         <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-6 sm:w-7 md:w-8 aspect-square rounded-lg sm:rounded-xl bg-gradient-to-br from-[#C694F9] to-[#94A1F9] shadow-[0_0_15px_rgba(198,148,249,0.35)]" />
-              <span className="text-white font-black text-lg sm:text-xl md:text-2xl tracking-tighter" style={{ fontFamily: 'var(--font-syne)' }}>EXPO</span>
+              <Logo className="w-8 h-8 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+              <span className="text-white font-black text-lg sm:text-xl md:text-2xl tracking-tighter">ZPAY</span>
             </div>
             
             <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
@@ -169,7 +176,7 @@ const FooterCTA = () => {
                 <a 
                   key={link}
                   href="#" 
-                  className="text-white/40 text-xs sm:text-sm font-medium hover:text-white transition-colors"
+                  className="text-white/80 text-xs sm:text-sm font-medium hover:text-white transition-colors"
                 >
                   {link}
                 </a>
@@ -177,7 +184,7 @@ const FooterCTA = () => {
             </div>
 
             <p className="text-white/30 text-xs sm:text-sm">
-              © 2025 EXPO. All rights reserved.
+              © 2025 ZPAY. All rights reserved.
             </p>
           </div>
         </div>

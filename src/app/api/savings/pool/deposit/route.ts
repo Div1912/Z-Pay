@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       tx_hash:     txHash,
       position_id: positionId,
       position,
-      message:     `Deposited ${amount_xlm} XLM into the EXPO Yield Pool. Rewards accrue daily.`,
+      message:     `Deposited ${amount_xlm} XLM into the ZPAY Yield Pool. Rewards accrue daily.`,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || 'Deposit failed' }, { status: 500 });

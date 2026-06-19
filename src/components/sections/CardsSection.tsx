@@ -4,6 +4,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import { Spotlight } from "@/components/ui/spotlight";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,8 +94,9 @@ export default function CardsSection() {
       ref={sectionRef}
       className="relative w-full bg-black py-20 sm:py-28 md:py-40 lg:py-56 overflow-hidden"
     >
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[1000px] aspect-square rounded-full bg-gradient-to-br from-[#F5A7C4]/10 to-[#C694F9]/5 blur-[150px] md:blur-[200px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[1000px] aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent blur-[150px] md:blur-[200px]" />
       </div>
 
       <div ref={contentRef} className="container relative mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px]">
@@ -102,16 +104,16 @@ export default function CardsSection() {
           
           <div ref={titleRef} className="w-full lg:w-1/2 text-center lg:text-left">
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-5 sm:mb-6 md:mb-8">
-              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#F5A7C4] shadow-[0_0_10px_#F5A7C4]" />
+              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#e5e5e5] shadow-[0_0_10px_#e5e5e5]" />
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Revolution</span>
             </div>
             
             <h2 
               className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8"
-              style={{ fontFamily: 'var(--font-syne)' }}
+
             >
               <span className="block text-white text-[13vw] sm:text-[11vw] md:text-[9vw] lg:text-[6vw] xl:text-[5rem]">Say bye</span>
-              <span className="block bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] bg-clip-text text-transparent text-[13vw] sm:text-[11vw] md:text-[9vw] lg:text-[6vw] xl:text-[5rem]">to cards</span>
+              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[13vw] sm:text-[11vw] md:text-[9vw] lg:text-[6vw] xl:text-[5rem]">to cards</span>
             </h2>
             
             <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 md:mb-10 leading-relaxed">
@@ -126,8 +128,8 @@ export default function CardsSection() {
                 viewport={{ once: true }}
                 className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.02]"
               >
-                <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#C694F9]/20 to-[#94A1F9]/20 flex items-center justify-center flex-shrink-0">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C694F9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5 md:w-6">
+                <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center flex-shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5 md:w-6">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   </svg>
                 </div>
@@ -144,8 +146,8 @@ export default function CardsSection() {
                 viewport={{ once: true }}
                 className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/[0.08] bg-white/[0.02]"
               >
-                <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#F5A7C4]/20 to-[#C694F9]/20 flex items-center justify-center flex-shrink-0">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F5A7C4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5 md:w-6">
+                <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center flex-shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5e5e5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5 md:w-6">
                     <circle cx="12" cy="12" r="10"/>
                     <polyline points="12 6 12 12 16 14"/>
                   </svg>
@@ -182,7 +184,7 @@ export default function CardsSection() {
                         <div className="flex justify-between items-end">
                           <div>
                             <p className="text-white/40 text-[8px] sm:text-[9px] md:text-[10px] uppercase mb-0.5 sm:mb-1">Card Holder</p>
-                            <p className="text-white/80 text-xs sm:text-sm font-medium">EXPO USER</p>
+                            <p className="text-white/80 text-xs sm:text-sm font-medium">ZPAY USER</p>
                           </div>
                           <div className="text-right">
                             <p className="text-white/40 text-[8px] sm:text-[9px] md:text-[10px] uppercase mb-0.5 sm:mb-1">Expires</p>
@@ -202,8 +204,8 @@ export default function CardsSection() {
                 viewport={{ once: true }}
                 className="absolute -bottom-2 sm:-bottom-4 left-1/2 -translate-x-1/2 z-20"
               >
-                <div className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] text-black text-xs sm:text-sm font-black uppercase tracking-wide sm:tracking-wider shadow-[0_15px_30px_rgba(198,148,249,0.25)]">
-                  Replaced by EXPO ID
+                <div className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 text-black text-xs sm:text-sm font-black uppercase tracking-wide sm:tracking-wider shadow-[0_15px_30px_rgba(255,255,255,0.1)]">
+                  Replaced by ZPAY ID
                 </div>
               </motion.div>
             </div>

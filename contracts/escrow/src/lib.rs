@@ -29,7 +29,7 @@ pub struct EscrowContract;
 #[contractimpl]
 impl EscrowContract {
     /// Create a new escrow between client and freelancer.
-    /// token_id points to the deployed EXPO SEP-41 token contract.
+    /// token_id points to the deployed ZPAY SEP-41 token contract.
     pub fn create(
         env: Env,
         escrow_id: String,
@@ -75,7 +75,7 @@ impl EscrowContract {
         env.storage().instance().extend_ttl(100, 100);
     }
 
-    /// Fund the escrow — inter-contract call: client → escrow contract via EXPO token transfer.
+    /// Fund the escrow — inter-contract call: client → escrow contract via ZPAY token transfer.
     pub fn fund(env: Env, escrow_id: String) {
         let key = DataKey::Escrow(escrow_id);
         let mut escrow: Escrow = env
@@ -92,7 +92,7 @@ impl EscrowContract {
             panic!("Escrow has been cancelled");
         }
 
-        // Inter-contract call: transfer EXPO tokens from client to this escrow contract
+        // Inter-contract call: transfer ZPAY tokens from client to this escrow contract
         let token_client = token::Client::new(&env, &escrow.token);
         token_client.transfer(
             &escrow.client,
@@ -132,7 +132,7 @@ impl EscrowContract {
         env.storage().instance().extend_ttl(100, 100);
     }
 
-    /// Client releases funds to freelancer — inter-contract call: escrow → EXPO token contract.
+    /// Client releases funds to freelancer — inter-contract call: escrow → ZPAY token contract.
     pub fn release_funds(env: Env, escrow_id: String) {
         let key = DataKey::Escrow(escrow_id);
         let mut escrow: Escrow = env
@@ -155,7 +155,7 @@ impl EscrowContract {
             panic!("Escrow has been cancelled");
         }
 
-        // Inter-contract call: escrow contract calls EXPO token to transfer to freelancer
+        // Inter-contract call: escrow contract calls ZPAY token to transfer to freelancer
         let token_client = token::Client::new(&env, &escrow.token);
         token_client.transfer(
             &env.current_contract_address(),
@@ -170,7 +170,7 @@ impl EscrowContract {
         env.storage().instance().extend_ttl(100, 100);
     }
 
-    /// Cancel escrow and return EXPO tokens to client via inter-contract call.
+    /// Cancel escrow and return ZPAY tokens to client via inter-contract call.
     /// Can only be called before release, and either before funding or if disputed.
     pub fn cancel_escrow(env: Env, escrow_id: String) {
         let key = DataKey::Escrow(escrow_id);
@@ -188,7 +188,7 @@ impl EscrowContract {
             panic!("Already cancelled");
         }
 
-        // If funded, return tokens to client via inter-contract call to EXPO token contract
+        // If funded, return tokens to client via inter-contract call to ZPAY token contract
         if escrow.funded {
             let token_client = token::Client::new(&env, &escrow.token);
             token_client.transfer(
@@ -239,7 +239,7 @@ impl EscrowContract {
         env.storage().instance().extend_ttl(100, 100);
     }
 
-    /// Arbiter resolves dispute — inter-contract call to distribute EXPO tokens.
+    /// Arbiter resolves dispute — inter-contract call to distribute ZPAY tokens.
     pub fn resolve(env: Env, escrow_id: String, pay_freelancer: bool) {
         let key = DataKey::Escrow(escrow_id);
         let mut escrow: Escrow = env
@@ -265,7 +265,7 @@ impl EscrowContract {
             escrow.client.clone()
         };
 
-        // Inter-contract call: escrow calls EXPO token to distribute funds
+        // Inter-contract call: escrow calls ZPAY token to distribute funds
         let token_client = token::Client::new(&env, &escrow.token);
         token_client.transfer(
             &env.current_contract_address(),
@@ -321,7 +321,7 @@ mod tests {
         // Deploy a mock Stellar Asset token contract (SEP-41 compliant)
         let token_id = env.register_stellar_asset_contract_v2(token_admin.clone()).address();
 
-        // Mint EXPO tokens to client so they can fund escrow
+        // Mint ZPAY tokens to client so they can fund escrow
         let stellar_asset_client = StellarAssetClient::new(&env, &token_id);
         stellar_asset_client.mint(&client_addr, &1_000_000_000i128);
 
@@ -399,7 +399,7 @@ mod tests {
 
         let freelancer_balance_before = token.balance(&freelancer_addr);
 
-        // This is the inter-contract call: EscrowContract → EXPO Token Contract
+        // This is the inter-contract call: EscrowContract → ZPAY Token Contract
         escrow_client.release_funds(&escrow_id);
 
         let freelancer_balance_after = token.balance(&freelancer_addr);
@@ -431,7 +431,7 @@ mod tests {
 
         let client_balance_before = token.balance(&client_addr);
 
-        // cancel_escrow triggers inter-contract call back to EXPO token to refund client
+        // cancel_escrow triggers inter-contract call back to ZPAY token to refund client
         escrow_client.cancel_escrow(&escrow_id);
 
         let client_balance_after = token.balance(&client_addr);
@@ -582,4 +582,4 @@ mod tests {
 // When escrow is funded, cancel_escrow makes a live inter-contract call:
 //   token::Client::new(&env, &escrow.token)
 //   .transfer(&env.current_contract_address(), &escrow.client, &escrow.amount)
-// This returns EXPO tokens from the escrow vault back to the originating client.
+// This returns ZPAY tokens from the escrow vault back to the originating client.

@@ -38,7 +38,7 @@ export default function HistoryPage() {
     const fetchData = useCallback(async () => {
       try {
         const [profileRes, historyRes, merchantRes] = await Promise.all([
-          fetch("/api/expo/profile"),
+          fetch("/api/zpay/profile"),
           fetch("/api/payments/history"),
           fetch("/api/merchant/history"),
         ]);
@@ -224,7 +224,7 @@ export default function HistoryPage() {
                           "text-[10px] font-black uppercase tracking-[0.2em]",
                           isMerchant ? "text-green-500" : "text-blue-500"
                         )}>
-                          {isMerchant ? 'UPI' : '@expo'}
+                          {isMerchant ? 'UPI' : '@Zp'}
                         </span>
                       </div>
                       <div className="flex items-center gap-4">

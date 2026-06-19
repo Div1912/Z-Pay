@@ -99,8 +99,8 @@ function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinErro
         className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-[2rem] p-8 space-y-8"
       >
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 mx-auto bg-[#C694F9]/20 rounded-2xl flex items-center justify-center mb-4">
-            <Shield className="w-8 h-8 text-[#C694F9]" />
+          <div className="w-16 h-16 mx-auto bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-[#D4AF37]" />
           </div>
           <h2 className="text-2xl font-black uppercase">Confirm Payment</h2>
           <p className="text-zinc-500 text-sm">Enter your 4-digit PIN to authorize</p>
@@ -110,7 +110,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinErro
           <div className="p-4 bg-white/5 rounded-2xl space-y-3">
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 bg-[#C694F9]/20 rounded-xl flex items-center justify-center font-black text-[#C694F9] bg-cover bg-center overflow-hidden"
+                className="w-10 h-10 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center font-black text-[#D4AF37] bg-cover bg-center overflow-hidden"
                 style={{ backgroundImage: receiver.avatar_url ? `url(${receiver.avatar_url})` : undefined }}
               >
                 {!receiver.avatar_url && (receiver.display_name?.[0] || receiver.username[0])}
@@ -120,7 +120,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinErro
                   {receiver.display_name || receiver.username}
                   {receiver.verified && <BadgeCheck className="w-4 h-4 text-blue-500" />}
                 </p>
-                <p className="text-xs text-zinc-500">{receiver.username}@expo</p>
+                <p className="text-xs text-zinc-500">{receiver.username}@Zp</p>
               </div>
             </div>
             <div className="pt-3 border-t border-white/5 flex justify-between items-center">
@@ -157,7 +157,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinErro
               onKeyDown={(e) => handleKeyDown(index, e)}
               className={cn(
                 "w-14 h-14 text-center text-2xl font-black bg-white/5 border-2 rounded-xl focus:outline-none transition-colors",
-                pinError ? "border-red-500/50 focus:border-red-500" : "border-white/10 focus:border-[#C694F9]"
+                pinError ? "border-red-500/50 focus:border-red-500" : "border-white/10 focus:border-[#D4AF37]"
               )}
               disabled={loading}
             />
@@ -171,7 +171,7 @@ function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinErro
           <Button
             onClick={handleSubmit}
             disabled={loading || pin.some(d => d === '')}
-            className="flex-1 h-14 bg-[#C694F9] hover:bg-[#C694F9]/90 text-black font-black rounded-xl"
+            className="flex-1 h-14 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black rounded-xl"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirm'}
           </Button>
@@ -206,7 +206,7 @@ function SendForm() {
   const [useGasless, setUseGasless] = useState(false);
 
   useEffect(() => {
-    fetch("/api/expo/profile")
+    fetch("/api/zpay/profile")
       .then(res => res.json())
       .then(data => {
         setHasPin(!!data.app_pin);
@@ -216,14 +216,14 @@ function SendForm() {
   }, []);
 
   const resolveRecipient = useCallback(async (username: string) => {
-    const cleanUsername = username.replace('@expo', '').trim();
+    const cleanUsername = username.replace('@Zp', '').trim();
     if (!cleanUsername) {
       setReceiverProfile(null);
       return;
     }
     setResolving(true);
     try {
-      const res = await fetch(`/api/expo/resolve?username=${cleanUsername}`);
+      const res = await fetch(`/api/zpay/resolve?username=${cleanUsername}`);
       if (res.ok) {
         const data = await res.json();
         setReceiverProfile({
@@ -327,7 +327,7 @@ function SendForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          recipient: recipient.includes('@expo') ? recipient : `${recipient}@expo`,
+          recipient: recipient.includes('@Zp') ? recipient : `${recipient}@Zp`,
           amount: quote.source_amount.toString(),
           currency: senderCurrency,
           note,
@@ -377,7 +377,7 @@ function SendForm() {
         animate={{ scale: 1, opacity: 1 }}
         className="text-center py-10 glass-card relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C694F9] to-green-500" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4AF37] to-green-500" />
         <motion.div 
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -393,9 +393,9 @@ function SendForm() {
             <p className="text-3xl font-black">{paymentResult.amount_sent} {paymentResult.from_currency}</p>
           </div>
           {paymentResult.from_currency !== paymentResult.to_currency && (
-            <div className="p-4 bg-[#C694F9]/10 rounded-2xl border border-[#C694F9]/20">
+            <div className="p-4 bg-[#D4AF37]/10 rounded-2xl border border-[#D4AF37]/20">
               <p className="text-zinc-400 text-sm mb-1">{paymentResult.recipient_name} receives</p>
-              <p className="text-3xl font-black text-[#C694F9]">~{paymentResult.amount_received?.toFixed(2)} {paymentResult.to_currency}</p>
+              <p className="text-3xl font-black text-[#D4AF37]">~{paymentResult.amount_received?.toFixed(2)} {paymentResult.to_currency}</p>
             </div>
           )}
         </div>
@@ -404,7 +404,7 @@ function SendForm() {
             href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 text-zinc-500 hover:text-[#C694F9] transition-all font-bold text-sm bg-white/5 py-4 rounded-xl border border-white/5"
+            className="flex items-center justify-center gap-2 text-zinc-500 hover:text-[#D4AF37] transition-all font-bold text-sm bg-white/5 py-4 rounded-xl border border-white/5"
           >
             VIEW ON EXPLORER <ExternalLink className="w-4 h-4" />
           </a>
@@ -418,7 +418,7 @@ function SendForm() {
               setQuote(null);
               setPaymentResult(null);
             }}
-            className="w-full h-14 bg-[#C694F9]/15 hover:bg-[#C694F9]/25 border border-[#C694F9]/30 text-[#C694F9] font-black text-base rounded-2xl transition-all"
+            className="w-full h-14 bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 border border-[#D4AF37]/30 text-[#D4AF37] font-black text-base rounded-2xl transition-all"
           >
             PAY AGAIN
           </Button>
@@ -444,8 +444,8 @@ function SendForm() {
             <div className="relative group">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-zinc-600" />
               <Input
-                placeholder="username@expo"
-                className="bg-white/5 border-white/10 pl-14 h-16 text-xl font-bold rounded-2xl focus:border-[#C694F9]/50"
+                placeholder="username@Zp"
+                className="bg-white/5 border-white/10 pl-14 h-16 text-xl font-bold rounded-2xl focus:border-[#D4AF37]/50"
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
               />
@@ -456,10 +456,10 @@ function SendForm() {
           <AnimatePresence>
             {receiverProfile && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                <div className="p-5 bg-[#C694F9]/10 rounded-2xl border border-[#C694F9]/20 space-y-4">
+                <div className="p-5 bg-[#D4AF37]/10 rounded-2xl border border-[#D4AF37]/20 space-y-4">
                   <div className="flex items-center gap-4">
                     <div
-                      className="w-14 h-14 bg-[#C694F9]/20 rounded-2xl flex items-center justify-center text-2xl font-black text-[#C694F9] bg-cover bg-center overflow-hidden"
+                      className="w-14 h-14 bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center text-2xl font-black text-[#D4AF37] bg-cover bg-center overflow-hidden"
                       style={{ backgroundImage: receiverProfile.avatar_url ? `url(${receiverProfile.avatar_url})` : undefined }}
                     >
                       {!receiverProfile.avatar_url && (receiverProfile.display_name?.[0] || receiverProfile.username[0])}
@@ -469,11 +469,11 @@ function SendForm() {
                         <span className="font-black text-lg">{receiverProfile.display_name}</span>
                         {receiverProfile.verified && <BadgeCheck className="w-5 h-5 text-blue-500" />}
                       </div>
-                      <p className="text-zinc-500 text-sm">{receiverProfile.username}@expo</p>
+                      <p className="text-zinc-500 text-sm">{receiverProfile.username}@Zp</p>
                     </div>
                     <div className="text-right">
                       <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Prefers</p>
-                      <p className="font-black text-[#C694F9]">{receiverProfile.preferred_currency}</p>
+                      <p className="font-black text-[#D4AF37]">{receiverProfile.preferred_currency}</p>
                     </div>
                   </div>
                   <div className={cn(
@@ -484,7 +484,7 @@ function SendForm() {
                   )}>
                     <Shield className="w-4 h-4" />
                     {receiverProfile.verified ? (
-                      <span>Verified EXPO Identity - Phone confirmed</span>
+                      <span>Verified ZPAY Identity - Phone confirmed</span>
                     ) : (
                       <span>Unverified Identity - Proceed with caution</span>
                     )}
@@ -501,7 +501,7 @@ function SendForm() {
                   type="number"
                   step="0.01"
                   placeholder="0.00"
-                  className="bg-white/5 border-white/10 h-20 text-4xl font-black pr-24 rounded-2xl focus:border-[#C694F9]/50"
+                  className="bg-white/5 border-white/10 h-20 text-4xl font-black pr-24 rounded-2xl focus:border-[#D4AF37]/50"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                 />
@@ -514,7 +514,7 @@ function SendForm() {
               <select
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 h-14 px-5 text-base font-bold rounded-2xl focus:border-[#C694F9]/50 focus:outline-none appearance-none cursor-pointer"
+                className="w-full bg-white/5 border border-white/10 h-14 px-5 text-base font-bold rounded-2xl focus:border-[#D4AF37]/50 focus:outline-none appearance-none cursor-pointer"
               >
                 <option value="" className="bg-zinc-900">Select purpose (optional)</option>
                 <option value="P2P Transfer" className="bg-zinc-900">P2P Transfer</option>
@@ -553,7 +553,7 @@ function SendForm() {
                   <ArrowRight className="w-6 h-6 text-zinc-600" />
                   <div className="text-right">
                     <p className="text-zinc-500 text-xs uppercase tracking-widest mb-1">{receiverProfile.display_name} gets</p>
-                    <p className="text-2xl font-black text-[#C694F9]">~{quote.target_amount.toFixed(2)} {quote.to_currency}</p>
+                    <p className="text-2xl font-black text-[#D4AF37]">~{quote.target_amount.toFixed(2)} {quote.to_currency}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between text-sm">
@@ -573,20 +573,20 @@ function SendForm() {
 
           <div 
             className={cn("flex items-center justify-between p-4 rounded-2xl border cursor-pointer transition-all", 
-              useGasless ? "bg-[#C694F9]/10 border-[#C694F9]/30" : "bg-white/5 border-white/10 hover:bg-white/10")}
+              useGasless ? "bg-[#D4AF37]/10 border-[#D4AF37]/30" : "bg-white/5 border-white/10 hover:bg-white/10")}
             onClick={() => setUseGasless(!useGasless)}
           >
             <div className="flex items-center gap-3">
               <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center transition-colors", 
-                useGasless ? "bg-[#C694F9]/20" : "bg-white/10")}>
-                <Zap className={cn("w-5 h-5 transition-colors", useGasless ? "text-[#C694F9]" : "text-zinc-500")} />
+                useGasless ? "bg-[#D4AF37]/20" : "bg-white/10")}>
+                <Zap className={cn("w-5 h-5 transition-colors", useGasless ? "text-[#D4AF37]" : "text-zinc-500")} />
               </div>
               <div>
-                <p className={cn("font-bold transition-colors", useGasless ? "text-[#C694F9]" : "text-white")}>Gasless Transaction ⚡</p>
+                <p className={cn("font-bold transition-colors", useGasless ? "text-[#D4AF37]" : "text-white")}>Gasless Transaction ⚡</p>
                 <p className="text-xs text-zinc-500">Platform pays the Stellar network fee</p>
               </div>
             </div>
-            <div className={cn("w-12 h-6 rounded-full p-1 transition-colors", useGasless ? "bg-[#C694F9]" : "bg-zinc-700")}>
+            <div className={cn("w-12 h-6 rounded-full p-1 transition-colors", useGasless ? "bg-[#D4AF37]" : "bg-zinc-700")}>
               <div className={cn("w-4 h-4 rounded-full bg-white transition-transform", useGasless ? "translate-x-6" : "translate-x-0")} />
             </div>
           </div>
@@ -602,7 +602,7 @@ function SendForm() {
             type="button"
             onClick={handleInitiateSend}
             disabled={loading || !receiverProfile || !quote || countdown === 0} 
-            className="w-full h-20 bg-[#C694F9] hover:bg-[#C694F9]/90 text-black text-2xl font-black rounded-3xl shadow-2xl shadow-[#C694F9]/30 disabled:opacity-50 group"
+            className="w-full h-20 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black text-2xl font-black rounded-3xl shadow-2xl shadow-[#D4AF37]/30 disabled:opacity-50 group"
           >
             {loading ? (
               <span className="flex items-center gap-3"><Loader2 className="w-7 h-7 animate-spin" /> PROCESSING...</span>
@@ -635,7 +635,7 @@ export default function SendPage() {
     <div className="max-w-2xl mx-auto">
       <Suspense fallback={
         <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
-          <Loader2 className="w-10 h-10 animate-spin text-[#C694F9]" />
+          <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
           <p className="text-zinc-500 font-black text-xs uppercase tracking-widest">Initializing Route</p>
         </div>
       }>

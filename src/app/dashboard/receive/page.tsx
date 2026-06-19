@@ -17,7 +17,7 @@ export default function ReceivePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/expo/profile")
+    fetch("/api/zpay/profile")
       .then(res => res.json())
       .then(data => {
         setProfile(data);
@@ -26,7 +26,7 @@ export default function ReceivePage() {
   }, []);
 
   const qrData = JSON.stringify({
-    expo: profile?.universal_id ? `${profile.universal_id}@expo` : "",
+    zpay: profile?.universal_id ? `${profile.universal_id}@Zp` : "",
     network: "stellar-testnet",
     type: "payment",
     amount: amount || undefined,
@@ -40,7 +40,7 @@ export default function ReceivePage() {
 
   const copyId = () => {
     if (profile?.universal_id) {
-      navigator.clipboard.writeText(`${profile.universal_id}@expo`);
+      navigator.clipboard.writeText(`${profile.universal_id}@Zp`);
       setCopiedId(true);
       toast.success("Identity copied to clipboard");
       setTimeout(() => setCopiedId(false), 2000);
@@ -57,7 +57,7 @@ export default function ReceivePage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
-        <Loader2 className="w-12 h-12 animate-spin text-[#C694F9]" />
+        <Loader2 className="w-12 h-12 animate-spin text-[#D4AF37]" />
         <p className="text-white/40 font-black tracking-widest uppercase text-xs animate-pulse">Generating Secure Identity</p>
       </div>
     );
@@ -67,7 +67,7 @@ export default function ReceivePage() {
     <div className="max-w-2xl mx-auto space-y-12 pb-20">
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-          <Globe className="w-3.5 h-3.5 text-[#C694F9]" />
+          <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
           <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Global Payment Gateway</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight uppercase leading-none" style={{ fontFamily: 'var(--font-syne)' }}>
@@ -83,7 +83,7 @@ export default function ReceivePage() {
           animate={{ opacity: 1, x: 0 }}
           className="relative group"
         >
-          <div className="absolute -inset-4 bg-gradient-to-r from-[#C694F9]/20 via-[#F5A7C4]/20 to-[#94A1F9]/20 rounded-[3rem] blur-2xl opacity-50" />
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37]/20 via-[#FBBF24]/20 to-[#27272a]/20 rounded-[3rem] blur-2xl opacity-50" />
           <div className="relative bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-8 rounded-[2.5rem] flex flex-col items-center gap-8">
             <div className="relative p-5 bg-white rounded-[2rem] shadow-2xl overflow-hidden group/qr">
               <QRCodeSVG 
@@ -92,12 +92,12 @@ export default function ReceivePage() {
                 level="H"
                 className="relative z-10 w-full h-auto"
               />
-              <div className="absolute inset-0 bg-[#C694F9]/5 opacity-0 group-hover/qr:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-[#D4AF37]/5 opacity-0 group-hover/qr:opacity-100 transition-opacity" />
             </div>
 
             <div className="text-center space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C694F9]">Universal Identity</span>
-              <h3 className="text-2xl font-black tracking-tight text-white uppercase">{profile?.universal_id}@expo</h3>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#D4AF37]">Universal Identity</span>
+              <h3 className="text-2xl font-black tracking-tight text-white uppercase">{profile?.universal_id}@Zp</h3>
             </div>
 
             <Button 
@@ -117,7 +117,7 @@ export default function ReceivePage() {
           className="space-y-6"
         >
           <div className="bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-8 rounded-[2.5rem] space-y-6">
-            <div className="flex items-center gap-3 text-[#F5A7C4]">
+            <div className="flex items-center gap-3 text-[#FBBF24]">
               <Sparkles className="w-5 h-5" />
               <span className="text-xs font-black uppercase tracking-[0.2em]">Request Funds</span>
             </div>
@@ -129,7 +129,7 @@ export default function ReceivePage() {
                   <Input 
                     type="number" 
                     placeholder="0.00"
-                    className="bg-white/5 border-white/10 h-14 text-xl font-black pl-5 rounded-xl focus:border-[#C694F9]/50"
+                    className="bg-white/5 border-white/10 h-14 text-xl font-black pl-5 rounded-xl focus:border-[#D4AF37]/50"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                   />
@@ -141,7 +141,7 @@ export default function ReceivePage() {
                 <label className="text-[10px] font-black uppercase tracking-widest text-white/30 ml-1">Note (Optional)</label>
                 <Input 
                   placeholder="e.g. Dinner split"
-                  className="bg-white/5 border-white/10 h-14 text-lg font-bold pl-5 rounded-xl focus:border-[#C694F9]/50"
+                  className="bg-white/5 border-white/10 h-14 text-lg font-bold pl-5 rounded-xl focus:border-[#D4AF37]/50"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                 />
@@ -150,7 +150,7 @@ export default function ReceivePage() {
               <div className="pt-2">
                 <Button 
                   onClick={copyRequestLink}
-                  className="w-full h-16 bg-gradient-to-r from-[#C694F9] to-[#94A1F9] text-white font-black text-lg rounded-2xl gap-3 shadow-xl shadow-[#C694F9]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] text-white font-black text-lg rounded-2xl gap-3 shadow-xl shadow-[#D4AF37]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                 >
                   {copiedLink ? <Check className="w-6 h-6" /> : <LinkIcon className="w-6 h-6" />}
                   {copiedLink ? "LINK COPIED" : "SHARE REQUEST LINK"}
@@ -167,7 +167,7 @@ export default function ReceivePage() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/[0.05]">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#C694F9]/20 flex items-center justify-center text-[#C694F9] font-black text-xs">
+                  <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37] font-black text-xs">
                     {profile?.full_name?.[0]}
                   </div>
                   <span className="text-sm font-bold text-white/80">{profile?.full_name}</span>

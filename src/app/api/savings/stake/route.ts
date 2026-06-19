@@ -72,7 +72,7 @@ export async function POST(request: Request) {
       tx_hash:  txHash,
       stake_id: stakeId,
       position,
-      message:  `Staked ${amount_expo} EXPO for ${duration_days} days. Expected reward: ${rewardExpo.toFixed(4)} EXPO`,
+      message:  `Staked ${amount_expo} ZPAY for ${duration_days} days. Expected reward: ${rewardExpo.toFixed(4)} ZPAY`,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || 'Staking failed' }, { status: 500 });

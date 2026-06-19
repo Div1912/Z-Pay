@@ -1,5 +1,5 @@
 -- ============================================================
--- ExpoPay Black Belt Migration
+-- Zpay Black Belt Migration
 -- Apply after: supabase_migration.sql, supabase_split_migration.sql,
 --              supabase_savings_migration.sql
 -- ============================================================

@@ -3,7 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { notifyEscrow } from '@/lib/notify';
 
-const ADMIN_EMAILS = ['admin@expopay.app', 'support@expopay.app', 'bkbhaia@gmail.com'];
+const ADMIN_EMAILS = ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com'];
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     // So when arbiter sides with the freelancer, we do it in two on-chain steps:
     //   1) refund escrow back to payer
     //   2) transfer that amount from payer's wallet to freelancer (SEP-41)
-    // ExpoPay is custodial so the backend signs both with the payer's secret.
+    // Zpay is custodial so the backend signs both with the payer's secret.
 
     const { data: payerProfile } = await supabaseAdmin
       .from('profiles')

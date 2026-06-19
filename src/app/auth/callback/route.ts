@@ -25,17 +25,32 @@ export async function GET(request: NextRequest) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    const { error, data } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      let redirectPath = next;
+      
+      // Check if user has completed onboarding
+      if (data?.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('universal_id')
+          .eq('id', data.user.id)
+          .single();
+          
+        if (!profile?.universal_id) {
+          redirectPath = '/onboarding';
+        }
+      }
+
       const forwardedHost = request.headers.get('x-forwarded-host') // Hello, localhost:3000
       const isLocalEnv = process.env.NODE_ENV === 'development'
       if (isLocalEnv) {
         // we can be sure that origin is http://localhost:3000
-        return NextResponse.redirect(`${origin}${next}`)
+        return NextResponse.redirect(`${origin}${redirectPath}`)
       } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
+        return NextResponse.redirect(`https://${forwardedHost}${redirectPath}`)
       } else {
-        return NextResponse.redirect(`${origin}${next}`)
+        return NextResponse.redirect(`${origin}${redirectPath}`)
       }
     }
   }
