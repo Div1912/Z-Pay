@@ -11,7 +11,7 @@ import FooterCTA from "@/components/sections/FooterCTA";
 
 export default function LandingPage() {
   return (
-    <main className="relative min-h-screen bg-black text-white selection:bg-purple-500/30 overflow-x-hidden">
+    <main className="relative min-h-screen bg-black text-white selection:bg-white/20 overflow-x-hidden font-[family-name:var(--font-jakarta)]">
       <Navbar />
       <Hero />
       <QuickActions />

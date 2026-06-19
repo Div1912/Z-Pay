@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-// Pool: 0.5% per day in EXPO rewards on deposited XLM (BASE_REWARD_BPS_PER_DAY = 50)
+// Pool: 0.5% per day in ZPAY rewards on deposited XLM (BASE_REWARD_BPS_PER_DAY = 50)
 const POOL_BPS_PER_DAY = 50;
 
 export async function GET() {

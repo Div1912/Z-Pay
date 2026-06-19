@@ -10,7 +10,7 @@ const LEDGERS_PER_DAY: u64 = 17280; // ~5s per ledger
 pub struct Stake {
     pub stake_id:       u64,
     pub staker:         Address,
-    pub amount:         i128,   // EXPO tokens locked (in stroops)
+    pub amount:         i128,   // ZPAY tokens locked (in stroops)
     pub start_ledger:   u64,
     pub unlock_ledger:  u64,
     pub duration_days:  u32,    // 30 | 60 | 90
@@ -24,7 +24,7 @@ pub enum DataKey {
     StakeCount,       // u64
     ExpoToken,        // Address
     Admin,            // Address
-    RewardPool,       // i128 - EXPO available for rewards
+    RewardPool,       // i128 - ZPAY available for rewards
     TotalStaked,      // i128
 }
 
@@ -35,7 +35,7 @@ pub struct StakingContract;
 #[contractimpl]
 impl StakingContract {
 
-    /// One-time initializer. Sets admin and EXPO token address.
+    /// One-time initializer. Sets admin and ZPAY token address.
     pub fn initialize(env: Env, admin: Address, expo_token: Address) {
         admin.require_auth();
         if env.storage().instance().has(&DataKey::Admin) {
@@ -49,7 +49,7 @@ impl StakingContract {
         env.storage().instance().extend_ttl(500, 500);
     }
 
-    /// Admin pre-funds the reward pool with EXPO tokens.
+    /// Admin pre-funds the reward pool with ZPAY tokens.
     pub fn fund_rewards(env: Env, amount: i128) {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
         admin.require_auth();
@@ -63,7 +63,7 @@ impl StakingContract {
         env.storage().instance().extend_ttl(500, 500);
     }
 
-    /// Stake EXPO tokens for 30, 60, or 90 days.
+    /// Stake ZPAY tokens for 30, 60, or 90 days.
     /// Returns the new stake_id.
     pub fn stake(env: Env, staker: Address, amount: i128, duration_days: u32) -> u64 {
         staker.require_auth();
@@ -85,7 +85,7 @@ impl StakingContract {
             panic!("Reward pool insufficient — contact admin");
         }
 
-        // Transfer EXPO from staker into contract
+        // Transfer ZPAY from staker into contract
         let expo_token: Address = env.storage().instance().get(&DataKey::ExpoToken).unwrap();
         let token = token::Client::new(&env, &expo_token);
         token.transfer(&staker, &env.current_contract_address(), &amount);

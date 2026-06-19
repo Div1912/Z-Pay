@@ -67,7 +67,7 @@ export async function POST(request: Request) {
       success:     true,
       tx_hash:     txHash,
       payout_expo: payoutExpo,
-      message:     `Unstaked ${payoutExpo.toFixed(4)} EXPO (principal + rewards)`,
+      message:     `Unstaked ${payoutExpo.toFixed(4)} ZPAY (principal + rewards)`,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || 'Unstake failed' }, { status: 500 });

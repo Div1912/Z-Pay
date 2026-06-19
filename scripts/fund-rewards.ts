@@ -90,15 +90,15 @@ async function run() {
     console.log(`Staking: ${STAKING_CONTRACT_ID}`);
     console.log(`Pool:    ${POOL_CONTRACT_ID}\n`);
 
-    // 1. Check admin's EXPO balance
+    // 1. Check admin's ZPAY balance
     const adminBalance = await simulateBalance(TOKEN_CONTRACT_ID, admin.publicKey());
-    console.log(`Admin EXPO balance: ${adminBalance} stroops (${Number(adminBalance) / 1e7} EXPO)`);
+    console.log(`Admin ZPAY balance: ${adminBalance} stroops (${Number(adminBalance) / 1e7} ZPAY)`);
 
     if (adminBalance <= 0n) {
-        console.error('\n❌ Admin has 0 EXPO tokens. Cannot fund reward pools.');
-        console.error('You need to transfer EXPO tokens to the admin address:');
+        console.error('\n❌ Admin has 0 ZPAY tokens. Cannot fund reward pools.');
+        console.error('You need to transfer ZPAY tokens to the admin address:');
         console.error(`  ${admin.publicKey()}`);
-        console.error('\nIf this is your EXPO token contract, use the token admin/minter key to mint tokens first.');
+        console.error('\nIf this is your ZPAY token contract, use the token admin/minter key to mint tokens first.');
         process.exit(1);
     }
 
@@ -107,8 +107,8 @@ async function run() {
     const stakingFund = safeAmount;
     const poolFund    = safeAmount;
 
-    console.log(`Will fund staking pool: ${stakingFund} stroops (${Number(stakingFund) / 1e7} EXPO)`);
-    console.log(`Will fund XLM pool:     ${poolFund} stroops (${Number(poolFund) / 1e7} EXPO)`);
+    console.log(`Will fund staking pool: ${stakingFund} stroops (${Number(stakingFund) / 1e7} ZPAY)`);
+    console.log(`Will fund XLM pool:     ${poolFund} stroops (${Number(poolFund) / 1e7} ZPAY)`);
 
     // 3. Fund staking reward pool
     await callContract(
@@ -132,8 +132,8 @@ async function run() {
 
     console.log('\n======================================================');
     console.log('✅ REWARD POOLS FUNDED!');
-    console.log(`Staking contract EXPO balance: ${Number(stakingPool) / 1e7} EXPO`);
-    console.log(`Pool contract EXPO balance:    ${Number(poolPool) / 1e7} EXPO`);
+    console.log(`Staking contract ZPAY balance: ${Number(stakingPool) / 1e7} ZPAY`);
+    console.log(`Pool contract ZPAY balance:    ${Number(poolPool) / 1e7} ZPAY`);
     console.log('Users can now stake and deposit without errors.');
     console.log('======================================================\n');
 }

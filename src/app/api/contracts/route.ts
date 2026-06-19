@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Payer wallet not found' }, { status: 404 });
   }
 
-  const cleanUsername = freelancer_username.replace('@expo', '').trim();
+  const cleanUsername = freelancer_username.replace('@Zp', '').trim();
   const { data: freelancerProfile } = await supabaseAdmin
     .from('profiles')
     .select('*')

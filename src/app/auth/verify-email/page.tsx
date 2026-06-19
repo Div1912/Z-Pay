@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Background } from "@/components/Background";
-import { Logo } from "@/components/Logo";
+import { Logo } from "@/components/ui/Logo";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -81,7 +81,7 @@ function VerifyEmailInner() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#C694F9]/30 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-hidden">
       <Background />
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-center px-4 py-4 bg-transparent">
         <Logo />
@@ -116,7 +116,7 @@ function VerifyEmailInner() {
                 inputMode="numeric"
                 maxLength={8}
                 placeholder="000000"
-                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-center text-2xl tracking-[0.5em] font-bold focus:border-[#C694F9]/40 focus:bg-white/[0.05] transition-all duration-300"
+                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-center text-2xl tracking-[0.5em] font-bold focus:border-[#D4AF37]/40 focus:bg-white/[0.05] transition-all duration-300"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                 required
@@ -148,7 +148,7 @@ function VerifyEmailInner() {
                   type="button"
                   onClick={handleResend}
                   disabled={resendLoading}
-                  className="text-[#C694F9] text-sm font-medium hover:text-white transition-colors disabled:opacity-50"
+                  className="text-[#D4AF37] text-sm font-medium hover:text-white transition-colors disabled:opacity-50"
                 >
                   {resendLoading ? "Sending..." : "Resend Code"}
                 </button>
@@ -163,7 +163,7 @@ function VerifyEmailInner() {
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center"><Loader2 className="w-8 h-8 text-[#C694F9] animate-spin" /></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center"><Loader2 className="w-8 h-8 text-[#D4AF37] animate-spin" /></div>}>
       <VerifyEmailInner />
     </Suspense>
   );

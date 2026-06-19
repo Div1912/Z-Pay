@@ -29,14 +29,14 @@ export function Logo({ className = "", showText = true, size = "default" }: { cl
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           className="absolute inset-1 rounded-full border-t-2 border-l-2 border-white/60"
         />
-        <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
+        <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#D4AF37] via-[#FBBF24] to-[#27272a] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
       </div>
       {showText && (
         <span 
           className={`text-white font-black ${textSizeClasses[size]} tracking-tighter`}
           style={{ fontFamily: 'var(--font-syne)' }}
         >
-          EXPO
+          ZPAY
         </span>
       )}
     </div>
@@ -62,7 +62,7 @@ export function LogoIcon({ className = "", size = "default" }: { className?: str
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         className="absolute inset-1 rounded-full border-t-2 border-l-2 border-white/60"
       />
-      <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
+      <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#D4AF37] via-[#FBBF24] to-[#27272a] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
     </div>
   );
 }

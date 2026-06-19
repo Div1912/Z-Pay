@@ -29,8 +29,8 @@ function makeToast(opts: {
       transition={{ type: "spring", damping: 22, stiffness: 300 }}
       className="w-[calc(100vw-2rem)] max-w-sm mx-auto"
     >
-      <div className="relative bg-[#0d0d0d] border border-[#C694F9]/30 rounded-2xl p-4 shadow-2xl shadow-black/60 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9]" />
+      <div className="relative bg-[#0d0d0d] border border-[#D4AF37]/30 rounded-2xl p-4 shadow-2xl shadow-black/60 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a]" />
         <div className="flex items-start gap-3">
           <div className={`w-11 h-11 shrink-0 rounded-xl ${iconBg} flex items-center justify-center`}>
             {icon}
@@ -68,7 +68,7 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
         iconBg: "bg-green-500/15 border border-green-500/25",
         label: "Payment Received",
         headline: `+${amount} ${currency}`,
-        sub: `from ${sender}@expo`,
+        sub: `from ${sender}@Zp`,
       }),
       { duration: 7000, position: "top-center" }
     );
@@ -91,8 +91,8 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
 
     const configs: Record<string, ToastConfig> = {
       funded: {
-        icon: <FileText className="w-5 h-5 text-[#C694F9]" />,
-        iconBg: "bg-[#C694F9]/15 border border-[#C694F9]/25",
+        icon: <FileText className="w-5 h-5 text-[#D4AF37]" />,
+        iconBg: "bg-[#D4AF37]/15 border border-[#D4AF37]/25",
         label: "New Contract",
         headline: `${amount} ${currency} in escrow`,
         sub: title,

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Syne, Inter } from "next/font/google";
+import { Syne, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import { Toaster } from "sonner";
+import GlobalBackground from "@/components/GlobalBackground";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -18,8 +19,14 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
 export const metadata: Metadata = {
-  title: "EXPO | Global Payment Router",
+  title: "ZPAY | Global Payment Router",
   description: "Global payments resolved and settled on Stellar.",
 };
 
@@ -29,8 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable}`}>
-      <body className="antialiased bg-black font-inter">
+    <html lang="en" className={`${syne.variable} ${inter.variable} ${plusJakarta.variable}`}>
+      <body className="antialiased bg-black font-[family-name:var(--font-jakarta)] text-white">
+        <GlobalBackground />
         <Script
           id="orchids-browser-logs"
           src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts/orchids-browser-logs.js"

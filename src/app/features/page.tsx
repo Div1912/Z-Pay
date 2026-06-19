@@ -2,196 +2,171 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Globe, Shield, Cpu, Layers, Share2 } from 'lucide-react';
+import { Network, Fingerprint, Store, Lock, Users, TrendingUp, Zap } from 'lucide-react';
 import Navbar from "@/components/sections/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
+import Link from 'next/link';
 
-const FeatureCard = ({ icon: Icon, title, description, delay }: { icon: any, title: string, description: string, delay: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
+const FeatureRow = ({ 
+  title, 
+  description, 
+  icon: Icon, 
+  imageSrc, 
+  reverse = false, 
+  delay = 0 
+}: { 
+  title: string, 
+  description: string, 
+  icon: any, 
+  imageSrc: string, 
+  reverse?: boolean,
+  delay?: number
+}) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay }}
-    className="p-8 rounded-3xl bg-white/[0.03] border border-white/[0.08] hover:border-white/20 transition-all group"
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.8, delay }}
+    className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-20 py-20 border-b border-white/5 last:border-0`}
   >
-    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-      <Icon className="w-7 h-7 text-purple-400" />
+    {/* Text Content */}
+    <div className="flex-1 space-y-6">
+      <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-8">
+        <Icon className="w-7 h-7 text-[#D4AF37]" />
+      </div>
+      <h2 className="text-4xl md:text-5xl font-black tracking-tight">{title}</h2>
+      <p className="text-xl text-white/60 leading-relaxed font-medium">
+        {description}
+      </p>
     </div>
-    <h3 className="text-xl font-bold mb-3 font-syne text-white">{title}</h3>
-    <p className="text-white/60 leading-relaxed">{description}</p>
+
+    {/* Image Container */}
+    <div className="flex-1 w-full">
+      <div className="relative group rounded-3xl overflow-hidden border border-white/10 bg-black aspect-video shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+        {/* Subtle gold gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent mix-blend-overlay z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+        
+        {/* Image */}
+        <img 
+          src={imageSrc} 
+          alt={title}
+          className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out grayscale group-hover:grayscale-0"
+        />
+        
+        {/* Decorative corner accents */}
+        <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 z-20 group-hover:border-[#D4AF37] transition-colors duration-500" />
+        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 z-20 group-hover:border-[#D4AF37] transition-colors duration-500" />
+      </div>
+    </div>
   </motion.div>
 );
 
 export default function FeaturesPage() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-purple-500/30 overflow-x-hidden">
+    <main className="min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-x-hidden">
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 relative px-6">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-purple-600/10 blur-[120px] rounded-full opacity-50" />
-        <div className="container mx-auto text-center relative z-10">
+      <section className="pt-40 pb-10 relative px-6 z-10">
+        <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
           >
-            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-6 inline-block">
-              Technology Stack
+            <span className="px-5 py-2 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37] mb-8 inline-block shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+              The Protocol
             </span>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter font-syne leading-tight">
-              The Power Behind <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-                Global Settlement
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.95]">
+              Architected for <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#D4AF37] to-[#FBBF24]">
+                Dominance.
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12">
-              EXPO combines the speed of local payment rails with the security and transparency of the Stellar blockchain.
+            <p className="text-lg md:text-2xl text-white/50 mb-12 font-medium max-w-2xl mx-auto">
+              ZPAY replaces legacy financial plumbing with a unified, agentic, globally distributed execution engine.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* EXPO Features */}
-      <section className="py-20 px-6 bg-white/[0.02]">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-16 mb-32">
-            <div className="flex-1">
-              <h2 className="text-4xl font-bold mb-6 font-syne">EXPO: The Payment Router</h2>
-              <p className="text-white/60 text-lg mb-8 leading-relaxed">
-                EXPO acts as an intelligent layer above traditional financial networks, routing payments instantly across borders using a network of liquidity providers and automated market makers.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  "Intelligent pathfinding for lowest fees",
-                  "Instant currency conversion at mid-market rates",
-                  "Unified API for all global payment methods",
-                  "Real-time settlement verification"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                    <span className="text-white/80">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex-1 relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-white/10 flex items-center justify-center p-12 overflow-hidden group">
-                <motion.div
-                  animate={{ 
-                    rotate: 360,
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                    scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-                  }}
-                  className="w-full h-full border-2 border-dashed border-white/20 rounded-full flex items-center justify-center relative"
-                >
-                  <div className="absolute inset-0 bg-purple-500/10 blur-3xl rounded-full" />
-                  <Cpu className="w-24 h-24 text-white group-hover:text-purple-400 transition-colors" />
-                </motion.div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    animate={{ x: [-100, 100], opacity: [0, 1, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                    className="w-1 h-20 bg-gradient-to-t from-transparent via-purple-500 to-transparent blur-sm"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Feature Rows */}
+      <section className="py-12 px-6 relative z-10">
+        <div className="container mx-auto max-w-6xl">
+          
+          <FeatureRow 
+            title="Agentic Pathfinding AI"
+            description="Our artificial intelligence continuously analyzes global liquidity pools and AMMs in real-time, instantly routing your payments through the absolute cheapest and fastest path available on the Stellar network. Zero human intervention."
+            icon={Network}
+            imageSrc="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1600&auto=format&fit=crop"
+            delay={0.1}
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={Zap} 
-              title="Hyper-Speed" 
-              description="Transactions are processed in sub-3 seconds, rivaling the speed of local credit card swipes." 
-              delay={0.1}
-            />
-            <FeatureCard 
-              icon={Layers} 
-              title="Multi-Asset" 
-              description="Settle in USDC, EURC, or native assets. EXPO handles the conversion in the background." 
-              delay={0.2}
-            />
-            <FeatureCard 
-              icon={Share2} 
-              title="Interoperable" 
-              description="Connect your existing banking apps, wallets, or enterprise systems via our simple SDK." 
-              delay={0.3}
-            />
-          </div>
+          <FeatureRow 
+            title="Universal IDs & P2P"
+            description="Ditch the 56-character addresses. Send instant cross-currency payments globally to simple identifiers like alice@Zp. Settles in XLM, USDC, or INR natively in under 3 seconds."
+            icon={Fingerprint}
+            imageSrc="https://images.unsplash.com/photo-1516322073321-4f10118eb3d3?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
+            delay={0.1}
+          />
+
+          <FeatureRow 
+            title="Indian UPI Bridge"
+            description="The ultimate physical-to-digital bridge. Walk into any local shop in India, scan their UPI QR code, and pay with your crypto balance. The merchant receives fiat (INR) instantly."
+            icon={Store}
+            imageSrc="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop"
+            delay={0.1}
+          />
+
+          <FeatureRow 
+            title="Soroban Smart Escrow"
+            description="Trustless B2B and freelance payments. Lock funds on-chain within a smart contract, release upon delivery, and rely on our built-in decentralized arbiter resolution protocol if disputes arise."
+            icon={Lock}
+            imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
+            delay={0.1}
+          />
+          
+          <FeatureRow 
+            title="On-Chain Bill Splitting"
+            description="Split expenses with friends securely. Enjoy real-time on-chain tracking, custom or equal fractional shares, and instant one-tap participant settlements that update the ledger live."
+            icon={Users}
+            imageSrc="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1600&auto=format&fit=crop"
+            delay={0.1}
+          />
+          
+          <FeatureRow 
+            title="Yield Vault & Staking"
+            description="Put your capital to work. Lock ZPAY for up to 24% APR, or pool XLM with zero lock-up. Features a live compound-interest projection engine to visualize your decentralized earnings."
+            icon={TrendingUp}
+            imageSrc="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
+            delay={0.1}
+          />
+
+          <FeatureRow 
+            title="Gasless Transactions"
+            description="Absolute zero friction. Utilizing Stellar's fee_bump_transaction, ZPAY sponsors the network fees on your behalf. You pay precisely zero gas to execute transactions."
+            icon={Zap}
+            imageSrc="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600&auto=format&fit=crop"
+            delay={0.1}
+          />
+
         </div>
       </section>
 
-      {/* Stellar Network Section */}
-      <section className="py-32 px-6 overflow-hidden">
-        <div className="container mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-syne">Built on Stellar Network</h2>
-            <p className="text-white/50 max-w-2xl mx-auto text-lg">
-              We chose Stellar for its proven track record in global asset issuance and instant finality.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative aspect-video rounded-3xl bg-black border border-white/10 overflow-hidden group">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="grid grid-cols-4 gap-4 w-full h-full opacity-30 group-hover:opacity-50 transition-opacity">
-                  {Array.from({ length: 16 }).map((_, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ 
-                        opacity: [0.3, 1, 0.3],
-                        scale: [1, 1.05, 1]
-                      }}
-                      transition={{ 
-                        duration: Math.random() * 3 + 2, 
-                        repeat: Infinity,
-                        delay: Math.random() * 2
-                      }}
-                      className="bg-white/10 rounded-xl"
-                    />
-                  ))}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                   <Globe className="w-40 h-40 text-blue-400/40" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-blue-500/10 flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-blue-400" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-2 font-syne">Global Access</h4>
-                  <p className="text-white/60">Connect to over 300,000 cash-in/cash-out points globally through the Stellar Anchor network.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-green-500/10 flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-green-400" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-2 font-syne">Iron-Clad Security</h4>
-                  <p className="text-white/60">Immutable ledger technology ensures your transactions are secure, verifiable, and transparent.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-purple-500/10 flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-purple-400" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-2 font-syne">Eco-Friendly</h4>
-                  <p className="text-white/60">Stellar is one of the most sustainable blockchains, consuming minimal energy per transaction.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Final Call to Action */}
+      <section className="py-32 px-6 relative z-10 text-center">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tight">Ready to integrate?</h2>
+          <Link 
+            href="/auth/signup"
+            className="inline-flex h-16 items-center justify-center rounded-full bg-[#D4AF37] px-12 text-black font-black text-lg uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)]"
+          >
+            Create Developer Account
+          </Link>
         </div>
       </section>
 

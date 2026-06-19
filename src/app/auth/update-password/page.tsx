@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { Background } from "@/components/Background";
-import { Logo } from "@/components/Logo";
+import { Logo } from "@/components/ui/Logo";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -43,7 +43,7 @@ export default function UpdatePasswordPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#C694F9]/30 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-hidden">
       <Background />
 
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-center px-4 py-4 bg-transparent">
@@ -91,7 +91,7 @@ export default function UpdatePasswordPage() {
               <Input
                 type="password"
                 placeholder="••••••••"
-                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#C694F9]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -105,7 +105,7 @@ export default function UpdatePasswordPage() {
               <Input
                 type="password"
                 placeholder="••••••••"
-                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#C694F9]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required

@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import { Spotlight } from "@/components/ui/spotlight";
 import Link from 'next/link';
 
 const StellarLogo = () => (
@@ -128,10 +130,16 @@ const OrbitIcon = ({ icon, orbitRadius, counterRotate }: {
 };
 
 const Integrations = () => {
+  const sectionRef = useRef(null);
+
   return (
-    <section className="relative w-full overflow-hidden bg-black py-20 sm:py-28 md:py-40 lg:py-56">
+    <section 
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-black py-20 sm:py-28 md:py-40 lg:py-56"
+    >
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] aspect-square rounded-full bg-gradient-to-br from-[#94A1F9]/10 to-[#C694F9]/5 blur-[180px] md:blur-[250px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent blur-[180px] md:blur-[250px]" />
       </div>
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px]">
@@ -143,16 +151,16 @@ const Integrations = () => {
           className="text-center mb-16 sm:mb-20 md:mb-24"
         >
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-5 sm:mb-6 md:mb-8">
-            <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#94A1F9] shadow-[0_0_10px_#94A1F9]" />
+            <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#a3a3a3] shadow-[0_0_10px_#a3a3a3]" />
             <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Ecosystem</span>
           </div>
           
           <h2 
             className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8"
-            style={{ fontFamily: 'var(--font-syne)' }}
+
           >
             <span className="block text-white text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">Integrate with</span>
-            <span className="block bg-gradient-to-r from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] bg-clip-text text-transparent text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">any apps</span>
+            <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">any apps</span>
           </h2>
           
           <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed">
@@ -161,7 +169,7 @@ const Integrations = () => {
           
           <Link
             href="/auth/signup"
-            className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-white text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(255,255,255,0.12)]"
+            className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-[#D4AF37] text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(212,175,55,0.2)]"
           >
             Get the app
           </Link>
@@ -204,9 +212,9 @@ const Integrations = () => {
             viewport={{ once: true }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
           >
-            <div className="w-16 sm:w-20 md:w-24 lg:w-28 aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#C694F9] via-[#F5A7C4] to-[#94A1F9] flex items-center justify-center shadow-[0_0_60px_rgba(198,148,249,0.4)] p-0.5 sm:p-1">
+            <div className="w-16 sm:w-20 md:w-24 lg:w-28 aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-zinc-100 via-neutral-300 to-neutral-600 flex items-center justify-center shadow-[0_15px_30px_rgba(255,255,255,0.1)] p-0.5 sm:p-1">
               <div className="w-full h-full rounded-[14px] sm:rounded-[20px] bg-[#0A0A0A] flex items-center justify-center">
-                <span className="text-white font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl" style={{ fontFamily: 'var(--font-syne)' }}>E</span>
+                <span className="text-white font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl">Z</span>
               </div>
             </div>
           </motion.div>

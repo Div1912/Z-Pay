@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-const ADMIN_EMAILS = ['admin@expopay.app', 'support@expopay.app', 'bkbhaia@gmail.com'];
+const ADMIN_EMAILS = ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com'];
 
 export async function GET() {
   const user = await getUser();

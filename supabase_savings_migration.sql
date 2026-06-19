@@ -1,13 +1,13 @@
--- ExpoPay SAVINGS Feature Migration
+-- Zpay SAVINGS Feature Migration
 -- Run in Supabase SQL Editor
 
--- EXPO Staking positions
+-- ZPAY Staking positions
 CREATE TABLE IF NOT EXISTS staking_positions (
   id             UUID    PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id        UUID    REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
   universal_id   TEXT    NOT NULL,
   stake_id       BIGINT  NOT NULL,           -- on-chain stake_id (u64)
-  amount_expo    DECIMAL(18,7) NOT NULL,      -- EXPO staked
+  amount_expo    DECIMAL(18,7) NOT NULL,      -- ZPAY staked
   duration_days  INT     NOT NULL,            -- 30 | 60 | 90
   reward_bps     INT     NOT NULL,            -- basis points reward
   reward_expo    DECIMAL(18,7) NOT NULL,      -- projected reward
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS pool_positions (
   universal_id    TEXT    NOT NULL,
   position_id     BIGINT  NOT NULL,           -- on-chain position_id (u64)
   amount_xlm      DECIMAL(18,7) NOT NULL,     -- XLM deposited
-  expo_earned     DECIMAL(18,7) DEFAULT 0,    -- EXPO earned at withdrawal
+  expo_earned     DECIMAL(18,7) DEFAULT 0,    -- ZPAY earned at withdrawal
   status          TEXT    NOT NULL DEFAULT 'active', -- active | withdrawn
   tx_hash_deposit  TEXT,
   tx_hash_withdraw TEXT,

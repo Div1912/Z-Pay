@@ -1,4 +1,4 @@
-# ExpoPay Technical Documentation
+# Zpay Technical Documentation
 
 ## Table of Contents
 1. [System Architecture](#architecture)
@@ -13,7 +13,7 @@
 
 ## Architecture
 
-ExpoPay is a full-stack Next.js 15 application built on the Stellar blockchain with Supabase as the backend-as-a-service.
+Zpay is a full-stack Next.js 15 application built on the Stellar blockchain with Supabase as the backend-as-a-service.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -40,7 +40,7 @@ ExpoPay is a full-stack Next.js 15 application built on the Stellar blockchain w
 | Next.js API Routes for all blockchain calls | Keeps secret keys server-side; browser never sees Stellar private keys |
 | Supabase Realtime | Low-latency WebSocket push for payment notifications without polling |
 | Fee Bump transactions | Platform-sponsored fees remove UX barrier of users needing XLM for fees |
-| Universal IDs (`alice@expo`) | Human-readable alternative to 56-char Stellar public keys |
+| Universal IDs (`alice@Zp`) | Human-readable alternative to 56-char Stellar public keys |
 | Custodial wallet (testnet) | Simplifies onboarding; non-custodial migration planned for mainnet |
 
 ---
@@ -54,17 +54,17 @@ Base URL: `https://exporouter.site`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
-| POST | `/api/expo/claim` | Claim a Universal ID, create Stellar wallet | Session |
-| GET | `/api/expo/profile` | Get authenticated user's profile | Session |
-| GET | `/api/expo/balance` | Wallet balances (XLM, EXPO, converted) | Session |
-| GET | `/api/expo/resolve?username=alice` | Resolve @expo ID → Stellar address | Session |
-| GET | `/api/expo/check?username=alice` | Check username availability | Session |
-| GET | `/api/expo/check-phone?phone=+91…` | Check phone number uniqueness | Session |
-| POST | `/api/expo/pin` | Set or change 4-digit transaction PIN | Session |
+| POST | `/api/zpay/claim` | Claim a Universal ID, create Stellar wallet | Session |
+| GET | `/api/zpay/profile` | Get authenticated user's profile | Session |
+| GET | `/api/zpay/balance` | Wallet balances (XLM, ZPAY, converted) | Session |
+| GET | `/api/zpay/resolve?username=alice` | Resolve @Zp ID → Stellar address | Session |
+| GET | `/api/zpay/check?username=alice` | Check username availability | Session |
+| GET | `/api/zpay/check-phone?phone=+91…` | Check phone number uniqueness | Session |
+| POST | `/api/zpay/pin` | Set or change 4-digit transaction PIN | Session |
 
 **Example — Claim Universal ID:**
 ```bash
-curl -X POST https://exporouter.site/api/expo/claim \
+curl -X POST https://exporouter.site/api/zpay/claim \
   -H "Content-Type: application/json" \
   -H "Cookie: <supabase-session>" \
   -d '{
@@ -91,7 +91,7 @@ curl -X POST https://exporouter.site/api/payments/send \
   -H "Content-Type: application/json" \
   -H "Cookie: <session>" \
   -d '{
-    "recipient": "bob@expo",
+    "recipient": "bob@Zp",
     "amount": "10",
     "currency": "USDC",
     "pin": "1234",
@@ -106,7 +106,7 @@ curl -X POST https://exporouter.site/api/payments/gasless \
   -H "Content-Type: application/json" \
   -H "Cookie: <session>" \
   -d '{
-    "recipient": "bob@expo",
+    "recipient": "bob@Zp",
     "amount": "5",
     "currency": "XLM",
     "pin": "1234"
@@ -142,10 +142,10 @@ curl -X POST https://exporouter.site/api/payments/gasless \
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/savings/positions` | All stakes + pool positions with live accrual |
-| POST | `/api/savings/stake` | Stake EXPO tokens (30/60/90 days) |
+| POST | `/api/savings/stake` | Stake ZPAY tokens (30/60/90 days) |
 | POST | `/api/savings/unstake` | Unstake matured position |
 | POST | `/api/savings/pool/deposit` | Deposit XLM to yield pool |
-| POST | `/api/savings/pool/withdraw` | Withdraw XLM + accrued EXPO |
+| POST | `/api/savings/pool/withdraw` | Withdraw XLM + accrued ZPAY |
 
 ### Merchant (UPI Bridge)
 
@@ -220,7 +220,7 @@ Accrual: `expo_earned = xlm_deposited × 0.005 × elapsed_days` (~18% APR)
 ### `profiles`
 ```sql
 id uuid PRIMARY KEY,
-universal_id text UNIQUE,      -- "alice" in alice@expo
+universal_id text UNIQUE,      -- "alice" in alice@Zp
 stellar_address text,           -- G... public key
 stellar_secret text,            -- S... secret key (encrypt before mainnet)
 full_name text,
@@ -303,7 +303,7 @@ NEXT_PUBLIC_TOKEN_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2H
 
 # Email
 RESEND_API_KEY=re_...
-NOTIFY_FROM_EMAIL=ExpoPay <noreply@exporouter.site>
+NOTIFY_FROM_EMAIL=Zpay <noreply@exporouter.site>
 
 # Admin
 ADMIN_EMAILS=your@email.com,another@email.com
