@@ -56,29 +56,15 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            contracts/*/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            contracts/escrow/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('contracts/escrow/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
 
       - name: Build Soroban Contracts (wasm)
-        run: |
-          for contract in contracts/*/; do
-            if [ -f "$contract/Cargo.toml" ]; then
-              echo "Building $contract"
-              cd $contract
-              cargo build --target wasm32-unknown-unknown --release --no-default-features
-              cd ../..
-            fi
-          done
+        working-directory: contracts/escrow
+        run: cargo build --target wasm32-unknown-unknown --release --no-default-features
 
       - name: Run contract tests
-        run: |
-          for contract in contracts/*/; do
-            if [ -f "$contract/Cargo.toml" ]; then
-              echo "Testing $contract"
-              cd $contract
-              cargo test -- --nocapture
-              cd ../..
-            fi
-          done
+        working-directory: contracts/escrow
+        run: cargo test -- --nocapture
