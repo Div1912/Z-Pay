@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useRef, useId, useEffect, CSSProperties } from 'react';
-import { animate, useMotionValue, AnimationPlaybackControls } from 'framer-motion';
+// eslint-disable-next-line import/named
+import { animate, useMotionValue, type AnimationPlaybackControls } from 'framer-motion';
 
 interface ResponsiveImage {
     src: string;

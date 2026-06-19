@@ -21,6 +21,7 @@ function makeToast(opts: {
   accentColor?: string;
 }) {
   const { icon, iconBg, label, headline, sub } = opts;
+  // eslint-disable-next-line react/display-name
   return (t: string | number) => (
     <motion.div
       initial={{ opacity: 0, y: -60, scale: 0.92 }}
