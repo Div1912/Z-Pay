@@ -81,7 +81,7 @@ const Hero = () => {
       
       <div 
         ref={contentRef}
-        className="flex flex-col lg:flex-row h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20"
+        className="flex flex-col-reverse lg:flex-row h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20"
       >
         
         {/* Left content: Typography and Call to Action */}
