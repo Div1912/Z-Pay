@@ -187,25 +187,13 @@ export default function QuickActions() {
                     src="/images/quick_action_phone.jpg" 
                     alt="Quick Action UI" 
                     fill 
-                    className="object-cover object-top z-0 opacity-90"
+                    className="object-cover object-center z-0 opacity-100"
                   />
                   
                   <div className="absolute top-2.5 sm:top-3 md:top-3.5 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-full z-50 shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
                   
-                  <div className="relative w-full h-full pt-10 sm:pt-12 md:pt-14 pb-6 sm:pb-8 px-4 sm:px-5 flex flex-col z-10">
-                    <div className="flex justify-between items-center mb-6 sm:mb-8">
-                      <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold text-white drop-shadow-md">9:41</span>
-                      <div className="flex gap-1 items-center drop-shadow-md">
-                        <svg width="16" height="11" viewBox="0 0 17 12" fill="none" className="w-[14px] sm:w-[15px] drop-shadow-md">
-                          <path d="M1 4.5C2.5 2.5 5 1 8.5 1C12 1 14.5 2.5 16 4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                          <path d="M3 7C4 5.5 6 4.5 8.5 4.5C11 4.5 13 5.5 14 7" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                          <circle cx="8.5" cy="10" r="1.5" fill="white"/>
-                        </svg>
-                        <div className="ml-1 w-[22px] sm:w-[24px] h-[9px] sm:h-[10px] border-[1.5px] border-white/80 rounded-[2px] relative shadow-sm">
-                          <div className="absolute inset-[1px] right-[4px] bg-white rounded-[1px]" />
-                        </div>
-                      </div>
-                    </div>
+                  <div className="absolute top-3 sm:top-3.5 md:top-4 left-6 sm:left-7 md:left-8 z-10">
+                    <span className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white tracking-wide drop-shadow-md">9:41</span>
                   </div>
                 </div>
               </div>
