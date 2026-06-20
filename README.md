@@ -56,13 +56,11 @@ Scan any UPI QR or pick a demo merchant. The platform converts XLM/USDC to INR a
 
 <img width="320" alt="Merchant payment flow" src="./screenshots/Pay Merchant.png" />
 
-<img width="520" alt="Pay with crypto at local Indian shops" src="https://github.com/user-attachments/assets/c44a7676-74ca-4969-a7fb-6656e3370c50" />
-
 ### 3 · P2P send
 
 Send to `bob@Zp` instead of `GAB6F…`. Cross-currency sends show a live FX quote with a locked window.
 
-<img width="610" alt="Send money to Universal ID" src="./screenshots/P2p.png" />
+<img width="320" alt="Send money to Universal ID" src="./screenshots/P2p.png" />
 
 ### 4 · Transaction history
 
@@ -70,7 +68,7 @@ Every payment, escrow action, split contribution, and vault event in one place �
 
 <img width="700" alt="Transaction history" src="./screenshots/Transaction History.png" />
 
-<img width="1200" alt="Verify transaction on Stellar Explorer" src="./screenshots/transaction History1.png" />
+<img width="1200" alt="Verify transaction on Stellar Explorer" src="./screenshots/Transactio History1.png" />
 
 ### 5 · Soroban escrow contracts
 
