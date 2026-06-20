@@ -48,13 +48,13 @@ Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), sett
 
 The home of the app — wallet balance, recent transactions, quick actions for Send/Scan/Split/Vault.
 
-<img width="320" alt="Dashboard overview" src="./screenshots/Dashboard overview.png" />
+<img width="620" alt="Dashboard overview" src="./screenshots/Dashboard overview.png" />
 
 ### 2 · Pay Indian merchants with crypto
 
 Scan any UPI QR or pick a demo merchant. The platform converts XLM/USDC to INR at a locked rate and settles UPI to the merchant.
 
-<img width="780" alt="Merchant payment flow" src="./screenshots/Pay Merchant.png" />
+<img width="320" alt="Merchant payment flow" src="./screenshots/Pay Merchant.png" />
 
 <img width="520" alt="Pay with crypto at local Indian shops" src="https://github.com/user-attachments/assets/c44a7676-74ca-4969-a7fb-6656e3370c50" />
 
