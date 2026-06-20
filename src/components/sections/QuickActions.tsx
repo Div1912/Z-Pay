@@ -1,5 +1,5 @@
-"use client";
 
+import Image from 'next/image';
 import React, { useRef, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
@@ -183,93 +183,28 @@ export default function QuickActions() {
                 <div className="absolute -inset-12 sm:-inset-16 md:-inset-20 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[80px] sm:blur-[100px] opacity-60" />
                 
                 <div className="relative w-full aspect-[9/19.5] rounded-[36px] sm:rounded-[42px] md:rounded-[48px] overflow-hidden bg-[#050505] border-[5px] sm:border-[6px] md:border-[7px] border-[#151515] shadow-[0_40px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.05)]">
-                  <div className="absolute top-2.5 sm:top-3 md:top-3.5 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-full z-50" />
+                  <Image 
+                    src="/images/quick_action_phone.jpg" 
+                    alt="Quick Action UI" 
+                    fill 
+                    className="object-cover object-top z-0 opacity-90"
+                  />
                   
-                  <div className="relative w-full h-full pt-10 sm:pt-12 md:pt-14 pb-6 sm:pb-8 px-4 sm:px-5 flex flex-col">
+                  <div className="absolute top-2.5 sm:top-3 md:top-3.5 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-full z-50 shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
+                  
+                  <div className="relative w-full h-full pt-10 sm:pt-12 md:pt-14 pb-6 sm:pb-8 px-4 sm:px-5 flex flex-col z-10">
                     <div className="flex justify-between items-center mb-6 sm:mb-8">
-                      <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold text-white">9:41</span>
-                      <div className="flex gap-1 items-center">
-                        <svg width="16" height="11" viewBox="0 0 17 12" fill="none" className="w-[14px] sm:w-[15px]">
+                      <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold text-white drop-shadow-md">9:41</span>
+                      <div className="flex gap-1 items-center drop-shadow-md">
+                        <svg width="16" height="11" viewBox="0 0 17 12" fill="none" className="w-[14px] sm:w-[15px] drop-shadow-md">
                           <path d="M1 4.5C2.5 2.5 5 1 8.5 1C12 1 14.5 2.5 16 4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                           <path d="M3 7C4 5.5 6 4.5 8.5 4.5C11 4.5 13 5.5 14 7" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                           <circle cx="8.5" cy="10" r="1.5" fill="white"/>
                         </svg>
-                        <div className="ml-1 w-[22px] sm:w-[24px] h-[9px] sm:h-[10px] border-[1.5px] border-white/80 rounded-[2px] relative">
+                        <div className="ml-1 w-[22px] sm:w-[24px] h-[9px] sm:h-[10px] border-[1.5px] border-white/80 rounded-[2px] relative shadow-sm">
                           <div className="absolute inset-[1px] right-[4px] bg-white rounded-[1px]" />
                         </div>
                       </div>
-                    </div>
-
-                    <div className="p-4 sm:p-5 md:p-6 rounded-[20px] sm:rounded-[24px] md:rounded-[28px] bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] mb-4 sm:mb-5 md:mb-6 relative overflow-hidden">
-                      <div className="absolute top-0 right-0 w-24 sm:w-28 md:w-32 aspect-square bg-purple-500/20 blur-2xl sm:blur-3xl -mr-12 sm:-mr-16 -mt-12 sm:-mt-16" />
-                      <div className="relative">
-                        <p className="text-white/50 text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-2 sm:mb-3">Total Balance</p>
-                        <div className="flex items-baseline gap-0.5 sm:gap-1 mb-3 sm:mb-4 md:mb-5">
-                          <span className="text-white/50 font-black text-base sm:text-lg md:text-xl">$</span>
-                          <h3 className="text-[24px] sm:text-[28px] md:text-[32px] font-black text-white tracking-tighter">12,450.00</h3>
-                        </div>
-                        <div className="flex gap-1.5 sm:gap-2">
-                          <div className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 text-[8px] sm:text-[9px] md:text-[10px] font-black flex items-center gap-0.5 sm:gap-1">
-                            <TrendingUp className="w-2.5 sm:w-3 h-2.5 sm:h-3" />
-                            +2.4%
-                          </div>
-                          <div className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-white/50 text-[8px] sm:text-[9px] md:text-[10px] font-black">24h</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-5 sm:mb-6 md:mb-8">
-                      {[
-                        { icon: ArrowUpRight, label: "Send", color: "#d4d4d8" },
-                        { icon: Plus, label: "Add", color: "#e5e5e5" },
-                        { icon: Repeat, label: "Swap", color: "#a3a3a3" },
-                        { icon: CreditCard, label: "Pay", color: "#d4d4d8" },
-                      ].map((item, i) => {
-                        const Icon = item.icon;
-                        return (
-                          <motion.div 
-                            key={i}
-                            className="flex flex-col items-center gap-1.5 sm:gap-2"
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <div 
-                              className="w-10 sm:w-11 md:w-12 aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/[0.05] border border-white/[0.08]"
-                              style={{ boxShadow: `0 0 15px ${item.color}10` }}
-                            >
-                              <Icon className="w-4 sm:w-4.5 md:w-5 h-4 sm:h-4.5 md:h-5" style={{ color: item.color }} />
-                            </div>
-                            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-black uppercase tracking-wider text-white/50">{item.label}</span>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="flex-1 space-y-2 sm:space-y-2.5 md:space-y-3 overflow-hidden">
-                      <div className="flex justify-between items-center px-0.5 sm:px-1 mb-2 sm:mb-3">
-                        <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Recent</span>
-                        <span className="text-[7px] sm:text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-white/30">See all</span>
-                      </div>
-                      {[
-                        { name: "Sarah Miller", amount: "-$45.00", initials: "SM", positive: false },
-                        { name: "Apple Store", amount: "-$1,299.00", initials: "AS", positive: false },
-                        { name: "Alex Chen", amount: "+$120.00", initials: "AC", positive: true },
-                      ].map((tx, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center justify-between p-2.5 sm:p-3 md:p-3.5 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.05]"
-                        >
-                          <div className="flex items-center gap-2 sm:gap-2.5 md:gap-3">
-                            <div className="w-8 sm:w-9 md:w-10 aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-[8px] sm:text-[9px] md:text-[10px] font-black text-white border border-white/10">
-                              {tx.initials}
-                            </div>
-                            <p className="text-[9px] sm:text-[10px] md:text-[11px] font-black text-white uppercase tracking-tight">{tx.name}</p>
-                          </div>
-                          <span className={`text-[10px] sm:text-[11px] md:text-[12px] font-black tracking-tight ${tx.positive ? 'text-green-400' : 'text-white/80'}`}>
-                            {tx.amount}
-                          </span>
-                        </div>
-                      ))}
                     </div>
                   </div>
                 </div>
