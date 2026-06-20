@@ -37,7 +37,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: "Overview",  icon: LayoutDashboard, href: "/dashboard" },
     { label: "History",   icon: History,          href: "/dashboard/history" },
     { label: "Scan",      icon: Scan,             href: "/dashboard/scan", primary: true },
-    { label: "Split",     icon: Users,            href: "/dashboard/split" },
     { label: "Send",      icon: Send,             href: "/dashboard/send" },
   ];
 
