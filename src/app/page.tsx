@@ -3,6 +3,7 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import QuickActions from "@/components/sections/QuickActions";
+import AgenticSection from "@/components/sections/AgenticSection";
 import CardsSection from "@/components/sections/CardsSection";
 import LargePayments from "@/components/sections/LargePayments";
 import Testimonials from "@/components/sections/Testimonials";
@@ -15,6 +16,7 @@ export default function LandingPage() {
       <Navbar />
       <Hero />
       <QuickActions />
+      <AgenticSection />
       <CardsSection />
       <LargePayments />
       <Testimonials />
