@@ -182,18 +182,38 @@ export default function QuickActions() {
               >
                 <div className="absolute -inset-12 sm:-inset-16 md:-inset-20 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[80px] sm:blur-[100px] opacity-60" />
                 
-                <div className="relative w-full aspect-[9/19.5] rounded-[36px] sm:rounded-[42px] md:rounded-[48px] overflow-hidden bg-[#050505] border-[5px] sm:border-[6px] md:border-[7px] border-[#151515] shadow-[0_40px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.05)]">
-                  <Image 
-                    src="/images/quick_action_phone.jpg" 
-                    alt="Quick Action UI" 
-                    fill 
-                    className="object-cover object-center z-0 opacity-100"
-                  />
+                <div className="relative w-full aspect-[9/19.5] rounded-[36px] sm:rounded-[42px] md:rounded-[48px] overflow-hidden bg-[#050505] border-[5px] sm:border-[6px] md:border-[7px] border-[#151515] shadow-[0_40px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.05)] flex flex-col">
                   
-                  <div className="absolute top-2.5 sm:top-3 md:top-3.5 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-full z-50 shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
-                  
-                  <div className="absolute top-3 sm:top-3.5 md:top-4 left-6 sm:left-7 md:left-8 z-10">
-                    <span className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white tracking-wide drop-shadow-md">9:41</span>
+                  {/* Status Bar Header */}
+                  <div className="relative w-full bg-[#000000] pt-3.5 sm:pt-4 md:pt-4 pb-2.5 sm:pb-3 px-5 sm:px-6 md:px-7 flex justify-between items-center z-20 shrink-0">
+                    {/* The Notch */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-b-[18px] sm:rounded-b-[20px] md:rounded-b-[24px] z-50 shadow-[0_2px_10px_rgba(0,0,0,0.5)]" />
+                    
+                    {/* Time */}
+                    <span className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white tracking-wide z-10 relative mt-0.5">9:41</span>
+                    
+                    {/* Wifi & Battery */}
+                    <div className="flex gap-1.5 items-center z-10 relative mt-0.5">
+                      <svg width="16" height="11" viewBox="0 0 17 12" fill="none" className="w-[14px] sm:w-[15px]">
+                        <path d="M1 4.5C2.5 2.5 5 1 8.5 1C12 1 14.5 2.5 16 4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                        <path d="M3 7C4 5.5 6 4.5 8.5 4.5C11 4.5 13 5.5 14 7" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                        <circle cx="8.5" cy="10" r="1.5" fill="white"/>
+                      </svg>
+                      <div className="w-[20px] sm:w-[22px] h-[9px] sm:h-[10px] border-[1.5px] border-white/80 rounded-[3px] relative flex items-center justify-start p-[1px]">
+                        <div className="h-full w-[80%] bg-white rounded-[1px]" />
+                        <div className="absolute -right-[3px] top-1/2 -translate-y-1/2 w-[2px] h-[4px] bg-white/80 rounded-r-[1px]" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phone Content (Image) */}
+                  <div className="relative flex-1 w-full z-0 bg-[#050505]">
+                    <Image 
+                      src="/images/quick_action_phone.jpg" 
+                      alt="Quick Action UI" 
+                      fill 
+                      className="object-cover object-top opacity-100"
+                    />
                   </div>
                 </div>
               </div>
