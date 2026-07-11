@@ -83,6 +83,11 @@ export default function AddFundsPage() {
   // Onramp State
   const [isVerifyingOnChain, setIsVerifyingOnChain] = useState(false);
 
+  // Faucet State
+  const [faucetLoading, setFaucetLoading] = useState(false);
+  const [faucetSuccess, setFaucetSuccess] = useState(false);
+  const [faucetError, setFaucetError] = useState("");
+
   useEffect(() => {
     const fetchProfile = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -546,6 +551,38 @@ export default function AddFundsPage() {
                             )}
                           </button>
                         </div>
+                      </div>
+
+                      {/* Testnet Faucet */}
+                      <div className="space-y-3 pt-4 border-t border-white/5">
+                        <p className="text-xs text-zinc-500 text-center">
+                          TESTNET ONLY: Need funds to test? Get 10,000 XLM instantly.
+                        </p>
+                        <Button
+                          onClick={async () => {
+                            setFaucetLoading(true);
+                            setFaucetError("");
+                            try {
+                              const res = await fetch('/api/zpay/faucet', { method: 'POST' });
+                              const data = await res.json();
+                              if (res.ok) {
+                                setFaucetSuccess(true);
+                                setTimeout(() => setFaucetSuccess(false), 3000);
+                              } else {
+                                setFaucetError(data.error);
+                              }
+                            } catch (e: any) {
+                              setFaucetError(e.message);
+                            }
+                            setFaucetLoading(false);
+                          }}
+                          disabled={faucetLoading || faucetSuccess}
+                          className="w-full bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 border border-blue-500/30 font-semibold rounded-2xl transition-all h-12"
+                        >
+                          {faucetLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Zap className="w-4 h-4 mr-2" />}
+                          {faucetSuccess ? "Funded 10k XLM!" : "Use Friendbot Faucet (10k XLM)"}
+                        </Button>
+                        {faucetError && <p className="text-xs text-red-400 text-center">{faucetError}</p>}
                       </div>
 
                       {/* Live detection indicator */}
