@@ -3,14 +3,16 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
 // GET /api/split/[id]
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { id } = await params;
 
   const { data: split } = await supabaseAdmin
     .from('split_bills')
     .select('*, split_participants(*)')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (!split) return NextResponse.json({ error: 'Split not found' }, { status: 404 });

@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, ArrowUpRight, ArrowDownLeft, QrCode, Scan, History, Loader2, ExternalLink, Zap, Shield, Wallet, ArrowRight, Store, FileText } from "lucide-react";
+import { Copy, Check, ArrowUpRight, ArrowDownLeft, QrCode, Scan, History, Loader2, ExternalLink, Zap, Shield, Wallet, ArrowRight, Store, FileText, Plus } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -219,7 +219,7 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,1)] animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-tight text-white/60">Stellar Testnet</span>
+          <span className="text-xs font-bold uppercase tracking-tight text-white/60">Stellar Mainnet</span>
         </div>
       </section>
 
@@ -296,16 +296,26 @@ export default function DashboardPage() {
                 </div>
   
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 w-full lg:w-auto lg:min-w-[240px] xl:min-w-[280px]">
-                  <Link href="/dashboard/send" className="flex-1">
-                    <Button className="w-full h-14 sm:h-16 xl:h-20 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
-                      SEND <ArrowUpRight className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </Button>
-                  </Link>
-                  <Link href="/dashboard/receive" className="flex-1">
-                    <Button className="w-full h-14 sm:h-16 xl:h-20 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl group">
-                      RECEIVE <ArrowDownLeft className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:-translate-x-1 group-hover:translate-y-1 transition-transform" />
-                    </Button>
-                  </Link>
+                  {parseFloat(xlmBalance) < 1 ? (
+                    <Link href="/dashboard/add-funds" className="flex-1">
+                      <Button className="w-full h-14 sm:h-16 xl:h-20 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-500/30 group">
+                        <Plus className="mr-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:scale-110 transition-transform" /> ADD FUNDS
+                      </Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Link href="/dashboard/send" className="flex-1">
+                        <Button className="w-full h-14 sm:h-16 xl:h-20 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
+                          SEND <ArrowUpRight className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </Button>
+                      </Link>
+                      <Link href="/dashboard/receive" className="flex-1">
+                        <Button className="w-full h-14 sm:h-16 xl:h-20 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl group">
+                          RECEIVE <ArrowDownLeft className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:-translate-x-1 group-hover:translate-y-1 transition-transform" />
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -459,7 +469,7 @@ function QuickActionCard({ href, icon, title, description, color }: any) {
     <Link href={href}>
       <motion.div 
         whileHover={{ scale: 1.02, x: 5 }}
-        whileActive={{ scale: 0.98 }}
+        whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.1 }}
         className="bg-white/[0.02] border border-white/[0.06] p-4 sm:p-5 xl:p-6 rounded-xl sm:rounded-[1.5rem] xl:rounded-[2rem] flex items-center gap-4 sm:gap-5 group hover:bg-white/[0.05] transition-all"
       >

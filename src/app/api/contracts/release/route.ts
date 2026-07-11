@@ -3,6 +3,9 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { releaseEscrow } from '@/lib/escrow';
 import { notifyEscrow } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
+import { authLimiter } from '@/lib/rate-limit';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -48,13 +51,29 @@ export async function POST(request: Request) {
     if (!pin) {
       return NextResponse.json({ error: 'PIN required' }, { status: 400 });
     }
-    if (payerProfile.app_pin !== pin) {
+    if (!authLimiter.check(`pin:${user.id}`)) {
+      return NextResponse.json({ error: 'Too many PIN attempts. Please wait a minute.' }, { status: 429 });
+    }
+    const isHashedPin = payerProfile.app_pin.startsWith('$2');
+    const pinValid = isHashedPin
+      ? await bcrypt.compare(pin, payerProfile.app_pin)
+      : payerProfile.app_pin === pin;
+    if (!pinValid) {
       return NextResponse.json({ error: 'Invalid PIN' }, { status: 401 });
     }
+    if (!isHashedPin) {
+      const hashed = await bcrypt.hash(pin, 10);
+      await supabaseAdmin.from('profiles').update({ app_pin: hashed }).eq('id', user.id);
+    }
+    authLimiter.reset(`pin:${user.id}`);
   }
 
   try {
-    const releaseTxHash = await releaseEscrow(Number(contract.escrow_id), payerProfile.stellar_secret);
+    const secret = safeDecryptSecret(payerProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
+    const releaseTxHash = await releaseEscrow(Number(contract.escrow_id), secret);
 
     await supabaseAdmin
       .from('contracts')

@@ -47,7 +47,7 @@ async function deployContract(wasmPath: string, keypair: StellarSdk.Keypair): Pr
 
     let wasmId;
     if (getRes.returnValue) {
-        wasmId = getRes.returnValue.value().toString('hex');
+        wasmId = (getRes.returnValue.value() as Buffer).toString('hex');
     } else {
         throw new Error('Failed to retrieve wasmId');
     }
@@ -91,7 +91,7 @@ async function deployContract(wasmPath: string, keypair: StellarSdk.Keypair): Pr
     }
 
     // Parse the new contract ID from the result
-    const contractIdStr = StellarSdk.Address.fromScAddress(getRes.returnValue.address()).toString();
+    const contractIdStr = StellarSdk.Address.fromScAddress(getRes.returnValue!.address()).toString();
     console.log(`Contract Deployed: ${contractIdStr}`);
     
     return contractIdStr;

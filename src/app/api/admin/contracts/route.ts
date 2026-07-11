@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
-
-// Security check: Only allow specific Admin/Arbiter emails to access this
-const ADMIN_EMAILS = ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com']; // Customize as needed
+import { isAdmin, adminForbiddenResponse } from '@/lib/admin';
 
 export async function GET() {
   const user = await getUser();
@@ -11,9 +9,9 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Simple admin check based on email
-  if (!user.email || !ADMIN_EMAILS.includes(user.email)) {
-    return NextResponse.json({ error: 'Forbidden: Admins Only' }, { status: 403 });
+  // DB-driven admin check
+  if (!await isAdmin(user.id)) {
+    return adminForbiddenResponse();
   }
 
   try {

@@ -3,6 +3,10 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { sendMerchantPayment, getExplorerUrl, IS_MAINNET } from '@/lib/stellar';
 import { notifyMerchantPayment } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
+import { authLimiter } from '@/lib/rate-limit';
+import { checkPinLockout, recordPinFailure, clearPinLockout, formatLockoutDuration } from '@/lib/pin-lockout';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -45,8 +49,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Please set a PIN in Settings before making payments' }, { status: 400 });
   }
 
-  if (profile.app_pin !== pin) {
-    return NextResponse.json({ error: 'Invalid PIN. Please try again.' }, { status: 401 });
+  // PIN verification with progressive lockout
+  const lockoutStatus = await checkPinLockout(user.id);
+  if (lockoutStatus.locked) {
+    return NextResponse.json({
+      error: `Too many failed PIN attempts. Try again in ${formatLockoutDuration(lockoutStatus.retryAfterMs)}.`,
+      locked_until: lockoutStatus.lockedUntil,
+    }, { status: 429 });
+  }
+  const isHashedPin = profile.app_pin?.startsWith('$2');
+  const pinValid = isHashedPin
+    ? await bcrypt.compare(pin, profile.app_pin!)
+    : profile.app_pin === pin;
+  if (!pinValid) {
+    const updated = await recordPinFailure(user.id);
+    const msg = updated.locked
+      ? `Incorrect PIN. Account locked for ${formatLockoutDuration(updated.retryAfterMs)}.`
+      : `Incorrect PIN. ${updated.attemptsLeft} attempt${updated.attemptsLeft !== 1 ? 's' : ''} remaining.`;
+    return NextResponse.json({ error: msg }, { status: 401 });
+  }
+  await clearPinLockout(user.id);
+  if (!isHashedPin && profile.app_pin) {
+    bcrypt.hash(profile.app_pin, 10).then(h =>
+      supabaseAdmin.from('profiles').update({ app_pin: h }).eq('id', user.id)
+    ).catch(console.error);
   }
 
   const { data: quote, error: quoteError } = await supabaseAdmin
@@ -74,8 +100,12 @@ export async function POST(request: Request) {
     const xlmAmount = parseFloat(quote.xlm_amount).toFixed(7);
 
     // Execute REAL Stellar transaction — XLM is debited from user wallet
+    const secret = safeDecryptSecret(profile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const txHash = await sendMerchantPayment(
-      profile.stellar_secret,
+      secret,
       xlmAmount,
       merchant_name
     );

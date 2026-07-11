@@ -229,30 +229,6 @@ export default function OnboardingPage() {
             Welcome to ZPAY, <span className="text-white font-black">{fullName}</span>. Your universal identity <span className="text-white font-black">{username}@Zp</span> is now live.
           </p>
 
-          {/* Fund wallet notice for mainnet */}
-          {stellarAddress && (
-            <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30">
-              <p className="text-amber-400 text-xs font-black uppercase tracking-widest mb-2">⚡ Activate Your Wallet</p>
-              <p className="text-white/60 text-xs mb-3">
-                Send at least <span className="text-white font-bold">1 XLM</span> to this address to activate your wallet:
-              </p>
-              <div className="flex items-center gap-2 bg-black/40 rounded-xl p-3">
-                <code className="text-[10px] text-amber-300 font-mono flex-1 break-all">{stellarAddress}</code>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(stellarAddress);
-                    setCopiedAddress(true);
-                    setTimeout(() => setCopiedAddress(false), 2000);
-                  }}
-                  className="shrink-0 text-white/40 hover:text-white transition-colors"
-                >
-                  {copiedAddress
-                    ? <CheckCircle className="w-4 h-4 text-green-400" />
-                    : <Copy className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-          )}
 
           <div className="space-y-3 sm:space-y-4">
             <Button

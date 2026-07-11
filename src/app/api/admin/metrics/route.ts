@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
-
-const ADMIN_EMAILS = ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com'];
+import { isAdmin, adminForbiddenResponse } from '@/lib/admin';
 
 export async function GET() {
   const user = await getUser();
-  if (!user || !ADMIN_EMAILS.includes(user.email ?? '')) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!await isAdmin(user.id)) return adminForbiddenResponse();
 
   try {
     const now = new Date();

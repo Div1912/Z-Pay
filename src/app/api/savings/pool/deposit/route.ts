@@ -3,6 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { depositToPool } from '@/lib/savings';
 import { notifyPoolDeposit } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -24,8 +25,12 @@ export async function POST(request: Request) {
   const amountInStroops = BigInt(Math.round(parseFloat(amount_xlm) * 10_000_000));
 
   try {
+    const secret = safeDecryptSecret(profile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const { txHash, positionId } = await depositToPool(
-      profile.stellar_secret,
+      secret,
       profile.stellar_address,
       amountInStroops
     );

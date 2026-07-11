@@ -46,10 +46,10 @@ async function simulateBalance(contractId: string, address: string): Promise<big
     const sim = await server.simulateTransaction(tx);
     if ('error' in sim) {
         console.warn(`balance() simulation error: ${sim.error}`);
-        return 0n;
+        return BigInt(0);
     }
     const result = (sim as StellarSdk.rpc.Api.SimulateTransactionSuccessResponse).result;
-    if (!result) return 0n;
+    if (!result) return BigInt(0);
     const val = StellarSdk.scValToNative(result.retval);
     return BigInt(val);
 }
@@ -94,7 +94,7 @@ async function run() {
     const adminBalance = await simulateBalance(TOKEN_CONTRACT_ID, admin.publicKey());
     console.log(`Admin ZPAY balance: ${adminBalance} stroops (${Number(adminBalance) / 1e7} ZPAY)`);
 
-    if (adminBalance <= 0n) {
+    if (adminBalance <= BigInt(0)) {
         console.error('\n❌ Admin has 0 ZPAY tokens. Cannot fund reward pools.');
         console.error('You need to transfer ZPAY tokens to the admin address:');
         console.error(`  ${admin.publicKey()}`);
@@ -103,7 +103,7 @@ async function run() {
     }
 
     // 2. Split balance: 40% staking, 40% pool, keep 20% buffer for fees
-    const safeAmount  = (adminBalance * 40n) / 100n;
+    const safeAmount  = (adminBalance * BigInt(40)) / BigInt(100);
     const stakingFund = safeAmount;
     const poolFund    = safeAmount;
 

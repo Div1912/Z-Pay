@@ -15,6 +15,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState(false);
   const [copiedAddr, setCopiedAddr] = useState(false);
+  const [copiedSecret, setCopiedSecret] = useState(false);
   const [showKeysModal, setShowKeysModal] = useState(false);
   const [show2FAModal, setShow2FAModal] = useState(false);
   const [twoFactor, setTwoFactor] = useState(false);
@@ -49,6 +50,14 @@ export default function ProfilePage() {
       navigator.clipboard.writeText(profile.stellar_address);
       setCopiedAddr(true);
       setTimeout(() => setCopiedAddr(false), 2000);
+    }
+  };
+
+  const copySecret = () => {
+    if (profile?.stellar_secret) {
+      navigator.clipboard.writeText(profile.stellar_secret);
+      setCopiedSecret(true);
+      setTimeout(() => setCopiedSecret(false), 2000);
     }
   };
 
@@ -227,13 +236,53 @@ export default function ProfilePage() {
                       </AnimatePresence>
                     </button>
                     <a 
-                      href={`https://stellar.expert/explorer/testnet/account/${profile?.stellar_address}`}
+                      href={`https://stellar.expert/explorer/public/account/${profile?.stellar_address}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 bg-white/5 rounded-xl hover:bg-white/10 text-zinc-500 transition-colors"
                     >
                       <ExternalLink className="w-5 h-5" />
                     </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-end">
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500 ml-1 flex items-center gap-2">
+                    <Shield className="w-3 h-3" /> Master Secret Key
+                  </label>
+                  <button 
+                    onClick={() => setShowSecret(!showSecret)}
+                    className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
+                  >
+                    {showSecret ? "Hide" : "Reveal"}
+                  </button>
+                </div>
+                <div className="group relative flex items-center justify-between p-4 sm:p-5 bg-red-500/5 rounded-2xl border border-red-500/10 hover:border-red-500/30 transition-all gap-4">
+                  <div className="min-w-0 flex-1">
+                    <code className="text-xs text-red-400/80 font-mono truncate block w-full group-hover:text-red-400 transition-colors">
+                      {showSecret ? profile?.stellar_secret : "••••••••••••••••••••••••••••••••••••••••••••••••••••••••"}
+                    </code>
+                  </div>
+                  <div className="flex gap-2 shrink-0">
+                    <button 
+                      onClick={copySecret} 
+                      disabled={!showSecret}
+                      className="p-3 bg-red-500/10 rounded-xl hover:bg-red-500/20 disabled:opacity-30 disabled:hover:bg-red-500/10 transition-colors"
+                    >
+                      <AnimatePresence mode="wait">
+                        {copiedSecret ? (
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} key="check">
+                            <Check className="w-5 h-5 text-green-500" />
+                          </motion.div>
+                        ) : (
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} key="copy">
+                            <Copy className="w-5 h-5 text-red-400" />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </button>
                   </div>
                 </div>
               </div>

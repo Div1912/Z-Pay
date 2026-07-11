@@ -5,26 +5,15 @@ import { sendPayment } from '@/lib/stellar';
 import { getExchangeRate } from '@/lib/fx-service';
 import { notifyPayment } from '@/lib/notify';
 import { logInfo, logError, logWarn } from '@/lib/logger';
+import { safeDecryptSecret } from '@/lib/crypto';
+import { paymentLimiter, authLimiter } from '@/lib/rate-limit';
+import { checkPinLockout, recordPinFailure, clearPinLockout, formatLockoutDuration } from '@/lib/pin-lockout';
+import bcrypt from 'bcryptjs';
 
 const ROUTE = '/api/payments/send';
 
 // Daily send limit per user (in XLM). Approx ₹50,000 at current rates.
 const DAILY_LIMIT_XLM = 3000;
-
-// In-memory rate limiter: max 10 requests per user per minute
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-
-function checkRateLimit(userId: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(userId);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(userId, { count: 1, resetAt: now + 60_000 });
-    return true;
-  }
-  if (entry.count >= 10) return false;
-  entry.count++;
-  return true;
-}
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -33,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   // Rate limiting: max 10 payment attempts per user per minute
-  if (!checkRateLimit(user.id)) {
+  if (!paymentLimiter.check(user.id)) {
     return NextResponse.json(
       { error: 'Too many requests. Please wait a minute before trying again.' },
       { status: 429 }
@@ -59,10 +48,40 @@ export async function POST(request: Request) {
     if (!pin) {
       return NextResponse.json({ error: 'PIN is required to authorize payment' }, { status: 400 });
     }
-    if (senderProfile.app_pin !== pin) {
-      logWarn('payment_invalid_pin', { route: ROUTE, user_id: user.id }).catch(() => {});
-      return NextResponse.json({ error: 'Invalid PIN. Please try again.' }, { status: 401 });
+    // Rate-limit PIN attempts to prevent brute-force
+    if (!authLimiter.check(`pin:${user.id}`)) {
+      return NextResponse.json({ error: 'Too many PIN attempts. Please wait a minute.' }, { status: 429 });
     }
+
+    // 5. PIN verification with progressive lockout
+    const lockoutStatus = await checkPinLockout(user.id);
+    if (lockoutStatus.locked) {
+      return NextResponse.json({
+        error: `Too many failed PIN attempts. Please try again in ${formatLockoutDuration(lockoutStatus.retryAfterMs)}.`,
+        locked_until: lockoutStatus.lockedUntil,
+      }, { status: 429 });
+    }
+
+    const isHashedPin = senderProfile.app_pin.startsWith('$2');
+    const pinValid = isHashedPin
+      ? await bcrypt.compare(pin, senderProfile.app_pin)
+      : senderProfile.app_pin === pin;
+
+    if (!pinValid) {
+      const updated = await recordPinFailure(user.id);
+      const msg = updated.locked
+        ? `Incorrect PIN. Your account is locked for ${formatLockoutDuration(updated.retryAfterMs)}.`
+        : `Incorrect PIN. ${updated.attemptsLeft} attempt${updated.attemptsLeft !== 1 ? 's' : ''} remaining before lockout.`;
+      return NextResponse.json({ error: msg }, { status: 401 });
+    }
+
+    // Correct PIN — clear lockout and silently upgrade plaintext to bcrypt
+    await clearPinLockout(user.id);
+    if (!isHashedPin) {
+      const hashed = await bcrypt.hash(pin, 10);
+      await supabaseAdmin.from('profiles').update({ app_pin: hashed }).eq('id', user.id);
+    }
+    authLimiter.reset(`pin:${user.id}`);
   }
 
   try {
@@ -138,9 +157,14 @@ export async function POST(request: Request) {
     }
     memo = memo.substring(0, 28);
 
+    const secret = safeDecryptSecret(senderProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
+
     const txHash = await sendPayment(
-      senderProfile.stellar_secret, 
-      recipientAddress, 
+      secret,
+      recipientAddress,
       xlmAmount,
       { memo }
     );

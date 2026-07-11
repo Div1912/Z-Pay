@@ -5,6 +5,10 @@ import { sendGaslessPayment, canSponsorFees } from '@/lib/fee-bump';
 import { getExchangeRate } from '@/lib/fx-service';
 import { notifyPayment } from '@/lib/notify';
 import { logInfo, logError, logWarn } from '@/lib/logger';
+import { safeDecryptSecret } from '@/lib/crypto';
+import { paymentLimiter, authLimiter } from '@/lib/rate-limit';
+import { checkPinLockout, recordPinFailure, clearPinLockout, formatLockoutDuration } from '@/lib/pin-lockout';
+import bcrypt from 'bcryptjs';
 
 const ROUTE = '/api/payments/gasless';
 
@@ -43,10 +47,39 @@ export async function POST(request: Request) {
     if (!pin) {
       return NextResponse.json({ error: 'PIN is required to authorize payment' }, { status: 400 });
     }
-    if (senderProfile.app_pin !== pin) {
-      await logWarn('gasless_payment_invalid_pin', { route: ROUTE, user_id: user.id });
-      return NextResponse.json({ error: 'Invalid PIN. Please try again.' }, { status: 401 });
+    if (!paymentLimiter.check(user.id)) {
+      return NextResponse.json({ error: 'Too many requests. Please wait a minute before trying again.' }, { status: 429 });
     }
+    if (!authLimiter.check(`pin:${user.id}`)) {
+      return NextResponse.json({ error: 'Too many PIN attempts. Please wait a minute.' }, { status: 429 });
+    }
+    // PIN verification with progressive lockout
+    const lockoutStatus = await checkPinLockout(user.id);
+    if (lockoutStatus.locked) {
+      return NextResponse.json({
+        error: `Too many failed PIN attempts. Try again in ${formatLockoutDuration(lockoutStatus.retryAfterMs)}.`,
+        locked_until: lockoutStatus.lockedUntil,
+      }, { status: 429 });
+    }
+
+    const isHashedPin = senderProfile.app_pin?.startsWith('$2');
+    const pinValid = isHashedPin
+      ? await bcrypt.compare(pin, senderProfile.app_pin!)
+      : senderProfile.app_pin === pin;
+
+    if (!pinValid) {
+      const updated = await recordPinFailure(user.id);
+      const msg = updated.locked
+        ? `Incorrect PIN. Account locked for ${formatLockoutDuration(updated.retryAfterMs)}.`
+        : `Incorrect PIN. ${updated.attemptsLeft} attempt${updated.attemptsLeft !== 1 ? 's' : ''} remaining.`;
+      return NextResponse.json({ error: msg }, { status: 401 });
+    }
+    await clearPinLockout(user.id);
+    if (!isHashedPin && senderProfile.app_pin) {
+      bcrypt.hash(senderProfile.app_pin, 10).then(h =>
+        supabaseAdmin.from('profiles').update({ app_pin: h }).eq('id', user.id)
+      ).catch(console.error);
+    }  authLimiter.reset(`pin:${user.id}`);
   }
 
   try {
@@ -82,8 +115,12 @@ export async function POST(request: Request) {
     memo = `${memo}|${senderName}>${recipientName}`.substring(0, 28);
 
     // Submit as fee-bump (gasless) transaction
+    const secret = safeDecryptSecret(senderProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const result = await sendGaslessPayment({
-      fromSecret: senderProfile.stellar_secret,
+      fromSecret: secret,
       toAddress: recipientAddress,
       amount: xlmAmount,
       memo,

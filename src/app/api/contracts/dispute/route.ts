@@ -3,6 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { disputeEscrow } from '@/lib/escrow';
 import { notifyEscrow } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -73,7 +74,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const txHash = await disputeEscrow(Number(contract.escrow_id), signerProfile.stellar_secret);
+    const secret = safeDecryptSecret(signerProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
+    const txHash = await disputeEscrow(Number(contract.escrow_id), secret);
 
     const { error: updateError } = await supabaseAdmin
       .from('contracts')

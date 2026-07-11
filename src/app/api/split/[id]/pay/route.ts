@@ -3,6 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import * as StellarSdk from '@stellar/stellar-sdk';
 import { notifySplitPaid } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 const { Server } = StellarSdk.rpc;
 const SOROBAN_RPC_URL = process.env.SOROBAN_RPC_URL || 'https://soroban-testnet.stellar.org';
@@ -10,15 +11,17 @@ const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE || StellarSdk.
 const server = new Server(SOROBAN_RPC_URL);
 
 // POST /api/split/[id]/pay — participant pays their share
-export async function POST(_req: Request, { params }: { params: { id: string } }) {
+export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { id } = await params;
 
   // Get the split
   const { data: split } = await supabaseAdmin
     .from('split_bills')
     .select('*, split_participants(*)')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (!split) return NextResponse.json({ error: 'Split not found' }, { status: 404 });
@@ -52,7 +55,11 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   }
 
   try {
-    const keypair = StellarSdk.Keypair.fromSecret(payerProfile.stellar_secret);
+    const secret = safeDecryptSecret(payerProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
+    const keypair = StellarSdk.Keypair.fromSecret(secret);
     const amount = myEntry.amount_owed.toString();
 
     const account = await server.getAccount(payerProfile.stellar_address);

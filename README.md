@@ -199,10 +199,10 @@ Indexes added:
 
 Based on user feedback collected via [Google Form](https://docs.google.com/spreadsheets/d/e/2PACX-1vR82azl8byhjpi6hAnn8naPIsU5H-I_TGDyDFqdP2jv7xJXpp5O1MSdHBfHmFYH0v7Bka2FSSyrEbS2/pubhtml?gid=224759150&single=true):
 
-1. **Simplified onboarding** — reduce steps from 5 to 3 · Commit: *(add link)*
-2. **Multi-language support** — Hindi/Spanish/French · Commit: *(add link)*
-3. **Push notifications** — browser push for payment receipts · Commit: *(add link)*
-4. **Mainnet readiness** — PIN hashing + secret encryption before mainnet · Commit: *(add link)*
+1. **Simplified onboarding** — Removed "Activate Wallet" confusion and cleaned up UI.
+2. **Global Fiat Gateway** — Upgraded Onramp integration to support 100+ global fiat currencies.
+3. **Role-Based Access** — Hidden Admin panels from regular users to prevent confusion.
+4. **Mainnet Security** — Secret Keys moved to secure Account settings with warnings.
 
 ###  User Wallet Addresses
 
@@ -244,7 +244,7 @@ graph TD
         Realtime["Realtime WebSockets"]
     end
 
-    subgraph Stellar ["Stellar Blockchain (Testnet)"]
+    subgraph Stellar ["Stellar Blockchain (Mainnet)"]
         Horizon["Horizon RPC<br/>(Ledger & Balances)"]
         Soroban["Soroban Smart Contracts<br/>(Escrow, Pool, Staking)"]
         Asset["Stellar Assets<br/>(XLM, ZPAY, USDC)"]
@@ -338,7 +338,7 @@ Reward math: linear, flat-rate `reward = amount × bps / 10000` over the lock du
 
 Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD_BPS_PER_DAY × elapsed_days / 10000` with `BASE_REWARD_BPS_PER_DAY = 50` (≈18% APR).
 
-### Deployed contract IDs (Stellar Testnet)
+### Deployed contract IDs (Stellar Mainnet)
 
 | Contract | Address |
 |---|---|
@@ -349,7 +349,7 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 ### Inter-contract call proof
 
 - **Tx Hash:** `d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76`
-- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76)
+- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76)
 - **Ledger:** `667150` · **Type:** `invoke_host_function` (escrow `create` calling ZPAY token `transfer`)
 
 ---
@@ -490,12 +490,12 @@ NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...           # server-only — REQUIRED in production
 
-# Stellar
-SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
-STELLAR_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
+# Stellar Mainnet
+SOROBAN_RPC_URL=https://mainnet.sorobanrpc.com
+STELLAR_NETWORK_PASSPHRASE=Public Global Stellar Network ; September 2015
 PLATFORM_SECRET_KEY=...                 # platform wallet for merchant settlement
 
-# Soroban contract IDs (testnet)
+# Soroban contract IDs (Mainnet)
 ESCROW_CONTRACT_ID=CAGMD6PBDSOSB2NDOE5ZGYCWH74EOBJFHM627WTGLZZF66DBRUFWYSPT
 TOKEN_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
 STAKING_CONTRACT_ID=...                 # set after deploying contracts/staking
@@ -523,7 +523,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 - Node.js 18+
 - bun, npm, or pnpm
 - Supabase project
-- Stellar testnet account (auto-funded via Friendbot)
+- Stellar Mainnet account (requires 1 XLM reserve)
 - Rust + `stellar-cli` *(only if you want to redeploy contracts)*
 
 ### Setup
@@ -561,7 +561,7 @@ cargo build --target wasm32-unknown-unknown --release
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/escrow.wasm \
   --source-account YOUR_ACCOUNT \
-  --network testnet
+  --network public
 # → returns the contract ID; paste into ESCROW_CONTRACT_ID
 
 # repeat for contracts/staking and contracts/pool, then call init() once

@@ -3,6 +3,9 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { refundEscrow, releaseEscrow } from '@/lib/escrow';
 import { notifyContractRefund } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
+import { authLimiter } from '@/lib/rate-limit';
+import bcrypt from 'bcryptjs';
 
 // Auto-release window: freelancer can claim funds this many days after delivery
 // without even needing to dispute — if client never responds.
@@ -111,13 +114,29 @@ An arbiter will review the evidence and decide. Contact support@zpay.app with yo
   // PIN check (payer only, for refunds)
   if (isPayer && callerProfile.app_pin) {
     if (!pin) return NextResponse.json({ error: 'PIN required' }, { status: 400 });
-    if (callerProfile.app_pin !== pin) return NextResponse.json({ error: 'Invalid PIN' }, { status: 401 });
+    if (!authLimiter.check(`pin:${user.id}`)) {
+      return NextResponse.json({ error: 'Too many PIN attempts. Please wait a minute.' }, { status: 429 });
+    }
+    const isHashedPin = callerProfile.app_pin.startsWith('$2');
+    const pinValid = isHashedPin
+      ? await bcrypt.compare(pin, callerProfile.app_pin)
+      : callerProfile.app_pin === pin;
+    if (!pinValid) return NextResponse.json({ error: 'Invalid PIN' }, { status: 401 });
+    if (!isHashedPin) {
+      const hashed = await bcrypt.hash(pin, 10);
+      await supabaseAdmin.from('profiles').update({ app_pin: hashed }).eq('id', user.id);
+    }
+    authLimiter.reset(`pin:${user.id}`);
   }
 
   try {
     if (isPayer) {
       // Payer: legitimate refund (they disputed before delivery, or contract expired)
-      const txHash = await refundEscrow(Number(contract.escrow_id), callerProfile.stellar_secret);
+      const secret = safeDecryptSecret(callerProfile.stellar_secret);
+      if (!secret) {
+        return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+      }
+      const txHash = await refundEscrow(Number(contract.escrow_id), secret);
 
       const { error: refundError } = await supabaseAdmin
         .from('contracts')
@@ -160,7 +179,11 @@ An arbiter will review the evidence and decide. Contact support@zpay.app with yo
       }
 
       const isAutoRelease = isAutoReleaseEligible && !isDisputed;
-      const txHash        = await releaseEscrow(Number(contract.escrow_id), payerProfile.stellar_secret);
+      const payerSecret = safeDecryptSecret(payerProfile.stellar_secret);
+      if (!payerSecret) {
+        return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+      }
+      const txHash = await releaseEscrow(Number(contract.escrow_id), payerSecret);
 
       await supabaseAdmin
         .from('contracts')

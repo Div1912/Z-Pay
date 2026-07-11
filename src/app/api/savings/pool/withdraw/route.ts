@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { withdrawFromPool } from '@/lib/savings';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -29,8 +30,12 @@ export async function POST(request: Request) {
   if (!profile?.stellar_secret) return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
 
   try {
+    const secret = safeDecryptSecret(profile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const { txHash, xlmAmount, expoReward } = await withdrawFromPool(
-      profile.stellar_secret,
+      secret,
       profile.stellar_address,
       position.position_id
     );

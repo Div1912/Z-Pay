@@ -3,6 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { createEscrow, getCurrentLedger, calculateDeadlineLedger } from '@/lib/escrow';
 import { notifyEscrow } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -56,8 +57,12 @@ export async function POST(request: Request) {
     const deadlineLedger = BigInt(currentLedger) + calculateDeadlineLedger(expiryDays);
 
     // Contract returns the auto-generated numeric escrowId
+    const secret = safeDecryptSecret(payerProfile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const { txHash, escrowId } = await createEscrow(
-      payerProfile.stellar_secret,
+      secret,
       payerProfile.stellar_address,
       freelancerProfile.stellar_address,
       amountInStroops,

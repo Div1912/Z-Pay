@@ -3,6 +3,9 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { createStellarAccount, registerUniversalId } from '@/lib/stellar';
 import { notifyWelcome } from '@/lib/notify';
+import { encryptSecret } from '@/lib/crypto';
+import { authLimiter } from '@/lib/rate-limit';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -13,6 +16,11 @@ export async function POST(request: Request) {
   const { username, full_name, phone_number, app_pin, preferred_currency } = await request.json();
   if (!username || !full_name || !phone_number || !app_pin) {
     return NextResponse.json({ error: 'All fields are mandatory' }, { status: 400 });
+  }
+
+  // Rate-limit account creation
+  if (!authLimiter.check(`claim:${user.id}`)) {
+    return NextResponse.json({ error: 'Too many requests. Please try again in a minute.' }, { status: 429 });
   }
 
   // Check username availability
@@ -44,16 +52,20 @@ export async function POST(request: Request) {
     // 2. Register on Soroban
     const txHash = await registerUniversalId(username, publicKey);
 
-    // 3. Update Supabase profile
+    // 3. Encrypt secret and hash PIN before storing
+    const encryptedSecret = encryptSecret(secretKey);
+    const hashedPin = await bcrypt.hash(app_pin, 10);
+
+    // 4. Update Supabase profile
     const { error: updateError } = await supabaseAdmin
       .from('profiles')
       .update({
         universal_id: username,
         stellar_address: publicKey,
-        stellar_secret: secretKey,
+        stellar_secret: encryptedSecret,
         full_name,
         phone_number,
-        app_pin,
+        app_pin: hashedPin,
         preferred_currency: preferred_currency || 'USDC'
       })
       .eq('id', user.id);

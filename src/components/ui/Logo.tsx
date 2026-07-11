@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export function Logo({ className = "w-8 h-8" }: { className?: string }) {
+export function Logo({ className = "w-8 h-8", size }: { className?: string; size?: string }) {
   return (
     <div className={`relative flex items-center justify-center ${className} group cursor-pointer`}>
       {/* Ethereal Glow */}

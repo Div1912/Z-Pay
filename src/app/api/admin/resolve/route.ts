@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { notifyEscrow } from '@/lib/notify';
-
-const ADMIN_EMAILS = ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com'];
+import { isAdmin, adminForbiddenResponse, logAdminAction, extractRequestMeta } from '@/lib/admin';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -11,9 +11,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Admin check
-  if (!user.email || !ADMIN_EMAILS.includes(user.email)) {
-    return NextResponse.json({ error: 'Forbidden: Admins Only' }, { status: 403 });
+  // Admin check via DB role column
+  if (!await isAdmin(user.id)) {
+    return adminForbiddenResponse();
   }
 
   const { contract_id, resolution } = await request.json();
@@ -64,10 +64,15 @@ export async function POST(request: Request) {
 
     const { refundEscrow, transferExpoToken } = await import('@/lib/escrow');
 
+    const payerSecret = safeDecryptSecret(payerProfile.stellar_secret);
+    if (!payerSecret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable.' }, { status: 503 });
+    }
+
     // Step 1: always refund the escrow back to the payer's wallet
     const refundTx = await refundEscrow(
       Number(contract.escrow_id),
-      payerProfile.stellar_secret
+      payerSecret
     );
 
     let payoutTx: string | undefined;
@@ -85,7 +90,7 @@ export async function POST(request: Request) {
       const amountStroops = BigInt(Math.floor(parseFloat(contract.amount) * 10_000_000));
 
       payoutTx = await transferExpoToken(
-        payerProfile.stellar_secret,
+        payerSecret,
         contract.freelancer_stellar_address,
         amountStroops
       );
@@ -148,6 +153,17 @@ export async function POST(request: Request) {
       freelancerUniversalId: contract.freelancer_universal_id,
       txHash,
       notifyParties: 'both',
+    }).catch(console.error);
+
+    // Immutable audit trail
+    const { ipAddress, userAgent } = extractRequestMeta(request);
+    logAdminAction(user.id, {
+      action:     'resolve_dispute',
+      targetId:   contract_id,
+      targetType: 'contract',
+      details:    { verdict: resolution, refund_tx: refundTx, payout_tx: payoutTx ?? null },
+      ipAddress,
+      userAgent,
     }).catch(console.error);
 
     return NextResponse.json({

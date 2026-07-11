@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{ id: string; universal_id: string } | null>(null);
+  const [currentUser, setCurrentUser] = useState<{ id: string; universal_id: string; email: string } | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -27,11 +27,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           return;
         }
         if (data?.id && data?.universal_id) {
-          setCurrentUser({ id: data.id, universal_id: data.universal_id });
+          setCurrentUser({ id: data.id, universal_id: data.universal_id, email: data.email });
         }
       })
       .catch(() => {});
   }, []);
+
+  const isAdmin = currentUser?.email && ['admin@zpay.app', 'support@zpay.app', 'bkbhaia@gmail.com'].includes(currentUser.email);
 
   const navItems = [
     { label: "Overview",  icon: LayoutDashboard, href: "/dashboard" },
@@ -98,25 +100,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Link>
           ))}
 
-          <div className="pt-4 pb-1">
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-2 px-3">Admin</p>
-            {adminItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "group flex items-center gap-3 px-3 h-10 rounded-xl transition-all relative overflow-hidden",
-                  mounted && pathname === item.href
-                    ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
-                    : "text-white/30 hover:text-white/70 hover:bg-white/5"
-                )}
-              >
-                <item.icon className={cn("w-4 h-4 shrink-0 transition-transform group-hover:scale-110",
-                  mounted && pathname === item.href ? "text-[#D4AF37]" : "text-white/25")} />
-                <span className="font-bold tracking-tight text-xs">{item.label}</span>
-              </Link>
-            ))}
-          </div>
+          {isAdmin && (
+            <div className="pt-4 pb-1">
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-2 px-3">Admin</p>
+              {adminItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "group flex items-center gap-3 px-3 h-10 rounded-xl transition-all relative overflow-hidden",
+                    mounted && pathname === item.href
+                      ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                      : "text-white/30 hover:text-white/70 hover:bg-white/5"
+                  )}
+                >
+                  <item.icon className={cn("w-4 h-4 shrink-0 transition-transform group-hover:scale-110",
+                    mounted && pathname === item.href ? "text-[#D4AF37]" : "text-white/25")} />
+                  <span className="font-bold tracking-tight text-xs">{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          )}
         </nav>
 
         <div className="pt-4 mt-2 border-t border-white/5 space-y-1 shrink-0">

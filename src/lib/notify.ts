@@ -8,8 +8,8 @@ import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-const DOMAIN = 'https://exporouter.site';
+const FROM = process.env.RESEND_FROM_EMAIL || 'ZPay <notifications@zpayrouter.me>';
+const DOMAIN = 'https://zpayrouter.me';
 
 // ─── Shared HTML shell ────────────────────────────────────────────────────────
 function emailShell(content: string): string {

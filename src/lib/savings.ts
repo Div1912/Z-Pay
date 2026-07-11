@@ -98,7 +98,7 @@ export async function unstakeExpo(
   const tx = await buildAndPrepare(stakerAddress, STAKING_CONTRACT_ID, 'unstake', args);
   const { hash, result } = await signAndSubmit(tx, keypair);
 
-  let payout = 0n;
+  let payout = BigInt(0);
   if (result) payout = BigInt(StellarSdk.scValToNative(result) as string);
 
   return { txHash: hash, payout };
@@ -188,8 +188,8 @@ export async function withdrawFromPool(
   const tx = await buildAndPrepare(depositorAddress, POOL_CONTRACT_ID, 'withdraw', args);
   const { hash, result } = await signAndSubmit(tx, keypair);
 
-  let xlmAmount  = 0n;
-  let expoReward = 0n;
+  let xlmAmount  = BigInt(0);
+  let expoReward = BigInt(0);
   if (result) {
     const tuple = StellarSdk.scValToNative(result) as [string, string];
     xlmAmount  = BigInt(tuple[0]);

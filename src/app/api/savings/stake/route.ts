@@ -3,6 +3,7 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { stakeExpo } from '@/lib/savings';
 import { notifyStake } from '@/lib/notify';
+import { safeDecryptSecret } from '@/lib/crypto';
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -28,8 +29,12 @@ export async function POST(request: Request) {
   const rewardExpo = (parseFloat(amount_expo) * rewardBps[duration_days]) / 10000;
 
   try {
+    const secret = safeDecryptSecret(profile.stellar_secret);
+    if (!secret) {
+      return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
     const { txHash, stakeId } = await stakeExpo(
-      profile.stellar_secret,
+      secret,
       profile.stellar_address,
       amountInStroops,
       duration_days as 30 | 60 | 90
