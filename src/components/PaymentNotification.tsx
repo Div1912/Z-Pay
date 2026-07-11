@@ -75,6 +75,24 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
     );
   }, []);
 
+  // ─── P2P payment sent ─────────────────────────────────────────────────────
+  const showPaymentSentToast = useCallback((tx: any) => {
+    const amount = parseFloat(tx.amount || "0").toFixed(2);
+    const currency = tx.currency || "XLM";
+    const recipient = tx.recipient_universal_id || "Someone";
+
+    toast.custom(
+      makeToast({
+        icon: <CheckCircle2 className="w-5 h-5 text-blue-400" />,
+        iconBg: "bg-blue-500/15 border border-blue-500/25",
+        label: "Payment Sent",
+        headline: `-${amount} ${currency}`,
+        sub: `to ${recipient}@Zp`,
+      }),
+      { duration: 7000, position: "top-center" }
+    );
+  }, []);
+
   // ─── Escrow contract update ─────────────────────────────────────────────────
   const showContractToast = useCallback((contract: any, isFreelancer: boolean) => {
     const status: string = contract.status || "";
@@ -139,7 +157,7 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
 
     // ── P2P incoming payments ──────────────────────────────────────────────────
     const txChannel = supabase
-      .channel(`incoming-payments-${currentUserId}`)
+      .channel(`transactions-${currentUserId}`)
       .on(
         "postgres_changes",
         {
@@ -149,6 +167,16 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
           filter: `recipient_id=eq.${currentUserId}`,
         },
         (payload) => showPaymentToast(payload.new)
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "transactions",
+          filter: `sender_id=eq.${currentUserId}`,
+        },
+        (payload) => showPaymentSentToast(payload.new)
       )
       .subscribe();
 
@@ -190,7 +218,7 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
       supabase.removeChannel(txChannel);
       supabase.removeChannel(contractChannel);
     };
-  }, [currentUserId, currentUniversalId, showPaymentToast, showContractToast]);
+  }, [currentUserId, currentUniversalId, showPaymentToast, showPaymentSentToast, showContractToast]);
 
   return null;
 }
