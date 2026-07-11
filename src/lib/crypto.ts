@@ -166,16 +166,17 @@ export function decryptSecret(encrypted: string): string {
   return plaintext.toString('utf8');
 }
 
-/**
- * Safe wrapper around decryptSecret for use in API routes.
- * Returns null and logs the error instead of throwing, so a decryption failure
- * surfaces as a user-friendly "wallet temporarily unavailable" response.
- */
 export function safeDecryptSecret(encrypted: string | null | undefined): string | null {
   if (!encrypted) return null;
   try {
     return decryptSecret(encrypted);
   } catch (err: any) {
+    // Graceful fallback for older testnet accounts that haven't run the migration script yet
+    if (err.message.includes('plaintext value') && encrypted.startsWith('S') && encrypted.length === 56) {
+      console.warn('[crypto] WARNING: Using unencrypted legacy secret. Please run migrate-encrypt-secrets.ts.');
+      return encrypted;
+    }
+
     // Log server-side but never surface key details externally
     console.error('[crypto] safeDecryptSecret failed:', err.message);
     return null;
