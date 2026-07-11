@@ -1,32 +1,5 @@
-/**
- * cctp.ts — Circle Cross-Chain Transfer Protocol (CCTP) integration
- *
- * Architecture:
- *   1. User wants to deposit USDC from Ethereum/Base to their Z-Pay (Stellar) wallet.
- *   2. User sends USDC to the platform's EVM receiver address on the source chain,
- *      including their Z-Pay universal_id as a transfer memo (via Circle's depositForBurn).
- *   3. Our webhook polls Circle's Iris attestation API every ~2 minutes.
- *   4. When attested, we call the Stellar CCTP MessageTransmitter contract to mint
- *      USDC to the user's Stellar address.
- *   5. We credit `stellar_deposits` and mark the cctp_deposit_intent as 'completed'.
- *
- * Circle CCTP v2 testnet domains:
- *   Ethereum Sepolia : 0
- *   Base Sepolia     : 6
- *
- * Circle CCTP v2 mainnet domains:
- *   Ethereum         : 0
- *   Base             : 6
- *   Avalanche        : 1
- *   Arbitrum         : 3
- *   Optimism         : 2
- *   Polygon          : 7
- *   Solana           : 5 (different mechanism)
- *
- * Docs: https://developers.circle.com/stablecoins/docs/cctp-getting-started
- */
-
 import { supabaseAdmin } from './supabase';
+import { StrKey } from '@stellar/stellar-sdk';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -51,7 +24,6 @@ const STELLAR_CCTP_DOMAIN = 5; // Placeholder — update when Circle publishes S
 export interface CctpChainConfig {
   chain:            string;
   domain:           number;
-  receiverAddress:  string;   // Platform EVM wallet on this chain
   usdcAddress:      string;   // USDC contract on this chain
   tokenMessenger:   string;   // Circle TokenMessenger contract
   messageTransmitter: string; // Circle MessageTransmitter contract
@@ -66,7 +38,6 @@ const TESTNET_CHAINS: Record<string, CctpChainConfig> = {
   ethereum: {
     chain:              'ethereum',
     domain:             0,
-    receiverAddress:    process.env.CCTP_EVM_RECEIVER_ADDRESS ?? '0x0000000000000000000000000000000000000000',
     usdcAddress:        '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238', // Sepolia USDC
     tokenMessenger:     '0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5', // Sepolia TokenMessenger
     messageTransmitter: '0x7865fAfC2db2093669d92c0197e5116c76d60e9f', // Sepolia MessageTransmitter
@@ -78,7 +49,6 @@ const TESTNET_CHAINS: Record<string, CctpChainConfig> = {
   base: {
     chain:              'base',
     domain:             6,
-    receiverAddress:    process.env.CCTP_EVM_RECEIVER_ADDRESS ?? '0x0000000000000000000000000000000000000000',
     usdcAddress:        '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // Base Sepolia USDC
     tokenMessenger:     '0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5', // Base Sepolia TokenMessenger
     messageTransmitter: '0x7865fAfC2db2093669d92c0197e5116c76d60e9f', // Base Sepolia MessageTransmitter
@@ -94,7 +64,6 @@ const MAINNET_CHAINS: Record<string, CctpChainConfig> = {
   ethereum: {
     chain:              'ethereum',
     domain:             0,
-    receiverAddress:    process.env.CCTP_EVM_RECEIVER_ADDRESS_MAINNET ?? '0x0000000000000000000000000000000000000000',
     usdcAddress:        '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // Mainnet USDC
     tokenMessenger:     '0xBd3fa81B58Ba92a82136038B25aDec7066af3155',
     messageTransmitter: '0x0a992d191DEeC32aFe36203Ad87D7d289a738F81',
@@ -106,7 +75,6 @@ const MAINNET_CHAINS: Record<string, CctpChainConfig> = {
   base: {
     chain:              'base',
     domain:             6,
-    receiverAddress:    process.env.CCTP_EVM_RECEIVER_ADDRESS_MAINNET ?? '0x0000000000000000000000000000000000000000',
     usdcAddress:        '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // Base mainnet USDC
     tokenMessenger:     '0x1682Ae6375C4E4A97e4B583BC394c861A46D8962',
     messageTransmitter: '0xAD09780d193884d503182aD4588450C416D6F9D4',
@@ -135,7 +103,7 @@ export interface DepositInstructions {
   chain:            string;
   chainDisplayName: string;
   domain:           number;
-  receiverAddress:  string;
+  mintRecipient:    string;
   usdcContractAddress: string;
   tokenMessengerAddress: string;
   minUsdc:          number;
@@ -160,11 +128,15 @@ export function generateDepositInstructions(
   const config = getChainConfig(chain);
   if (!config) return null;
 
+  // Convert Stellar Ed25519 public key to bytes32 hex for Circle CCTP mintRecipient
+  const mintRecipientBuffer = StrKey.decodeEd25519PublicKey(userStellarAddress);
+  const mintRecipientHex = '0x' + Buffer.from(mintRecipientBuffer).toString('hex');
+
   return {
     chain:                 config.chain,
     chainDisplayName:      chain === 'base' ? 'Base (Coinbase L2)' : 'Ethereum',
     domain:                config.domain,
-    receiverAddress:       config.receiverAddress,
+    mintRecipient:         mintRecipientHex,
     usdcContractAddress:   config.usdcAddress,
     tokenMessengerAddress: config.tokenMessenger,
     minUsdc:               config.minUsdc,
@@ -172,7 +144,7 @@ export function generateDepositInstructions(
     destinationDomain:     STELLAR_CCTP_DOMAIN,
     steps: [
       `Approve USDC for the TokenMessenger contract: ${config.tokenMessenger}`,
-      `Call depositForBurn(amount, destinationDomain=${STELLAR_CCTP_DOMAIN}, mintRecipient=<your Stellar address padded to bytes32>, burnToken=${config.usdcAddress})`,
+      `Call depositForBurn(amount, destinationDomain=${STELLAR_CCTP_DOMAIN}, mintRecipient=${mintRecipientHex}, burnToken=${config.usdcAddress})`,
       `Or use the Z-Pay mobile app / MetaMask snap for one-tap bridging`,
       `After ~5-15 minutes, your Z-Pay balance will update automatically`,
     ],

@@ -629,18 +629,18 @@ export default function AddFundsPage() {
 
                       {(cctpStatus === 'ready' || cctpStatus === 'submitted') && cctpInstructions && (
                         <>
-                          {/* Receiver address */}
+                          {/* Mint Recipient */}
                           <div className="space-y-2">
                             <p className="text-xs text-zinc-500 uppercase tracking-wider font-bold">
-                              Send USDC on {cctpChain === 'base' ? 'Base' : 'Ethereum'} to this address
+                              Use this mintRecipient for depositForBurn()
                             </p>
                             <div className="flex items-center gap-2 bg-black/50 border border-purple-500/20 rounded-2xl px-4 py-3">
                               <span className="flex-1 text-xs text-purple-300 font-mono break-all">
-                                {cctpInstructions.receiverAddress}
+                                {cctpInstructions.mintRecipient}
                               </span>
                               <button
                                 onClick={() => {
-                                  navigator.clipboard.writeText(cctpInstructions.receiverAddress);
+                                  navigator.clipboard.writeText(cctpInstructions.mintRecipient);
                                   setCctpCopied(true);
                                   setTimeout(() => setCctpCopied(false), 2000);
                                 }}
