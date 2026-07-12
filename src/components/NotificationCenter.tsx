@@ -181,7 +181,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
 
     // ── Transactions channel ──────────────────────────────────────────────────
     const txChannel = supabase
-      .channel(`notif-tx-${currentUserId}`)
+      .channel(`notif-tx-${currentUserId}-${Date.now()}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "transactions", filter: `recipient_id=eq.${currentUserId}` },
@@ -196,7 +196,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
 
     // ── Contracts channel (payer) ─────────────────────────────────────────────
     const contractPayerChannel = supabase
-      .channel(`notif-contracts-payer-${currentUserId}`)
+      .channel(`notif-contracts-payer-${currentUserId}-${Date.now()}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "contracts", filter: `payer_id=eq.${currentUserId}` },
@@ -211,7 +211,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
 
     // ── Contracts channel (freelancer) ────────────────────────────────────────
     const contractFreelancerChannel = supabase
-      .channel(`notif-contracts-freelancer-${currentUserId}`)
+      .channel(`notif-contracts-freelancer-${currentUserId}-${Date.now()}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "contracts", filter: `freelancer_id=eq.${currentUserId}` },

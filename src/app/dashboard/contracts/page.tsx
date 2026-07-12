@@ -230,7 +230,7 @@ export default function ContractsPage() {
 
     // ── Realtime: auto-refresh when any contract changes ──────────────────────
     const channel = supabase
-      .channel('contracts-page-realtime')
+      .channel(`contracts-page-realtime-${Date.now()}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'contracts' }, () => fetchContracts())
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'contracts' }, () => fetchContracts())
       .subscribe();
