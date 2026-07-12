@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Send, QrCode, History, User, Scan, LayoutDashboard, Store, Settings, FileText, Users, TrendingUp, BarChart2, Radio, Shield } from "lucide-react";
+import { Send, QrCode, History, User, Scan, LayoutDashboard, Store, Settings, FileText, Users, TrendingUp, BarChart2, Radio, Shield, Server } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/Logo";
 import { Background } from "@/components/Background";
@@ -52,6 +52,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: "Vault",       icon: TrendingUp,       href: "/dashboard/savings" },
     { label: "Pay Merchant",icon: Store,            href: "/dashboard/merchant" },
     { label: "Contracts",   icon: FileText,         href: "/dashboard/contracts" },
+    { label: "X-402 APIs",  icon: Server,           href: "/dashboard/x402" },
     { label: "My Code",     icon: QrCode,           href: "/dashboard/receive" },
   ];
 

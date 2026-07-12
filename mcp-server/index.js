@@ -10,7 +10,7 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mumdfrgyxhddtyuebonc.supabase.co";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bWRmcmd5eGhkZHR5dWVib25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4NjExNzksImV4cCI6MjA5NzQzNzE3OX0.D7TBeq0xupZhqGyQ5d2xplFkLqAz189L2ueq-Eb-i-g";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_GjX76to1Jg_B8NuL1ty30Q_pZZkiZaZ";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
@@ -75,17 +75,27 @@ async function createMcpServerForUser(email, password) {
           },
         },
         {
-          name: "send_payment",
-          description: "Send XLM to another Zpay user by their universal ID.",
+          name: "zpay_send_payment",
+          description: "Send a payment (XLM) to another Z-Pay user. This enables autonomous payment for API access (X402 protocol).",
           inputSchema: {
             type: "object",
             properties: {
-              recipient_universal_id: { type: "string" },
-              amount: { type: "string" },
-              memo: { type: "string" }
+              recipient_universal_id: { type: "string", description: "The @Zp ID of the recipient" },
+              amount: { type: "string", description: "Amount in XLM to send" },
+              memo: { type: "string", description: "Optional transaction memo or purpose" }
             },
             required: ["recipient_universal_id", "amount"],
           },
+        },
+        {
+          name: "zpay_get_history",
+          description: "Fetch the user's transaction history.",
+          inputSchema: { type: "object", properties: {} },
+        },
+        {
+          name: "zpay_get_profile",
+          description: "Get the current authenticated user's profile details (including their universal ID and stellar address).",
+          inputSchema: { type: "object", properties: {} },
         },
         {
           name: "create_escrow",
@@ -195,6 +205,45 @@ async function createMcpServerForUser(email, password) {
         });
 
         return { content: [{ type: "text", text: `Successfully sent ${amount} XLM. TxHash: ${result.hash}` }] };
+      }
+
+      if (request.params.name === "zpay_get_history") {
+        const { data: sent } = await supabaseAdmin
+          .from('transactions')
+          .select('*')
+          .eq('sender_id', profile.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        const { data: received } = await supabaseAdmin
+          .from('transactions')
+          .select('*')
+          .eq('recipient_id', profile.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        const allMap = new Map();
+        for (const tx of [...(sent || []), ...(received || [])]) {
+          allMap.set(tx.id, tx);
+        }
+        const merged = Array.from(allMap.values()).sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        ).slice(0, 20);
+
+        if (merged.length === 0) return { content: [{ type: "text", text: "No transactions found." }] };
+
+        const lines = merged.map(tx => {
+          const type = tx.sender_id === profile.id ? "SENT" : "RECEIVED";
+          const otherId = type === "SENT" ? tx.recipient_universal_id : tx.sender_universal_id;
+          return `[${tx.created_at}] ${type} ${tx.amount} ${tx.currency} (Hash: ${tx.tx_hash}, Peer: ${otherId}@Zp, Status: ${tx.status})`;
+        });
+
+        return { content: [{ type: "text", text: "Transaction History:\n" + lines.join("\n") }] };
+      }
+
+      if (request.params.name === "zpay_get_profile") {
+        const details = `Universal ID: ${profile.universal_id}@Zp\nFull Name: ${profile.full_name}\nEmail: ${profile.email}\nStellar Address: ${profile.stellar_address}`;
+        return { content: [{ type: "text", text: details }] };
       }
 
       if (request.params.name === "create_escrow") {

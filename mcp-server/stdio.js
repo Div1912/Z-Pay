@@ -7,7 +7,7 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mumdfrgyxhddtyuebonc.supabase.co";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bWRmcmd5eGhkZHR5dWVib25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4NjExNzksImV4cCI6MjA5NzQzNzE3OX0.D7TBeq0xupZhqGyQ5d2xplFkLqAz189L2ueq-Eb-i-g";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_GjX76to1Jg_B8NuL1ty30Q_pZZkiZaZ";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
@@ -91,6 +91,16 @@ async function runMcpServer() {
           },
         },
         {
+          name: "zpay_get_history",
+          description: "Fetch the user's transaction history.",
+          inputSchema: { type: "object", properties: {} },
+        },
+        {
+          name: "zpay_get_profile",
+          description: "Get the current authenticated user's profile details (including their universal ID and stellar address).",
+          inputSchema: { type: "object", properties: {} },
+        },
+        {
           name: "zpay_pay_x402",
           description: "Pay an X402/L402 invoice to access a premium API. Automatically handles platform fees if required.",
           inputSchema: {
@@ -103,6 +113,52 @@ async function runMcpServer() {
               fee_amount: { type: "string", description: "Optional platform fee amount in XLM" }
             },
             required: ["merchant_address", "amount", "invoice_id"],
+          },
+        },
+        {
+          name: "zpay_create_split_contract",
+          description: "Execute a split contract by sending XLM to multiple recipients atomically in a single transaction.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              splits: { 
+                type: "array", 
+                items: {
+                  type: "object",
+                  properties: {
+                    address: { type: "string", description: "Stellar address of recipient" },
+                    amount: { type: "string", description: "Amount in XLM" }
+                  },
+                  required: ["address", "amount"]
+                },
+                description: "Array of recipients and amounts" 
+              },
+              memo: { type: "string", description: "Optional transaction memo" }
+            },
+            required: ["splits"],
+          },
+        },
+        {
+          name: "zpay_transaction_history",
+          description: "Fetch the recent Stellar on-chain transaction history for the user's wallet.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              limit: { type: "number", description: "Number of recent transactions to fetch (default 5)" }
+            }
+          },
+        },
+        {
+          name: "zpay_create_time_lock_contract",
+          description: "Create an escrow/time-locked payment that cannot be submitted until a specific future timestamp.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              destination: { type: "string", description: "The recipient's Stellar address" },
+              amount: { type: "string", description: "Amount in XLM" },
+              unlock_timestamp_seconds: { type: "number", description: "Unix timestamp (in seconds) when the funds unlock" }
+            },
+            required: ["destination", "amount", "unlock_timestamp_seconds"],
           },
         }
       ],
@@ -172,6 +228,49 @@ async function runMcpServer() {
         return { content: [{ type: "text", text: `Successfully sent ${amount} XLM to ${recipient_universal_id}. TxHash: ${result.hash}` }] };
       }
 
+      if (request.params.name === "zpay_get_history") {
+        // Fetch outgoing transactions
+        const { data: sent } = await supabaseAdmin
+          .from('transactions')
+          .select('*')
+          .eq('sender_id', profile.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        // Fetch incoming transactions
+        const { data: received } = await supabaseAdmin
+          .from('transactions')
+          .select('*')
+          .eq('recipient_id', profile.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        const allMap = new Map();
+        for (const tx of [...(sent || []), ...(received || [])]) {
+          allMap.set(tx.id, tx);
+        }
+        const merged = Array.from(allMap.values()).sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        ).slice(0, 20);
+
+        if (merged.length === 0) {
+          return { content: [{ type: "text", text: "No transactions found." }] };
+        }
+
+        const lines = merged.map(tx => {
+          const type = tx.sender_id === profile.id ? "SENT" : "RECEIVED";
+          const otherId = type === "SENT" ? tx.recipient_universal_id : tx.sender_universal_id;
+          return `[${tx.created_at}] ${type} ${tx.amount} ${tx.currency} (Hash: ${tx.tx_hash}, Peer: ${otherId}@Zp, Status: ${tx.status})`;
+        });
+
+        return { content: [{ type: "text", text: "Transaction History:\n" + lines.join("\n") }] };
+      }
+
+      if (request.params.name === "zpay_get_profile") {
+        const details = `Universal ID: ${profile.universal_id}@Zp\nFull Name: ${profile.full_name}\nEmail: ${profile.email}\nStellar Address: ${profile.stellar_address}`;
+        return { content: [{ type: "text", text: details }] };
+      }
+
       if (request.params.name === "zpay_pay_x402") {
         const { merchant_address, amount, invoice_id, fee_address, fee_amount } = request.params.arguments;
 
@@ -207,6 +306,86 @@ async function runMcpServer() {
         const result = await HORIZON_SERVER.submitTransaction(transaction);
 
         return { content: [{ type: "text", text: `Successfully paid X402 invoice! TxHash: ${result.hash}. You can now replay your API request using this TxHash as proof.` }] };
+      }
+
+      if (request.params.name === "zpay_create_split_contract") {
+        const { splits, memo } = request.params.arguments;
+        
+        const sourceKeypair = StellarSdk.Keypair.fromSecret(profile.stellar_secret);
+        const sourceAccount = await HORIZON_SERVER.loadAccount(sourceKeypair.publicKey());
+
+        const txBuilder = new StellarSdk.TransactionBuilder(sourceAccount, {
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase: NETWORK_PASSPHRASE,
+        });
+
+        for (const split of splits) {
+          txBuilder.addOperation(
+            StellarSdk.Operation.payment({
+              destination: split.address,
+              asset: StellarSdk.Asset.native(),
+              amount: String(split.amount),
+            })
+          );
+        }
+
+        if (memo) txBuilder.addMemo(StellarSdk.Memo.text(memo.substring(0, 28)));
+        txBuilder.setTimeout(30);
+
+        const transaction = txBuilder.build();
+        transaction.sign(sourceKeypair);
+        const result = await HORIZON_SERVER.submitTransaction(transaction);
+
+        return { content: [{ type: "text", text: `Successfully executed split contract! TxHash: ${result.hash}` }] };
+      }
+
+      if (request.params.name === "zpay_transaction_history") {
+        const { limit = 5 } = request.params.arguments;
+        const page = await HORIZON_SERVER.payments()
+          .forAccount(profile.stellar_address)
+          .order("desc")
+          .limit(limit)
+          .call();
+          
+        const history = page.records.map(r => {
+          if (r.type === 'payment' && r.asset_type === 'native') {
+            const isSender = r.from === profile.stellar_address;
+            return `${r.created_at}: ${isSender ? 'SENT' : 'RECEIVED'} ${r.amount} XLM ${isSender ? 'to ' + r.to : 'from ' + r.from} (Hash: ${r.transaction_hash})`;
+          }
+          return null;
+        }).filter(Boolean);
+
+        return { content: [{ type: "text", text: `Recent transactions:\n${history.join('\n') || 'No recent native XLM payments found.'}` }] };
+      }
+
+      if (request.params.name === "zpay_create_time_lock_contract") {
+        const { destination, amount, unlock_timestamp_seconds } = request.params.arguments;
+
+        const sourceKeypair = StellarSdk.Keypair.fromSecret(profile.stellar_secret);
+        const sourceAccount = await HORIZON_SERVER.loadAccount(sourceKeypair.publicKey());
+
+        const txBuilder = new StellarSdk.TransactionBuilder(sourceAccount, {
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase: NETWORK_PASSPHRASE,
+          timebounds: {
+            minTime: String(unlock_timestamp_seconds),
+            maxTime: "0"
+          }
+        });
+
+        txBuilder.addOperation(
+          StellarSdk.Operation.payment({
+            destination: destination,
+            asset: StellarSdk.Asset.native(),
+            amount: String(amount),
+          })
+        );
+
+        const transaction = txBuilder.build();
+        transaction.sign(sourceKeypair);
+        const xdr = transaction.toEnvelope().toXDR('base64');
+
+        return { content: [{ type: "text", text: `Time-locked contract created! This transaction CANNOT be submitted until timestamp ${unlock_timestamp_seconds}.\n\nTransaction XDR to submit later:\n${xdr}` }] };
       }
 
       throw new Error(`Unknown tool: ${request.params.name}`);
