@@ -12,6 +12,7 @@ import {
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 interface Contract {
   id: string;
@@ -226,6 +227,15 @@ export default function ContractsPage() {
 
   useEffect(() => {
     fetchContracts();
+
+    // ── Realtime: auto-refresh when any contract changes ──────────────────────
+    const channel = supabase
+      .channel('contracts-page-realtime')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'contracts' }, () => fetchContracts())
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'contracts' }, () => fetchContracts())
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
   }, [fetchContracts]);
 
   const resolveRecipient = useCallback(async (username: string) => {

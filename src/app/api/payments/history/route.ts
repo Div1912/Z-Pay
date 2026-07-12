@@ -4,25 +4,34 @@ import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET() {
   const user = await getUser();
-  console.log('History API - User:', user?.id);
-  
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { data, error } = await supabaseAdmin
+  // Fetch as sender (outgoing payments)
+  const { data: sent } = await supabaseAdmin
     .from('transactions')
     .select('*')
-    .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
+    .eq('sender_id', user.id)
     .order('created_at', { ascending: false })
     .limit(50);
 
-  console.log('History API - Query result:', { dataCount: data?.length, error });
+  // Fetch as recipient (incoming payments, refunds from escrow where sender_id may be null)
+  const { data: received } = await supabaseAdmin
+    .from('transactions')
+    .select('*')
+    .eq('recipient_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(50);
 
-  if (error) {
-    console.error('Transactions fetch error:', error);
-    return NextResponse.json({ error: 'Failed to fetch history' }, { status: 500 });
+  // Merge and deduplicate by id, sort newest first
+  const allMap = new Map<string, any>();
+  for (const tx of [...(sent || []), ...(received || [])]) {
+    allMap.set(tx.id, tx);
   }
+  const merged = Array.from(allMap.values()).sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  ).slice(0, 100);
 
-  return NextResponse.json(data || []);
+  return NextResponse.json(merged);
 }

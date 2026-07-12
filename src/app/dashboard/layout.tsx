@@ -8,6 +8,7 @@ import { Logo } from "@/components/ui/Logo";
 import { Background } from "@/components/Background";
 import { InactivityGuard } from "@/components/InactivityGuard";
 import { PaymentNotification } from "@/components/PaymentNotification";
+import { NotificationCenter } from "@/components/NotificationCenter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -74,8 +75,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* ── Desktop Sidebar ── */}
       <aside className="hidden lg:flex fixed inset-y-0 left-0 w-72 xl:w-80 bg-black/40 backdrop-blur-3xl border-r border-white/5 flex-col p-6 xl:p-8 z-40">
-        <div className="mb-8 shrink-0">
+        <div className="mb-8 shrink-0 flex items-center justify-between">
           <Link href="/"><Logo /></Link>
+          {currentUser && (
+            <NotificationCenter
+              currentUserId={currentUser.id}
+              currentUniversalId={currentUser.universal_id}
+            />
+          )}
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto scrollbar-hide">
@@ -144,12 +151,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* ── Mobile Top Header ── */}
       <header className="lg:hidden sticky top-0 z-40 bg-black/40 backdrop-blur-2xl border-b border-white/5 px-4 h-16 flex items-center justify-between">
         <Link href="/dashboard"><Logo size="small" /></Link>
-        <Link
-          href="/dashboard/settings"
-          className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
-        >
-          <Settings className="w-5 h-5 text-white/70" />
-        </Link>
+        <div className="flex items-center gap-2">
+          {currentUser && (
+            <NotificationCenter
+              currentUserId={currentUser.id}
+              currentUniversalId={currentUser.universal_id}
+            />
+          )}
+          <Link
+            href="/dashboard/settings"
+            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
+          >
+            <Settings className="w-5 h-5 text-white/70" />
+          </Link>
+        </div>
       </header>
 
       <main className="lg:pl-72 xl:pl-80 pb-28 lg:pb-0">
