@@ -46,7 +46,7 @@ export function withX402(
       const m = macaroon.importMacaroon(macaroonBase64);
       m.verify(MACAROON_SECRET, () => null); 
       
-      const invoiceId = m.identifier;
+      const invoiceId = Buffer.from(m.identifier).toString('utf8');
 
       // 4. Verify Stellar Transaction
       const tx = await server.transactions().transaction(txHash).call();
@@ -127,7 +127,7 @@ function issue402Challenge(options: X402Options) {
     location: "zpay-x402-gateway"
   });
 
-  const macaroonBase64 = m.exportMacaroon();
+  const macaroonBase64 = Buffer.from(m.exportBinary()).toString('base64');
 
   const response = NextResponse.json(
     { 
