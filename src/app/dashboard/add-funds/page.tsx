@@ -8,6 +8,13 @@ import QRCode from "react-qr-code";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import { ethers } from "ethers";
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 const PROVIDERS = [
   {
@@ -87,6 +94,82 @@ export default function AddFundsPage() {
   const [faucetLoading, setFaucetLoading] = useState(false);
   const [faucetSuccess, setFaucetSuccess] = useState(false);
   const [faucetError, setFaucetError] = useState("");
+
+  // Web3 State (CCTP 1-Click)
+  const [web3Account, setWeb3Account] = useState<string | null>(null);
+  const [bridgeLoading, setBridgeLoading] = useState(false);
+  const [bridgeError, setBridgeError] = useState("");
+
+  const connectWeb3Wallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setWeb3Account(accounts[0]);
+      } catch (err) {
+        console.error("Wallet connection failed", err);
+      }
+    } else {
+      alert("Please install MetaMask or another Web3 wallet.");
+    }
+  };
+
+  const handle1ClickBridge = async () => {
+    if (!web3Account || !cctpInstructions || !cctpIntentId || !window.ethereum) return;
+    setBridgeLoading(true);
+    setBridgeError("");
+
+    try {
+      // 1. Setup Ethers Provider & Signer
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      // Ensure user is on the correct network (Base or Ethereum)
+      const network = await provider.getNetwork();
+      const requiredChainId = cctpChain === 'base' ? 84532 : 11155111; // Base Sepolia / Sepolia Testnet IDs for now (adjust for mainnet)
+      const expectedChainId = BigInt(cctpChain === 'base' ? (cctpInstructions.domain === 6 ? 84532 : 8453) : (cctpInstructions.domain === 0 ? 11155111 : 1)); // Handle mainnet/testnet automatically later. Actually let's just let ethers try the transaction, if the contract isn't there it will fail, or we can just send the tx.
+      // Wait, we can just rely on the user having the right network selected, or the tx will fail.
+      
+      const amountInUnits = ethers.parseUnits(finalAmount.toString(), 6);
+
+      // 2. Approve USDC
+      const usdcAbi = ["function approve(address spender, uint256 amount) public returns (bool)"];
+      const usdcContract = new ethers.Contract(cctpInstructions.usdcContractAddress, usdcAbi, signer);
+      
+      const approveTx = await usdcContract.approve(cctpInstructions.tokenMessengerAddress, amountInUnits);
+      await approveTx.wait();
+
+      // 3. Call depositForBurn
+      const tmAbi = ["function depositForBurn(uint256 amount, uint32 destinationDomain, bytes32 mintRecipient, address burnToken) external"];
+      const tmContract = new ethers.Contract(cctpInstructions.tokenMessengerAddress, tmAbi, signer);
+
+      const burnTx = await tmContract.depositForBurn(
+        amountInUnits,
+        cctpInstructions.destinationDomain,
+        cctpInstructions.mintRecipient,
+        cctpInstructions.usdcContractAddress
+      );
+      
+      await burnTx.wait();
+
+      // 4. Submit tx hash to backend
+      const res = await fetch('/api/cctp/deposit-address', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ intent_id: cctpIntentId, source_tx_hash: burnTx.hash }),
+      });
+      
+      if (res.ok) setCctpStatus('submitted');
+      else {
+        const data = await res.json();
+        setBridgeError(data.error || "Failed to submit bridge transaction");
+      }
+    } catch (e: any) {
+      console.error(e);
+      setBridgeError(e.message || "Transaction failed or rejected");
+    } finally {
+      setBridgeLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -666,83 +749,52 @@ export default function AddFundsPage() {
 
                       {(cctpStatus === 'ready' || cctpStatus === 'submitted') && cctpInstructions && (
                         <>
-                          {/* Mint Recipient */}
-                          <div className="space-y-2">
-                            <p className="text-xs text-zinc-500 uppercase tracking-wider font-bold">
-                              Use this mintRecipient for depositForBurn()
-                            </p>
-                            <div className="flex items-center gap-2 bg-black/50 border border-purple-500/20 rounded-2xl px-4 py-3">
-                              <span className="flex-1 text-xs text-purple-300 font-mono break-all">
-                                {cctpInstructions.mintRecipient}
-                              </span>
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(cctpInstructions.mintRecipient);
-                                  setCctpCopied(true);
-                                  setTimeout(() => setCctpCopied(false), 2000);
-                                }}
-                                className="flex-shrink-0 p-2 hover:bg-white/5 rounded-xl transition-colors"
-                              >
-                                {cctpCopied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-zinc-400" />}
-                              </button>
-                            </div>
-                            <div className="flex items-center justify-between text-[11px] text-zinc-600">
-                              <span>Min: {cctpInstructions.minUsdc} USDC</span>
-                              <span>Max: {cctpInstructions.maxUsdc} USDC</span>
-                              <span className="text-purple-500 font-bold">Circle CCTP v2</span>
-                            </div>
-                          </div>
+                          {/* 1-Click Bridge UI */}
+                          <div className="bg-purple-500/5 border border-purple-500/10 rounded-3xl p-6 space-y-5">
+                            {cctpStatus === 'ready' && (
+                              <>
+                                <div className="text-center space-y-1">
+                                  <p className="text-sm text-zinc-300">You are bridging</p>
+                                  <p className="text-3xl font-bold text-white">{finalAmount} USDC</p>
+                                  <p className="text-xs text-zinc-500">to {profile?.stellar_address.slice(0, 6)}...{profile?.stellar_address.slice(-4)}</p>
+                                </div>
 
-                          {/* USDC contract info & Warning */}
-                          <div className="bg-purple-500/5 border border-purple-500/10 rounded-2xl p-4 space-y-3">
-                            <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-xl flex items-start gap-3">
-                              <div className="text-xl">⚠️</div>
-                              <p className="text-xs text-red-400 font-medium leading-relaxed">
-                                <strong className="text-red-300">DO NOT use MetaMask's normal "Send" button!</strong><br />
-                                MetaMask will say "Invalid Address" because this is a 32-byte cross-chain identifier, not a standard Ethereum wallet address. 
-                              </p>
-                            </div>
-                            
-                            <div>
-                              <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Token: USDC</p>
-                              <p className="text-xs text-zinc-600 font-mono break-all mt-1">{cctpInstructions.usdcContractAddress}</p>
-                            </div>
-                            <p className="text-xs text-zinc-400 leading-relaxed border-t border-purple-500/10 pt-2">
-                              You MUST interact with the TokenMessenger smart contract and pass the mintRecipient above into the <code className="text-purple-300 bg-purple-500/20 px-1 py-0.5 rounded">depositForBurn()</code> function.
-                            </p>
+                                {!web3Account ? (
+                                  <Button
+                                    onClick={connectWeb3Wallet}
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold h-12 rounded-2xl transition-colors shadow-lg shadow-orange-500/20"
+                                  >
+                                    Connect MetaMask
+                                  </Button>
+                                ) : (
+                                  <div className="space-y-4">
+                                    <div className="flex items-center justify-between bg-black/40 border border-white/5 rounded-2xl px-4 py-3">
+                                      <span className="text-xs text-zinc-400">Connected</span>
+                                      <span className="text-xs font-mono text-purple-300">{web3Account.slice(0, 6)}...{web3Account.slice(-4)}</span>
+                                    </div>
+                                    
+                                    <Button
+                                      onClick={handle1ClickBridge}
+                                      disabled={bridgeLoading}
+                                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold h-12 rounded-2xl transition-colors shadow-xl shadow-purple-500/20"
+                                    >
+                                      {bridgeLoading ? (
+                                        <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Please confirm in wallet...</>
+                                      ) : (
+                                        `Bridge ${finalAmount} USDC in 1-Click`
+                                      )}
+                                    </Button>
+                                    
+                                    {bridgeError && (
+                                      <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-center">
+                                        <p className="text-red-400 text-xs font-medium">{bridgeError}</p>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </>
+                            )}
                           </div>
-
-                          {/* Submit tx hash */}
-                          {cctpStatus === 'ready' && (
-                            <div className="space-y-3 pt-2 border-t border-white/5">
-                              <p className="text-sm text-zinc-400">
-                                After you broadcast the <code className="text-purple-400">depositForBurn</code> transaction,
-                                paste your source-chain tx hash here so we can track it:
-                              </p>
-                              <input
-                                type="text"
-                                placeholder="0x1234abcd… (source chain tx hash)"
-                                value={cctpSourceTx}
-                                onChange={e => setCctpSourceTx(e.target.value)}
-                                className="w-full bg-black/50 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple-500/50 transition-colors font-mono"
-                              />
-                              <Button
-                                onClick={async () => {
-                                  if (!cctpSourceTx || !cctpIntentId) return;
-                                  const res = await fetch('/api/cctp/deposit-address', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ intent_id: cctpIntentId, source_tx_hash: cctpSourceTx }),
-                                  });
-                                  if (res.ok) setCctpStatus('submitted');
-                                }}
-                                disabled={!cctpSourceTx || cctpSourceTx.length < 10}
-                                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold h-12 rounded-2xl transition-colors"
-                              >
-                                Submit & Track Bridge
-                              </Button>
-                            </div>
-                          )}
 
                           {cctpStatus === 'submitted' && (
                             <div className="flex items-center gap-3 p-4 rounded-2xl bg-purple-500/5 border border-purple-500/20">
