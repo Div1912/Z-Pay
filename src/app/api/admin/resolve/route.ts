@@ -129,14 +129,14 @@ export async function POST(request: Request) {
       await supabaseAdmin
         .from('transactions')
         .insert({
-          sender_id:              contract.freelancer_id, // technically from escrow, but returning to payer
+          sender_id:              null,           // funds come from escrow, not the freelancer
           recipient_id:           contract.payer_id,
-          sender_universal_id:    contract.freelancer_universal_id,
+          sender_universal_id:    'Escrow',       // shown as "from Escrow" in history
           recipient_universal_id: contract.payer_universal_id,
           amount:                 contract.amount,
           currency:               contract.currency,
           tx_hash:                txHash,
-          status:                 'completed',
+          status:                 'refunded',     // distinct status so UI shows "Refunded" not "Completed"
           note:                   `Arbiter Resolved (Refunded Client): ${contract.title}`,
           purpose:                'Dispute Refund',
         });

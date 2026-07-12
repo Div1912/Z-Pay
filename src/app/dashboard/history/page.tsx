@@ -397,19 +397,25 @@ export default function HistoryPage() {
                         {isDeposit && (
                           <DepositStatusBadge deposit={tx} />
                         )}
-                        {!isDeposit && (
-                          <span className={cn(
-                            "text-[9px] font-black uppercase tracking-widest",
-                            tx.status === 'completed' || tx.status === 'confirmed'
-                              ? "text-green-500" : "text-zinc-500"
-                          )}>
-                            {tx.status}
-                          </span>
-                        )}
+                        {!isDeposit && (() => {
+                          const statusMap: Record<string, { label: string; color: string }> = {
+                            completed:  { label: 'Completed',      color: 'text-green-500' },
+                            confirmed:  { label: 'Confirmed',      color: 'text-green-500' },
+                            refunded:   { label: 'Refunded',       color: 'text-blue-400' },
+                            pending:    { label: 'Pending',        color: 'text-yellow-400' },
+                            failed:     { label: 'Failed',         color: 'text-red-400' },
+                          };
+                          const s = statusMap[tx.status] ?? { label: tx.status, color: 'text-zinc-500' };
+                          return (
+                            <span className={cn('text-[9px] font-black uppercase tracking-widest', s.color)}>
+                              {s.label}
+                            </span>
+                          );
+                        })()}
                         <div className="flex items-center gap-1 text-zinc-600">
                           <Calendar className="w-3 h-3" />
                           <span className="text-[9px] font-black uppercase tracking-widest">
-                            {format(new Date(tx.created_at), 'MMM d, yyyy')}
+                            {format(new Date(tx.created_at), 'MMM d, yyyy · h:mm a')}
                           </span>
                         </div>
                         {isDeposit && tx.from_address && (
@@ -438,14 +444,20 @@ export default function HistoryPage() {
                           <p className={cn(
                             "text-xl md:text-2xl font-black tracking-tighter leading-none mb-1",
                             isDeposit ? "text-purple-400"
+                              : tx.status === 'refunded' ? "text-blue-400"
                               : isReceived ? "text-green-500"
                               : "text-white"
                           )}>
-                            {(isReceived || isDeposit) ? '+' : '-'}{tx.amount}
+                            {(isReceived || isDeposit || tx.status === 'refunded') ? '+' : '-'}{tx.amount}
                             <span className="text-xs text-zinc-500 ml-1 uppercase tracking-wider">
                               {tx.currency || tx.asset || 'XLM'}
                             </span>
                           </p>
+                          {tx.note && !tx.note.startsWith('XLM:') && tx.note.length < 60 && (
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-zinc-600 font-black truncate max-w-[160px]">
+                              {tx.note}
+                            </p>
+                          )}
                           {tx.note?.startsWith('XLM:') && (
                             <p className="text-[9px] uppercase tracking-[0.2em] text-zinc-600 font-black">
                               {tx.note.replace('XLM:', '')} XLM on-chain
