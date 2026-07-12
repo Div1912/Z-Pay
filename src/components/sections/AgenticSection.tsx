@@ -11,16 +11,21 @@ import { Spotlight } from "@/components/ui/spotlight";
 gsap.registerPlugin(ScrollTrigger);
 
 const terminalLines = [
-  { text: "$ npx @zpay/mcp-server start", type: "cmd", delay: 0 },
-  { text: "[ZPAY MCP] Starting server on port 3000...", type: "log", delay: 0.8 },
-  { text: "[ZPAY MCP] Connected to Stellar Mainnet.", type: "success", delay: 1.5 },
-  { text: "[Claude] Requesting ZPAY tool execution...", type: "log", delay: 2.2 },
-  { text: "[Claude] Using tool: \"transfer_funds\"", type: "action", delay: 2.8 },
-  { text: "[ZPAY MCP] Executing transfer_funds(amount: 100, asset: ZPAY, destination: GBXZ...)", type: "log", delay: 3.5 },
-  { text: "[ZPAY MCP] Building transaction...", type: "log", delay: 4.2 },
-  { text: "[ZPAY MCP] Signing transaction via Soroban...", type: "log", delay: 4.9 },
-  { text: "[ZPAY MCP] Transaction successful! Hash: 1a2b3c...", type: "success", delay: 6.0 },
-  { text: "$ _", type: "cursor", delay: 6.5 }
+  { text: "{", type: "log", delay: 0 },
+  { text: "  \"mcpServers\": {", type: "log", delay: 0.2 },
+  { text: "    \"zpay-agent\": {", type: "action", delay: 0.4 },
+  { text: "      \"command\": \"node\",", type: "log", delay: 0.6 },
+  { text: "      \"args\": [\"mcp-server/stdio.js\"],", type: "log", delay: 0.8 },
+  { text: "      \"env\": {", type: "log", delay: 1.0 },
+  { text: "        \"ZPAY_EMAIL\": \"agent@domain.com\",", type: "cmd", delay: 1.2 },
+  { text: "        \"ZPAY_PASSWORD\": \"********\"", type: "cmd", delay: 1.4 },
+  { text: "      }", type: "log", delay: 1.6 },
+  { text: "    }", type: "action", delay: 1.8 },
+  { text: "  }", type: "log", delay: 2.0 },
+  { text: "}", type: "log", delay: 2.2 },
+  { text: " ", type: "log", delay: 2.4 },
+  { text: "[ZPAY MCP] Connected via stdio.", type: "success", delay: 3.0 },
+  { text: "[ZPAY MCP] 6 tools registered (x402, split_contract, escrow...)", type: "success", delay: 3.5 }
 ];
 
 export default function AgenticSection() {
@@ -97,7 +102,7 @@ export default function AgenticSection() {
             </h2>
 
             <p className="mt-4 lg:mt-6 text-neutral-400 text-base lg:text-xl max-w-lg leading-relaxed font-medium">
-              ZPAY exposes a powerful MCP server that allows AI models like Claude to autonomously interact with the Stellar blockchain. Pay anyone from your terminal or build autonomous financial agents.
+              Z-Pay exposes a standard Model Context Protocol (MCP) server. Fuse it with any AI terminal like Claude Desktop or Cursor to give your AI agents the power to execute split contracts, bypass X402 paywalls, and audit on-chain history.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
@@ -107,9 +112,9 @@ export default function AgenticSection() {
                   <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
                     <Terminal className="w-5 h-5 text-white/80" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">Terminal Native</h3>
+                  <h3 className="text-lg font-semibold text-white">Universal Standard</h3>
                   <p className="text-neutral-500 text-sm leading-relaxed">
-                    Execute complex Soroban contracts directly from your command line using natural language.
+                    Connect via stdio to any MCP-compatible client. No complicated setup—just add our config file to your AI agent's environment.
                   </p>
                 </div>
               </div>
@@ -120,9 +125,9 @@ export default function AgenticSection() {
                   <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
                     <Bot className="w-5 h-5 text-white/80" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">Claude Integration</h3>
+                  <h3 className="text-lg font-semibold text-white">Advanced Contracts</h3>
                   <p className="text-neutral-500 text-sm leading-relaxed">
-                    Give Claude the tools to analyze your portfolio and autonomously execute split payments.
+                    Empower your agents to natively build atomic split-revenue transactions and time-locked escrow contracts on Stellar.
                   </p>
                 </div>
               </div>
