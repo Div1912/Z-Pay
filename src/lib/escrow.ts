@@ -1,8 +1,8 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
 import { NETWORK_PASSPHRASE, server } from './stellar';
 
-const CONTRACT_ID       = process.env.ESCROW_CONTRACT_ID  || '';
-const TOKEN_CONTRACT_ID = process.env.TOKEN_CONTRACT_ID   || '';
+const CONTRACT_ID       = process.env.ESCROW_CONTRACT_ID  || 'CAGMD6PBDSOSB2NDOE5ZGYCWH74EOBJFHM627WTGLZZF66DBRUFWYSPT';
+const TOKEN_CONTRACT_ID = process.env.TOKEN_CONTRACT_ID   || 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
 
 export type EscrowStatus = 'Funded' | 'Delivered' | 'Released' | 'Disputed' | 'Refunded';
 
