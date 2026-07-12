@@ -7,8 +7,10 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mumdfrgyxhddtyuebonc.supabase.co";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bWRmcmd5eGhkZHR5dWVib25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4NjExNzksImV4cCI6MjA5NzQzNzE3OX0.D7TBeq0xupZhqGyQ5d2xplFkLqAz189L2ueq-Eb-i-g";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_GjX76to1Jg_B8NuL1ty30Q_pZZkiZaZ";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 const HORIZON_SERVER = new StellarSdk.Horizon.Server('https://horizon-testnet.stellar.org');
 const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
@@ -87,6 +89,21 @@ async function runMcpServer() {
             },
             required: ["recipient_universal_id", "amount"],
           },
+        },
+        {
+          name: "zpay_pay_x402",
+          description: "Pay an X402/L402 invoice to access a premium API. Automatically handles platform fees if required.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              merchant_address: { type: "string", description: "The Stellar address of the merchant" },
+              amount: { type: "string", description: "Amount in XLM to pay the merchant" },
+              invoice_id: { type: "string", description: "The invoice ID (memo) from the WWW-Authenticate header" },
+              fee_address: { type: "string", description: "Optional platform fee Stellar address" },
+              fee_amount: { type: "string", description: "Optional platform fee amount in XLM" }
+            },
+            required: ["merchant_address", "amount", "invoice_id"],
+          },
         }
       ],
     };
@@ -113,9 +130,9 @@ async function runMcpServer() {
 
       if (request.params.name === "zpay_send_payment") {
         const { recipient_universal_id, amount, memo } = request.params.arguments;
-        const { data: recipient } = await supabase
+        const { data: recipient } = await supabaseAdmin
           .from('profiles')
-          .select('id, stellar_address')
+          .select('id, stellar_address, universal_id')
           .ilike('universal_id', recipient_universal_id.replace(/@Zp$/i, ''))
           .single();
 
@@ -141,19 +158,55 @@ async function runMcpServer() {
         transaction.sign(sourceKeypair);
         const result = await HORIZON_SERVER.submitTransaction(transaction);
 
-        await supabase.from('transactions').insert({
+        await supabaseAdmin.from('transactions').insert({
           sender_id: profile.id,
           recipient_id: recipient.id,
           sender_universal_id: profile.universal_id,
-          recipient_universal_id: recipient_universal_id,
+          recipient_universal_id: recipient.universal_id || recipient_universal_id,
           amount: amount,
           currency: 'XLM',
           tx_hash: result.hash,
-          status: 'completed',
-          type: 'p2p'
+          status: 'completed'
         });
 
         return { content: [{ type: "text", text: `Successfully sent ${amount} XLM to ${recipient_universal_id}. TxHash: ${result.hash}` }] };
+      }
+
+      if (request.params.name === "zpay_pay_x402") {
+        const { merchant_address, amount, invoice_id, fee_address, fee_amount } = request.params.arguments;
+
+        const sourceKeypair = StellarSdk.Keypair.fromSecret(profile.stellar_secret);
+        const sourceAccount = await HORIZON_SERVER.loadAccount(sourceKeypair.publicKey());
+
+        const txBuilder = new StellarSdk.TransactionBuilder(sourceAccount, {
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase: NETWORK_PASSPHRASE,
+        }).addOperation(
+          StellarSdk.Operation.payment({
+            destination: merchant_address,
+            asset: StellarSdk.Asset.native(),
+            amount: String(amount),
+          })
+        );
+
+        if (fee_address && fee_amount && Number(fee_amount) > 0) {
+          txBuilder.addOperation(
+            StellarSdk.Operation.payment({
+              destination: fee_address,
+              asset: StellarSdk.Asset.native(),
+              amount: String(fee_amount),
+            })
+          );
+        }
+
+        txBuilder.addMemo(StellarSdk.Memo.text(invoice_id.substring(0, 28)));
+        txBuilder.setTimeout(30);
+
+        const transaction = txBuilder.build();
+        transaction.sign(sourceKeypair);
+        const result = await HORIZON_SERVER.submitTransaction(transaction);
+
+        return { content: [{ type: "text", text: `Successfully paid X402 invoice! TxHash: ${result.hash}. You can now replay your API request using this TxHash as proof.` }] };
       }
 
       throw new Error(`Unknown tool: ${request.params.name}`);

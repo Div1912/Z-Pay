@@ -1,0 +1,22 @@
+{
+  "name": "@zpay/x402-gateway",
+  "version": "1.0.0",
+  "description": "Z-Pay X402 Gateway SDK for monetizing API routes on Stellar",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.0.0",
+    "macaroon": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  },
+  "author": "Z-Pay",
+  "license": "MIT"
+}

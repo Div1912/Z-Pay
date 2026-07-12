@@ -10,8 +10,10 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mumdfrgyxhddtyuebonc.supabase.co";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bWRmcmd5eGhkZHR5dWVib25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4NjExNzksImV4cCI6MjA5NzQzNzE3OX0.D7TBeq0xupZhqGyQ5d2xplFkLqAz189L2ueq-Eb-i-g";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_GjX76to1Jg_B8NuL1ty30Q_pZZkiZaZ";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 const HORIZON_SERVER = new StellarSdk.Horizon.Server('https://horizon-testnet.stellar.org');
 const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
@@ -153,9 +155,9 @@ async function createMcpServerForUser(email, password) {
 
       if (request.params.name === "send_payment") {
         const { recipient_universal_id, amount, memo } = request.params.arguments;
-        const { data: recipient } = await supabase
+        const { data: recipient } = await supabaseAdmin
           .from('profiles')
-          .select('id, stellar_address')
+          .select('id, stellar_address, universal_id')
           .eq('universal_id', recipient_universal_id.replace(/@Zp$/i, ''))
           .single();
 
@@ -181,16 +183,15 @@ async function createMcpServerForUser(email, password) {
         transaction.sign(sourceKeypair);
         const result = await HORIZON_SERVER.submitTransaction(transaction);
 
-        await supabase.from('transactions').insert({
+        await supabaseAdmin.from('transactions').insert({
           sender_id: profile.id,
           recipient_id: recipient.id,
           sender_universal_id: profile.universal_id,
-          recipient_universal_id: recipient_universal_id,
+          recipient_universal_id: recipient.universal_id || recipient_universal_id,
           amount: amount,
           currency: 'XLM',
           tx_hash: result.hash,
-          status: 'completed',
-          type: 'p2p'
+          status: 'completed'
         });
 
         return { content: [{ type: "text", text: `Successfully sent ${amount} XLM. TxHash: ${result.hash}` }] };
@@ -198,7 +199,7 @@ async function createMcpServerForUser(email, password) {
 
       if (request.params.name === "create_escrow") {
         const { freelancer_universal_id, amount, title, description } = request.params.arguments;
-        const { data: freelancer } = await supabase
+        const { data: freelancer } = await supabaseAdmin
           .from('profiles')
           .select('id, stellar_address')
           .eq('universal_id', freelancer_universal_id.replace(/@Zp$/i, ''))
@@ -207,7 +208,7 @@ async function createMcpServerForUser(email, password) {
         if (!freelancer?.stellar_address) throw new Error(`Freelancer not found`);
 
         const escrowId = Math.floor(Math.random() * 1000000);
-        const { data: contract, error: dbError } = await supabase
+        const { data: contract, error: dbError } = await supabaseAdmin
           .from('contracts')
           .insert({
             title, description, amount, currency: 'XLM',
@@ -221,7 +222,7 @@ async function createMcpServerForUser(email, password) {
 
       if (request.params.name === "create_split_bill") {
         const { title, total_amount, participants } = request.params.arguments;
-        const { data: split, error: splitError } = await supabase
+        const { data: split, error: splitError } = await supabaseAdmin
           .from('split_bills')
           .insert({
             creator_id: profile.id, creator_universal_id: profile.universal_id,
@@ -231,14 +232,14 @@ async function createMcpServerForUser(email, password) {
         if (splitError) throw new Error(`Failed to create split bill: ${splitError.message}`);
 
         for (const p of participants) {
-          const { data: partProfile } = await supabase
+          const { data: partProfile } = await supabaseAdmin
             .from('profiles')
             .select('id, universal_id, stellar_address')
             .eq('universal_id', p.universal_id.replace(/@Zp$/i, ''))
             .single();
 
           if (partProfile) {
-            await supabase.from('split_participants').insert({
+            await supabaseAdmin.from('split_participants').insert({
               split_id: split.id, user_id: partProfile.id,
               universal_id: partProfile.universal_id, stellar_address: partProfile.stellar_address,
               amount_owed: parseFloat(p.amount_owed), status: 'pending'
@@ -259,7 +260,7 @@ async function createMcpServerForUser(email, password) {
 
         if (!participant || participant.status === 'paid') throw new Error('Split bill not found or already paid.');
 
-        const { data: creator } = await supabase.from('profiles').select('stellar_address').eq('id', participant.split_bills.creator_id).single();
+        const { data: creator } = await supabaseAdmin.from('profiles').select('stellar_address').eq('id', participant.split_bills.creator_id).single();
 
         const sourceKeypair = StellarSdk.Keypair.fromSecret(profile.stellar_secret);
         const sourceAccount = await HORIZON_SERVER.loadAccount(sourceKeypair.publicKey());
@@ -274,7 +275,7 @@ async function createMcpServerForUser(email, password) {
         transaction.sign(sourceKeypair);
         await HORIZON_SERVER.submitTransaction(transaction);
 
-        await supabase.from('split_participants').update({ status: 'paid' }).eq('id', participant.id);
+        await supabaseAdmin.from('split_participants').update({ status: 'paid' }).eq('id', participant.id);
         return { content: [{ type: "text", text: `Successfully paid your share of ${participant.amount_owed} XLM for split bill ${split_id}.` }] };
       }
 
