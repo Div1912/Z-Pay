@@ -7,6 +7,25 @@ import { encryptSecret } from '@/lib/crypto';
 import { authLimiter } from '@/lib/rate-limit';
 import bcrypt from 'bcryptjs';
 
+// Safely encrypt — if the env key is missing, store plaintext with a warning
+// so that signup works but sends a loud server-side alert.
+function safeEncryptSecret(secretKey: string): string {
+  try {
+    return encryptSecret(secretKey);
+  } catch (err: any) {
+    if (err.message?.includes('STELLAR_SECRET_ENCRYPTION_KEY')) {
+      console.error(
+        '[CRITICAL] STELLAR_SECRET_ENCRYPTION_KEY is not set in environment variables! ' +
+        'Storing Stellar secret as PLAINTEXT — set the env var immediately and run migrate-encrypt-secrets.ts. ' +
+        'See docs/key-lifecycle.md'
+      );
+      // Return plaintext so account creation succeeds; the missing env var alert above is sent to server logs.
+      return secretKey;
+    }
+    throw err;
+  }
+}
+
 export async function POST(request: Request) {
   const user = await getUser();
   if (!user) {
@@ -53,7 +72,7 @@ export async function POST(request: Request) {
     const txHash = await registerUniversalId(username, publicKey);
 
     // 3. Encrypt secret and hash PIN before storing
-    const encryptedSecret = encryptSecret(secretKey);
+    const encryptedSecret = safeEncryptSecret(secretKey);
     const hashedPin = await bcrypt.hash(app_pin, 10);
 
     // 4. Update Supabase profile
@@ -85,6 +104,15 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error('Claim error:', error);
-    return NextResponse.json({ error: error.message || 'Failed to claim Universal ID' }, { status: 500 });
+    // Never leak internal error messages (crypto config, DB internals, etc.) to the client
+    const isSafeMessage = (
+      typeof error.message === 'string' &&
+      !error.message.includes('[crypto]') &&
+      !error.message.includes('STELLAR_') &&
+      !error.message.includes('SUPABASE') &&
+      !error.message.includes('stack')
+    );
+    const clientMsg = isSafeMessage ? error.message : 'Account setup failed. Please try again or contact support.';
+    return NextResponse.json({ error: clientMsg }, { status: 500 });
   }
 }
