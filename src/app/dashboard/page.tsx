@@ -43,8 +43,14 @@ export default function DashboardPage() {
         const balanceData = await balanceRes.json();
         if (balanceData?.xlm_balance !== undefined) {
           setBalances(balanceData.balances || []);
-          setConvertedBalance(balanceData.converted_balance || "0.00");
-          setXlmBalance(balanceData.xlm_balance || "0.00");
+          setXlmBalance((prevXlm) => {
+            // Only update the fiat converted balance if the actual crypto balance changed.
+            // This prevents the UI from fluctuating wildly due to live FX rates.
+            if (prevXlm !== balanceData.xlm_balance) {
+              setConvertedBalance(balanceData.converted_balance || "0.00");
+            }
+            return balanceData.xlm_balance || "0.00";
+          });
         }
       }
 
@@ -272,7 +278,7 @@ export default function DashboardPage() {
               
               <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12">
                 <div className="space-y-3 sm:space-y-4 min-w-0 flex-1">
-                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]">Available Balance</p>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]">Currency Balance</p>
                     <div className="flex items-baseline gap-2 sm:gap-3 overflow-hidden">
                       <h2
                         className="text-[clamp(2.8rem,9vw,5rem)] font-black leading-none"
@@ -288,34 +294,33 @@ export default function DashboardPage() {
                       <span className="text-xl sm:text-2xl md:text-3xl font-black text-white/30 tracking-widest shrink-0">{preferredCurrency}</span>
                     </div>
                     {preferredCurrency !== 'XLM' && (
-                      <p className="text-xs text-white/40 font-medium">
-                        ≈ {parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} XLM on Stellar
-                      </p>
+                      <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full w-fit border border-white/10">
+                        <span className="text-[9px] font-black tracking-[0.2em] text-[#D4AF37] uppercase">Crypto Balance</span>
+                        <div className="w-1 h-1 bg-white/20 rounded-full" />
+                        <span className="text-xs font-bold text-white/80">{parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} XLM</span>
+                      </div>
                     )}
 
                 </div>
   
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 w-full lg:w-auto lg:min-w-[240px] xl:min-w-[280px]">
-                  {parseFloat(xlmBalance) < 1 ? (
-                    <Link href="/dashboard/add-funds" className="flex-1">
-                      <Button className="w-full h-14 sm:h-16 xl:h-20 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-500/30 group">
-                        <Plus className="mr-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:scale-110 transition-transform" /> ADD FUNDS
+                  <Link href="/dashboard/add-funds" className="flex-1">
+                    <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-black text-sm sm:text-base xl:text-lg rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-500/30 group">
+                      <Plus className="mr-2 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform" /> ADD FUNDS
+                    </Button>
+                  </Link>
+                  <div className="flex gap-3 sm:gap-4 flex-1">
+                    <Link href="/dashboard/send" className="flex-1">
+                      <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-sm sm:text-base rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
+                        SEND <ArrowUpRight className="ml-1 w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </Button>
                     </Link>
-                  ) : (
-                    <>
-                      <Link href="/dashboard/send" className="flex-1">
-                        <Button className="w-full h-14 sm:h-16 xl:h-20 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
-                          SEND <ArrowUpRight className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        </Button>
-                      </Link>
-                      <Link href="/dashboard/receive" className="flex-1">
-                        <Button className="w-full h-14 sm:h-16 xl:h-20 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-base sm:text-lg xl:text-xl rounded-xl sm:rounded-2xl xl:rounded-3xl transition-all hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl group">
-                          RECEIVE <ArrowDownLeft className="ml-2 w-5 sm:w-6 h-5 sm:h-6 group-hover:-translate-x-1 group-hover:translate-y-1 transition-transform" />
-                        </Button>
-                      </Link>
-                    </>
-                  )}
+                    <Link href="/dashboard/receive" className="flex-1">
+                      <Button className="w-full h-12 sm:h-14 xl:h-16 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black text-sm sm:text-base rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl group">
+                        RECEIVE <ArrowDownLeft className="ml-1 w-4 sm:w-5 h-4 sm:h-5 group-hover:-translate-x-1 group-hover:translate-y-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
