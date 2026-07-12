@@ -105,7 +105,7 @@ async function runMcpServer() {
         const { data: user } = await supabase
           .from('profiles')
           .select('universal_id, full_name')
-          .eq('universal_id', universal_id.replace(/@Zp$/i, ''))
+          .ilike('universal_id', universal_id.replace(/@Zp$/i, ''))
           .single();
         if (!user) return { content: [{ type: "text", text: "User not found." }] };
         return { content: [{ type: "text", text: `User found: ${user.full_name} (${user.universal_id}@Zp)` }] };
@@ -116,7 +116,7 @@ async function runMcpServer() {
         const { data: recipient } = await supabase
           .from('profiles')
           .select('id, stellar_address')
-          .eq('universal_id', recipient_universal_id.replace(/@Zp$/i, ''))
+          .ilike('universal_id', recipient_universal_id.replace(/@Zp$/i, ''))
           .single();
 
         if (!recipient?.stellar_address) throw new Error(`Recipient not found`);
