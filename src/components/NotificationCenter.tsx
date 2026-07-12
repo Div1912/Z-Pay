@@ -287,7 +287,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.96 }}
             transition={{ type: "spring", damping: 24, stiffness: 320 }}
-            className="absolute -right-[3rem] sm:right-0 top-14 w-[calc(100vw-2rem)] sm:w-[360px] max-h-[85vh] sm:max-h-[520px] bg-[#0d0d0d] border border-white/10 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-50 flex flex-col"
+            className="absolute -right-[3rem] lg:right-auto lg:-left-2 top-14 w-[calc(100vw-2rem)] sm:w-[360px] max-h-[85vh] sm:max-h-[520px] bg-[#0d0d0d] border border-white/10 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-50 flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 shrink-0">
