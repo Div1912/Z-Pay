@@ -114,7 +114,14 @@ export default function AddFundsPage() {
   };
 
   const handle1ClickBridge = async () => {
-    if (!web3Account || !cctpInstructions || !cctpIntentId || !window.ethereum) return;
+    if (!web3Account || !window.ethereum) {
+      alert("Please connect your wallet first.");
+      return;
+    }
+    if (!cctpInstructions || !cctpIntentId) {
+      setBridgeError("Bridge tracking failed to initialize. Please check your database setup (CCTP tables may be missing).");
+      return;
+    }
     setBridgeLoading(true);
     setBridgeError("");
 
