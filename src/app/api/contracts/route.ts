@@ -95,6 +95,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to save contract' }, { status: 500 });
     }
 
+    // Insert transaction history for the escrow funding
+    await supabaseAdmin
+      .from('transactions')
+      .insert({
+        sender_id: payerProfile.id,
+        recipient_id: null,
+        sender_universal_id: payerProfile.universal_id,
+        recipient_universal_id: 'Escrow',
+        amount: parseFloat(amount),
+        currency: 'XLM',
+        tx_hash: txHash,
+        status: 'completed',
+        note: `Funded Escrow: ${title}`,
+        purpose: 'Contract Funding',
+      });
+
     notifyEscrow({
       event: 'funded',
       contractTitle: title,
