@@ -693,13 +693,22 @@ export default function AddFundsPage() {
                             </div>
                           </div>
 
-                          {/* USDC contract info */}
-                          <div className="bg-purple-500/5 border border-purple-500/10 rounded-2xl p-4 space-y-2">
-                            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Token: USDC</p>
-                            <p className="text-xs text-zinc-600 font-mono break-all">{cctpInstructions.usdcContractAddress}</p>
-                            <p className="text-xs text-zinc-600 mt-1">
-                              Use your wallet to call <code className="text-purple-400">depositForBurn()</code> on the TokenMessenger,
-                              or use the MetaMask CCTP snap for one-click bridging.
+                          {/* USDC contract info & Warning */}
+                          <div className="bg-purple-500/5 border border-purple-500/10 rounded-2xl p-4 space-y-3">
+                            <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-xl flex items-start gap-3">
+                              <div className="text-xl">⚠️</div>
+                              <p className="text-xs text-red-400 font-medium leading-relaxed">
+                                <strong className="text-red-300">DO NOT use MetaMask's normal "Send" button!</strong><br />
+                                MetaMask will say "Invalid Address" because this is a 32-byte cross-chain identifier, not a standard Ethereum wallet address. 
+                              </p>
+                            </div>
+                            
+                            <div>
+                              <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Token: USDC</p>
+                              <p className="text-xs text-zinc-600 font-mono break-all mt-1">{cctpInstructions.usdcContractAddress}</p>
+                            </div>
+                            <p className="text-xs text-zinc-400 leading-relaxed border-t border-purple-500/10 pt-2">
+                              You MUST interact with the TokenMessenger smart contract and pass the mintRecipient above into the <code className="text-purple-300 bg-purple-500/20 px-1 py-0.5 rounded">depositForBurn()</code> function.
                             </p>
                           </div>
 
