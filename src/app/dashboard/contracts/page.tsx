@@ -690,19 +690,24 @@ export default function ContractsPage() {
                     )}
 
                     <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
-                      {/* FREELANCER: auto-release after 7 days (no dispute needed) */}
+                      {/* FREELANCER: auto-release after 7 days if client ghosts (no dispute needed) */}
                       {isFreelancer && contract.status === 'delivered' && contract.delivered_at && (
                         (() => {
-                          const daysElapsed = (Date.now() - new Date(contract.delivered_at).getTime()) / 864e5;
+                          const daysElapsed = (Date.now() - new Date(contract.delivered_at!).getTime()) / 864e5;
+                          const daysLeft = Math.ceil(7 - daysElapsed);
                           return daysElapsed >= 7 ? (
                             <Button
-                              onClick={() => { setSelectedContract(contract); setActionType('refund'); handleAction(''); }}
+                              onClick={() => { setSelectedContract(contract); setActionType('release'); handleAction(''); }}
                               disabled={actionLoading}
                               className="h-10 bg-green-500 hover:bg-green-600 text-black font-bold rounded-lg gap-2"
                             >
-                              <CheckCircle2 className="w-4 h-4" /> Auto-Release Payment
+                              <CheckCircle2 className="w-4 h-4" /> Auto-Claim Payment (7 days passed)
                             </Button>
-                          ) : null;
+                          ) : (
+                            <span className="h-10 px-3 flex items-center text-xs text-zinc-500 border border-white/5 rounded-lg gap-2">
+                              <Clock className="w-3 h-3" /> Auto-claim unlocks in {daysLeft} day{daysLeft !== 1 ? 's' : ''} if client doesn&apos;t respond
+                            </span>
+                          );
                         })()
                       )}
 
@@ -729,15 +734,11 @@ export default function ContractsPage() {
                         </Button>
                       )}
 
-                      {/* FREELANCER: claim funds after they raised the dispute */}
+                      {/* FREELANCER: dispute raised by them → ONLY arbiter can resolve, not the freelancer */}
                       {isFreelancer && contract.status === 'disputed' && contract.disputed_by === 'freelancer' && (
-                        <Button
-                          onClick={() => { setSelectedContract(contract); setActionType('refund'); handleAction(''); }}
-                          disabled={actionLoading}
-                          className="h-10 bg-green-500 hover:bg-green-600 text-black font-bold rounded-lg gap-2"
-                        >
-                          <DollarSign className="w-4 h-4" /> Claim Payment
-                        </Button>
+                        <span className="h-10 px-3 flex items-center text-xs text-amber-400 border border-amber-500/20 rounded-lg gap-2 bg-amber-500/10">
+                          <Shield className="w-3 h-3" /> Dispute submitted — Awaiting Arbiter decision
+                        </span>
                       )}
 
                       {/* FREELANCER: waiting for arbiter if payer disputed */}
