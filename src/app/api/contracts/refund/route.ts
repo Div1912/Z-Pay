@@ -145,6 +145,22 @@ An arbiter will review the evidence and decide. Contact support@zpay.app with yo
 
       if (refundError) throw new Error(`DB Error: ${refundError.message}`);
 
+      // Insert transaction history for the refund
+      await supabaseAdmin
+        .from('transactions')
+        .insert({
+          sender_id:              null,
+          recipient_id:           contract.payer_id,
+          sender_universal_id:    'Escrow',
+          recipient_universal_id: contract.payer_universal_id,
+          amount:                 contract.amount,
+          currency:               contract.currency,
+          tx_hash:                txHash,
+          status:                 'refunded',
+          note:                   `Contract Refunded: ${contract.title}`,
+          purpose:                'Contract Refund',
+        });
+
       // Notify payer of refund
       notifyContractRefund({
         contractId: contract_id,
