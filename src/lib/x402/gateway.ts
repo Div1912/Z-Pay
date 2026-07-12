@@ -10,7 +10,7 @@ const server = new StellarSdk.Horizon.Server(HORIZON_URL);
 
 // Supabase Admin Client for logging payments
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mumdfrgyxhddtyuebonc.supabase.co";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_GjX76to1Jg_B8NuL1ty30Q_pZZkiZaZ";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 export interface X402Options {
