@@ -229,8 +229,9 @@ export default function ContractsPage() {
     fetchContracts();
 
     // ── Realtime: auto-refresh when any contract changes ──────────────────────
+    const uniqueSuffix = Math.random().toString(36).substring(2, 10);
     const channel = supabase
-      .channel(`contracts-page-realtime-${Date.now()}`)
+      .channel(`contracts-page-realtime-${uniqueSuffix}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'contracts' }, () => fetchContracts())
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'contracts' }, () => fetchContracts())
       .subscribe();

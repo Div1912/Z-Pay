@@ -155,9 +155,11 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
   useEffect(() => {
     if (!currentUserId || !currentUniversalId) return;
 
+    const uniqueSuffix = Math.random().toString(36).substring(2, 10);
+
     // ── P2P incoming payments ──────────────────────────────────────────────────
     const txChannel = supabase
-      .channel(`transactions-${currentUserId}`)
+      .channel(`transactions-${currentUserId}-${uniqueSuffix}`)
       .on(
         "postgres_changes",
         {
@@ -182,7 +184,7 @@ export function PaymentNotification({ currentUserId, currentUniversalId }: Payme
 
     // ── Escrow contract changes (as payer OR freelancer) ───────────────────────
     const contractChannel = supabase
-      .channel(`contracts-${currentUserId}`)
+      .channel(`contracts-${currentUserId}-${uniqueSuffix}`)
       .on(
         "postgres_changes",
         {
