@@ -46,7 +46,7 @@ function buildTransactionNotification(tx: any, currentUserId: string): AppNotifi
       body: `+${amount} ${currency} returned to your wallet`,
       href: "/dashboard/history",
       read: false,
-      createdAt: new Date(tx.created_at),
+      createdAt: new Date(tx.created_at || Date.now()),
       raw: tx,
     };
   }
@@ -60,7 +60,7 @@ function buildTransactionNotification(tx: any, currentUserId: string): AppNotifi
       body: `+${amount} ${currency} from ${sender}@Zp`,
       href: "/dashboard/history",
       read: false,
-      createdAt: new Date(tx.created_at),
+      createdAt: new Date(tx.created_at || Date.now()),
       raw: tx,
     };
   } else {
@@ -72,7 +72,7 @@ function buildTransactionNotification(tx: any, currentUserId: string): AppNotifi
       body: `-${amount} ${currency} to ${recipient}@Zp`,
       href: "/dashboard/history",
       read: false,
-      createdAt: new Date(tx.created_at),
+      createdAt: new Date(tx.created_at || Date.now()),
       raw: tx,
     };
   }
@@ -128,7 +128,7 @@ function buildContractNotification(contract: any, currentUserId: string): AppNot
     body: cfg.body,
     href: "/dashboard/contracts",
     read: false,
-    createdAt: new Date(contract.updated_at || contract.created_at),
+    createdAt: new Date(contract.updated_at || contract.created_at || Date.now()),
     raw: contract,
   };
 }
