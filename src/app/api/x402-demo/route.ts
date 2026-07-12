@@ -19,5 +19,5 @@ async function premiumDataHandler(req: NextRequest) {
 // We require a payment of 1 XLM to the specified testnet merchant address
 export const GET = withX402(premiumDataHandler, {
   priceXLM: "1",
-  destinationAddress: "GBSUOSW53YYIK2DDF3L2HED6X6D4MOMVXVHDEYQTVBYCVM464LIXB2S2" // Replace with a real Z-Pay merchant address
+  destinationAddress: "GCF74YZF5V4HEEKVGP4NFOYJ56Y2KZ4D5DR3XTJFXTWF7UTSMILJC245"
 });
