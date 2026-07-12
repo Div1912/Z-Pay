@@ -126,19 +126,34 @@ export default function AddFundsPage() {
     setBridgeError("");
 
     try {
-      // 1. Setup Ethers Provider & Signer
+      // 1. Ensure Correct Network
+      const targetChainIdHex = '0x' + cctpInstructions.chainId.toString(16);
+      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+      
+      if (currentChainId !== targetChainIdHex) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: targetChainIdHex }],
+          });
+          // Small delay to let MetaMask settle after network switch
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            throw new Error(`Please add the network (Chain ID: ${cctpInstructions.chainId}) to MetaMask first.`);
+          } else {
+            throw new Error("You must switch to the correct network in MetaMask to bridge.");
+          }
+        }
+      }
+
+      // 2. Setup Ethers Provider & Signer
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-
-      // Ensure user is on the correct network (Base or Ethereum)
-      const network = await provider.getNetwork();
-      const requiredChainId = cctpChain === 'base' ? 84532 : 11155111; // Base Sepolia / Sepolia Testnet IDs for now (adjust for mainnet)
-      const expectedChainId = BigInt(cctpChain === 'base' ? (cctpInstructions.domain === 6 ? 84532 : 8453) : (cctpInstructions.domain === 0 ? 11155111 : 1)); // Handle mainnet/testnet automatically later. Actually let's just let ethers try the transaction, if the contract isn't there it will fail, or we can just send the tx.
-      // Wait, we can just rely on the user having the right network selected, or the tx will fail.
       
       const amountInUnits = ethers.parseUnits(finalAmount.toString(), 6);
 
-      // 2. Approve USDC
+      // 3. Approve USDC
       const usdcAbi = ["function approve(address spender, uint256 amount) public returns (bool)"];
       const usdcContract = new ethers.Contract(cctpInstructions.usdcContractAddress, usdcAbi, signer);
       

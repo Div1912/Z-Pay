@@ -24,6 +24,7 @@ const STELLAR_CCTP_DOMAIN = 5; // Placeholder — update when Circle publishes S
 export interface CctpChainConfig {
   chain:            string;
   domain:           number;
+  chainId:          number;
   usdcAddress:      string;   // USDC contract on this chain
   tokenMessenger:   string;   // Circle TokenMessenger contract
   messageTransmitter: string; // Circle MessageTransmitter contract
@@ -38,6 +39,7 @@ const TESTNET_CHAINS: Record<string, CctpChainConfig> = {
   ethereum: {
     chain:              'ethereum',
     domain:             0,
+    chainId:            11155111,
     usdcAddress:        '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238', // Sepolia USDC
     tokenMessenger:     '0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5', // Sepolia TokenMessenger
     messageTransmitter: '0x7865fAfC2db2093669d92c0197e5116c76d60e9f', // Sepolia MessageTransmitter
@@ -49,6 +51,7 @@ const TESTNET_CHAINS: Record<string, CctpChainConfig> = {
   base: {
     chain:              'base',
     domain:             6,
+    chainId:            84532,
     usdcAddress:        '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // Base Sepolia USDC
     tokenMessenger:     '0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5', // Base Sepolia TokenMessenger
     messageTransmitter: '0x7865fAfC2db2093669d92c0197e5116c76d60e9f', // Base Sepolia MessageTransmitter
@@ -64,6 +67,7 @@ const MAINNET_CHAINS: Record<string, CctpChainConfig> = {
   ethereum: {
     chain:              'ethereum',
     domain:             0,
+    chainId:            1,
     usdcAddress:        '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // Mainnet USDC
     tokenMessenger:     '0xBd3fa81B58Ba92a82136038B25aDec7066af3155',
     messageTransmitter: '0x0a992d191DEeC32aFe36203Ad87D7d289a738F81',
@@ -75,6 +79,7 @@ const MAINNET_CHAINS: Record<string, CctpChainConfig> = {
   base: {
     chain:              'base',
     domain:             6,
+    chainId:            8453,
     usdcAddress:        '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // Base mainnet USDC
     tokenMessenger:     '0x1682Ae6375C4E4A97e4B583BC394c861A46D8962',
     messageTransmitter: '0xAD09780d193884d503182aD4588450C416D6F9D4',
@@ -103,6 +108,7 @@ export interface DepositInstructions {
   chain:            string;
   chainDisplayName: string;
   domain:           number;
+  chainId:          number;
   mintRecipient:    string;
   usdcContractAddress: string;
   tokenMessengerAddress: string;
@@ -136,6 +142,7 @@ export function generateDepositInstructions(
     chain:                 config.chain,
     chainDisplayName:      chain === 'base' ? 'Base (Coinbase L2)' : 'Ethereum',
     domain:                config.domain,
+    chainId:               config.chainId,
     mintRecipient:         mintRecipientHex,
     usdcContractAddress:   config.usdcAddress,
     tokenMessengerAddress: config.tokenMessenger,
