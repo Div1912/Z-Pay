@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Search, Loader2, CheckCircle2, XCircle, ArrowRight, ExternalLink, 
-  Zap, Shield, Globe, BadgeCheck, Clock, RefreshCw, Lock, User
+  Zap, Shield, Globe, BadgeCheck, Clock, RefreshCw, Lock, User, AlertCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
