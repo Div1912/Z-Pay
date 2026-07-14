@@ -114,17 +114,33 @@ export async function sendPayment(
   const sourceKeypair = StellarSdk.Keypair.fromSecret(fromSecret);
   const sourceAccount = await horizonServer.loadAccount(sourceKeypair.publicKey());
 
-  const txBuilder = new StellarSdk.TransactionBuilder(sourceAccount, {
-    fee: StellarSdk.BASE_FEE,
-    networkPassphrase: NETWORK_PASSPHRASE,
-  })
-    .addOperation(
-      StellarSdk.Operation.payment({
+  let destinationExists = true;
+  try {
+    await horizonServer.loadAccount(toAddress);
+  } catch (e: any) {
+    if (e.response?.status === 404) {
+      destinationExists = false;
+    } else {
+      throw e;
+    }
+  }
+
+  const operation = destinationExists
+    ? StellarSdk.Operation.payment({
         destination: toAddress,
         asset: StellarSdk.Asset.native(),
         amount: amount,
       })
-    )
+    : StellarSdk.Operation.createAccount({
+        destination: toAddress,
+        startingBalance: amount,
+      });
+
+  const txBuilder = new StellarSdk.TransactionBuilder(sourceAccount, {
+    fee: StellarSdk.BASE_FEE,
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(operation)
     .setTimeout(30);
 
   if (options?.memo) {

@@ -216,8 +216,24 @@ export async function POST(request: Request) {
       xlm_amount: parseFloat(xlmAmount)
     });
   } catch (error: any) {
+    let errMsg = error.message || 'Payment failed';
+    
+    // Extract precise Stellar network errors if available
+    if (error.response?.data?.extras?.result_codes) {
+      const codes = error.response.data.extras.result_codes;
+      if (codes.operations && codes.operations.includes('op_no_destination')) {
+        errMsg = 'The receiving wallet is not active yet. You must send at least 1 XLM (approx ₹180) to activate it for the first time.';
+      } else if (codes.operations && codes.operations.includes('op_underfunded')) {
+        errMsg = 'You do not have enough XLM available to cover this payment and the network reserve.';
+      } else if (codes.operations && codes.operations.includes('op_low_reserve')) {
+        errMsg = 'The receiving wallet would drop below the minimum network reserve.';
+      } else {
+        errMsg = `Stellar Network Error: ${codes.transaction || codes.operations?.join(', ')}`;
+      }
+    }
+
     logError('payment_failed', error, { route: ROUTE, user_id: user.id }).catch(() => {});
-    console.error('Payment error:', error);
-    return NextResponse.json({ error: error.message || 'Payment failed' }, { status: 500 });
+    console.error('Payment error:', error.response?.data || error);
+    return NextResponse.json({ error: errMsg }, { status: 400 });
   }
 }
