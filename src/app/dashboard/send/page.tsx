@@ -188,6 +188,7 @@ function SendForm() {
   const [recipient, setRecipient] = useState(searchParams.get("to") || "");
   const [amount, setAmount] = useState(searchParams.get("amount") || "");
   const [note, setNote] = useState(searchParams.get("note") || "");
+  const [memo, setMemo] = useState("");
   const [purpose, setPurpose] = useState("");
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
@@ -219,6 +220,21 @@ function SendForm() {
     const cleanUsername = username.replace('@Zp', '').trim();
     if (!cleanUsername) {
       setReceiverProfile(null);
+      return;
+    }
+    
+    if (cleanUsername.startsWith('G') && cleanUsername.length === 56) {
+      setReceiverProfile({
+        username: "External Stellar Wallet",
+        address: cleanUsername,
+        display_name: "External Wallet",
+        full_name: "Send to Stellar Network",
+        avatar_url: null,
+        preferred_currency: 'XLM',
+        verified: false,
+      });
+      setError("");
+      setResolving(false);
       return;
     }
     setResolving(true);
@@ -327,10 +343,11 @@ function SendForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          recipient: recipient.includes('@Zp') ? recipient : `${recipient}@Zp`,
+          recipient: (recipient.startsWith('G') && recipient.length === 56) ? recipient : (recipient.includes('@Zp') ? recipient : `${recipient}@Zp`),
           amount: quote.source_amount.toString(),
           currency: senderCurrency,
           note,
+          memo,
           purpose: purpose || note || undefined,
           pin: pin || undefined,
         }),
@@ -528,6 +545,22 @@ function SendForm() {
                 <option value="Medical" className="bg-zinc-900">Medical</option>
               </select>
             </div>
+
+            {(receiverProfile?.address.startsWith('G') && receiverProfile?.username === "External Stellar Wallet") && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 ml-1">Memo (Optional but REQUIRED for Exchanges)</label>
+                  <span className="text-[10px] font-bold text-amber-500 px-2 py-0.5 bg-amber-500/10 rounded-md">Numeric = Memo.id</span>
+                </div>
+                <Input
+                  type="text"
+                  placeholder="e.g. 123456789"
+                  className="bg-white/5 border-white/10 h-14 text-base font-bold rounded-2xl focus:border-[#D4AF37]/50"
+                  value={memo}
+                  onChange={(e) => setMemo(e.target.value)}
+                />
+              </div>
+            )}
 
           <AnimatePresence>
             {quote && receiverProfile && (

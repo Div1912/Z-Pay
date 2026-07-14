@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { recipient, amount, note, pin, purpose, currency } = await request.json();
+  const { recipient, amount, note, pin, purpose, currency, memo: customMemo } = await request.json();
   if (!recipient || !amount) {
     return NextResponse.json({ error: 'Recipient and amount are required' }, { status: 400 });
   }
@@ -147,15 +147,17 @@ export async function POST(request: Request) {
 
     const senderName = senderProfile.universal_id || 'unknown';
     const recipientName = recipientProfile?.universal_id || recipient.replace('@Zp', '');
-    let memo = '';
-    if (purpose) {
-      memo = `${purpose}|${senderName}>${recipientName}`;
-    } else if (note) {
-      memo = `${note}|${senderName}>${recipientName}`;
-    } else {
-      memo = `${senderName}>${recipientName}`;
+    let memo = customMemo;
+    if (!memo) {
+      if (purpose) {
+        memo = `${purpose}|${senderName}>${recipientName}`;
+      } else if (note) {
+        memo = `${note}|${senderName}>${recipientName}`;
+      } else {
+        memo = `${senderName}>${recipientName}`;
+      }
+      memo = memo.substring(0, 28);
     }
-    memo = memo.substring(0, 28);
 
     const secret = safeDecryptSecret(senderProfile.stellar_secret);
     if (!secret) {

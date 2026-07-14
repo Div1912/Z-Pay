@@ -128,8 +128,18 @@ export async function sendPayment(
     .setTimeout(30);
 
   if (options?.memo) {
-    const memoText = options.memo.substring(0, 28);
-    txBuilder.addMemo(StellarSdk.Memo.text(memoText));
+    if (options.memoType === 'id' || /^\d+$/.test(options.memo)) {
+      try {
+        txBuilder.addMemo(StellarSdk.Memo.id(options.memo));
+      } catch (e) {
+        // Fallback if the number is out of bounds for uint64
+        const memoText = options.memo.substring(0, 28);
+        txBuilder.addMemo(StellarSdk.Memo.text(memoText));
+      }
+    } else {
+      const memoText = options.memo.substring(0, 28);
+      txBuilder.addMemo(StellarSdk.Memo.text(memoText));
+    }
   }
 
   const transaction = txBuilder.build();
