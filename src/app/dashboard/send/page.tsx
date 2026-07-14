@@ -20,6 +20,7 @@ interface ReceiverProfile {
   avatar_url?: string | null;
   preferred_currency: string;
   verified: boolean;
+  isUnfunded?: boolean;
 }
 
 interface FxQuote {
@@ -234,6 +235,16 @@ function SendForm() {
     }
     
     if (cleanUsername.startsWith('G') && cleanUsername.length === 56) {
+      let isUnfunded = false;
+      try {
+        const horizonRes = await fetch(`https://horizon.stellar.org/accounts/${cleanUsername}`);
+        if (horizonRes.status === 404) {
+          isUnfunded = true;
+        }
+      } catch {
+        // ignore
+      }
+
       setReceiverProfile({
         username: "External Stellar Wallet",
         address: cleanUsername,
@@ -242,6 +253,7 @@ function SendForm() {
         avatar_url: null,
         preferred_currency: 'XLM',
         verified: false,
+        isUnfunded,
       });
       setError("");
       setResolving(false);
@@ -252,6 +264,17 @@ function SendForm() {
       const res = await fetch(`/api/zpay/resolve?username=${cleanUsername}`);
       if (res.ok) {
         const data = await res.json();
+        
+        let isUnfunded = false;
+        try {
+          const horizonRes = await fetch(`https://horizon.stellar.org/accounts/${data.address}`);
+          if (horizonRes.status === 404) {
+            isUnfunded = true;
+          }
+        } catch {
+          // ignore
+        }
+
         setReceiverProfile({
           username: data.username || cleanUsername,
           address: data.address,
@@ -260,6 +283,7 @@ function SendForm() {
           avatar_url: data.avatar_url || null,
           preferred_currency: data.preferred_currency || 'USDC',
           verified: true,
+          isUnfunded,
         });
         setError("");
       } else {
@@ -428,7 +452,7 @@ function SendForm() {
         </div>
         <div className="space-y-3">
           <a 
-            href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
+            href={`https://stellar.expert/explorer/public/tx/${txHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 text-zinc-500 hover:text-[#D4AF37] transition-all font-bold text-sm bg-white/5 py-4 rounded-xl border border-white/5"
@@ -516,6 +540,16 @@ function SendForm() {
                       <span>Unverified Identity - Proceed with caution</span>
                     )}
                   </div>
+                  
+                  {receiverProfile.isUnfunded && (
+                    <div className="mt-4 p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                      <div className="text-sm">
+                        <p className="text-orange-500 font-bold mb-1">Inactive Wallet</p>
+                        <p className="text-orange-500/80">This receiving wallet has not been activated on the Stellar network yet. You must send at least <strong>1 XLM (approx ₹180)</strong> to activate it.</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
