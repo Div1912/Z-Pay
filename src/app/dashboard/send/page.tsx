@@ -219,7 +219,7 @@ function SendForm() {
     fetch("/api/zpay/balance")
       .then(res => res.json())
       .then(data => {
-        setXlmBalance(data.crypto_balance || "0.00");
+        setXlmBalance(data.xlm_balance || "0.00");
       })
       .catch(() => {});
   }, []);
