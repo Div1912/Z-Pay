@@ -14,6 +14,8 @@ export interface FXQuote {
   target_amount: number;
   expires_at: string;
   seconds_remaining: number;
+  xlm_source_amount: number;
+  xlm_target_amount: number;
 }
 
 // ─── In-memory cache ──────────────────────────────────────────────────────────
@@ -130,6 +132,9 @@ export async function generateQuote(
   const rate = await getExchangeRate(fromCurrency, toCurrency);
   const targetAmount = sourceAmount * rate;
   const expiresAt = new Date(Date.now() + expirySeconds * 1000);
+  
+  const xlmRate = await getExchangeRate(fromCurrency, 'XLM');
+  const xlmSourceAmount = sourceAmount * xlmRate;
 
   return {
     from_currency: fromCurrency,
@@ -139,6 +144,8 @@ export async function generateQuote(
     target_amount: targetAmount,
     expires_at: expiresAt.toISOString(),
     seconds_remaining: expirySeconds,
+    xlm_source_amount: xlmSourceAmount,
+    xlm_target_amount: xlmSourceAmount, // In XLM terms, what is sent is what is received, minus any network fee (ignored in quote)
   };
 }
 

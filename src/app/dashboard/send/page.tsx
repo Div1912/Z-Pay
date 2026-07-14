@@ -31,6 +31,8 @@ interface FxQuote {
   target_amount: number;
   expires_at: string;
   seconds_remaining: number;
+  xlm_source_amount: number;
+  xlm_target_amount: number;
 }
 
 function PinModal({ isOpen, onClose, onSubmit, loading, receiver, quote, pinError }: { 
@@ -605,6 +607,27 @@ function SendForm() {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-zinc-500">Exchange Rate</span>
                   <span className="font-bold">1 {senderCurrency} = {quote.rate.toFixed(4)} {quote.to_currency}</span>
+                </div>
+                <div className="pt-4 border-t border-white/5">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">Network Breakdown</p>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Underlying Asset</span>
+                      <span className="font-bold text-white">Stellar Lumens (XLM)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">XLM Debited from You</span>
+                      <span className="font-bold text-red-400">-{quote.xlm_source_amount?.toFixed(4) || "0.0000"} XLM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Network Fee</span>
+                      <span className="font-bold text-[#D4AF37]">{useGasless ? "0.0000 XLM (Paid by Z-Pay)" : "0.00001 XLM (Standard)"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">XLM Credited to Receiver</span>
+                      <span className="font-bold text-green-400">+{((quote.xlm_target_amount || 0) - (useGasless ? 0 : 0.00001)).toFixed(4)} XLM</span>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             )}
