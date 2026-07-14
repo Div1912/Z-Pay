@@ -21,6 +21,14 @@ export async function GET() {
   }
 
   const balances = await getBalances(profile.stellar_address);
+  
+  if (balances[0]?.asset === 'UNFUNDED') {
+    return NextResponse.json({ 
+      unfunded: true,
+      address: profile.stellar_address
+    });
+  }
+
   const preferredCurrency = profile.preferred_currency || 'XLM';
   
   const xlmBalance = balances.find(b => b.asset === 'XLM')?.balance || '0';

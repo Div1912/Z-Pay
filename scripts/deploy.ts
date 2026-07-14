@@ -5,10 +5,12 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
+dotenv.config({ path: path.join(process.cwd(), '.env.local') });
 
-const SOROBAN_RPC_URL = process.env.SOROBAN_RPC_URL || 'https://soroban-testnet.stellar.org';
-const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE || StellarSdk.Networks.TESTNET;
-const TOKEN_CONTRACT_ID = process.env.TOKEN_CONTRACT_ID || 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
+const IS_MAINNET = process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet';
+const SOROBAN_RPC_URL = process.env.SOROBAN_RPC_URL || (IS_MAINNET ? 'https://mainnet.stellar.validationcloud.io/v1/stellar' : 'https://soroban-testnet.stellar.org');
+const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE || (IS_MAINNET ? StellarSdk.Networks.PUBLIC : StellarSdk.Networks.TESTNET);
+const TOKEN_CONTRACT_ID = process.env.TOKEN_CONTRACT_ID || (IS_MAINNET ? 'CAS3J7GYIGIRONOMEV75O2O2OOTWTZOMBWG2OBYGHOVKUDHQZHEOONUN' : 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC'); // Note: You'll need the real mainnet token ID if applicable
 
 const server = new StellarSdk.rpc.Server(SOROBAN_RPC_URL);
 
@@ -131,14 +133,27 @@ async function initializeContract(contractId: string, method: string, args: Stel
 }
 
 async function run() {
-    console.log('Generating deployer account...');
-    const deployer = StellarSdk.Keypair.random();
-    
-    console.log(`Deployer Public Key: ${deployer.publicKey()}`);
-    console.log(`Deployer Secret: ${deployer.secret()}`);
-    console.log('Funding from Friendbot...');
-    
-    await fetch(`https://friendbot.stellar.org?addr=${deployer.publicKey()}`);
+    let deployer;
+
+    if (IS_MAINNET) {
+        console.log('Mainnet detected. Checking for DEPLOYER_SECRET_KEY or PLATFORM_SECRET_KEY...');
+        const secret = process.env.DEPLOYER_SECRET_KEY || process.env.PLATFORM_SECRET_KEY;
+        if (!secret) {
+            console.error('Error: DEPLOYER_SECRET_KEY or PLATFORM_SECRET_KEY must be set in .env for mainnet deployments.');
+            process.exit(1);
+        }
+        deployer = StellarSdk.Keypair.fromSecret(secret);
+        console.log(`Using existing mainnet deployer: ${deployer.publicKey()}`);
+    } else {
+        console.log('Generating deployer account (Testnet)...');
+        deployer = StellarSdk.Keypair.random();
+        
+        console.log(`Deployer Public Key: ${deployer.publicKey()}`);
+        console.log(`Deployer Secret: ${deployer.secret()}`);
+        console.log('Funding from Friendbot...');
+        
+        await fetch(`https://friendbot.stellar.org?addr=${deployer.publicKey()}`);
+    }
     
     try {
         // Staking

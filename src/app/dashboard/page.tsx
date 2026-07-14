@@ -16,6 +16,7 @@ export default function DashboardPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [isUnfunded, setIsUnfunded] = useState(false);
   const [convertedBalance, setConvertedBalance] = useState("0.00");
   const [xlmBalance, setXlmBalance] = useState("0.00");
   const [recentContacts, setRecentContacts] = useState<any[]>([]);
@@ -41,7 +42,10 @@ export default function DashboardPage() {
       let profileDataForContacts: any = null;
       if (balanceRes.ok) {
         const balanceData = await balanceRes.json();
-        if (balanceData?.xlm_balance !== undefined) {
+        if (balanceData?.unfunded) {
+          setIsUnfunded(true);
+        } else if (balanceData?.xlm_balance !== undefined) {
+          setIsUnfunded(false);
           setBalances(balanceData.balances || []);
           setXlmBalance((prevXlm) => {
             // Only update the fiat converted balance if the actual crypto balance changed.
@@ -195,6 +199,36 @@ export default function DashboardPage() {
       'XLM': ''
     };
     const currencySymbol = currencySymbols[preferredCurrency] || '';
+
+  if (isUnfunded) {
+    return (
+      <div className="space-y-8 sm:space-y-10 pb-20 max-w-2xl mx-auto mt-10">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="relative bg-white/[0.03] border border-red-500/30 backdrop-blur-xl p-8 sm:p-12 rounded-[2rem] text-center overflow-hidden"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500" />
+          <h2 className="text-3xl font-black mb-4 text-white">Action Required</h2>
+          <p className="text-white/70 text-lg mb-8">
+            Your ZPay Mainnet wallet is currently inactive. You must deposit at least 1 XLM to activate it and use ZPay.
+          </p>
+          <div className="bg-black/30 p-6 rounded-2xl border border-white/10 mb-8 flex flex-col items-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Your Stellar Address</p>
+            <p className="font-mono text-sm sm:text-base break-all text-[#D4AF37] text-center max-w-full">
+              {profile?.stellar_address}
+            </p>
+          </div>
+          <Button
+            onClick={() => window.location.href = '/dashboard/add-funds'}
+            className="bg-[#D4AF37] text-black font-black hover:bg-[#D4AF37]/90 px-8 py-6 rounded-xl w-full text-lg"
+          >
+            How to Add Funds
+          </Button>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 sm:space-y-10 pb-20">

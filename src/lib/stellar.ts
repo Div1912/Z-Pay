@@ -157,7 +157,10 @@ export async function getBalances(address: string) {
         asset: b.asset_type === 'native' ? 'XLM' : (b as any).asset_code,
         balance: b.balance,
       }));
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      return [{ asset: 'UNFUNDED', balance: '0' }];
+    }
     console.error('Balance fetch failed:', error);
     return [];
   }
