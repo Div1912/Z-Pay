@@ -79,42 +79,8 @@ export default function PortfolioPage() {
         </div>
       </div>
 
-      {/* ── Main Portfolio Card ── */}
-      <div className="glass-card rounded-[2rem] p-6 md:p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
-          <PieChart className="w-48 h-48 text-[#D4AF37]" />
-        </div>
-        
-        <div className="relative z-10 space-y-8">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-zinc-400 font-medium tracking-wide text-sm">Portfolio Value ({currency})</span>
-              <ChevronDown className="w-4 h-4 text-zinc-500" />
-            </div>
-            <div className="text-5xl md:text-6xl font-black tracking-tighter">
-              {currency === 'INR' ? '₹' : currency === 'USD' ? '$' : ''}
-              {loading ? "..." : totalValue}
-            </div>
-            
-            <div className="flex items-center gap-6 mt-6">
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Invested</p>
-                <p className="text-lg font-bold">{currency === 'INR' ? '₹' : currency === 'USD' ? '$' : ''}{loading ? "..." : totalValue}</p>
-              </div>
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Total PNL</p>
-                <div className="flex items-center gap-1 text-green-400">
-                  <TrendingUp className="w-4 h-4" />
-                  <span className="font-bold">+0.00 (0.00%)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* ── Tabs for Assets ── */}
-      <Tabs defaultValue="coins" className="w-full">
+      <Tabs defaultValue="overview" className="w-full">
         <TabsList className="w-full justify-start bg-transparent border-b border-white/10 rounded-none p-0 h-auto mb-6 gap-6">
           <TabsTrigger value="overview" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-[#D4AF37] px-0">
             Overview
@@ -144,9 +110,6 @@ export default function PortfolioPage() {
                       <p className="text-zinc-500 text-sm font-medium">{parseFloat(b.balance).toFixed(4)} {b.asset}</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-bold text-green-400 text-sm mb-1">+0.00%</p>
-                    <p className="font-medium text-zinc-300">-- PNL</p>
                   </div>
                 </div>
               ))}
@@ -161,8 +124,23 @@ export default function PortfolioPage() {
         </TabsContent>
         
         <TabsContent value="overview">
-          <div className="h-48 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 text-zinc-500">
-            Overview metrics coming soon
+          {/* ── Main Portfolio Card ── */}
+          <div className="glass-card rounded-[2rem] p-6 md:p-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
+              <PieChart className="w-48 h-48 text-[#D4AF37]" />
+            </div>
+            
+            <div className="relative z-10 space-y-8">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-zinc-400 font-medium tracking-wide text-sm">Portfolio Value ({currency})</span>
+                </div>
+                <div className="text-5xl md:text-6xl font-black tracking-tighter">
+                  {currency === 'INR' ? '₹' : currency === 'USD' ? '$' : ''}
+                  {loading ? "..." : totalValue}
+                </div>
+              </div>
+            </div>
           </div>
         </TabsContent>
         <TabsContent value="funds">
