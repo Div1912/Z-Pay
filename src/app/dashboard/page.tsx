@@ -258,8 +258,10 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,1)] animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-tight text-white/60">Stellar Mainnet</span>
+          <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_rgba(34,197,94,1)] animate-pulse ${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'bg-green-500' : 'bg-yellow-500'}`} />
+          <span className="text-xs font-bold uppercase tracking-tight text-white/60">
+            {process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'Stellar Mainnet' : 'Stellar Testnet'}
+          </span>
         </div>
       </section>
 
