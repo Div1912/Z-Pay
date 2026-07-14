@@ -205,6 +205,7 @@ function SendForm() {
   const [pinError, setPinError] = useState("");
   const [senderCurrency, setSenderCurrency] = useState("USDC");
   const [useGasless, setUseGasless] = useState(false);
+  const [xlmBalance, setXlmBalance] = useState("0.00");
 
   useEffect(() => {
     fetch("/api/zpay/profile")
@@ -212,6 +213,13 @@ function SendForm() {
       .then(data => {
         setHasPin(!!data.app_pin);
         setSenderCurrency(data.preferred_currency || "USDC");
+      })
+      .catch(() => {});
+
+    fetch("/api/zpay/balance")
+      .then(res => res.json())
+      .then(data => {
+        setXlmBalance(data.crypto_balance || "0.00");
       })
       .catch(() => {});
   }, []);
@@ -512,7 +520,12 @@ function SendForm() {
           </AnimatePresence>
 
 <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 ml-1">Payment Amount</label>
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 ml-1">Payment Amount</label>
+                <span className="text-[10px] font-bold text-[#D4AF37] px-2 py-0.5 bg-[#D4AF37]/10 rounded-md">
+                  Available: {xlmBalance} XLM
+                </span>
+              </div>
               <div className="relative group">
                 <Input
                   type="number"
