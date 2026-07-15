@@ -336,6 +336,14 @@ export default function DashboardPage() {
                         <span className="text-xs font-bold text-white/80">{parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} XLM</span>
                       </div>
                     )}
+                    
+                    <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-full w-fit border border-green-500/20">
+                      <span className="text-[9px] font-black tracking-[0.2em] text-green-500 uppercase">Fiat Balance (Withdrawable)</span>
+                      <div className="w-1 h-1 bg-green-500/30 rounded-full" />
+                      <span className="text-xs font-bold text-green-400">
+                        {parseFloat(profile?.fiat_balance || '0').toLocaleString('en-US', { style: 'currency', currency: profile?.fiat_currency?.toUpperCase() || 'USD' })}
+                      </span>
+                    </div>
 
                 </div>
   
