@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { supabaseAdmin } from '@/lib/supabase';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-01-27.acacia',
+// Use a dummy key if env var is missing during Next.js build time to prevent crashes
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy', {
+  apiVersion: '2025-10-29.clover' as any,
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
@@ -27,32 +28,36 @@ export async function POST(req: Request) {
     }
 
     // Handle the event
-    switch (event.type) {
+    // Cast event type to string to avoid TS errors on beta webhook types
+    switch (event.type as string) {
       case 'crypto.onramp_session.updated': {
-        const session = event.data.object as any;
-        console.log(`Onramp session updated: ${session.id}, status: ${session.status}`);
-
+        const session = (event as any).data.object;
+        
         await supabaseAdmin
           .from('fiat_transactions')
-          .update({ 
+          .update({
             status: session.status,
-            fiat_amount: session.transaction_details?.destination_amount
+            fiat_amount: session.transaction_details?.source_amount,
+            crypto_amount: session.transaction_details?.destination_amount,
+            updated_at: new Date().toISOString()
           })
           .eq('stripe_session_id', session.id);
         break;
       }
+      
       case 'crypto.onramp_session.fulfilled': {
-        const session = event.data.object as any;
-        console.log(`Onramp session fulfilled: ${session.id}`);
+        const session = (event as any).data.object;
 
         await supabaseAdmin
           .from('fiat_transactions')
-          .update({ status: 'fulfilled' })
+          .update({
+            status: 'fulfilled',
+            updated_at: new Date().toISOString()
+          })
           .eq('stripe_session_id', session.id);
-        
-        // At this point, the crypto is in the user's wallet
         break;
       }
+
       default:
         console.log(`Unhandled event type ${event.type}`);
     }

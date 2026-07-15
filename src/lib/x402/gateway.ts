@@ -104,7 +104,9 @@ export function withX402(
           fee: options.platformFeeXLM || "0",
           tx_hash: txHash,
           endpoint: req.nextUrl.pathname
-        }).catch(err => console.error("Failed to log X402 payment:", err));
+        }).then(({ error }) => {
+          if (error) console.error("Failed to log X402 payment:", error);
+        });
       }
 
       // 6. Success! Grant access.
