@@ -2,13 +2,13 @@
 
 <img width="380" alt="Zpay logo" src="https://github.com/user-attachments/assets/101d4866-070b-410b-a6ca-fdbce03a7cc2" />
 
-# Zpay — Global Payment Router
+# Zpay — Agentic Global Payment Router
 
-**Cross-border payments, escrow, group bills, and on-chain savings — all on Stellar.**
+**Cross-border payments, escrow, group bills, and on chain savings — all on Stellar.**
 
 Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
 
-[**Live demo →**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Sristipriya/Zpay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; 
+[**Live demo →**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Zpay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; 
 
 
 
@@ -32,11 +32,12 @@ Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), sett
 ## Highlights
 
 - **Universal IDs** — send to `div@Zp` instead of a 56-char Stellar public key.
+- **X402 Protocol** — Agents can interact with your wallet , Can pay for upu , Can earn for you.
+- **Indian UPI bridge** — pay any UPI QR with crypto; merchant receives INR.
 - **Instant P2P** — XLM/USDC/INR P2P transfers settled on Stellar in ~3 seconds.
 - **Escrow with arbiter** — Soroban contract handles fund/deliver/release/dispute/resolve. Two-step arbiter override pays the freelancer even when the on-chain `release` is locked.
 - **Split bills** — equal or custom-share bill splitting across `@Zp` users, with per-participant payment tracking and notifications.
 - **On-chain Vault** — fixed-term ZPAY staking (30/60/90 days, up to 6%) plus a no-lock XLM yield pool that mints ZPAY rewards daily. Live accrual UI, compound projection, and a real-time earnings ticker.
-- **Indian UPI bridge** — pay any UPI QR with crypto; merchant receives INR.
 - **Cross-currency FX** — XLM ↔ USDC ↔ INR/USD/EUR/GBP with locked-window quotes.
 - **Inactivity guard, transaction PINs, on-chain audit trail** — every action emits a Stellar tx hash you can verify on Stellar Expert.
 
@@ -80,7 +81,13 @@ Lock funds in a Soroban contract, mark delivered, release on completion. If some
 
 <img width="1200" alt="Escrow contract dashboard" src="./screenshots/Arbiter.png" />
 
-### 6 · Split bills *(new)*
+### 6 · Autonomous AI Agents (X-402 Protocol)
+
+Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. With our integrated Model Context Protocol (MCP) server, agents can query balances, resolve Universal IDs, and securely send payments on behalf of users or as independent entities!
+
+![AI Agent X-402 Protocol](./screenshots/x402.png)
+
+### 7 · Split bills *(new)*
 
 Create a bill, pick `@Zp` participants, choose **Equal** or **Custom shares**, and the app tracks who's paid and who hasn't. Each participant pays from their own balance with a single tap; the split updates in real time for everyone.
 
@@ -96,7 +103,7 @@ What's under the hood:
 - Each pay-in is an on-chain Stellar payment from participant → creator
 - Status transitions: `active` → `partial` → `paid` (auto when all participants settle)
 
-### 7 · Vault — staking + yield pool *(new)*
+### 8 · Vault — staking + yield pool *(new)*
 
 Two products in one tab. Live earnings ticker, animated stake progress, and a built-in compound-interest projection.
 
@@ -121,12 +128,6 @@ Drag the slider for amount, tap a tier — see what auto-rolling that tier yield
 Deposit XLM with **no lock-up**, earn ZPAY at 0.5% per XLM per day (~18% APR). Withdraw anytime; rewards accrue linearly and are paid out in ZPAY from the pool's reward bucket on withdrawal.
 
 ![XLM yield pool tab](./screenshots/vault-pool.png)
-
-### 8 · Autonomous AI Agents (X-402 Protocol)
-
-Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. With our integrated Model Context Protocol (MCP) server, agents can query balances, resolve Universal IDs, and securely send payments on behalf of users or as independent entities!
-
-![AI Agent X-402 Protocol](./screenshots/agent-x402.png)
 
 ### 9 · CI / CD
 
