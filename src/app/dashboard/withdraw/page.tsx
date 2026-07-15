@@ -11,7 +11,7 @@ import { BuildingLibraryIcon } from "@heroicons/react/24/outline";
 export default function WithdrawCryptoPage() {
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [successData, setSuccessData] = useState<{ sessionId: string, txHash: string } | null>(null);
 
   const handleWithdraw = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +35,11 @@ export default function WithdrawCryptoPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      setSessionId(data.sessionId);
-      toast.success("Withdrawal initiated!");
+      setSuccessData({
+        sessionId: data.sessionId,
+        txHash: data.txHash
+      });
+      toast.success("Withdrawal successful! Funds deducted.");
       
     } catch (error: any) {
       toast.error(error.message);
@@ -62,7 +65,7 @@ export default function WithdrawCryptoPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {!sessionId ? (
+          {!successData ? (
             <form onSubmit={handleWithdraw} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="amount" className="text-zinc-200">Amount (USDC)</Label>
@@ -95,19 +98,20 @@ export default function WithdrawCryptoPage() {
             </form>
           ) : (
             <div className="p-4 bg-zinc-900 rounded-lg border border-zinc-800 text-center">
-              <p className="text-sm text-green-400 mb-2">
-                Withdrawal Session Created!
+              <p className="text-lg font-semibold text-green-400 mb-2">
+                Withdrawal Successful!
               </p>
-              <p className="text-xs text-zinc-500 mb-4 break-all">
-                Session ID: {sessionId}
+              <p className="text-sm text-zinc-300 mb-2">
+                Your USDC has been deducted from your wallet and converted to fiat for payout.
               </p>
-              <p className="text-xs text-zinc-400 mb-4">
-                In a full implementation, you would be prompted to sign a Stellar transaction here to send funds to the offramp treasury.
-              </p>
+              <div className="text-xs text-zinc-500 mb-4 break-all bg-black/40 p-3 rounded text-left space-y-2">
+                <p><span className="text-zinc-400">Session:</span> {successData.sessionId}</p>
+                <p><span className="text-zinc-400">Stellar Tx:</span> {successData.txHash}</p>
+              </div>
               <Button 
                 variant="outline" 
-                className="mt-4 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-                onClick={() => setSessionId(null)}
+                className="mt-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                onClick={() => setSuccessData(null)}
               >
                 Start New Withdrawal
               </Button>
