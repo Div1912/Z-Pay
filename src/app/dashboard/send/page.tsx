@@ -259,6 +259,22 @@ function SendForm() {
       setResolving(false);
       return;
     }
+
+    if (cleanUsername.startsWith('0x') && cleanUsername.length === 42) {
+      setReceiverProfile({
+        username: "External EVM Wallet",
+        address: cleanUsername,
+        display_name: "External EVM Wallet",
+        full_name: "Cross-Chain Send via CCTP",
+        avatar_url: null,
+        preferred_currency: 'USDC',
+        verified: false,
+        isUnfunded: false,
+      });
+      setError("");
+      setResolving(false);
+      return;
+    }
     setResolving(true);
     try {
       const res = await fetch(`/api/zpay/resolve?username=${cleanUsername}`);

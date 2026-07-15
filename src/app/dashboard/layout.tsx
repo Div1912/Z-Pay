@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Send, QrCode, History, User, Scan, LayoutDashboard, Store, Settings, FileText, Users, TrendingUp, BarChart2, Radio, Shield, Server, PieChart } from "lucide-react";
+import { Send, QrCode, History, User, Scan, LayoutDashboard, Store, Settings, FileText, Users, TrendingUp, BarChart2, Radio, Shield, Server, PieChart, CreditCard, Landmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/Logo";
 import { Background } from "@/components/Background";
@@ -49,6 +49,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: "Transactions",icon: History,          href: "/dashboard/history" },
     { label: "Scan & Pay",  icon: Scan,             href: "/dashboard/scan" },
     { label: "Send Money",  icon: Send,             href: "/dashboard/send" },
+    { label: "Buy Crypto",  icon: CreditCard,       href: "/dashboard/buy-sell" },
+    { label: "Withdraw",    icon: Landmark,         href: "/dashboard/withdraw" },
     { label: "Split Bills", icon: Users,            href: "/dashboard/split" },
     { label: "Vault",       icon: TrendingUp,       href: "/dashboard/savings" },
     { label: "Pay Merchant",icon: Store,            href: "/dashboard/merchant" },

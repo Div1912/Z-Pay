@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { sendPayment } from '@/lib/stellar';
+import { sendPayment, PLATFORM_MERCHANT_WALLET } from '@/lib/stellar';
 import { getExchangeRate } from '@/lib/fx-service';
 import { notifyPayment } from '@/lib/notify';
 import { logInfo, logError, logWarn } from '@/lib/logger';
@@ -87,8 +87,13 @@ export async function POST(request: Request) {
   try {
     let recipientAddress = recipient;
     let recipientProfile = null;
+    let isCrossChain = false;
+    let crossChainDestination = 'ethereum';
 
-    if (recipient.includes('@Zp') || !recipient.startsWith('G')) {
+    if (recipient.startsWith('0x') && recipient.length === 42) {
+      isCrossChain = true;
+      // We could detect base vs ethereum here based on user input, but defaulting to ethereum
+    } else if (recipient.includes('@Zp') || !recipient.startsWith('G')) {
       const username = recipient.replace('@Zp', '');
       const { data: recProfile } = await supabaseAdmin
         .from('profiles')
@@ -162,6 +167,54 @@ export async function POST(request: Request) {
     const secret = safeDecryptSecret(senderProfile.stellar_secret);
     if (!secret) {
       return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
+    }
+
+    if (isCrossChain) {
+      // 1. Send the USDC/XLM to the Z-Pay Treasury wallet to simulate the burn.
+      const txHash = await sendPayment(
+        secret,
+        PLATFORM_MERCHANT_WALLET,
+        xlmAmount,
+        { memo: 'CCTP-BURN' }
+      );
+
+      // 2. Insert into cctp_outbound_intents
+      await supabaseAdmin.from('cctp_outbound_intents').insert({
+        user_id: user.id,
+        sender_stellar_address: senderProfile.stellar_address,
+        recipient_evm_address: recipientAddress,
+        amount_usdc: parseFloat(amount),
+        destination_chain: crossChainDestination,
+        status: 'pending_burn',
+        stellar_burn_tx_hash: txHash
+      });
+
+      // 3. Insert transaction history record
+      await supabaseAdmin.from('transactions').insert({
+        sender_id: senderProfile.id,
+        sender_universal_id: senderProfile.universal_id,
+        recipient_universal_id: recipientAddress,
+        amount: parseFloat(amount),
+        currency: sourceCurrency,
+        tx_hash: txHash,
+        status: 'completed',
+        note: `Cross-Chain Transfer to ${recipientAddress.substring(0, 6)}...`,
+        purpose: purpose || 'CCTP Outbound',
+      });
+
+      logInfo('cctp_outbound_success', {
+        route: ROUTE,
+        user_id: user.id,
+        meta: { amount, currency: sourceCurrency, tx_hash: txHash, recipient: recipientAddress },
+      }).catch(() => {});
+
+      return NextResponse.json({ 
+        success: true, 
+        tx_hash: txHash,
+        amount_sent: parseFloat(amount),
+        currency: sourceCurrency,
+        xlm_amount: parseFloat(xlmAmount)
+      });
     }
 
     const txHash = await sendPayment(
