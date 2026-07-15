@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: "Transactions",icon: History,          href: "/dashboard/history" },
     { label: "Scan & Pay",  icon: Scan,             href: "/dashboard/scan" },
     { label: "Send Money",  icon: Send,             href: "/dashboard/send" },
-    { label: "Buy Crypto",  icon: CreditCard,       href: "/dashboard/buy-sell" },
+
     { label: "Withdraw",    icon: Landmark,         href: "/dashboard/withdraw" },
     { label: "Split Bills", icon: Users,            href: "/dashboard/split" },
     { label: "Vault",       icon: TrendingUp,       href: "/dashboard/savings" },

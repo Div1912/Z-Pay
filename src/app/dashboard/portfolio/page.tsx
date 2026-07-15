@@ -122,23 +122,107 @@ export default function PortfolioPage() {
           )}
         </TabsContent>
         
-        <TabsContent value="overview">
+        <TabsContent value="overview" className="space-y-6">
           {/* ── Main Portfolio Card ── */}
-          <div className="glass-card rounded-[2rem] p-6 md:p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
-              <PieChart className="w-48 h-48 text-[#D4AF37]" />
+          <div className="bg-gradient-to-br from-blue-900/40 to-[#1a1a2e] border border-blue-500/20 rounded-[1.5rem] p-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+              <PieChart className="w-40 h-40 text-blue-400" />
             </div>
             
-            <div className="relative z-10 space-y-8">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-zinc-400 font-medium tracking-wide text-sm">Portfolio Value ({currency})</span>
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-zinc-400 font-medium tracking-wide text-sm">Portfolio value {currency} ▾</span>
+              </div>
+              <div className="text-4xl md:text-5xl font-black tracking-tighter mb-2">
+                {currency === 'INR' ? '₹' : currency === 'USD' ? '$' : ''}
+                {loading ? "..." : totalValue}
+              </div>
+              {!loading && parseFloat(totalValue) > 0 && (
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <span className="text-red-500 bg-red-500/10 px-2 py-0.5 rounded flex items-center">
+                    <TrendingDown className="w-3 h-3 mr-1" />
+                    -{(parseFloat(totalValue) * 0.042).toFixed(2)} (4.20%)
+                  </span>
+                  <span className="text-zinc-500">Today</span>
                 </div>
-                <div className="text-5xl md:text-6xl font-black tracking-tighter">
-                  {currency === 'INR' ? '₹' : currency === 'USD' ? '$' : ''}
-                  {loading ? "..." : totalValue}
+              )}
+            </div>
+          </div>
+
+          {/* ── Products List (CoinDCX Style) ── */}
+          <div className="space-y-4 pt-2">
+            <h3 className="text-zinc-400 font-medium text-sm">Products</h3>
+            
+            {/* Coins */}
+            <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/5 rounded-2xl p-4 flex items-center justify-between cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center">
+                  <PieChart className="w-5 h-5" />
+                </div>
+                <span className="font-bold text-lg">Coins</span>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-lg">
+                  {currency === 'INR' ? '₹' : ''}{loading ? "0.00" : totalValue}
+                </p>
+                {!loading && parseFloat(totalValue) > 0 && (
+                  <p className="text-xs text-zinc-500">
+                    Today <span className="text-red-500">-{(parseFloat(totalValue) * 0.042).toFixed(2)} (4.20%)</span>
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Futures */}
+            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <span className="font-bold text-lg text-zinc-300">Futures</span>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
+              </div>
+            </div>
+
+            {/* Options */}
+            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
+                  <ArrowRightLeft className="w-5 h-5" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-lg text-zinc-300">Options</span>
+                  <span className="text-[9px] font-black uppercase bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">New</span>
                 </div>
               </div>
+              <div className="text-right">
+                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
+                <p className="text-xs text-zinc-500">Active ₹0</p>
+              </div>
+            </div>
+
+            {/* Global Futures */}
+            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
+                  <div className="w-4 h-4 bg-zinc-400 rounded-full" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-lg text-zinc-300">Global Futures</span>
+                  <span className="text-[9px] font-black uppercase bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">New</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
+              </div>
+            </div>
+            
+            {/* Promo banner */}
+            <div className="bg-blue-600/10 border border-blue-500/20 rounded-xl p-4 flex items-center gap-3 mt-4">
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">₹</div>
+              <p className="text-sm font-medium text-blue-100">Start trading Global Futures. <span className="font-bold text-white cursor-pointer hover:underline">Add funds</span></p>
             </div>
           </div>
         </TabsContent>
