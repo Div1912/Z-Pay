@@ -185,20 +185,9 @@ export default function DashboardPage() {
     );
   }
 
-    const preferredCurrency = profile?.preferred_currency || 'XLM';
-    const displayBalance = preferredCurrency === 'XLM' 
-      ? parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-      : parseFloat(convertedBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    
-    const currencySymbols: Record<string, string> = {
-      'INR': '₹',
-      'USD': '$',
-      'EUR': '€',
-      'GBP': '£',
-      'USDC': '$',
-      'XLM': ''
-    };
-    const currencySymbol = currencySymbols[preferredCurrency] || '';
+    const displayBalance = parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const currencySymbol = '';
+    const preferredCurrency = 'XLM';
 
   if (isUnfunded) {
     return (
@@ -314,7 +303,7 @@ export default function DashboardPage() {
               
               <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12">
                 <div className="space-y-3 sm:space-y-4 min-w-0 flex-1">
-                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]">Currency Balance</p>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]">Crypto Balance</p>
                     <div className="flex items-baseline gap-2 sm:gap-3 overflow-hidden">
                       <h2
                         className="text-[clamp(2.8rem,9vw,5rem)] font-black leading-none"
@@ -325,34 +314,22 @@ export default function DashboardPage() {
                           letterSpacing: '-0.02em',
                         }}
                       >
-                        {currencySymbol}{displayBalance}
+                        {displayBalance}
                       </h2>
                       <span className="text-xl sm:text-2xl md:text-3xl font-black text-white/30 tracking-widest shrink-0">{preferredCurrency}</span>
                     </div>
-                    {preferredCurrency !== 'XLM' && (
-                      <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full w-fit border border-white/10">
-                        <span className="text-[9px] font-black tracking-[0.2em] text-[#D4AF37] uppercase">Crypto Balance</span>
-                        <div className="w-1 h-1 bg-white/20 rounded-full" />
-                        <span className="text-xs font-bold text-white/80">{parseFloat(xlmBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} XLM</span>
-                      </div>
-                    )}
                     
                     <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-full w-fit border border-green-500/20">
                       <span className="text-[9px] font-black tracking-[0.2em] text-green-500 uppercase">Fiat Balance (Withdrawable)</span>
                       <div className="w-1 h-1 bg-green-500/30 rounded-full" />
                       <span className="text-xs font-bold text-green-400">
-                        {parseFloat(profile?.fiat_balance || '0').toLocaleString('en-US', { style: 'currency', currency: profile?.fiat_currency?.toUpperCase() || 'USD' })}
+                        {parseFloat(profile?.fiat_balance || '0').toLocaleString('en-US', { style: 'currency', currency: profile?.fiat_currency?.toUpperCase() || 'INR' })}
                       </span>
                     </div>
 
                 </div>
   
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 w-full lg:w-auto lg:min-w-[240px] xl:min-w-[280px]">
-                  <Link href="/dashboard/add-funds" className="flex-1">
-                    <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-black text-sm sm:text-base xl:text-lg rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-500/30 group">
-                      <Plus className="mr-2 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform" /> ADD FUNDS
-                    </Button>
-                  </Link>
                   <div className="flex gap-3 sm:gap-4 flex-1">
                     <Link href="/dashboard/send" className="flex-1">
                       <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-sm sm:text-base rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
