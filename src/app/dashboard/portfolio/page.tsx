@@ -110,7 +110,6 @@ export default function PortfolioPage() {
                       <p className="text-zinc-500 text-sm font-medium">{parseFloat(b.balance).toFixed(4)} {b.asset}</p>
                     </div>
                   </div>
-                  </div>
                 </div>
               ))}
               {balances.length === 0 && (
