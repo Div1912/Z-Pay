@@ -28,8 +28,8 @@ export default function PortfolioPage() {
   
   // Deposit flow state
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<string | null>(null);
   const [stellarAddress, setStellarAddress] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -117,12 +117,18 @@ export default function PortfolioPage() {
           >
             <ArrowDownToLine className="w-4 h-4 mr-2" /> Deposit Crypto
           </Button>
+        <div className="flex gap-3 w-full md:w-auto">
           <Button 
-            onClick={() => setWithdrawModalOpen(true)}
-            className="flex-1 md:flex-none h-12 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl"
+            onClick={() => setDepositModalOpen(true)}
+            className="flex-1 md:flex-none h-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl"
           >
-            <ArrowRightLeft className="w-4 h-4 mr-2" /> Withdraw
+            <ArrowDownToLine className="w-4 h-4 mr-2" /> Deposit Crypto
           </Button>
+          <a href="/dashboard/withdraw" className="flex-1 md:flex-none">
+            <Button className="w-full h-12 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl">
+              <ArrowRightLeft className="w-4 h-4 mr-2" /> Withdraw
+            </Button>
+          </a>
         </div>
       </div>
 
@@ -250,8 +256,8 @@ export default function PortfolioPage() {
 
               {!selectedAsset ? (
                 <div className="space-y-4">
-                  <p className="text-sm text-zinc-400 mb-4">Select an asset to deposit:</p>
-                  {['USDC', 'XLM', 'USDT', 'BTC'].map(asset => (
+                  <p className="text-sm text-zinc-400 mb-4">Select an asset to deposit via Stellar Network:</p>
+                  {['XLM', 'USDC'].map(asset => (
                     <button 
                       key={asset}
                       onClick={() => setSelectedAsset(asset)}
@@ -262,81 +268,43 @@ export default function PortfolioPage() {
                     </button>
                   ))}
                 </div>
-              ) : !selectedNetwork ? (
-                <div className="space-y-4">
-                  <button onClick={() => setSelectedAsset(null)} className="text-sm text-[#D4AF37] font-bold mb-4 flex items-center">
-                    ← Back to assets
-                  </button>
-                  <p className="text-sm text-zinc-400 mb-2">Select network for <strong>{selectedAsset}</strong>:</p>
-                  
-                  <button 
-                    onClick={() => setSelectedNetwork('Stellar')}
-                    className="w-full flex items-center justify-between p-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-xl transition-colors"
-                  >
-                    <div className="text-left">
-                      <p className="font-bold text-blue-400">Stellar Network</p>
-                      <p className="text-xs text-blue-400/70">Fast, low fees</p>
-                    </div>
-                    <CheckCircle2 className="w-5 h-5 text-blue-500" />
-                  </button>
-                  
-                  <button 
-                    onClick={() => setSelectedNetwork('ERC20')}
-                    className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-colors group"
-                  >
-                    <div className="text-left">
-                      <p className="font-bold text-white">Ethereum (ERC20)</p>
-                      <p className="text-xs text-zinc-500">Cross-chain bridging</p>
-                    </div>
-                  </button>
-
-                  <button 
-                    onClick={() => setSelectedNetwork('TRC20')}
-                    className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-colors group"
-                  >
-                    <div className="text-left">
-                      <p className="font-bold text-white">Tron (TRC20)</p>
-                      <p className="text-xs text-zinc-500">Cross-chain bridging</p>
-                    </div>
-                  </button>
-                </div>
-              ) : selectedNetwork === 'Stellar' ? (
+              ) : (
                 <div className="space-y-6">
-                  <button onClick={() => setSelectedNetwork(null)} className="text-sm text-[#D4AF37] font-bold flex items-center">
-                    ← Back to networks
+                  <button onClick={() => setSelectedAsset(null)} className="text-sm text-blue-400 font-bold flex items-center">
+                    ← Back to assets
                   </button>
                   <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
                     <div className="w-48 h-48 bg-white mx-auto rounded-xl flex items-center justify-center p-2 mb-6">
-                      <div className="w-full h-full border-4 border-dashed border-black/20 flex flex-col items-center justify-center text-black/50">
-                        <QrCode className="w-12 h-12 mb-2 opacity-50" />
-                        <span className="text-xs font-bold uppercase">QR Code</span>
-                      </div>
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${stellarAddress}`} 
+                        alt="Stellar Deposit QR" 
+                        className="w-full h-full"
+                      />
                     </div>
                     
                     <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-2">Your Stellar Deposit Address</p>
-                    <div className="bg-black/50 p-4 rounded-xl font-mono text-sm break-all text-blue-400 border border-blue-500/20 select-all cursor-text">
-                      {stellarAddress || "Loading..."}
+                    <div 
+                      onClick={() => {
+                        navigator.clipboard.writeText(stellarAddress);
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
+                      }}
+                      className="bg-black/50 p-4 rounded-xl font-mono text-xs sm:text-sm break-all text-blue-400 border border-blue-500/20 cursor-pointer hover:bg-black/70 transition-colors flex items-center justify-between group"
+                    >
+                      <span>{stellarAddress || "Loading..."}</span>
+                      {copied ? (
+                        <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 ml-2" />
+                      ) : (
+                        <span className="text-[9px] uppercase font-bold text-white/30 group-hover:text-white/80 shrink-0 ml-2">Copy</span>
+                      )}
                     </div>
                     
-                    <p className="text-xs text-zinc-400 mt-4 leading-relaxed">
-                      Only send {selectedAsset} to this address via the Stellar network. Sending any other asset or using a different network will result in permanent loss.
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <button onClick={() => setSelectedNetwork(null)} className="text-sm text-[#D4AF37] font-bold flex items-center">
-                    ← Back to networks
-                  </button>
-                  <div className="p-6 bg-orange-500/10 border border-orange-500/30 rounded-2xl text-center">
-                    <Info className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-                    <h3 className="font-black text-lg text-orange-500 mb-2">Network Unavailable</h3>
-                    <p className="text-orange-500/80 text-sm leading-relaxed mb-4">
-                      To comply with current Indian Financial Intelligence Unit (FIU) regulations regarding virtual digital asset cross-chain bridges, non-Stellar network deposits are temporarily disabled until full KYC integration is complete.
-                    </p>
-                    <p className="text-sm text-zinc-400">
-                      Please use the native <strong>Stellar Network</strong> to deposit your {selectedAsset}.
-                    </p>
+                    <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex gap-3 text-left">
+                      <Info className="w-5 h-5 text-red-500 shrink-0" />
+                      <p className="text-xs text-zinc-400 leading-relaxed">
+                        Send only <strong className="text-white">{selectedAsset} (Stellar Network)</strong> to this address. Sending any other asset or using a different network (like ERC20 or TRC20) will result in permanent loss.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -345,41 +313,7 @@ export default function PortfolioPage() {
         )}
       </AnimatePresence>
       
-      {/* ── Withdraw Modal ── */}
-      <AnimatePresence>
-        {withdrawModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-              onClick={resetWithdraw}
-            />
-            <motion.div 
-              initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-md bg-zinc-900 border border-white/10 rounded-[2rem] p-6 shadow-2xl z-10"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-black uppercase tracking-tight">Withdraw Crypto</h2>
-                <button onClick={resetWithdraw} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X className="w-5 h-5" /></button>
-              </div>
-              
-              <div className="p-6 bg-orange-500/10 border border-orange-500/30 rounded-2xl text-center mb-6">
-                <Info className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-                <h3 className="font-black text-lg text-orange-500 mb-2">Withdrawals Restricted</h3>
-                <p className="text-orange-500/80 text-sm leading-relaxed">
-                  Direct external withdrawals to unregulated self-custodial wallets are currently restricted pending KYC verification as per FIU compliance guidelines. 
-                  <br/><br/>
-                  To transfer funds out, please use the <strong>Send Money</strong> feature to send directly to an FIU-registered exchange (like CoinDCX or Binance).
-                </p>
-              </div>
-              
-              <Button onClick={resetWithdraw} className="w-full h-12 bg-white text-black font-bold rounded-xl">
-                Understood
-              </Button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+
       
     </div>
   );
