@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Logo({ className = "", showText = true, size = "default" }: { className?: string; showText?: boolean; size?: "small" | "default" | "large" }) {
   const sizeClasses = {
@@ -19,17 +20,12 @@ export function Logo({ className = "", showText = true, size = "default" }: { cl
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <div className={`relative ${sizeClasses[size]}`}>
-        <motion.div 
-          animate={{ rotate: 360 }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border-2 border-white/30"
+        <Image 
+          src="/logo.png"
+          alt="Zpay Logo"
+          fill
+          className="object-contain"
         />
-        <motion.div 
-          animate={{ rotate: -360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-1 rounded-full border-t-2 border-l-2 border-white/60"
-        />
-        <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#D4AF37] via-[#FBBF24] to-[#27272a] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
       </div>
       {showText && (
         <span 
@@ -52,17 +48,12 @@ export function LogoIcon({ className = "", size = "default" }: { className?: str
 
   return (
     <div className={`relative ${sizeClasses[size]} ${className}`}>
-      <motion.div 
-        animate={{ rotate: 360 }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-0 rounded-full border-2 border-white/30"
+      <Image 
+        src="/logo.png"
+        alt="Zpay Logo"
+        fill
+        className="object-contain"
       />
-      <motion.div 
-        animate={{ rotate: -360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-1 rounded-full border-t-2 border-l-2 border-white/60"
-      />
-      <div className="absolute inset-2 rounded-md bg-gradient-to-br from-[#D4AF37] via-[#FBBF24] to-[#27272a] shadow-[0_0_20px_rgba(198,148,249,0.7)]" />
     </div>
   );
 }

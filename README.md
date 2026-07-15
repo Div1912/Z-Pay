@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="380" alt="Zpay logo" src="https://github.com/user-attachments/assets/101d4866-070b-410b-a6ca-fdbce03a7cc2" />
+<img width="380" alt="Zpay logo" src="./public/logo.png" className="rounded-[3rem] shadow-2xl shadow-blue-500/20" />
 
 # Zpay — Agentic Global Payment Router
 
