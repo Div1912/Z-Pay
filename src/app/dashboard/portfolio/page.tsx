@@ -92,7 +92,6 @@ export default function PortfolioPage() {
 
   const resetDeposit = () => {
     setSelectedAsset(null);
-    setSelectedNetwork(null);
     setDepositModalOpen(false);
   };
 
@@ -110,13 +109,6 @@ export default function PortfolioPage() {
           <p className="text-zinc-500 font-medium">Your assets across all networks</p>
         </div>
         
-        <div className="flex gap-3 w-full md:w-auto">
-          <Button 
-            onClick={() => setDepositModalOpen(true)}
-            className="flex-1 md:flex-none h-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl"
-          >
-            <ArrowDownToLine className="w-4 h-4 mr-2" /> Deposit Crypto
-          </Button>
         <div className="flex gap-3 w-full md:w-auto">
           <Button 
             onClick={() => setDepositModalOpen(true)}
