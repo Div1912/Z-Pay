@@ -122,7 +122,13 @@ Deposit XLM with **no lock-up**, earn ZPAY at 0.5% per XLM per day (~18% APR). W
 
 ![XLM yield pool tab](./screenshots/vault-pool.png)
 
-### 8 · CI / CD
+### 8 · Autonomous AI Agents (X-402 Protocol)
+
+Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. With our integrated Model Context Protocol (MCP) server, agents can query balances, resolve Universal IDs, and securely send payments on behalf of users or as independent entities!
+
+![AI Agent X-402 Protocol](./screenshots/agent-x402.png)
+
+### 9 · CI / CD
 
 Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite.
 
