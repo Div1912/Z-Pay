@@ -57,18 +57,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Insufficient funds or network error' }, { status: 400 });
     }
 
-    // 4. Calculate fiat value (Assuming 1 USDC = 1 USD for simplicity here, or fetch rate)
+    // 4. Calculate fiat value in INR
     let fiatValue = cryptoAmount;
-    if (currency?.toUpperCase() === 'XLM') {
-      const usdRate = await getExchangeRate('XLM', 'USDC');
-      fiatValue = cryptoAmount * usdRate;
+    if (currency?.toUpperCase() === 'USDC' || currency?.toUpperCase() === 'XLM') {
+      const inrRate = await getExchangeRate(currency?.toUpperCase() || 'USDC', 'INR');
+      fiatValue = cryptoAmount * inrRate;
     }
 
-    // 5. Update user's fiat_balance
+    // 5. Update user's fiat_balance (INR)
     const newFiatBalance = (parseFloat(profile.fiat_balance || '0') + fiatValue).toFixed(2);
     await supabaseAdmin
       .from('profiles')
-      .update({ fiat_balance: newFiatBalance })
+      .update({ fiat_balance: newFiatBalance, fiat_currency: 'inr' })
       .eq('id', user.id);
 
     // 6. Record transaction
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
       currency: currency || 'USDC',
       tx_hash: txHash,
       status: 'completed',
-      note: `Sold ${cryptoAmount} ${currency || 'USDC'} for $${fiatValue.toFixed(2)} USD`,
+      note: `Sold ${cryptoAmount} ${currency || 'USDC'} for ₹${fiatValue.toFixed(2)} INR`,
     });
 
     return NextResponse.json({ 
