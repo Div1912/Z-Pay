@@ -142,7 +142,7 @@ export async function POST(request: Request) {
         });
     }
 
-    notifyEscrow({
+    await {
       event: payFreelancer ? 'resolved_freelancer' : 'resolved_client',
       contractTitle: contract.title,
       amount: contract.amount,

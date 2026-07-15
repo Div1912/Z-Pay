@@ -139,7 +139,7 @@ export async function POST(request: Request) {
     })).catch(() => {}); // non-blocking
 
     // Fire-and-forget email alert
-    notifySplit({
+    await {
       splitId: split.id,
       splitTitle: title,
       amount: parseFloat(amountOwed),
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
   }
 
   // Also notify the creator with a summary
-  notifySplitCreatedSummary({
+  await {
     splitId: split.id,
     splitTitle: title,
     totalAmount: parseFloat(total_amount),

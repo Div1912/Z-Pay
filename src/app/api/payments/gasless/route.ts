@@ -160,7 +160,7 @@ export async function POST(request: Request) {
 
     // Fire-and-forget notifications
     if (recipientProfile?.id) {
-      notifyPayment({
+      await {
         senderId: senderProfile.id,
         recipientId: recipientProfile.id,
         senderUniversalId: senderProfile.universal_id || '',

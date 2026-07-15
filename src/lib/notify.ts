@@ -67,9 +67,14 @@ function infoRow(label: string, value: string): string {
 // ─── Helper: fetch user email by userId ──────────────────────────────────────
 async function getUserEmail(userId: string): Promise<string | null> {
   try {
-    const { data } = await supabaseAdmin.auth.admin.getUserById(userId);
+    const { data, error } = await supabaseAdmin.auth.admin.getUserById(userId);
+    if (error) {
+      console.error('[notify] Supabase admin error:', error);
+      return null;
+    }
     return data.user?.email ?? null;
-  } catch {
+  } catch (err) {
+    console.error('[notify] getUserEmail catch error:', err);
     return null;
   }
 }

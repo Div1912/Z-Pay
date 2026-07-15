@@ -111,7 +111,7 @@ export async function POST(request: Request) {
         purpose: 'Contract Funding',
       });
 
-    notifyEscrow({
+    await {
       event: 'funded',
       contractTitle: title,
       amount: parseFloat(amount),

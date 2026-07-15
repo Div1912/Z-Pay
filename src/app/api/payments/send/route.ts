@@ -243,7 +243,7 @@ export async function POST(request: Request) {
 
     // Fire-and-forget email notifications to both parties
     if (recipientProfile?.id) {
-      notifyPayment({
+      await {
         senderId: senderProfile.id,
         recipientId: recipientProfile.id,
         senderUniversalId: senderProfile.universal_id || '',

@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     if (error) console.error('DB insert error:', error);
 
     // Fire-and-forget email alert
-    notifyPoolDeposit({
+    await {
       userId: user.id,
       amount: parseFloat(amount_xlm),
       txHash,
