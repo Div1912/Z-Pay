@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export FILTER_BRANCH_SQUELCH_WARNING=1
 git filter-branch -f --env-filter '
 OLD_EMAIL="Sristipriya@users.noreply.github.com"
 CORRECT_NAME="Div1912"
