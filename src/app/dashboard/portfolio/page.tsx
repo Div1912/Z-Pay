@@ -172,58 +172,6 @@ export default function PortfolioPage() {
                 )}
               </div>
             </div>
-
-            {/* Futures */}
-            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <span className="font-bold text-lg text-zinc-300">Futures</span>
-              </div>
-              <div className="text-right">
-                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
-              </div>
-            </div>
-
-            {/* Options */}
-            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
-                  <ArrowRightLeft className="w-5 h-5" />
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-lg text-zinc-300">Options</span>
-                  <span className="text-[9px] font-black uppercase bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">New</span>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
-                <p className="text-xs text-zinc-500">Active ₹0</p>
-              </div>
-            </div>
-
-            {/* Global Futures */}
-            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-70">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-white/10 text-zinc-400 rounded-full flex items-center justify-center">
-                  <div className="w-4 h-4 bg-zinc-400 rounded-full" />
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-lg text-zinc-300">Global Futures</span>
-                  <span className="text-[9px] font-black uppercase bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">New</span>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="font-bold text-lg text-zinc-300">{currency === 'INR' ? '₹' : ''}0</p>
-              </div>
-            </div>
-            
-            {/* Promo banner */}
-            <div className="bg-blue-600/10 border border-blue-500/20 rounded-xl p-4 flex items-center gap-3 mt-4">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">₹</div>
-              <p className="text-sm font-medium text-blue-100">Start trading Global Futures. <span className="font-bold text-white cursor-pointer hover:underline">Add funds</span></p>
-            </div>
           </div>
         </TabsContent>
         <TabsContent value="funds">
