@@ -761,7 +761,7 @@ function StakeCard({
 
       {stake.tx_hash_stake && (
         <a
-          href={`https://stellar.expert/explorer/testnet/tx/${stake.tx_hash_stake}`}
+          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${stake.tx_hash_stake}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-[10px] text-white/20 hover:text-white/50 transition-colors w-fit"
@@ -903,7 +903,7 @@ function PoolCard({
 
       {position.tx_hash_deposit && (
         <a
-          href={`https://stellar.expert/explorer/testnet/tx/${position.tx_hash_deposit}`}
+          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${position.tx_hash_deposit}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-[10px] text-white/20 hover:text-white/50 transition-colors w-fit"

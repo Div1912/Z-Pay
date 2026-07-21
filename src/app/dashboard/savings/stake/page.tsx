@@ -59,7 +59,7 @@ export default function StakePage() {
           <p className="text-white/50 text-sm mt-2">{success.message}</p>
         </div>
         <a
-          href={`https://stellar.expert/explorer/testnet/tx/${success.tx_hash}`}
+          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${success.tx_hash}`}
           target="_blank" rel="noopener noreferrer"
           className="text-[#D4AF37] text-sm font-bold underline underline-offset-2"
         >

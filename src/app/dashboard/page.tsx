@@ -436,7 +436,7 @@ export default function DashboardPage() {
                           )}
                         </div>
                         <a 
-                          href={`https://stellar.expert/explorer/testnet/tx/${tx.tx_hash}`} 
+                          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${tx.tx_hash}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="p-2 sm:p-3 bg-white/5 rounded-lg sm:rounded-xl hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100"
@@ -466,7 +466,7 @@ export default function DashboardPage() {
                 href="/dashboard/merchant"
                 icon={<Store className="w-5 sm:w-6 h-5 sm:h-6" />}
                 title="PAY MERCHANT (UPI)"
-                description="Pay any UPI QR with testnet crypto"
+                description="Pay any UPI QR with crypto"
                 color="pink"
               />
               <QuickActionCard 

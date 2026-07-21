@@ -182,7 +182,7 @@ export default function SplitDetailPage() {
                         <CheckCircle2 className="w-5 h-5" />
                         {p.tx_hash && (
                           <a
-                            href={`https://stellar.expert/explorer/testnet/tx/${p.tx_hash}`}
+                            href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${p.tx_hash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={e => e.stopPropagation()}

@@ -156,7 +156,7 @@ export default function X402DashboardPage() {
                     </p>
                   </div>
                   <a 
-                    href={`https://stellar.expert/explorer/testnet/tx/${tx.tx_hash}`} 
+                    href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${tx.tx_hash}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors"

@@ -395,7 +395,7 @@ export default function MerchantPayPage() {
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-600 bg-zinc-800 px-2 py-1 rounded">Testnet</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-600 bg-zinc-800 px-2 py-1 rounded">{process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'Mainnet' : 'Testnet'}</span>
           </div>
         </div>
       </div>

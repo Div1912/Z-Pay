@@ -447,7 +447,7 @@ export default function NewSplitPage() {
             <div className="flex items-start gap-3 bg-amber-500/5 border border-amber-500/15 rounded-2xl px-4 py-3">
               <span className="text-amber-400 shrink-0">⚠️</span>
               <p className="text-[10px] font-medium text-amber-400/60 leading-relaxed">
-                Requests will be sent to all participants instantly. On-chain transactions (Stellar Testnet) are irreversible.
+                Requests will be sent to all participants instantly. On-chain transactions (Stellar ${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'Mainnet' : 'Testnet'}) are irreversible.
               </p>
             </div>
 

@@ -53,7 +53,7 @@ export default function PoolDepositPage() {
           </p>
         </div>
         <a
-          href={`https://stellar.expert/explorer/testnet/tx/${success.tx_hash}`}
+          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${success.tx_hash}`}
           target="_blank" rel="noopener noreferrer"
           className="text-blue-400 text-sm font-bold underline underline-offset-2"
         >

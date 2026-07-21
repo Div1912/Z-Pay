@@ -318,7 +318,7 @@ export default function ProfilePage() {
               <div className="space-y-2">
                 <h4 className="text-xl font-black tracking-tight uppercase">NETWORK NODE</h4>
                 <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest leading-relaxed">
-                  Direct connection established with Stellar Horizon Testnet. Horizon version 2.14.0. Node: HORIZON-TESTNET-PROD.
+                  Direct connection established with Stellar Horizon ${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'Mainnet' : 'Testnet'}..
                 </p>
               </div>
             </div>

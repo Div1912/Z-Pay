@@ -27,7 +27,7 @@ export default function ReceivePage() {
 
   const qrData = JSON.stringify({
     zpay: profile?.universal_id ? `${profile.universal_id}@Zp` : "",
-    network: "stellar-testnet",
+    network: process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'stellar-mainnet' : 'stellar-testnet',
     type: "payment",
     amount: amount || undefined,
     currency: profile?.preferred_currency || "USDC",

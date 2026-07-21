@@ -821,7 +821,7 @@ export default function ContractsPage() {
                       {/* View on-chain */}
                       {(contract.tx_hash_release || contract.tx_hash_dispute || contract.tx_hash_create) && (
                         <a
-                          href={`https://stellar.expert/explorer/testnet/tx/${contract.tx_hash_release || contract.tx_hash_dispute || contract.tx_hash_create}`}
+                          href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${contract.tx_hash_release || contract.tx_hash_dispute || contract.tx_hash_create}`}
                           target="_blank" rel="noopener noreferrer"
                           className="h-10 px-4 flex items-center gap-2 text-xs text-blue-400 hover:text-blue-300 border border-blue-500/30 rounded-lg"
                         >

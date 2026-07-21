@@ -782,7 +782,7 @@ export default function SettingsPage() {
         <div className="space-y-3 text-sm">
           {[
             ["App Version", "1.0.0 (production)"],
-            ["Network", "Stellar Testnet"],
+            ["Network", "Stellar ${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'Mainnet' : 'Testnet'}"],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
               <span className="text-zinc-500">{k}</span>
