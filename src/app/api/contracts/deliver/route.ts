@@ -64,7 +64,7 @@ export async function POST(request: Request) {
       })
       .eq('id', contract_id);
 
-    await {
+    notifyEscrow({
       event: 'delivered',
       contractTitle: contract.title,
       amount: contract.amount,

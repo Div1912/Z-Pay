@@ -162,7 +162,7 @@ An arbiter will review the evidence and decide. Contact support@zpay.app with yo
         });
 
       // Notify payer of refund
-      await {
+      notifyContractRefund({
         contractId: contract_id,
         contractTitle: contract.title,
         amount: contract.amount,
@@ -228,7 +228,7 @@ An arbiter will review the evidence and decide. Contact support@zpay.app with yo
         });
 
       // Notify freelancer of the release/claim
-      await {
+      notifyContractRefund({
         contractId: contract_id,
         contractTitle: contract.title,
         amount: contract.amount,

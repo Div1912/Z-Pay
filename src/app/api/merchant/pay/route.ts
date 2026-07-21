@@ -140,7 +140,7 @@ export async function POST(request: Request) {
     }
 
     // Fire-and-forget email receipt
-    await {
+    notifyMerchantPayment({
       userId: user.id,
       merchantName: merchant_name,
       merchantUpiId: merchant_upi_id,

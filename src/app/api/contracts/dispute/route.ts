@@ -103,7 +103,7 @@ export async function POST(request: Request) {
         : 'Dispute raised. Funds are frozen. You may request a refund.'
       : 'Dispute raised. Funds are frozen. You can now claim your payment.';
 
-    await {
+    notifyEscrow({
       event: 'disputed',
       contractTitle: contract.title,
       amount: contract.amount,

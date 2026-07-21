@@ -131,7 +131,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     });
 
     // Fire-and-forget email alert to creator
-    await {
+    notifySplitPaid({
       splitId: split.id,
       splitTitle: split.title,
       amount: myEntry.amount_owed,

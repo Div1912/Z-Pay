@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     if (error) console.error('DB insert error:', error);
 
     // Fire-and-forget email alert
-    await {
+    notifyStake({
       userId: user.id,
       amountExpo: parseFloat(amount_expo),
       durationDays: duration_days,
