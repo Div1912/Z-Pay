@@ -94,7 +94,7 @@ export async function POST(request: Request) {
     }
 
     // Fire welcome email (fire-and-forget, works for both manual and Google signup)
-    notifyWelcome(user.id, username, full_name).catch(console.error);
+    await notifyWelcome(user.id, username, full_name).catch(console.error);
 
     return NextResponse.json({
       success: true,

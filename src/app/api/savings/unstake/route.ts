@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const payoutExpo = Number(payout) / 10_000_000;
 
     // Fire-and-forget unstake confirmation email
-    notifyUnstake({
+    await notifyUnstake({
       userId: user.id,
       amountExpo: position.amount_expo,
       rewardExpo: position.reward_expo,

@@ -16,6 +16,7 @@ export default function DashboardPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [addressCopied, setAddressCopied] = useState(false);
   const [isUnfunded, setIsUnfunded] = useState(false);
   const [convertedBalance, setConvertedBalance] = useState("0.00");
   const [xlmBalance, setXlmBalance] = useState("0.00");
@@ -173,6 +174,14 @@ export default function DashboardPage() {
     }
   };
 
+  const copyAddress = () => {
+    if (profile?.stellar_address) {
+      navigator.clipboard.writeText(profile.stellar_address);
+      setAddressCopied(true);
+      setTimeout(() => setAddressCopied(false), 2000);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 sm:gap-6">
@@ -204,16 +213,20 @@ export default function DashboardPage() {
           </p>
           <div className="bg-black/30 p-6 rounded-2xl border border-white/10 mb-8 flex flex-col items-center">
             <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Your Stellar Address</p>
-            <p className="font-mono text-sm sm:text-base break-all text-[#D4AF37] text-center max-w-full">
-              {profile?.stellar_address}
-            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+              <p className="font-mono text-sm sm:text-base break-all text-[#D4AF37] text-center max-w-full">
+                {profile?.stellar_address}
+              </p>
+              <Button 
+                onClick={copyAddress}
+                variant="outline" 
+                size="icon" 
+                className="shrink-0 bg-white/5 border-white/10 hover:bg-white/10 text-white"
+              >
+                {addressCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+              </Button>
+            </div>
           </div>
-          <Button
-            onClick={() => window.location.href = '/dashboard/add-funds'}
-            className="bg-[#D4AF37] text-black font-black hover:bg-[#D4AF37]/90 px-8 py-6 rounded-xl w-full text-lg"
-          >
-            How to Add Funds
-          </Button>
         </motion.div>
       </div>
     );

@@ -61,7 +61,7 @@ export async function POST(request: Request) {
   authLimiter.reset(`pin-change:${user.id}`);
 
   // Fire security alert (fire-and-forget)
-  notifySecurityEvent(user.id, 'pin_changed').catch(console.error);
+  await notifySecurityEvent(user.id, 'pin_changed').catch(console.error);
 
   return NextResponse.json({ success: true, message: 'PIN updated successfully' });
 }

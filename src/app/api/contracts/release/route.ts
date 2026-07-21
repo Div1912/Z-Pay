@@ -99,7 +99,7 @@ export async function POST(request: Request) {
         purpose: 'Contract Release',
       });
 
-    notifyEscrow({
+    await notifyEscrow({
       event: 'released',
       contractTitle: contract.title,
       amount: contract.amount,
