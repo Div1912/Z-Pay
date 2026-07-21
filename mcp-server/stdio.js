@@ -12,8 +12,11 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_s
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-const HORIZON_SERVER = new StellarSdk.Horizon.Server('https://horizon-testnet.stellar.org');
-const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
+const IS_MAINNET = process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet';
+const HORIZON_SERVER = new StellarSdk.Horizon.Server(
+  IS_MAINNET ? 'https://horizon.stellar.org' : 'https://horizon-testnet.stellar.org'
+);
+const NETWORK_PASSPHRASE = IS_MAINNET ? StellarSdk.Networks.PUBLIC : StellarSdk.Networks.TESTNET;
 
 async function runMcpServer() {
   const email = process.env.ZPAY_EMAIL;
