@@ -60,9 +60,9 @@ export default function X402DashboardPage() {
           <p className="text-white/50 text-sm sm:text-base font-medium">Monetize your APIs seamlessly with AI Agents.</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/docs/x402" className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 text-sm font-bold text-white/80">
+          <a href="https://github.com/Div1912/Z-Pay/blob/main/docs/SDK.md" target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 text-sm font-bold text-white/80">
             <LinkIcon className="w-4 h-4" /> SDK Docs
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -154,6 +154,27 @@ export const GET = withX402(
     macaroonSecret: process.env.MACAROON_SECRET || "super_secret_key"
   }
 );`}
+               </code>
+             </pre>
+          </div>
+
+          <div className="mt-8">
+             <h4 className="text-sm font-black text-white/50 uppercase tracking-widest mb-3">Z-Pay SDK Client Example</h4>
+             <pre className="bg-black/60 p-4 rounded-xl border border-white/[0.05] overflow-x-auto">
+               <code className="text-[13px] text-green-300 font-mono leading-relaxed">
+{`import { ZpayClient } from '@zpay/sdk';
+
+const zpay = new ZpayClient({ apiKey: 'YOUR_API_KEY' });
+
+// Automatically pay for the X402-gated API route above
+const response = await zpay.payments.send({
+  to: '${stellarAddress || 'YOUR_STELLAR_ADDRESS'}',
+  amount: '0.5',
+  asset: 'XLM',
+  memo: 'API Payment'
+});
+
+console.log(response.success ? 'Payment sent!' : 'Failed');`}
                </code>
              </pre>
           </div>
