@@ -60,9 +60,9 @@ export default function X402DashboardPage() {
           <p className="text-white/50 text-sm sm:text-base font-medium">Monetize your APIs seamlessly with AI Agents.</p>
         </div>
         <div className="flex gap-3">
-          <a href="https://github.com/Div1912/Z-Pay/blob/main/docs/SDK.md" target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 text-sm font-bold text-white/80">
+          <Link href="/docs/x402" className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 text-sm font-bold text-white/80">
             <LinkIcon className="w-4 h-4" /> SDK Docs
-          </a>
+          </Link>
         </div>
       </section>
 
