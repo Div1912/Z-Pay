@@ -106,7 +106,7 @@ export default function X402DocsPage() {
                 </div>
                 <pre className="bg-black/60 pt-12 pb-4 px-6 rounded-xl border border-white/10 overflow-x-auto">
                   <code className="text-sm text-green-400 font-mono">
-                    npm install @zpay/sdk @zpay/x402-gateway
+                    npm install @zpayrouter/sdk @zpayrouter/x402-gateway
                   </code>
                 </pre>
               </div>
@@ -136,7 +136,7 @@ export default function X402DocsPage() {
                 </div>
                 <pre className="bg-black/60 pt-12 pb-4 px-6 rounded-xl border border-white/10 overflow-x-auto">
                   <code className="text-[13px] sm:text-sm text-blue-300 font-mono leading-loose">
-{`import { withX402 } from '@zpay/x402-gateway';
+{`import { withX402 } from '@zpayrouter/x402-gateway';
 import { NextResponse } from 'next/server';
 
 export const GET = withX402(
@@ -179,7 +179,7 @@ export const GET = withX402(
                 </div>
                 <pre className="bg-black/60 pt-12 pb-4 px-6 rounded-xl border border-white/10 overflow-x-auto">
                   <code className="text-[13px] sm:text-sm text-green-300 font-mono leading-loose">
-{`import { ZpayClient } from '@zpay/sdk';
+{`import { ZpayClient } from '@zpayrouter/sdk';
 
 // 1. Initialize the Z-Pay Client
 const zpay = new ZpayClient({ apiKey: 'YOUR_API_KEY' });

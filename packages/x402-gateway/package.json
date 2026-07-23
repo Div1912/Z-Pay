@@ -1,5 +1,5 @@
 {
-  "name": "@zpay/x402-gateway",
+  "name": "@zpayrouter/x402-gateway",
   "version": "1.0.0",
   "description": "Z-Pay X402 Gateway SDK for monetizing API routes on Stellar",
   "main": "dist/index.js",

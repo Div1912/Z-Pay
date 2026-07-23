@@ -1,5 +1,5 @@
 {
-  "name": "@zpay/sdk",
+  "name": "@zpayrouter/sdk",
   "version": "1.0.0",
   "description": "Z-Pay SDK for integrating Universal IDs and Stellar payments",
   "main": "dist/index.js",

@@ -7,11 +7,11 @@ The Z-Pay SDK provides a simple interface for interacting with the Z-Pay platfor
 Install the package via npm, yarn, or pnpm:
 
 ```bash
-npm install @zpay/sdk
+npm install @zpayrouter/sdk
 # or
-yarn add @zpay/sdk
+yarn add @zpayrouter/sdk
 # or
-pnpm add @zpay/sdk
+pnpm add @zpayrouter/sdk
 ```
 
 ## Initialization
@@ -19,7 +19,7 @@ pnpm add @zpay/sdk
 Initialize the `ZpayClient` with your preferred configuration. 
 
 ```typescript
-import { ZpayClient } from '@zpay/sdk';
+import { ZpayClient } from '@zpayrouter/sdk';
 
 // Uses the default production endpoint: https://zpayrouter.me/api
 const zpay = new ZpayClient({

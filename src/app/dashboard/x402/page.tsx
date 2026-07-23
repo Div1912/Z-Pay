@@ -140,7 +140,7 @@ export default function X402DashboardPage() {
              <h4 className="text-sm font-black text-white/50 uppercase tracking-widest mb-3">Next.js API Route Example</h4>
              <pre className="bg-black/60 p-4 rounded-xl border border-white/[0.05] overflow-x-auto">
                <code className="text-[13px] text-blue-300 font-mono leading-relaxed">
-{`import { withX402 } from '@zpay/x402-gateway';
+{`import { withX402 } from '@zpayrouter/x402-gateway';
 import { NextResponse } from 'next/server';
 
 export const GET = withX402(
@@ -162,7 +162,7 @@ export const GET = withX402(
              <h4 className="text-sm font-black text-white/50 uppercase tracking-widest mb-3">Z-Pay SDK Client Example</h4>
              <pre className="bg-black/60 p-4 rounded-xl border border-white/[0.05] overflow-x-auto">
                <code className="text-[13px] text-green-300 font-mono leading-relaxed">
-{`import { ZpayClient } from '@zpay/sdk';
+{`import { ZpayClient } from '@zpayrouter/sdk';
 
 const zpay = new ZpayClient({ apiKey: 'YOUR_API_KEY' });
 
