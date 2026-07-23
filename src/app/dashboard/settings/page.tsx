@@ -183,6 +183,12 @@ export default function SettingsPage() {
   const [confirmPin, setConfirmPin] = useState("");
   const [savingPin, setSavingPin] = useState(false);
 
+  // Secret Key Export Modal
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [exportPin, setExportPin] = useState("");
+  const [exportedKey, setExportedKey] = useState<string | null>(null);
+  const [exportingKey, setExportingKey] = useState(false);
+
   // Feedback
   const [feedbackText, setFeedbackText] = useState("");
   const [feedbackRating, setFeedbackRating] = useState(0);
@@ -318,6 +324,32 @@ export default function SettingsPage() {
       toast.error("Failed to update PIN");
     } finally {
       setSavingPin(false);
+    }
+  };
+
+  const handleExportKey = async () => {
+    if (profile?.app_pin && (!exportPin || exportPin.length < 4)) {
+      toast.error("Please enter your PIN to export your key");
+      return;
+    }
+    setExportingKey(true);
+    try {
+      const res = await fetch("/api/zpay/export-key", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: exportPin }),
+      });
+      const data = await res.json();
+      if (res.ok && data.secretKey) {
+        setExportedKey(data.secretKey);
+        toast.success("Secret key decrypted successfully!");
+      } else {
+        toast.error(data.error || "Failed to export key");
+      }
+    } catch {
+      toast.error("Failed to export key");
+    } finally {
+      setExportingKey(false);
     }
   };
 
@@ -475,6 +507,78 @@ export default function SettingsPage() {
                     </button>
                   </div>
                 </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Export Secret Key Modal ── */}
+      <AnimatePresence>
+        {showExportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={() => { setShowExportModal(false); setExportedKey(null); setExportPin(""); }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-sm bg-[#111] border border-white/10 rounded-2xl p-6 space-y-4"
+            >
+              <div className="flex items-center justify-between">
+                <h3 className="font-black text-lg uppercase tracking-tight text-red-400">
+                  Export Secret Key
+                </h3>
+                <button onClick={() => { setShowExportModal(false); setExportedKey(null); setExportPin(""); }} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10">
+                  <span className="text-white/50 text-lg leading-none">×</span>
+                </button>
+              </div>
+
+              {!exportedKey ? (
+                <>
+                  <p className="text-zinc-500 text-sm">
+                    Warning: Never share your Secret Key with anyone. It gives full access to your funds.
+                  </p>
+                  {profile?.app_pin && (
+                    <Input
+                      type="password"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={exportPin}
+                      onChange={(e) => setExportPin(e.target.value.replace(/\D/g, ""))}
+                      placeholder="Enter your PIN"
+                      className="bg-white/5 border-white/10 h-12 rounded-xl tracking-widest text-center text-lg"
+                    />
+                  )}
+                  <button
+                    onClick={handleExportKey}
+                    disabled={exportingKey}
+                    className="w-full h-12 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-bold text-sm flex items-center justify-center gap-2 transition-all border border-red-500/20"
+                  >
+                    {exportingKey ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Shield className="w-4 h-4" /> Reveal Secret Key</>}
+                  </button>
+                </>
+              ) : (
+                <div className="space-y-4">
+                  <p className="text-zinc-500 text-sm">Your Secret Key:</p>
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-xl break-all">
+                    <p className="text-white font-mono text-xs">{exportedKey}</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(exportedKey);
+                      toast.success("Secret Key copied to clipboard");
+                    }}
+                    className="w-full h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm flex items-center justify-center transition-all"
+                  >
+                    Copy to Clipboard
+                  </button>
+                </div>
               )}
             </motion.div>
           </motion.div>
@@ -734,6 +838,20 @@ export default function SettingsPage() {
               </div>
             </div>
             <ChevronRight className="w-4 h-4 text-zinc-500" />
+          </button>
+
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex items-center justify-between"
+          >
+            <div className="flex items-center gap-3">
+              <Shield className="w-5 h-5 text-red-400" />
+              <div className="text-left">
+                <p className="font-semibold text-sm text-red-400">Export Secret Key</p>
+                <p className="text-zinc-500 text-xs">Reveal your Stellar secret key</p>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-red-500/60" />
           </button>
 
           <button
