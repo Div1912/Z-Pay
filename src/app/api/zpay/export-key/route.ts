@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabaseAdmin
     .from('profiles')
-    .select('app_pin, stellar_secret_key')
+    .select('app_pin, stellar_secret')
     .eq('id', user.id)
     .single();
 
@@ -28,11 +28,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid PIN' }, { status: 403 });
   }
 
-  if (!data.stellar_secret_key) {
+  if (!data.stellar_secret) {
     return NextResponse.json({ error: 'No secret key found' }, { status: 404 });
   }
 
-  const decryptedKey = safeDecryptSecret(data.stellar_secret_key);
+  const decryptedKey = safeDecryptSecret(data.stellar_secret);
 
   if (!decryptedKey) {
     return NextResponse.json({ error: 'Failed to decrypt secret key (missing encryption key)' }, { status: 500 });
