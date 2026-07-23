@@ -81,11 +81,11 @@ const Hero = () => {
       
       <div 
         ref={contentRef}
-        className="flex flex-col-reverse lg:flex-row h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20"
+        className="flex flex-row min-h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20 pb-20 lg:pb-0"
       >
         
         {/* Left content: Typography and Call to Action */}
-        <div className="w-full lg:flex-1 flex flex-col justify-center py-4 lg:py-0 relative z-20">
+        <div className="w-[55%] sm:w-[60%] lg:flex-1 flex flex-col justify-center py-4 lg:py-0 relative z-20">
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl w-fit mb-6 lg:mb-8 shadow-2xl">
@@ -95,13 +95,13 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-widest bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 pb-2">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-widest bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 pb-2">
             Agentic <br />
             Payment <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">Router</span>
           </h1>
           
-          <p className="mt-4 lg:mt-6 text-neutral-400 text-base lg:text-xl max-w-lg leading-relaxed font-medium">
+          <p className="mt-4 lg:mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-lg leading-relaxed font-medium">
             Empower AI agents to transact autonomously on your behalf. <br className="hidden md:block" />
             Zero friction. Infinite scale. The intelligent financial protocol.
           </p>
@@ -130,8 +130,8 @@ const Hero = () => {
         </div>
 
         {/* Right content: Vengeance UI Spline 3D Scene */}
-        <div className="w-full h-[40vh] sm:h-[45vh] lg:flex-1 lg:h-[90vh] relative lg:ml-10 mt-6 lg:mt-0 overflow-visible pointer-events-auto flex items-center justify-center">
-          <div className="w-[140%] sm:w-[120%] lg:w-[140%] h-[140%] sm:h-[120%] lg:h-[140%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="w-[45%] sm:w-[40%] h-[40vh] min-h-[300px] sm:min-h-[500px] lg:flex-1 lg:h-[90vh] relative lg:ml-10 mt-0 overflow-visible pointer-events-auto flex items-center justify-center">
+          <div className="w-[200%] sm:w-[140%] lg:w-[140%] h-[200%] sm:h-[140%] lg:h-[140%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <SplineScene 
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
               className="w-full h-full relative z-10"
