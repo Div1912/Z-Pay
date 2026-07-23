@@ -3,6 +3,8 @@ import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { safeDecryptSecret } from '@/lib/crypto';
 
+import bcrypt from 'bcryptjs';
+
 export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
@@ -27,8 +29,13 @@ export async function POST(request: Request) {
   if (data.app_pin) {
     const dbPin = String(data.app_pin).trim();
     const providedPin = String(pin || '').trim();
-    if (providedPin !== dbPin) {
-      console.log('PIN mismatch. DB:', dbPin, 'Provided:', providedPin);
+    
+    const isHashedPin = dbPin.startsWith('$2');
+    const pinValid = isHashedPin
+      ? await bcrypt.compare(providedPin, dbPin)
+      : providedPin === dbPin;
+
+    if (!pinValid) {
       return NextResponse.json({ error: 'Invalid PIN' }, { status: 403 });
     }
   }
