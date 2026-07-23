@@ -57,6 +57,7 @@ export async function POST(req: Request) {
           .eq('id', user.id);
       } catch (e: any) {
         console.warn('Razorpay contact creation failed (likely using dummy keys):', e.error?.description || e);
+        if (process.env.NODE_ENV === 'production') throw new Error(e.error?.description || 'Razorpay contact creation failed');
         // For local testing without real keys, we mock the contact ID
         contactId = `cont_${Date.now()}`;
       }
@@ -87,6 +88,7 @@ export async function POST(req: Request) {
       fundAccountId = fundAccount.id;
     } catch (e: any) {
       console.warn('Razorpay fund account creation failed:', e.error?.description || e);
+      if (process.env.NODE_ENV === 'production') throw new Error(e.error?.description || 'Razorpay fund account creation failed');
       // Mock the fund account for local testing
       fundAccountId = `fa_${Date.now()}`;
     }

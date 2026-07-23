@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     } catch (e: any) {
       console.warn('Razorpay payout failed (mocking success for local dev):', e.error?.description || e);
       // In production, you would throw the error here so the balance isn't deducted
-      // if (process.env.NODE_ENV === 'production') throw new Error(e.error?.description || 'Payout failed');
+      if (process.env.NODE_ENV === 'production') throw new Error(e.error?.description || 'Payout failed');
     }
 
     // 2. Deduct from Z-Pay Fiat Ledger

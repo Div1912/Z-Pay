@@ -1,5 +1,5 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
-import { NETWORK_PASSPHRASE, server } from './stellar';
+import { NETWORK_PASSPHRASE, server, PLATFORM_MERCHANT_WALLET } from './stellar';
 
 const CONTRACT_ID       = process.env.ESCROW_CONTRACT_ID  || 'CAGMD6PBDSOSB2NDOE5ZGYCWH74EOBJFHM627WTGLZZF66DBRUFWYSPT';
 const TOKEN_CONTRACT_ID = process.env.TOKEN_CONTRACT_ID   || 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
@@ -166,11 +166,11 @@ export async function getEscrow(escrowId: number): Promise<EscrowData | null> {
     
     const account = await server.getAccount(randomAccount).catch(() => null);
     if (!account) {
-      const fundedAccount = await server.getAccount('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF').catch(() => null);
+      const fundedAccount = await server.getAccount(PLATFORM_MERCHANT_WALLET).catch(() => null);
       if (!fundedAccount) return null;
     }
     
-    const sourceAccount = account || await server.getAccount('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF');
+    const sourceAccount = account || await server.getAccount(PLATFORM_MERCHANT_WALLET);
     
     const tx = new StellarSdk.TransactionBuilder(sourceAccount, {
       fee: '100',

@@ -7,7 +7,7 @@ import { supabaseAdmin } from './supabase';
 export const IS_MAINNET = process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet';
 
 const RPC_URL = IS_MAINNET
-  ? (process.env.STELLAR_RPC_URL || 'https://mainnet.stellar.validationcloud.io/v1/stellar')
+  ? (process.env.SOROBAN_RPC_URL || process.env.STELLAR_RPC_URL || 'https://mainnet.sorobanrpc.com')
   : 'https://soroban-testnet.stellar.org';
 
 const HORIZON_URL = IS_MAINNET
