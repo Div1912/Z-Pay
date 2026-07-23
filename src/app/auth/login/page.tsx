@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,6 +18,12 @@ function LoginInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isInactivityLogout = searchParams.get("reason") === "inactivity";
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem("expopay_last_activity");
+    } catch {}
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

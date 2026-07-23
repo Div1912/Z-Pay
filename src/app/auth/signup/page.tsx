@@ -28,6 +28,12 @@ export default function SignupPage() {
     setPasswordStrength(strength);
   }, [password]);
 
+  useEffect(() => {
+    try {
+      localStorage.removeItem("expopay_last_activity");
+    } catch {}
+  }, []);
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
