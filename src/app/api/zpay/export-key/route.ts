@@ -24,8 +24,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
   }
 
-  if (data.app_pin && pin !== data.app_pin) {
-    return NextResponse.json({ error: 'Invalid PIN' }, { status: 403 });
+  if (data.app_pin) {
+    const dbPin = String(data.app_pin).trim();
+    const providedPin = String(pin || '').trim();
+    if (providedPin !== dbPin) {
+      console.log('PIN mismatch. DB:', dbPin, 'Provided:', providedPin);
+      return NextResponse.json({ error: 'Invalid PIN' }, { status: 403 });
+    }
   }
 
   if (!data.stellar_secret) {
