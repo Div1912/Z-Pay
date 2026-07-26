@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { 
   Scene, 
   PerspectiveCamera, 
@@ -13,16 +13,10 @@ import {
   AdditiveBlending, 
   DoubleSide 
 } from "three";
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { Spotlight } from "@/components/ui/spotlight";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const WaitlistHero = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const animationIdRef = useRef<number>(0);
   
@@ -192,32 +186,6 @@ const WaitlistHero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // GSAP Scroll Parallax
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024px)", () => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        pin: contentRef.current,
-        pinSpacing: false,
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          gsap.set(contentRef.current, {
-            opacity: 1 - progress * 1.5,
-            scale: 1 - progress * 0.05,
-            y: progress * -100,
-          });
-        }
-      });
-    });
-
-    return () => mm.revert();
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
@@ -241,21 +209,15 @@ const WaitlistHero = () => {
   };
 
   return (
-    <section 
-      ref={sectionRef}
-      className="relative min-h-screen lg:h-[150vh] w-full bg-black overflow-x-hidden flex justify-center"
-    >
+    <section className="relative min-h-screen w-full bg-black overflow-hidden flex flex-col items-center justify-center pt-32 pb-20">
       {/* Three.js Background */}
-      <div ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
+      <div ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
 
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       
-      <div 
-        ref={contentRef}
-        className="flex flex-col min-h-[100dvh] w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center justify-center pt-20 pb-20 text-center"
-      >
-        <div className="relative backdrop-blur-[2px] bg-black/10 rounded-[2rem] sm:rounded-[3rem] p-5 sm:p-8 md:p-16 w-full max-w-4xl shadow-2xl border border-white/5 overflow-hidden">
-          <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+      <div className="flex flex-col w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center text-center">
+        <div className="relative backdrop-blur-[2px] bg-black/20 rounded-[2rem] sm:rounded-[3rem] p-5 sm:p-8 md:p-16 w-full max-w-4xl shadow-2xl border border-white/5 overflow-hidden">
+          <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl w-fit mb-8 shadow-2xl mx-auto">
@@ -295,7 +257,7 @@ const WaitlistHero = () => {
                 </div>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 items-center sm:items-stretch justify-center relative">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center justify-center relative w-full">
                 <input
                   type="email"
                   value={email}
@@ -303,12 +265,12 @@ const WaitlistHero = () => {
                   placeholder="Enter your work email"
                   required
                   disabled={isSubmitting}
-                  className="flex-1 h-14 rounded-full border border-white/10 bg-white/[0.03] px-6 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all backdrop-blur-md w-full disabled:opacity-50 text-base"
+                  className="w-full sm:flex-1 h-14 min-h-[56px] rounded-full border border-white/10 bg-white/[0.03] px-6 text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all backdrop-blur-md text-base shrink-0"
                 />
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative h-14 rounded-full bg-white text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] overflow-hidden w-full sm:w-auto shrink-0 disabled:opacity-75 disabled:hover:scale-100"
+                  className="group relative h-14 min-h-[56px] rounded-full bg-white text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] overflow-hidden w-full sm:w-auto shrink-0 disabled:opacity-75 disabled:hover:scale-100"
                 >
                   <span className="relative z-10 flex items-center gap-2 tracking-wide">
                     {isSubmitting ? 'JOINING...' : 'GET ACCESS'}
@@ -326,7 +288,7 @@ const WaitlistHero = () => {
 
           <div className="mt-12 flex flex-col items-center justify-center gap-4">
             <span className="text-white/40 text-xs font-bold uppercase tracking-[0.2em]">Launching In</span>
-            <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 text-center bg-white/[0.02] border border-white/5 rounded-2xl px-3 sm:px-8 py-3 sm:py-4 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 text-center bg-white/[0.02] border border-white/5 rounded-2xl px-3 sm:px-8 py-3 sm:py-4 backdrop-blur-md w-full max-w-[400px] sm:max-w-none mx-auto overflow-hidden">
               <div>
                 <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.days.toString().padStart(2, '0')}</div>
                 <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Days</div>
