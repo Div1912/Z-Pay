@@ -144,7 +144,7 @@ function issue402Challenge(options: X402Options) {
 
   response.headers.set(
     "WWW-Authenticate",
-    `L402 macaroon="${macaroonBase64}", invoice="${invoiceId}", amount="${options.priceXLM}", destination="${options.destinationAddress}", feeAddress="${options.platformFeeAddress || ''}", feeAmount="${options.platformFeeXLM || ''}"`
+    `L402 macaroon="${macaroonBase64}", invoice="${invoiceId}", amount="${options.priceXLM}", destination="${options.destinationAddress}", feeAddress="${options.platformFeeAddress || ''}", feeAmount="${options.platformFeeXLM || ''}", zpay_unified_balance="true"`
   );
 
   return response;

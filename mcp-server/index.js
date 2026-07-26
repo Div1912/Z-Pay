@@ -139,6 +139,48 @@ async function createMcpServerForUser(email, password) {
             properties: { split_id: { type: "string" } },
             required: ["split_id"],
           },
+        },
+        {
+          name: "zpay_unified_balance",
+          description: `Get the user's unified USDC balance across all chains (Stellar + Base).
+            This is the total spendable balance, regardless of which chain holds the funds.
+            Use this before calling zpay_unified_spend to verify sufficient funds.`,
+          inputSchema: { type: "object", properties: {} },
+        },
+        {
+          name: "zpay_unified_spend",
+          description: `Pay for a resource using the user's unified USDC balance.
+            You do NOT need to know which chain the funds are on — ZUB handles routing automatically.
+            Use this when encountering a 402 Payment Required response or when instructed to pay a specific USDC amount.
+
+            IMPORTANT: amount_usdc is in USDC (not XLM). Check zpay_unified_balance first.
+            destination_chain: 'stellar' for Stellar recipients, 'base' for Base/EVM recipients.
+
+            Partial failure: if status is 'failed', the balance was NOT debited. Retry is safe.
+            Success: status will be 'released' with a tx_hash.`,
+          inputSchema: {
+            type: "object",
+            properties: {
+              amount_usdc: {
+                type: "number",
+                description: "Amount in USDC to pay (e.g. 1.5 for $1.50)"
+              },
+              destination_chain: {
+                type: "string",
+                enum: ["stellar", "base"],
+                description: "Chain to release funds on. Use 'stellar' for Stellar addresses, 'base' for EVM/Base addresses."
+              },
+              recipient: {
+                type: "string",
+                description: "Recipient address (Stellar address or EVM address) or universal_id"
+              },
+              memo: {
+                type: "string",
+                description: "Optional payment memo or purpose description"
+              }
+            },
+            required: ["amount_usdc", "destination_chain", "recipient"]
+          },
         }
       ],
     };
@@ -326,6 +368,97 @@ async function createMcpServerForUser(email, password) {
 
         await supabaseAdmin.from('split_participants').update({ status: 'paid' }).eq('id', participant.id);
         return { content: [{ type: "text", text: `Successfully paid your share of ${participant.amount_owed} XLM for split bill ${split_id}.` }] };
+      }
+
+      // ── ZUB: Unified Balance ─────────────────────────────────────────────
+      if (request.params.name === "zpay_unified_balance") {
+        const ZPAY_BASE_URL = process.env.ZPAY_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${ZPAY_BASE_URL}/api/zub/balance`, {
+          headers: {
+            'Content-Type': 'application/json',
+            // Pass service role key to authenticate as the user's server context
+            'x-zub-user-id': profile.id,
+            'x-zub-user-email': profile.email || '',
+          },
+        }).then(r => r.json()).catch(() => null);
+
+        if (!res || !res.unified_balance) {
+          // Fallback: compute balance directly from Supabase
+          const { data: events } = await supabaseAdmin
+            .from('zub_balance_events')
+            .select('chain, delta')
+            .eq('user_id', profile.id);
+
+          const perChain = { stellar: 0, base: 0, ethereum: 0 };
+          for (const e of events || []) {
+            perChain[e.chain] = (perChain[e.chain] || 0) + parseFloat(e.delta);
+          }
+          const total = Object.values(perChain).reduce((a, b) => a + b, 0);
+
+          return {
+            content: [{ type: "text", text: JSON.stringify({
+              total_usdc: total.toFixed(6),
+              per_chain: perChain,
+              note: 'Unified USDC balance across all chains'
+            }, null, 2) }]
+          };
+        }
+
+        return {
+          content: [{ type: "text", text: JSON.stringify(res.unified_balance, null, 2) }]
+        };
+      }
+
+      // ── ZUB: Unified Spend ───────────────────────────────────────────────
+      if (request.params.name === "zpay_unified_spend") {
+        const { amount_usdc, destination_chain, recipient, memo } = request.params.arguments;
+
+        // 1. Check balance directly from DB
+        const { data: events } = await supabaseAdmin
+          .from('zub_balance_events')
+          .select('delta')
+          .eq('user_id', profile.id);
+
+        const totalBalance = (events || []).reduce((sum, e) => sum + parseFloat(e.delta), 0);
+
+        if (totalBalance < amount_usdc) {
+          return {
+            content: [{ type: "text", text: JSON.stringify({
+              status: 'failed',
+              error: `Insufficient unified balance. Available: ${totalBalance.toFixed(6)} USDC. Requested: ${amount_usdc} USDC.`,
+              available_usdc: totalBalance.toFixed(6),
+              requested_usdc: amount_usdc,
+            }, null, 2) }],
+            isError: true
+          };
+        }
+
+        // 2. Create spend intent via API
+        const ZPAY_BASE_URL = process.env.ZPAY_API_URL || 'http://localhost:3000';
+        const intentRes = await fetch(`${ZPAY_BASE_URL}/api/zub/spend-intent`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-zub-user-id': profile.id },
+          body: JSON.stringify({ amount_usdc, destination_chain, recipient, memo }),
+        }).then(r => r.json()).catch(err => ({ error: err.message }));
+
+        if (intentRes.error) {
+          return {
+            content: [{ type: "text", text: JSON.stringify({ status: 'failed', error: intentRes.error }, null, 2) }],
+            isError: true
+          };
+        }
+
+        return {
+          content: [{ type: "text", text: JSON.stringify({
+            status: intentRes.status,
+            intent_id: intentRes.intent_id,
+            tx_hash: intentRes.tx_hash,
+            amount_usdc: intentRes.amount_usdc,
+            destination_chain: intentRes.destination_chain,
+            recipient: intentRes.recipient,
+            note: 'Payment processed from unified USDC balance. No chain selection required.'
+          }, null, 2) }]
+        };
       }
 
       throw new Error(`Unknown tool: ${request.params.name}`);

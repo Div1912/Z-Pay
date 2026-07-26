@@ -6,6 +6,10 @@
     {
       "path": "/api/cctp/webhook",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/zub/reconciliation",
+      "schedule": "* * * * *"
     }
   ]
 }
