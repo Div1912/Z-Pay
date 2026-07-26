@@ -134,12 +134,21 @@ export default function ZubDepositPage() {
 
     } catch (e: any) {
       console.error(e);
-      // Clean up MetaMask errors
+      let prettyError = 'Transaction failed';
+      
       if (e.code === 'ACTION_REJECTED' || e.info?.error?.code === 4001) {
-        setErrorMsg('Transaction rejected by user');
-      } else {
-        setErrorMsg(e.message || 'Transaction failed');
+        prettyError = 'Transaction rejected by user';
+      } else if (e.message?.includes('transfer amount exceeds balance') || e.info?.error?.message?.includes('exceeds balance') || JSON.stringify(e).includes('exceeds balance')) {
+        prettyError = 'Insufficient USDC balance in your wallet to complete this deposit.';
+      } else if (e.message?.includes('insufficient funds for gas')) {
+        prettyError = 'Insufficient ETH for gas fees.';
+      } else if (e.message) {
+        // try to extract just the revert reason if it's a long JSON string
+        const match = e.message.match(/execution reverted: "(.*?)"/);
+        prettyError = match ? match[1] : (e.shortMessage || 'Transaction failed');
       }
+
+      setErrorMsg(prettyError);
       setStatus('error');
     }
   };
