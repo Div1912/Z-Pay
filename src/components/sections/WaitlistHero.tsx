@@ -194,7 +194,9 @@ const WaitlistHero = () => {
 
   // GSAP Scroll Parallax
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
@@ -211,8 +213,9 @@ const WaitlistHero = () => {
           });
         }
       });
-    }, sectionRef);
-    return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -240,7 +243,7 @@ const WaitlistHero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative h-[150vh] w-full bg-black overflow-x-hidden flex justify-center"
+      className="relative min-h-screen lg:h-[150vh] w-full bg-black overflow-x-hidden flex justify-center"
     >
       {/* Three.js Background */}
       <div ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
@@ -251,7 +254,7 @@ const WaitlistHero = () => {
         ref={contentRef}
         className="flex flex-col min-h-[100dvh] w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center justify-center pt-20 pb-20 text-center"
       >
-        <div className="relative backdrop-blur-[2px] bg-black/10 rounded-[3rem] p-8 md:p-16 w-full max-w-4xl shadow-2xl border border-white/5 overflow-hidden">
+        <div className="relative backdrop-blur-[2px] bg-black/10 rounded-[2rem] sm:rounded-[3rem] p-5 sm:p-8 md:p-16 w-full max-w-4xl shadow-2xl border border-white/5 overflow-hidden">
           <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
           
           {/* Badge */}
@@ -323,7 +326,7 @@ const WaitlistHero = () => {
 
           <div className="mt-12 flex flex-col items-center justify-center gap-4">
             <span className="text-white/40 text-xs font-bold uppercase tracking-[0.2em]">Launching In</span>
-            <div className="flex items-center justify-center gap-4 sm:gap-8 text-center bg-white/[0.02] border border-white/5 rounded-2xl px-8 py-4 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 text-center bg-white/[0.02] border border-white/5 rounded-2xl px-3 sm:px-8 py-3 sm:py-4 backdrop-blur-md">
               <div>
                 <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.days.toString().padStart(2, '0')}</div>
                 <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Days</div>

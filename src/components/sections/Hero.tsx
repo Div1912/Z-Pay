@@ -33,7 +33,9 @@ const Hero = () => {
   };
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
@@ -50,15 +52,15 @@ const Hero = () => {
           });
         }
       });
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
     <section 
       ref={sectionRef}
-      className="relative h-[200vh] w-full bg-black/[0.96] overflow-x-hidden"
+      className="relative min-h-screen lg:h-[200vh] w-full bg-black/[0.96] overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Interactive Mouse Orb */}
