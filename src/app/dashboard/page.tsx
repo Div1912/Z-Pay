@@ -342,11 +342,13 @@ export default function DashboardPage() {
                       >
                         {parseFloat(unifiedBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </h2>
+                      <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg" alt="USDC" className="w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 object-contain" />
                       <span className="text-xl sm:text-2xl md:text-3xl font-black text-white/30 tracking-widest shrink-0">USDC</span>
                     </div>
                     
                     <div className="mt-2 flex flex-col gap-2">
                       <div className="flex items-center gap-2 px-3 py-1.5 bg-[#D4AF37]/10 rounded-full w-fit border border-[#D4AF37]/20">
+                        <img src="https://cryptologos.cc/logos/stellar-xlm-logo.svg" alt="Stellar" className="w-3.5 h-3.5 object-contain" />
                         <span className="text-[9px] font-black tracking-[0.2em] text-[#D4AF37] uppercase">Stellar XLM</span>
                         <div className="w-1 h-1 bg-[#D4AF37]/30 rounded-full" />
                         <span className="text-xs font-bold text-[#D4AF37]">
