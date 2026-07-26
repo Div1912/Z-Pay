@@ -173,16 +173,26 @@ const WaitlistHero = () => {
 
   // Countdown timer
   useEffect(() => {
+    const TARGET_DATE = new Date("2026-07-27T00:00:00+05:30").getTime();
+
+    const calculateTimeLeft = () => {
+      const difference = TARGET_DATE - Date.now();
+      if (difference <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60)
+      };
+    };
+
+    setTimeLeft(calculateTimeLeft());
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        let { days, hours, minutes, seconds } = prev;
-        if (seconds > 0) seconds--;
-        else if (minutes > 0) { minutes--; seconds = 59; }
-        else if (hours > 0) { hours--; minutes = 59; seconds = 59; }
-        else if (days > 0) { days--; hours = 23; minutes = 59; seconds = 59; }
-        return { days, hours, minutes, seconds };
-      });
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
+    
     return () => clearInterval(timer);
   }, []);
 
