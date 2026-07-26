@@ -45,8 +45,9 @@ export async function middleware(request: NextRequest) {
   // Waitlist Mode: If enabled, lock down the entire site and redirect to /waitlist
   const isWaitlistMode = process.env.NEXT_PUBLIC_WAITLIST_MODE === 'true';
   const isWaitlistPage = request.nextUrl.pathname.startsWith('/waitlist');
+  const isPublicMarketingPage = ['/features', '/about', '/support', '/docs'].some(path => request.nextUrl.pathname.startsWith(path));
   
-  if (isWaitlistMode && !isWaitlistPage) {
+  if (isWaitlistMode && !isWaitlistPage && !isPublicMarketingPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/waitlist';
     return NextResponse.redirect(url);
