@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Network, Fingerprint, Store, Lock, Users, TrendingUp, Zap } from 'lucide-react';
+import { Network, Fingerprint, Store, Lock, Users, TrendingUp, Zap, Bot } from 'lucide-react';
 import Navbar from "@/components/sections/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
 import Link from 'next/link';
@@ -104,11 +104,19 @@ export default function FeaturesPage() {
           />
 
           <FeatureRow 
+            title="Native x402 Protocol"
+            description="Built from the ground up for machine-to-machine micropayments. When your AI agents hit a paywall, Z-Pay handles the 402 Payment Required response autonomously, paying exact fractions of a cent. Real pay-per-use, completely subscription-free."
+            icon={Bot}
+            imageSrc="https://images.unsplash.com/photo-1639762681485-074b7f4ec8e7?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
+            delay={0.1}
+          />
+
+          <FeatureRow 
             title="Universal IDs & P2P"
             description="Ditch the 56-character addresses. Send instant cross-currency payments globally to simple identifiers like alice@Zp. Settles in XLM, USDC, or INR natively in under 3 seconds."
             icon={Fingerprint}
             imageSrc="https://images.unsplash.com/photo-1516322073321-4f10118eb3d3?q=80&w=1600&auto=format&fit=crop"
-            reverse={true}
             delay={0.1}
           />
 
