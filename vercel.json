@@ -9,7 +9,7 @@
     },
     {
       "path": "/api/zub/reconciliation",
-      "schedule": "* * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
