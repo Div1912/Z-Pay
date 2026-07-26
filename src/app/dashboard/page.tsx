@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, ArrowUpRight, ArrowDownLeft, QrCode, Scan, History, Loader2, ExternalLink, Zap, Shield, Wallet, ArrowRight, Store, FileText, Plus } from "lucide-react";
+import { Copy, Check, ArrowUpRight, ArrowDownLeft, QrCode, Scan, History, Loader2, ExternalLink, Zap, Shield, Wallet, ArrowRight, Store, FileText, Plus, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -479,6 +479,13 @@ export default function DashboardPage() {
           <section className="space-y-4 sm:space-y-6">
             <h3 className="text-lg sm:text-xl xl:text-2xl font-black tracking-tight uppercase px-1 sm:px-2" style={{ fontFamily: 'var(--font-syne)' }}>QUICK ACTIONS</h3>
             <div className="grid grid-cols-1 gap-3 sm:gap-4">
+              <QuickActionCard 
+                href="/dashboard/deposit"
+                icon={<PlusCircle className="w-5 sm:w-6 h-5 sm:h-6" />}
+                title="TOP UP ZUB (USDC)"
+                description="Deposit cross-chain stables via Web3"
+                color="pink"
+              />
               <QuickActionCard 
                 href="/dashboard/scan"
                 icon={<Scan className="w-5 sm:w-6 h-5 sm:h-6" />}
