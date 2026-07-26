@@ -8,7 +8,7 @@
 
 Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
 
-[**Live demo →**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Zpay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; 
+[**Live demo →**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Z-Pay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
 
 
 
@@ -31,6 +31,7 @@ Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), sett
 
 ## Highlights
 
+- **ZUB (ZPay Unified Balance)** — True cross-chain DeFi. Deposit USDC via MetaMask on Base, Polygon, or Arbitrum and instantly spend it globally on the Stellar network with zero bridging friction.
 - **Universal IDs** — send to `div@Zp` instead of a 56-char Stellar public key.
 - **X402 Protocol** — Agents can interact with your wallet , Can pay for upu , Can earn for you.
 - **Indian UPI bridge** — pay any UPI QR with crypto; merchant receives INR.
@@ -129,9 +130,15 @@ Deposit XLM with **no lock-up**, earn ZPAY at 0.5% per XLM per day (~18% APR). W
 
 ![XLM yield pool tab](./screenshots/vault-pool.png)
 
-### 9 · CI / CD
+### 9 · ZUB (ZPay Unified Balance) *(new)*
 
-Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite.
+Abstracting blockchain fragmentation. Connect your MetaMask and deposit USDC from EVM networks (Base, Polygon, Arbitrum).
+ZPay's backend cryptographically verifies the transaction via raw RPC logs and credits your Unified Ledger. 
+Spend your cross-chain wealth instantly at any ZPay merchant on the Stellar network. No bridging delays, no gas fees at checkout.
+
+### 10 · CI / CD
+
+Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite. Plus, automated Vercel deployments.
 
 ![CI passing](./screenshots/ci-passing.png)
 
@@ -257,6 +264,11 @@ graph TD
         Asset["Stellar Assets<br/>(XLM, ZPAY, USDC)"]
     end
 
+    subgraph EVM ["EVM Chains (Base, Polygon)"]
+        RPC["Raw RPC Nodes<br/>(Cryptographic Tx Verification)"]
+        MetaMask["MetaMask / Web3 Wallet"]
+    end
+
     subgraph External ["External Services"]
         Email["Resend API<br/>(Transactional Emails)"]
         FX["FX Rates API"]
@@ -266,6 +278,7 @@ graph TD
     %% Client Interactions
     UI <-->|REST/JSON| Server
     UI <-->|Live Updates| Realtime
+    UI <-->|Web3 Tx| MetaMask
 
     %% Server Interactions with DB
     AuthAPI <--> AuthDB
@@ -279,6 +292,7 @@ graph TD
     MerchantAPI <-->|Cross-border TX| Horizon
     ContractAPI <-->|Invoke| Soroban
     SavingsAPI <-->|Invoke| Soroban
+    Server <-->|ZUB Verification| RPC
 
     %% External
     Server -->|Email Alerts| Email
@@ -288,12 +302,13 @@ graph TD
     %% Internal Blockchain
     Horizon <--> Asset
     Soroban <--> Asset
+    MetaMask --> RPC
 
     %% Apply Styles
     class UI frontend;
     class AuthAPI,PaymentAPI,ContractAPI,SavingsAPI,MerchantAPI backend;
     class AuthDB,PG,Realtime db;
-    class Horizon,Soroban,Asset blockchain;
+    class Horizon,Soroban,Asset,RPC,MetaMask blockchain;
     class Email,FX,UPI external;
 ```
 
@@ -409,6 +424,11 @@ All routes use Supabase session cookies (`getUser()` server-side). Routes that m
 | POST | `/api/savings/unstake` | Unstake matured position; pays principal + reward |
 | POST | `/api/savings/pool/deposit` | Deposit XLM into the yield pool |
 | POST | `/api/savings/pool/withdraw` | Withdraw XLM principal + accrued ZPAY |
+
+### ZUB (ZPay Unified Balance) *(new)*
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/zub/deposit/verify` | Cryptographically verifies on-chain EVM transactions (Base/Polygon) via raw RPCs to credit Unified Balance |
 
 ### Merchant (UPI bridge)
 | Method | Endpoint | Description |
@@ -664,6 +684,7 @@ What's still on the hardening backlog (call out in any prod deploy):
 - [x] Indian UPI merchant bridge
 - [x] Split bills with on-chain settlement
 - [x] ZPAY staking + XLM yield pool
+- [x] ZUB (ZPay Unified Balance) cross-chain infrastructure
 - [x] Compound projection UI
 - [ ] Auto-compound opt-in (on-chain auto-restake)
 - [ ] Stake streaks (consecutive completions → reward multiplier)
