@@ -20,13 +20,16 @@ export default function DashboardPage() {
   const [isUnfunded, setIsUnfunded] = useState(false);
   const [convertedBalance, setConvertedBalance] = useState("0.00");
   const [xlmBalance, setXlmBalance] = useState("0.00");
+  const [unifiedBalance, setUnifiedBalance] = useState("0.00");
+  const [chainBalances, setChainBalances] = useState<any>({});
   const [recentContacts, setRecentContacts] = useState<any[]>([]);
 
   const fetchData = useCallback(async () => {
     try {
-      const [profileRes, balanceRes, historyRes, merchantRes] = await Promise.all([
+      const [profileRes, balanceRes, zubBalanceRes, historyRes, merchantRes] = await Promise.all([
         fetch("/api/zpay/profile"),
         fetch("/api/zpay/balance"),
+        fetch("/api/zub/balance"),
         fetch("/api/payments/history"),
         fetch("/api/merchant/history"),
       ]);
@@ -36,6 +39,14 @@ export default function DashboardPage() {
         const profileData = await profileRes.json();
         if (profileData?.universal_id) {
           setProfile(profileData);
+        }
+      }
+
+      if (zubBalanceRes.ok) {
+        const zubData = await zubBalanceRes.json();
+        if (zubData?.unified_balance) {
+          setUnifiedBalance(zubData.unified_balance.total_usdc || "0.00");
+          setChainBalances(zubData.unified_balance.per_chain || {});
         }
       }
 
@@ -316,7 +327,9 @@ export default function DashboardPage() {
               
               <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12">
                 <div className="space-y-3 sm:space-y-4 min-w-0 flex-1">
-                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37]">Crypto Balance</p>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37] flex items-center gap-2">
+                      <Zap className="w-3 h-3 text-[#D4AF37]" /> UNIFIED BALANCE (CROSS-CHAIN)
+                    </p>
                     <div className="flex items-baseline gap-2 sm:gap-3 overflow-hidden">
                       <h2
                         className="text-[clamp(2.8rem,9vw,5rem)] font-black leading-none"
@@ -327,17 +340,26 @@ export default function DashboardPage() {
                           letterSpacing: '-0.02em',
                         }}
                       >
-                        {displayBalance}
+                        {parseFloat(unifiedBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </h2>
-                      <span className="text-xl sm:text-2xl md:text-3xl font-black text-white/30 tracking-widest shrink-0">{preferredCurrency}</span>
+                      <span className="text-xl sm:text-2xl md:text-3xl font-black text-white/30 tracking-widest shrink-0">USDC</span>
                     </div>
                     
-                    <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-full w-fit border border-green-500/20">
-                      <span className="text-[9px] font-black tracking-[0.2em] text-green-500 uppercase">Fiat Balance (Withdrawable)</span>
-                      <div className="w-1 h-1 bg-green-500/30 rounded-full" />
-                      <span className="text-xs font-bold text-green-400">
-                        {parseFloat(profile?.fiat_balance || '0').toLocaleString('en-US', { style: 'currency', currency: profile?.fiat_currency?.toUpperCase() || 'INR' })}
-                      </span>
+                    <div className="mt-2 flex flex-col gap-2">
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#D4AF37]/10 rounded-full w-fit border border-[#D4AF37]/20">
+                        <span className="text-[9px] font-black tracking-[0.2em] text-[#D4AF37] uppercase">Stellar XLM</span>
+                        <div className="w-1 h-1 bg-[#D4AF37]/30 rounded-full" />
+                        <span className="text-xs font-bold text-[#D4AF37]">
+                          {displayBalance} XLM
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-full w-fit border border-green-500/20">
+                        <span className="text-[9px] font-black tracking-[0.2em] text-green-500 uppercase">Fiat Balance (Withdrawable)</span>
+                        <div className="w-1 h-1 bg-green-500/30 rounded-full" />
+                        <span className="text-xs font-bold text-green-400">
+                          {parseFloat(profile?.fiat_balance || '0').toLocaleString('en-US', { style: 'currency', currency: profile?.fiat_currency?.toUpperCase() || 'INR' })}
+                        </span>
+                      </div>
                     </div>
 
                 </div>
