@@ -107,7 +107,7 @@ export default function FeaturesPage() {
             title="Native x402 Protocol"
             description="Built from the ground up for machine-to-machine micropayments. When your AI agents hit a paywall, Z-Pay handles the 402 Payment Required response autonomously, paying exact fractions of a cent. Real pay-per-use, completely subscription-free."
             icon={Bot}
-            imageSrc="https://images.unsplash.com/photo-1639762681485-074b7f4ec8e7?q=80&w=1600&auto=format&fit=crop"
+            imageSrc="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1600&auto=format&fit=crop"
             reverse={true}
             delay={0.1}
           />
