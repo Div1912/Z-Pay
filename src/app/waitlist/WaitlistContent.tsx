@@ -1,6 +1,6 @@
 "use client";
 
-import WaitlistNavbar from "@/components/sections/WaitlistNavbar";
+import Navbar from "@/components/sections/Navbar";
 import WaitlistHero from "@/components/sections/WaitlistHero";
 import QuickActions from "@/components/sections/QuickActions";
 import AgenticSection from "@/components/sections/AgenticSection";
@@ -13,7 +13,7 @@ import FooterCTA from "@/components/sections/FooterCTA";
 export default function WaitlistContent() {
   return (
     <>
-      <WaitlistNavbar />
+      <Navbar />
       <WaitlistHero />
       <QuickActions />
       <AgenticSection />
