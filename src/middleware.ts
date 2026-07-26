@@ -42,6 +42,16 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
+  // Waitlist Mode: If enabled, lock down the entire site and redirect to /waitlist
+  const isWaitlistMode = process.env.NEXT_PUBLIC_WAITLIST_MODE === 'true';
+  const isWaitlistPage = request.nextUrl.pathname.startsWith('/waitlist');
+  
+  if (isWaitlistMode && !isWaitlistPage) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/waitlist';
+    return NextResponse.redirect(url);
+  }
+
   // Redirect logged-in users away from auth pages (except update-password and verify-email)
   const isVerifyEmailPage = request.nextUrl.pathname.startsWith('/auth/verify-email');
   if (user && isAuthPage && !isUpdatePasswordPage && !isVerifyEmailPage) {

@@ -5,7 +5,7 @@ import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 
 const MACAROON_SECRET = process.env.MACAROON_SECRET || "zpay-x402-super-secret-key-change-in-prod";
-const HORIZON_URL = "https://horizon-testnet.stellar.org";
+const HORIZON_URL = "https://horizon.stellar.org";
 const server = new StellarSdk.Horizon.Server(HORIZON_URL);
 
 // Supabase Admin Client for logging payments
