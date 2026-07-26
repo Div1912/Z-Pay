@@ -8,7 +8,7 @@
  * pair over a 60-second window before executing CCTP.
  */
 
-import crypto from 'crypto';
+
 import { supabaseAdmin } from '@/lib/supabase';
 import { processPendingCctpIntents, processOutboundCctpIntents } from '@/lib/cctp';
 import { expireStaleIntents } from './attestation';

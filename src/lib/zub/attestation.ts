@@ -8,7 +8,7 @@
  *   signPayload() and verifyPayload() below.
  */
 
-import crypto from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getUnifiedBalance } from './ledger';
 import type {
@@ -134,7 +134,7 @@ export async function verifyReleaseAuthorization(
   const { signature, ...payload } = auth;
   const expectedSig = signPayload(payload);
 
-  if (!crypto.timingSafeEqual(Buffer.from(signature, 'hex'), Buffer.from(expectedSig, 'hex'))) {
+  if (!timingSafeEqual(Buffer.from(signature, 'hex'), Buffer.from(expectedSig, 'hex'))) {
     return { valid: false, reason: 'Invalid signature' };
   }
 
@@ -215,5 +215,5 @@ export async function getIntentStatus(
 function signPayload(payload: Record<string, unknown>): string {
   // Deterministic JSON serialization (sorted keys) to ensure consistent signatures
   const canonical = JSON.stringify(payload, Object.keys(payload).sort());
-  return crypto.createHmac('sha256', SIGNING_SECRET).update(canonical).digest('hex');
+  return createHmac('sha256', SIGNING_SECRET).update(canonical).digest('hex');
 }

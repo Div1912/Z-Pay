@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { createSpendIntent } from '@/lib/zub/attestation';
-import { debitSpend, creditDeposit } from '@/lib/zub/ledger';
+import { debitSpend } from '@/lib/zub/ledger';
 import { recordObligation } from '@/lib/zub/reconciliation';
 import { markIntentReleased, markIntentFailed } from '@/lib/zub/attestation';
 import type { ZubChain } from '@/lib/zub/types';
