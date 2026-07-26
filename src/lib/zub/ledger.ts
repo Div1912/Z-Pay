@@ -244,10 +244,12 @@ export async function checkSolvency(): Promise<SolvencyCheck> {
  * Refreshes the materialized balance view (call after bulk operations or on a schedule).
  */
 export async function refreshBalanceView(): Promise<void> {
-  await supabaseAdmin.rpc('refresh_zub_balances').catch((err) => {
+  try {
+    await supabaseAdmin.rpc('refresh_zub_balances');
+  } catch (err: any) {
     // Non-fatal — view is an optimization, not required for correctness
     console.warn('[zub/ledger] Could not refresh materialized view:', err.message);
-  });
+  }
 }
 
 // ── Internal Helpers ──────────────────────────────────────────────────────────
@@ -261,12 +263,14 @@ function buildEmptyBalance(): UnifiedBalance {
 }
 
 async function updateVaultReserve(chain: ZubChain, delta: number): Promise<void> {
-  // Use Supabase RPC for atomic increment to avoid race conditions
-  await supabaseAdmin.rpc('increment_zub_vault_reserve', {
-    p_chain: chain,
-    p_delta: delta,
-  }).catch((err) => {
+  try {
+    // Use Supabase RPC for atomic increment to avoid race conditions
+    await supabaseAdmin.rpc('increment_zub_vault_reserve', {
+      p_chain: chain,
+      p_delta: delta,
+    });
+  } catch (err: any) {
     // Non-fatal — vault config is a soft tracking layer, not the source of truth
     console.warn('[zub/ledger] Could not update vault reserve:', err.message);
-  });
+  }
 }
