@@ -116,7 +116,7 @@ export default function FeaturesPage() {
             title="Universal IDs & P2P"
             description="Ditch the 56-character addresses. Send instant cross-currency payments globally to simple identifiers like alice@Zp. Settles in XLM, USDC, or INR natively in under 3 seconds."
             icon={Fingerprint}
-            imageSrc="https://images.unsplash.com/photo-1516322073321-4f10118eb3d3?q=80&w=1600&auto=format&fit=crop"
+            imageSrc="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1600&auto=format&fit=crop"
             delay={0.1}
           />
 
@@ -125,6 +125,7 @@ export default function FeaturesPage() {
             description="The ultimate physical-to-digital bridge. Walk into any local shop in India, scan their UPI QR code, and pay with your crypto balance. The merchant receives fiat (INR) instantly."
             icon={Store}
             imageSrc="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
             delay={0.1}
           />
 
@@ -133,7 +134,6 @@ export default function FeaturesPage() {
             description="Trustless B2B and freelance payments. Lock funds on-chain within a smart contract, release upon delivery, and rely on our built-in decentralized arbiter resolution protocol if disputes arise."
             icon={Lock}
             imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop"
-            reverse={true}
             delay={0.1}
           />
           
@@ -142,6 +142,7 @@ export default function FeaturesPage() {
             description="Split expenses with friends securely. Enjoy real-time on-chain tracking, custom or equal fractional shares, and instant one-tap participant settlements that update the ledger live."
             icon={Users}
             imageSrc="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
             delay={0.1}
           />
           
@@ -150,7 +151,6 @@ export default function FeaturesPage() {
             description="Put your capital to work. Lock ZPAY for up to 24% APR, or pool XLM with zero lock-up. Features a live compound-interest projection engine to visualize your decentralized earnings."
             icon={TrendingUp}
             imageSrc="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop"
-            reverse={true}
             delay={0.1}
           />
 
@@ -159,6 +159,7 @@ export default function FeaturesPage() {
             description="Absolute zero friction. Utilizing Stellar's fee_bump_transaction, ZPAY sponsors the network fees on your behalf. You pay precisely zero gas to execute transactions."
             icon={Zap}
             imageSrc="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600&auto=format&fit=crop"
+            reverse={true}
             delay={0.1}
           />
 
