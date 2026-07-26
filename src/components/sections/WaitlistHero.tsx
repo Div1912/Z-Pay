@@ -25,9 +25,9 @@ const WaitlistHero = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState({
-    days: 45,
-    hours: 12,
-    minutes: 30,
+    days: 0,
+    hours: 8,
+    minutes: 0,
     seconds: 0,
   });
 
