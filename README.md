@@ -146,7 +146,7 @@ Spend your cross-chain wealth instantly at any ZPay merchant on the Stellar netw
 
 Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite. Plus, automated Vercel deployments.
 
-![CI passing](./screenshots/ci-passing.png)
+[![CI passing](./screenshots/ci-passing.png)](https://github.com/Div1912/Z-Pay/actions)
 
 ### Advanced Feature: Fee Sponsorship (Gasless Transactions)
 
@@ -438,7 +438,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ```bash
 # 1. Clone & install
-git clone https://github.com/Div1912/Zpay.git
+git clone https://github.com/Div1912/Z-Pay.git
 cd Zpay
 bun install        # or: npm install
 
@@ -581,7 +581,7 @@ What's still on the hardening backlog (call out in any prod deploy):
 
 All notable changes, version history, and published binaries are tracked on the **GitHub Releases** page:
 
-👉 **[View all releases →](https://github.com/Div1912/Zpay/releases)**
+👉 **[View all releases →](https://github.com/Div1912/Z-Pay/releases)**
 
 You can also subscribe to new releases via GitHub's **Watch → Custom → Releases** option on the repository page to get notified whenever a new version ships.
 
@@ -593,7 +593,7 @@ You can also subscribe to new releases via GitHub's **Watch → Custom → Relea
 - [Soroban Smart Contracts](https://soroban.stellar.org/)
 - [Supabase Docs](https://supabase.com/docs)
 - [Next.js Docs](https://nextjs.org/docs)
-- [Release notes](https://github.com/Div1912/Zpay/releases)
+- [Release notes](https://github.com/Div1912/Z-Pay/releases)
 
 ---
 
@@ -602,4 +602,5 @@ You can also subscribe to new releases via GitHub's **Watch → Custom → Relea
 Built on the Stellar Network · MIT License
 
 </div>
+
 
