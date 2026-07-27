@@ -5,10 +5,7 @@ import * as StellarSdk from '@stellar/stellar-sdk';
 import { notifySplitPaid } from '@/lib/notify';
 import { safeDecryptSecret } from '@/lib/crypto';
 
-const { Server } = StellarSdk.rpc;
-const SOROBAN_RPC_URL = process.env.SOROBAN_RPC_URL || 'https://soroban-testnet.stellar.org';
-const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE || StellarSdk.Networks.TESTNET;
-const server = new Server(SOROBAN_RPC_URL);
+import { sendPayment } from '@/lib/stellar';
 
 // POST /api/split/[id]/pay — participant pays their share
 export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -62,46 +59,19 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     const keypair = StellarSdk.Keypair.fromSecret(secret);
     const amount = myEntry.amount_owed.toString();
 
-    const account = await server.getAccount(payerProfile.stellar_address);
-    const tx = new StellarSdk.TransactionBuilder(account, {
-      fee: '100000',
-      networkPassphrase: NETWORK_PASSPHRASE,
-    })
-      .addOperation(
-        StellarSdk.Operation.payment({
-          destination: creatorProfile.stellar_address,
-          asset: StellarSdk.Asset.native(),
-          amount,
-        })
-      )
-      .addMemo(StellarSdk.Memo.text(`Split: ${split.title}`.slice(0, 28)))
-      .setTimeout(60)
-      .build();
-
-    tx.sign(keypair);
-    const sendRes = await server.sendTransaction(tx);
-
-    if (sendRes.status === 'ERROR') {
-      throw new Error(`Transaction failed: ${sendRes.errorResult?.toXDR('base64') || 'Unknown'}`);
-    }
-
-    // Poll for confirmation
-    let getRes = await server.getTransaction(sendRes.hash);
-    let attempts = 0;
-    while (getRes.status === 'NOT_FOUND' && attempts < 20) {
-      await new Promise(r => setTimeout(r, 1000));
-      getRes = await server.getTransaction(sendRes.hash);
-      attempts++;
-    }
-
-    if (getRes.status !== 'SUCCESS') {
-      throw new Error(`Transaction not confirmed: ${getRes.status}`);
+    let txHash: string;
+    try {
+      txHash = await sendPayment(secret, creatorProfile.stellar_address, amount, {
+        memo: `Split: ${split.title}`.slice(0, 28)
+      });
+    } catch (e: any) {
+      throw new Error(`Transaction failed: ${e.message || 'Unknown'}`);
     }
 
     // Mark participant as paid
     await supabaseAdmin
       .from('split_participants')
-      .update({ status: 'paid', tx_hash: sendRes.hash, paid_at: new Date().toISOString() })
+      .update({ status: 'paid', tx_hash: txHash, paid_at: new Date().toISOString() })
       .eq('id', myEntry.id);
 
     // Check if all participants paid → auto-complete the split
@@ -124,7 +94,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
       recipient_universal_id: split.creator_universal_id,
       amount: myEntry.amount_owed,
       currency: split.currency,
-      tx_hash: sendRes.hash,
+      tx_hash: txHash,
       status: 'completed',
       note: `Split: ${split.title}`,
       purpose: 'Split Payment',
@@ -143,7 +113,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
 
     return NextResponse.json({
       success: true,
-      tx_hash: sendRes.hash,
+      tx_hash: txHash,
       message: `Paid ${myEntry.amount_owed} ${split.currency} for "${split.title}"`,
       split_complete: allPaid,
     });
