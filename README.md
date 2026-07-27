@@ -95,7 +95,7 @@ We have built a dedicated MCP server that connects directly to the Z-Pay backend
 
 ![AI Agent X-402 Protocol](./screenshots/x402.png)
 <br/>
-![AI Agent MCP Action](./screenshots/Zpay%20mcp.png)
+![AI Agent MCP Action](./screenshots/zpay_mcp.png)
 
 ### 7 · Split bills *(new)*
 
@@ -197,7 +197,7 @@ Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM ne
 
 We are actively building our community of developers and early adopters!
 
-![X Follower](./screenshots/X%20follower.png)
+![X Follower](./screenshots/x_follower.png)
 
 ---
 ### Security Checklist
