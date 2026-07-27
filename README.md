@@ -86,14 +86,16 @@ Lock funds in a Soroban contract, mark delivered, release on completion. If some
 
 <img width="1200" alt="Escrow contract dashboard" src="./screenshots/Arbiter.png" />
 
-### 6 🤖 Autonomous AI Agents (X-402 Protocol)
+### 6 · Autonomous AI Agents (X-402 Protocol)
 
 Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. 
 
 **Model Context Protocol (MCP) Server Integration:** 
 We have built a dedicated MCP server that connects directly to the Z-Pay backend. Agents can use the MCP server to query balances, resolve Universal IDs (`alice@Zp`), and securely send payments on behalf of users or as independent entities via code!
 
-![AI Agent X-402 Protocol](./screenshots/Zpay%20mcp.png)
+![AI Agent X-402 Protocol](./screenshots/x402.png)
+<br/>
+![AI Agent MCP Action](./screenshots/Zpay%20mcp.png)
 
 ### 7 · Split bills *(new)*
 
