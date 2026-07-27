@@ -8,9 +8,9 @@
 
 Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
 
-[**Live demo ↗**](https://zpayrouter.me) &nbsp;·&nbsp; [![CI](https://github.com/Div1912/Z-Pay/actions/workflows/ci.yml/badge.svg)](https://github.com/Div1912/Z-Pay/actions) &nbsp;·&nbsp; [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)](https://zpayrouter.me) &nbsp;·&nbsp; [![X (Twitter)](https://img.shields.io/badge/Follow-@Zpayroute-black?logo=x&logoColor=white)](https://x.com/Zpayroute)
+[**Live demo ➔**](https://zpayrouter.me) &nbsp;•&nbsp; [![CI](https://github.com/Div1912/Z-Pay/actions/workflows/ci.yml/badge.svg)](https://github.com/Div1912/Z-Pay/actions) &nbsp;•&nbsp; [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)](https://zpayrouter.me) &nbsp;•&nbsp; [![X (Twitter)](https://img.shields.io/badge/Follow-@Zpayroute-black?logo=x&logoColor=white)](https://x.com/Zpayroute)
 
-
+[![Product Update](https://img.shields.io/badge/Product-Update_Post-1DA1F2?logo=x&logoColor=white)](https://x.com/Zpayroute/status/2081314236840722464?s=20) &nbsp;•&nbsp; [![User Feedback](https://img.shields.io/badge/User-Feedback_Sheet-0F9D58?logo=googlesheets&logoColor=white)](https://docs.google.com/spreadsheets/d/e/2PACX-1vRNaTRN9f4wrlpapTOg6w6kU9aNmMLFfZiwKg08naaq2TXrvhXLWVUJ5Uy8VBiHAvk1bwT6tgvIfe_2/pubhtml?gid=105799872&single=true)
 
 </div>
 
