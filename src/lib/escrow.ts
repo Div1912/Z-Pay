@@ -1,8 +1,14 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
 import { NETWORK_PASSPHRASE, server } from './stellar';
 
-const CONTRACT_ID       = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ID || process.env.ESCROW_CONTRACT_ID || 'CDQBFXZXYW5ZEXDFB2HR7M3HBDYFF6WY46SHPTQBHHC6JMIOKTAOTYX2';
-const TOKEN_CONTRACT_ID = process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ID  || process.env.TOKEN_CONTRACT_ID  || 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
+const CONTRACT_ID = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ID || process.env.ESCROW_CONTRACT_ID || 'CDQBFXZXYW5ZEXDFB2HR7M3HBDYFF6WY46SHPTQBHHC6JMIOKTAOTYX2';
+
+// Native XLM Stellar Asset Contract (SAC) on Mainnet.
+// The ZPAY token contract only exists on Testnet — on Mainnet we escrow using native XLM.
+const TOKEN_CONTRACT_ID =
+  process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ID ||
+  process.env.TOKEN_CONTRACT_ID ||
+  'CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA'; // native XLM SAC on Mainnet
 
 // Arbiter / platform wallet — used as the dispute arbiter for all escrows.
 // GCF74... is the public key of the platform deployer wallet.
