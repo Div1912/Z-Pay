@@ -86,11 +86,14 @@ Lock funds in a Soroban contract, mark delivered, release on completion. If some
 
 <img width="1200" alt="Escrow contract dashboard" src="./screenshots/Arbiter.png" />
 
-### 6 · Autonomous AI Agents (X-402 Protocol)
+### 6 🤖 Autonomous AI Agents (X-402 Protocol)
 
-Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. With our integrated Model Context Protocol (MCP) server, agents can query balances, resolve Universal IDs, and securely send payments on behalf of users or as independent entities!
+Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI agents (like Claude or GPT) to natively hold balances, parse smart invoices, and autonomously execute payments on the Stellar network. 
 
-![AI Agent X-402 Protocol](./screenshots/x402.png)
+**Model Context Protocol (MCP) Server Integration:** 
+We have built a dedicated MCP server that connects directly to the Z-Pay backend. Agents can use the MCP server to query balances, resolve Universal IDs (`alice@Zp`), and securely send payments on behalf of users or as independent entities via code!
+
+![AI Agent X-402 Protocol](./screenshots/Zpay%20mcp.png)
 
 ### 7 · Split bills *(new)*
 
@@ -185,11 +188,16 @@ Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM ne
 
 **Real time log stream  showing** :
 - Structured event log from all API routes (level: info/warn/error)
-- **Live Supabase subscription** — new events appear instantly without refresh
-- Hourly error rate chart (last 12h)
-- Filterable by log level
+- Live errors and warnings grouped by severity
+- Network/DB latency and 500 response spikes
 
+### 11 📈 Community Growth
 
+We are actively building our community of developers and early adopters!
+
+![X Follower](./screenshots/X%20follower.png)
+
+---
 ### Security Checklist
 
 See [SECURITY.md](./SECURITY.md) for the complete checklist. Current score: **~62% implemented** with remaining items on the mainnet hardening backlog.
