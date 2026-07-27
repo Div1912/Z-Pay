@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     const currentLedger = await getCurrentLedger();
     const deadlineLedger = BigInt(currentLedger) + calculateDeadlineLedger(expiryDays);
 
-    // Contract returns the auto-generated numeric escrowId
+    // Contract uses a string escrow_id (e.g. "escrow-1722085200000")
     const secret = safeDecryptSecret(payerProfile.stellar_secret);
     if (!secret) {
       return NextResponse.json({ error: 'Wallet temporarily unavailable. Please try again shortly.' }, { status: 503 });
