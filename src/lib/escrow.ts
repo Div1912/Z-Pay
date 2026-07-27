@@ -1,12 +1,15 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
-import { NETWORK_PASSPHRASE, server, PLATFORM_MERCHANT_WALLET } from './stellar';
+import { NETWORK_PASSPHRASE, server } from './stellar';
 
 const CONTRACT_ID       = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ID || process.env.ESCROW_CONTRACT_ID || 'CDQBFXZXYW5ZEXDFB2HR7M3HBDYFF6WY46SHPTQBHHC6JMIOKTAOTYX2';
 const TOKEN_CONTRACT_ID = process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ID  || process.env.TOKEN_CONTRACT_ID  || 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
 
-// Arbiter / platform wallet — used as the dispute arbiter for all escrows
-// Points to PLATFORM_MERCHANT_WALLET so only the platform admin can resolve disputes
-const ARBITER_ADDRESS = process.env.NEXT_PUBLIC_PLATFORM_MERCHANT_WALLET || PLATFORM_MERCHANT_WALLET;
+// Arbiter / platform wallet — used as the dispute arbiter for all escrows.
+// GCF74... is the public key of the platform deployer wallet.
+const ARBITER_ADDRESS =
+  process.env.NEXT_PUBLIC_PLATFORM_MERCHANT_WALLET ||
+  process.env.PLATFORM_MERCHANT_WALLET_MAINNET     ||
+  'GCF74YZF5V4HEEKVGP4NFOYJ56Y2KZ4D5DR3XTJFXTWF7UTSMILJC245';
 
 export type EscrowStatus = 'Funded' | 'Delivered' | 'Released' | 'Disputed' | 'Refunded';
 
@@ -247,7 +250,7 @@ export async function getEscrow(escrowId: string | number): Promise<EscrowData |
   try {
     const id             = String(escrowId);
     const contract       = new StellarSdk.Contract(CONTRACT_ID);
-    const sourceAccount  = await server.getAccount(PLATFORM_MERCHANT_WALLET);
+    const sourceAccount  = await server.getAccount(ARBITER_ADDRESS);
 
     const tx = new StellarSdk.TransactionBuilder(sourceAccount, {
       fee: '100',
