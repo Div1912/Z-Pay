@@ -371,14 +371,16 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 | Contract | Address |
 |---|---|
 | Escrow | `CDQBFXZXYW5ZEXDFB2HR7M3HBDYFF6WY46SHPTQBHHC6JMIOKTAOTYX2` |
-| ZPAY Token | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
+| Native XLM Token (SAC) | `CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA` |
 | Staking & Pool | Set via `STAKING_CONTRACT_ID` / `POOL_CONTRACT_ID` env vars |
 
 ### Inter-contract call proof
 
-- **Tx Hash:** `ff67ca4695b625bf4b3aaab5389b83c9da9bfcd2fdcea71a642b3c28d032e627`
-- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/ff67ca4695b625bf4b3aaab5389b83c9da9bfcd2fdcea71a642b3c28d032e627)
-- **Ledger:** `667150` · **Type:** `invoke_host_function` (escrow `create` calling ZPAY token `transfer`)
+![Invoked Contract](./screenshots/Invoked%20Contract.png)
+
+- **Tx Hash:** `1bb09bca074eda29cb93938323c1033ea87459d683c59a05f8ce066083226faa`
+- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/1bb09bca074eda29cb93938323c1033ea87459d683c59a05f8ce066083226faa)
+- **Type:** `invoke_host_function` (escrow `fund` calling XLM SAC `transfer`)
 
 ---
 
