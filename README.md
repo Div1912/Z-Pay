@@ -136,6 +136,8 @@ Abstracting blockchain fragmentation. Connect your MetaMask and deposit USDC fro
 ZPay's backend cryptographically verifies the transaction via raw RPC logs and credits your Unified Ledger. 
 Spend your cross-chain wealth instantly at any ZPay merchant on the Stellar network. No bridging delays, no gas fees at checkout.
 
+![ZPay Unified Balance](./screenshots/Zub.png)
+
 ### 10 · CI / CD
 
 Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite. Plus, automated Vercel deployments.
@@ -376,134 +378,9 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 
 ---
 
-## API reference
-
-### Auth
-All routes use Supabase session cookies (`getUser()` server-side). Routes that move funds require the user to have set their 4-digit transaction PIN.
-
-### Payments
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/payments/send` | Send P2P payment by Universal ID |
-| GET | `/api/payments/history` | User's transaction history |
-
-### Universal ID & wallet
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/zpay/profile` | Get user profile |
-| GET | `/api/zpay/balance` | Wallet balances (XLM, ZPAY, …) |
-| GET | `/api/zpay/resolve?username=…` | Resolve `@Zp` ID to a Stellar address |
-| POST | `/api/zpay/claim` | Claim a Universal ID and create wallet |
-| GET | `/api/zpay/check` / `check-phone` | Availability checks |
-| POST | `/api/zpay/pin` | Set or change the 4-digit PIN |
-
-### Escrow contracts
-| Method | Endpoint | Description |
-|---|---|---|
-| GET / POST | `/api/contracts` | List / create escrow |
-| POST | `/api/contracts/fund` | Fund an escrow |
-| POST | `/api/contracts/deliver` | Mark as delivered |
-| POST | `/api/contracts/release` | Release funds (payer) |
-| POST | `/api/contracts/dispute` | Raise dispute (either party) |
-| POST | `/api/contracts/refund` | Refund (payer) or auto-claim (freelancer after 7d) |
-| GET | `/api/admin/contracts` | List escalated disputes (arbiter only) |
-| POST | `/api/admin/resolve` | Force-resolve a dispute (arbiter only) |
-
-### Split bills *(new)*
-| Method | Endpoint | Description |
-|---|---|---|
-| GET / POST | `/api/split` | List / create a split bill |
-| GET | `/api/split/[id]` | Detail, including participants and statuses |
-| POST | `/api/split/[id]/pay` | Settle current user's share |
-
-### Vault — staking & pool *(new)*
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/savings/positions` | All stakes + pool positions, with live current-value, accrued rewards, time remaining, summary aggregates |
-| POST | `/api/savings/stake` | Stake ZPAY for 30/60/90 days |
-| POST | `/api/savings/unstake` | Unstake matured position; pays principal + reward |
-| POST | `/api/savings/pool/deposit` | Deposit XLM into the yield pool |
-| POST | `/api/savings/pool/withdraw` | Withdraw XLM principal + accrued ZPAY |
-
-### ZUB (ZPay Unified Balance) *(new)*
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/zub/deposit/verify` | Cryptographically verifies on-chain EVM transactions (Base/Polygon) via raw RPCs to credit Unified Balance |
-
-### Merchant (UPI bridge)
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/merchant/quote` | Get XLM↔INR quote |
-| POST | `/api/merchant/pay` | Process merchant payment + simulate UPI settlement |
-| GET | `/api/merchant/history` | Merchant payment history |
-
-### FX
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/fx/quote` | Live FX rate between any supported pair |
 
 ---
 
-## Database schema
-
-Three migration files live at the repo root:
-- `supabase_migration.sql` — core tables (profiles, transactions, contracts, merchant_payments)
-- `supabase_split_migration.sql` — `split_bills`, `split_participants`
-- `supabase_savings_migration.sql` — `staking_positions`, `pool_positions`
-
-### `profiles`
-```
-id, universal_id, stellar_address, stellar_secret, full_name,
-phone, preferred_currency, app_pin, avatar_url, verified, created_at
-```
-
-### `transactions`
-```
-id, sender_id, recipient_id, sender_universal_id, recipient_universal_id,
-amount, currency, tx_hash, status, note, purpose, created_at
-```
-
-### `contracts`
-```
-id, escrow_id, payer_id, freelancer_id, payer_universal_id,
-freelancer_universal_id, amount, currency, title, description,
-status, expiry_timestamp, disputed_by, dispute_after_delivery,
-delivered_at, released_at, refunded_at,
-tx_hash_create, tx_hash_release, tx_hash_refund, created_at
-```
-
-### `merchant_payments`
-```
-id, user_id, merchant_name, merchant_upi_id,
-inr_amount, xlm_amount, rate, tx_hash, status, created_at
-```
-
-### `split_bills`  *(new)*
-```
-id, creator_id, creator_universal_id, title, description,
-total_amount, currency, status (active|partial|paid|cancelled),
-created_at
-```
-
-### `split_participants`  *(new)*
-```
-id, split_id, user_id, universal_id, share_amount,
-paid_amount, status (pending|paid), tx_hash, paid_at
-```
-
-### `staking_positions`  *(new)*
-```
-id, user_id, universal_id, stake_id, amount_expo, duration_days,
-reward_bps, reward_expo, status (active|completed),
-tx_hash_stake, tx_hash_unstake, staked_at, unlocks_at, unstaked_at
-```
-
-### `pool_positions`  *(new)*
-```
-id, user_id, universal_id, position_id, amount_xlm, expo_earned,
-status (active|withdrawn), tx_hash_deposit, tx_hash_withdraw,
-deposited_at, withdrawn_at
-```
 
 ---
 
@@ -689,7 +566,7 @@ What's still on the hardening backlog (call out in any prod deploy):
 - [ ] Auto-compound opt-in (on-chain auto-restake)
 - [ ] Stake streaks (consecutive completions → reward multiplier)
 - [ ] Anti-rugpull insurance vault
-- [ ] Mainnet deployment + smart-contract audit
+- [x] Mainnet deployment + smart-contract audit
 - [ ] Hardware-wallet signing (Ledger / Trezor)
 - [ ] Multi-signature escrow
 - [ ] Native iOS / Android apps
@@ -721,3 +598,4 @@ You can also subscribe to new releases via GitHub's **Watch → Custom → Relea
 Built on the Stellar Network · MIT License
 
 </div>
+
