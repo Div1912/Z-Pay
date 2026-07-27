@@ -104,7 +104,7 @@ export async function canSponsorFees(): Promise<boolean> {
     const account = await horizonServer.loadAccount(platformKeypair.publicKey());
     const xlmBalance = account.balances.find(b => b.asset_type === 'native');
     const balance = parseFloat(xlmBalance?.balance ?? '0');
-    return balance >= 10; // require at least 10 XLM buffer
+    return balance > 0; // buffer limitation removed
   } catch {
     return false;
   }
