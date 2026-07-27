@@ -589,6 +589,13 @@ You can also subscribe to new releases via GitHub's **Watch → Custom → Relea
 
 ---
 
+## Useful Links
+
+- [Platform Dashboard](https://zpayrouter.me/dashboard)
+- [Monthly Growth & Traction Report (July 2026)](./monthly_growth_report.md)
+
+---
+
 ## Links
 
 - [Stellar Documentation](https://developers.stellar.org/)
