@@ -370,8 +370,8 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 
 ### Inter-contract call proof
 
-- **Tx Hash:** `d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76`
-- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/d62faff341a803b549c7c244acb0e1fd502823ee4f9ce815c51cd9eebd473f76)
+- **Tx Hash:** `ff67ca4695b625bf4b3aaab5389b83c9da9bfcd2fdcea71a642b3c28d032e627`
+- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/ff67ca4695b625bf4b3aaab5389b83c9da9bfcd2fdcea71a642b3c28d032e627)
 - **Ledger:** `667150` · **Type:** `invoke_host_function` (escrow `create` calling ZPAY token `transfer`)
 
 ---
