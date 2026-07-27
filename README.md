@@ -8,7 +8,7 @@
 
 Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), settles payments in seconds via Stellar, lets Indian merchants receive INR via UPI, lets freelancers and clients lock funds in Soroban escrow, and adds vault savings with yield on XLM.
 
-[**Live demo →**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Z-Pay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
+[**Live demo ↗**](https://zpayrouter.me) &nbsp;·&nbsp; ![CI](https://github.com/Div1912/Z-Pay/actions/workflows/ci.yml/badge.svg) &nbsp;·&nbsp; ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel) &nbsp;·&nbsp; [![X (Twitter)](https://img.shields.io/badge/Follow-@Zpayroute-black?logo=x&logoColor=white)](https://x.com/Zpayroute)
 
 
 
