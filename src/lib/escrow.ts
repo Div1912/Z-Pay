@@ -105,7 +105,8 @@ export async function createEscrow(
   _deadlineLedger?: bigint
 ): Promise<{ txHash: string; escrowId: string }> {
   const keypair   = StellarSdk.Keypair.fromSecret(buyerSecret);
-  const escrowId  = `escrow-${Date.now()}`;
+  // Must be purely numeric string to fit in Supabase bigint column
+  const escrowId  = Date.now().toString();
   const contract  = new StellarSdk.Contract(CONTRACT_ID);
   const account   = await server.getAccount(buyerAddress);
 
