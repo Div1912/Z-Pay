@@ -14,6 +14,7 @@ const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [showSpline, setShowSpline] = useState(false);
 
   // Performance Optimization: Use Framer Motion values instead of React state
   const mouseX = useMotionValue(0);
@@ -25,6 +26,9 @@ const Hero = () => {
 
   useEffect(() => {
     setIsMounted(true);
+    // Defer WebGL loading to prioritize LCP and main thread
+    const timer = setTimeout(() => setShowSpline(true), 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -133,12 +137,15 @@ const Hero = () => {
 
         {/* Right content: Vengeance UI Spline 3D Scene */}
         <div className="w-[45%] sm:w-[40%] h-[40vh] min-h-[300px] sm:min-h-[500px] lg:flex-1 lg:h-[90vh] relative lg:ml-10 mt-0 overflow-visible pointer-events-auto flex items-center justify-center">
-          <div className="w-[200%] sm:w-[140%] lg:w-[140%] h-[200%] sm:h-[140%] lg:h-[140%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <SplineScene 
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full relative z-10"
-            />
-          </div>
+          {/* 3D Element - heavily deferred to not block hydration */}
+          {showSpline && (
+            <div className="w-[200%] sm:w-[140%] lg:w-[140%] h-[200%] sm:h-[140%] lg:h-[140%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <SplineScene 
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full relative z-10"
+              />
+            </div>
+          )}
         </div>
       </div>
       

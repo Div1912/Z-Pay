@@ -2,13 +2,15 @@
 
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
-import QuickActions from "@/components/sections/QuickActions";
-import AgenticSection from "@/components/sections/AgenticSection";
-import CardsSection from "@/components/sections/CardsSection";
-import LargePayments from "@/components/sections/LargePayments";
-import Testimonials from "@/components/sections/Testimonials";
-import Integrations from "@/components/sections/Integrations";
-import FooterCTA from "@/components/sections/FooterCTA";
+import dynamic from 'next/dynamic';
+
+const QuickActions = dynamic(() => import('@/components/sections/QuickActions'), { ssr: false });
+const AgenticSection = dynamic(() => import('@/components/sections/AgenticSection'), { ssr: false });
+const CardsSection = dynamic(() => import('@/components/sections/CardsSection'), { ssr: false });
+const LargePayments = dynamic(() => import('@/components/sections/LargePayments'), { ssr: false });
+const Testimonials = dynamic(() => import('@/components/sections/Testimonials'), { ssr: false });
+const Integrations = dynamic(() => import('@/components/sections/Integrations'), { ssr: false });
+const FooterCTA = dynamic(() => import('@/components/sections/FooterCTA'), { ssr: false });
 
 export default function LandingPage() {
   return (
