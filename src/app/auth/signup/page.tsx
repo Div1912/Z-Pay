@@ -67,7 +67,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-white selection:bg-gold/30 overflow-hidden">
 
         <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 sm:px-6 md:px-12 py-4 bg-transparent">
           <Link href="/">
@@ -96,7 +96,7 @@ export default function SignupPage() {
               className="text-[clamp(2rem,8vw,3.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-3 sm:mb-4"
             >
               <span className="block text-white whitespace-nowrap">Join</span>
-              <span className="block bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="block bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
                 ZPAY
               </span>
             </motion.h1>
@@ -120,11 +120,11 @@ export default function SignupPage() {
             <div className="space-y-1.5">
               <label className="text-[10px] sm:text-xs font-medium text-white/40 ml-1 uppercase tracking-wider">Email Address</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-[#D4AF37] transition-colors" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-gold transition-colors" />
                 <Input
                   type="email"
                   placeholder="name@example.com"
-                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-gold/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -135,11 +135,11 @@ export default function SignupPage() {
             <div className="space-y-1.5">
               <label className="text-[10px] sm:text-xs font-medium text-white/40 ml-1 uppercase tracking-wider">Secure Password</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-[#D4AF37] transition-colors" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-gold transition-colors" />
                 <Input
                   type="password"
                   placeholder="••••••••"
-                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-gold/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -151,7 +151,7 @@ export default function SignupPage() {
                     key={i} 
                     className={`flex-1 rounded-full transition-all duration-500 ${
                       i < passwordStrength 
-                        ? (passwordStrength <= 2 ? 'bg-[#FBBF24] shadow-[0_0_10px_rgba(245,167,196,0.5)]' : 'bg-[#D4AF37] shadow-[0_0_10px_rgba(198,148,249,0.5)]') 
+                        ? (passwordStrength <= 2 ? 'bg-[#FBBF24] shadow-[0_0_10px_rgba(245,167,196,0.5)]' : 'bg-gold shadow-[0_0_10px_rgba(198,148,249,0.5)]') 
                         : 'bg-white/5'
                     }`}
                   />
@@ -162,11 +162,11 @@ export default function SignupPage() {
             <div className="space-y-1.5">
               <label className="text-[10px] sm:text-xs font-medium text-white/40 ml-1 uppercase tracking-wider">Confirm Password</label>
               <div className="relative group">
-                <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-[#D4AF37] transition-colors" />
+                <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-white/30 group-focus-within:text-gold transition-colors" />
                 <Input
                   type="password"
                   placeholder="••••••••"
-                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                  className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl pl-11 sm:pl-12 pr-4 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-gold/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -273,7 +273,7 @@ export default function SignupPage() {
             className="mt-8 sm:mt-10 text-center text-white/35 text-xs sm:text-sm"
           >
             Already have an ID?{" "}
-            <Link href="/auth/login" className="text-white font-medium hover:text-[#D4AF37] transition-colors">Sign In</Link>
+            <Link href="/auth/login" className="text-white font-medium hover:text-gold transition-colors">Sign In</Link>
           </motion.p>
         </motion.div>
       </main>

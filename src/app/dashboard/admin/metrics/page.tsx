@@ -124,8 +124,8 @@ export default function MetricsDashboard() {
   if (loading && !summary) return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] gap-4">
       <div className="relative w-14 h-14">
-        <div className="absolute inset-0 rounded-full border-2 border-[#D4AF37]/20 animate-ping" />
-        <Loader2 className="absolute inset-3 w-8 h-8 text-[#D4AF37] animate-spin" />
+        <div className="absolute inset-0 rounded-full border-2 border-gold/20 animate-ping" />
+        <Loader2 className="absolute inset-3 w-8 h-8 text-gold animate-spin" />
       </div>
       <p className="text-white/40 text-[11px] font-semibold uppercase tracking-widest">Loading Analytics…</p>
     </div>
@@ -357,7 +357,7 @@ export default function MetricsDashboard() {
                   <div key={u.universal_id} className="space-y-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-base w-5 shrink-0">{["🥇","🥈","🥉"][i] ?? `#${i+1}`}</span>
-                      <span className="font-semibold text-sm text-[#D4AF37] flex-1 truncate">{u.universal_id}@Zp</span>
+                      <span className="font-semibold text-sm text-gold flex-1 truncate">{u.universal_id}@Zp</span>
                       <span className="text-xs font-bold text-white/50 shrink-0">{u.tx_count} txs</span>
                     </div>
                     <div className="h-1 bg-white/5 rounded-full overflow-hidden">

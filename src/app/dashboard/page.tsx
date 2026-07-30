@@ -197,8 +197,8 @@ export default function DashboardPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 sm:gap-6">
         <div className="relative">
-          <Loader2 className="w-10 sm:w-12 h-10 sm:h-12 animate-spin text-[#D4AF37]" />
-          <div className="absolute inset-0 blur-lg bg-[#D4AF37]/20 rounded-full" />
+          <Loader2 className="w-10 sm:w-12 h-10 sm:h-12 animate-spin text-gold" />
+          <div className="absolute inset-0 blur-lg bg-gold/20 rounded-full" />
         </div>
         <p className="text-white/40 font-black tracking-widest uppercase text-[10px] sm:text-xs animate-pulse">Syncing with Stellar Network</p>
       </div>
@@ -225,7 +225,7 @@ export default function DashboardPage() {
           <div className="bg-black/30 p-6 rounded-2xl border border-white/10 mb-8 flex flex-col items-center">
             <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Your Stellar Address</p>
             <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
-              <p className="font-mono text-sm sm:text-base break-all text-[#D4AF37] text-center max-w-full">
+              <p className="font-mono text-sm sm:text-base break-all text-gold text-center max-w-full">
                 {profile?.stellar_address}
               </p>
               <Button 
@@ -251,11 +251,12 @@ export default function DashboardPage() {
           <h1 className="text-[clamp(2rem,8vw,4rem)] font-black tracking-tight mb-2 sm:mb-3 uppercase leading-[0.9]" style={{ fontFamily: 'var(--font-syne)' }}>
             OVERVIEW
           </h1>
-          <div 
+          <button 
             onClick={copyToClipboard}
+            aria-label="Copy Universal ID"
             className="group flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl w-fit cursor-pointer hover:bg-white/10 transition-all hover:scale-105 active:scale-95 shadow-xl"
           >
-            <span className="text-[#D4AF37] font-black text-sm sm:text-lg tracking-tight">{profile?.universal_id}@Zp</span>
+            <span className="text-gold font-black text-sm sm:text-lg tracking-tight truncate max-w-[150px] sm:max-w-none">{profile?.universal_id}@Zp</span>
             <div className="h-3 sm:h-4 w-[1px] bg-white/10" />
             <AnimatePresence mode="wait">
               {copied ? (
@@ -268,7 +269,7 @@ export default function DashboardPage() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </button>
         </div>
         <div className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_rgba(34,197,94,1)] animate-pulse ${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'bg-green-500' : 'bg-yellow-500'}`} />
@@ -298,7 +299,7 @@ export default function DashboardPage() {
                 className="flex flex-col items-center gap-2 min-w-[64px] group cursor-pointer"
               >
                 <div
-                  className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D4AF37]/20 to-[#27272a]/20 border border-[#D4AF37]/20 flex items-center justify-center font-black text-[#D4AF37] text-xl uppercase transition-all group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(198,148,249,0.3)] group-active:scale-95 bg-cover bg-center overflow-hidden"
+                  className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold/20 to-[#27272a]/20 border border-gold/20 flex items-center justify-center font-black text-gold text-xl uppercase transition-all group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(198,148,249,0.3)] group-active:scale-95 bg-cover bg-center overflow-hidden"
                   style={{ backgroundImage: p.avatar_url ? `url(${p.avatar_url})` : undefined }}
                 >
                   {!p.avatar_url && (p.display_name || p.username)[0]}
@@ -320,15 +321,15 @@ export default function DashboardPage() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative group"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a] rounded-[2rem] sm:rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a] rounded-[2rem] sm:rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
             <div className="relative bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-5 sm:p-8 md:p-14 rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden">
-              <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-[#D4AF37]/5 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-[#27272a]/5 rounded-full blur-[100px] pointer-events-none" />
               
               <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12">
                 <div className="space-y-3 sm:space-y-4 min-w-0 flex-1">
-                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#D4AF37] flex items-center gap-2">
-                      <Zap className="w-3 h-3 text-[#D4AF37]" /> UNIFIED BALANCE (CROSS-CHAIN)
+                    <p className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-gold flex items-center gap-2">
+                      <Zap className="w-3 h-3 text-gold" /> UNIFIED BALANCE (CROSS-CHAIN)
                     </p>
                     <div className="flex items-baseline gap-2 sm:gap-3 overflow-hidden">
                       <h2
@@ -347,11 +348,11 @@ export default function DashboardPage() {
                     </div>
                     
                     <div className="mt-2 flex flex-col gap-2">
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#D4AF37]/10 rounded-full w-fit border border-[#D4AF37]/20">
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-gold/10 rounded-full w-fit border border-gold/20">
                         <img src="https://cryptologos.cc/logos/stellar-xlm-logo.svg" alt="Stellar" className="w-3.5 h-3.5 object-contain" />
-                        <span className="text-[9px] font-black tracking-[0.2em] text-[#D4AF37] uppercase">Stellar XLM</span>
-                        <div className="w-1 h-1 bg-[#D4AF37]/30 rounded-full" />
-                        <span className="text-xs font-bold text-[#D4AF37]">
+                        <span className="text-[9px] font-black tracking-[0.2em] text-gold uppercase">Stellar XLM</span>
+                        <div className="w-1 h-1 bg-gold/30 rounded-full" />
+                        <span className="text-xs font-bold text-gold">
                           {displayBalance} XLM
                         </span>
                       </div>
@@ -369,7 +370,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-3 sm:gap-4 w-full lg:w-auto lg:min-w-[240px] xl:min-w-[280px]">
                   <div className="flex gap-3 sm:gap-4 flex-1">
                     <Link href="/dashboard/send" className="flex-1">
-                      <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] hover:opacity-90 text-white font-black text-sm sm:text-base rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-[#D4AF37]/30 group">
+                      <Button className="w-full h-12 sm:h-14 xl:h-16 bg-gradient-to-r from-gold to-[#27272a] hover:opacity-90 text-white font-black text-sm sm:text-base rounded-xl sm:rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-gold/30 group">
                         SEND <ArrowUpRight className="ml-1 w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </Button>
                     </Link>
@@ -419,7 +420,7 @@ export default function DashboardPage() {
                             ? "bg-green-500/10 text-green-500 border border-green-500/20"
                             : isReceived 
                               ? "bg-green-500/10 text-green-500 border border-green-500/20" 
-                              : "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                              : "bg-gold/10 text-gold border border-gold/20"
                         )}>
                           {isMerchant ? <Store className="w-5 sm:w-6 xl:w-7 h-5 sm:h-6 xl:h-7" /> : isReceived ? <ArrowDownLeft className="w-5 sm:w-6 xl:w-7 h-5 sm:h-6 xl:h-7" /> : <ArrowUpRight className="w-5 sm:w-6 xl:w-7 h-5 sm:h-6 xl:h-7" />}
                         </div>
@@ -530,7 +531,7 @@ export default function DashboardPage() {
 
 function QuickActionCard({ href, icon, title, description, color }: any) {
   const colors: any = {
-    purple: "text-[#D4AF37] bg-[#D4AF37]/10 border-[#D4AF37]/20",
+    purple: "text-gold bg-gold/10 border-gold/20",
     pink: "text-[#FBBF24] bg-[#FBBF24]/10 border-[#FBBF24]/20",
     blue: "text-[#27272a] bg-[#27272a]/10 border-[#27272a]/20"
   };

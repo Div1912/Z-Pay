@@ -77,7 +77,7 @@ export default function ProfilePage() {
       <AnimatePresence>
         {showKeysModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => setShowKeysModal(false)}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
@@ -121,7 +121,7 @@ export default function ProfilePage() {
       <AnimatePresence>
         {show2FAModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => setShow2FAModal(false)}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                 className={`w-full h-12 rounded-xl font-bold text-sm transition-all ${
                   twoFactor
                     ? "bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20"
-                    : "bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black"
+                    : "bg-gold hover:bg-gold/90 text-black"
                 }`}
               >
                 {twoFactor ? "Disable 2FA" : "Enable 2FA"}

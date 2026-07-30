@@ -76,7 +76,7 @@ export default function MCPDocsPage() {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-16 border-b border-white/5 pb-12">
           <div className="doc-section max-w-3xl">
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 shadow-2xl w-fit">
-              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#D4AF37] shadow-[0_0_10px_rgba(212,175,55,0.4)]" />
+              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.4)]" />
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">
                 Developer Documentation
               </span>
@@ -196,9 +196,9 @@ export default function MCPDocsPage() {
                   { name: 'get_zpay_balance', desc: 'Fetches current balances in XLM and fiat equivalents.', params: 'none' }
                 ].map((tool) => (
                   <div key={tool.name} className="group relative p-6 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300 overflow-hidden">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#D4AF37] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <h3 className="text-lg font-bold text-white mb-2 font-mono flex items-center gap-2">
-                      <span className="text-[#D4AF37]">ƒ</span> {tool.name}
+                      <span className="text-gold">ƒ</span> {tool.name}
                     </h3>
                     <p className="text-neutral-400 text-sm mb-4 leading-relaxed">{tool.desc}</p>
                     <div className="text-xs font-mono text-neutral-500 bg-black p-3 rounded-lg border border-white/5">

@@ -71,7 +71,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/auth/signup"
-                className="px-8 h-11 rounded-full bg-[#D4AF37] text-black text-[13px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
+                className="px-8 h-11 rounded-full bg-gold text-black text-[13px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
               >
                 Get Started
               </Link>
@@ -132,7 +132,7 @@ const Navbar = () => {
                 <Link
                   href="/auth/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full h-16 flex items-center justify-center rounded-full bg-[#D4AF37] text-black font-black uppercase tracking-widest text-sm"
+                  className="w-full h-16 flex items-center justify-center rounded-full bg-gold text-black font-black uppercase tracking-widest text-sm"
                 >
                   Get Started
                 </Link>

@@ -325,10 +325,10 @@ export default function MerchantPayPage() {
                 <p className="text-2xl font-black text-green-500">₹{parseFloat(paymentResult.inr_amount.toString()).toLocaleString('en-IN')}</p>
                 <p className="text-[10px] text-green-500/60">INR (Indian Rupee)</p>
               </div>
-              <div className="p-4 bg-[#D4AF37]/10 rounded-2xl border border-[#D4AF37]/20">
+              <div className="p-4 bg-gold/10 rounded-2xl border border-gold/20">
                 <p className="text-zinc-400 text-[10px] uppercase tracking-widest mb-1">You Spent</p>
-                <p className="text-2xl font-black text-[#D4AF37]">{paymentResult.xlm_amount}</p>
-                <p className="text-[10px] text-[#D4AF37]/60">XLM (Stellar)</p>
+                <p className="text-2xl font-black text-gold">{paymentResult.xlm_amount}</p>
+                <p className="text-[10px] text-gold/60">XLM (Stellar)</p>
               </div>
             </div>
 
@@ -364,7 +364,7 @@ export default function MerchantPayPage() {
           </div>
           
           <div className="space-y-3">
-            <a href={paymentResult.stellar_explorer_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-zinc-500 hover:text-[#D4AF37] font-bold text-sm bg-white/5 py-4 rounded-xl border border-white/5 w-full">
+            <a href={paymentResult.stellar_explorer_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-zinc-500 hover:text-gold font-bold text-sm bg-white/5 py-4 rounded-xl border border-white/5 w-full">
               VIEW STELLAR TX <ExternalLink className="w-4 h-4" />
             </a>
             <Button onClick={() => router.push("/dashboard")} className="w-full h-14 bg-white text-black hover:bg-zinc-200 font-black rounded-2xl">
@@ -386,8 +386,8 @@ export default function MerchantPayPage() {
       <div className="glass-card p-4 rounded-2xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center">
-              <Wallet className="w-5 h-5 text-[#D4AF37]" />
+            <div className="w-10 h-10 bg-gold/20 rounded-xl flex items-center justify-center">
+              <Wallet className="w-5 h-5 text-gold" />
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-widest text-zinc-500">Your Balance</p>
@@ -422,16 +422,16 @@ export default function MerchantPayPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleDemoMerchant(dm)}
-                    className="glass-card p-4 rounded-2xl text-left hover:border-[#D4AF37]/30 transition-all group"
+                    className="glass-card p-4 rounded-2xl text-left hover:border-gold/30 transition-all group"
                   >
-                    <div className="w-10 h-10 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center mb-3 group-hover:bg-[#D4AF37]/30 transition-colors">
-                      <dm.icon className="w-5 h-5 text-[#D4AF37]" />
+                    <div className="w-10 h-10 bg-gold/20 rounded-xl flex items-center justify-center mb-3 group-hover:bg-gold/30 transition-colors">
+                      <dm.icon className="w-5 h-5 text-gold" />
                     </div>
                     <p className="font-bold text-sm truncate">{dm.name}</p>
                     <p className="text-[10px] text-zinc-500 truncate">{dm.category}</p>
                     <div className="flex items-center justify-between mt-2">
-                      <p className="text-lg font-black text-[#D4AF37]">₹{dm.amount}</p>
-                      <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-[#D4AF37] transition-colors" />
+                      <p className="text-lg font-black text-gold">₹{dm.amount}</p>
+                      <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-gold transition-colors" />
                     </div>
                   </motion.button>
                 ))}
@@ -450,7 +450,7 @@ export default function MerchantPayPage() {
             <div className="grid grid-cols-2 gap-3">
               <Button 
                 onClick={() => { setStep('scan'); setLoading(true); setTimeout(() => { initScanner(); setLoading(false); }, 500); }} 
-                className="h-16 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black rounded-2xl flex flex-col gap-1"
+                className="h-16 bg-gold hover:bg-gold/90 text-black font-black rounded-2xl flex flex-col gap-1"
               >
                 <Camera className="w-5 h-5" />
                 <span className="text-xs">Scan QR</span>
@@ -490,7 +490,7 @@ export default function MerchantPayPage() {
               <div id="merchant-reader" className="w-full h-full" />
               {!scanning && !loading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-black/60 backdrop-blur-md z-20">
-                  <div className="w-20 h-20 bg-[#D4AF37] rounded-full flex items-center justify-center">
+                  <div className="w-20 h-20 bg-gold rounded-full flex items-center justify-center">
                     <Camera className="w-10 h-10 text-white" />
                   </div>
                   <div className="text-center px-8">
@@ -505,8 +505,8 @@ export default function MerchantPayPage() {
               {scanning && (
                 <>
                   <div className="absolute inset-0 border-[40px] border-black/40 pointer-events-none z-10">
-                    <div className="w-full h-full border-2 border-[#D4AF37]/50 rounded-2xl relative">
-                      <motion.div animate={{ top: ["10%", "90%", "10%"] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute left-0 right-0 h-0.5 bg-[#D4AF37] shadow-[0_0_15px_#D4AF37]" />
+                    <div className="w-full h-full border-2 border-gold/50 rounded-2xl relative">
+                      <motion.div animate={{ top: ["10%", "90%", "10%"] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute left-0 right-0 h-0.5 bg-gold shadow-[0_0_15px_#D4AF37]" />
                     </div>
                   </div>
                   <Button onClick={handleStopScanner} className="absolute bottom-8 left-1/2 -translate-x-1/2 h-12 w-12 p-0 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500/40 z-20">
@@ -514,7 +514,7 @@ export default function MerchantPayPage() {
                   </Button>
                 </>
               )}
-              {loading && <div className="absolute inset-0 flex items-center justify-center bg-black z-30"><Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" /></div>}
+              {loading && <div className="absolute inset-0 flex items-center justify-center bg-black z-30"><Loader2 className="w-10 h-10 animate-spin text-gold" /></div>}
             </div>
 
             <Button variant="outline" onClick={() => { handleStopScanner(); setStep('home'); }} className="w-full h-12 border-white/10 rounded-xl">
@@ -527,8 +527,8 @@ export default function MerchantPayPage() {
           <motion.div key="manual" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
             <div className="glass-card p-6 rounded-2xl space-y-6">
               <div className="flex items-center gap-4 pb-4 border-b border-white/5">
-                <div className="w-12 h-12 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center">
-                  <Keyboard className="w-6 h-6 text-[#D4AF37]" />
+                <div className="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                  <Keyboard className="w-6 h-6 text-gold" />
                 </div>
                 <div>
                   <p className="font-black">Enter Merchant Details</p>
@@ -566,7 +566,7 @@ export default function MerchantPayPage() {
             <Button 
               onClick={handleManualEntry} 
               disabled={!manualUpiId.trim() || !manualMerchantName.trim()}
-              className="w-full h-16 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black text-xl rounded-2xl"
+              className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl"
             >
               CONTINUE
             </Button>
@@ -585,14 +585,14 @@ export default function MerchantPayPage() {
           <motion.div key="amount" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
             <div className="glass-card p-6 rounded-2xl">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center">
-                  <Store className="w-7 h-7 text-[#D4AF37]" />
+                <div className="w-14 h-14 bg-gold/20 rounded-2xl flex items-center justify-center">
+                  <Store className="w-7 h-7 text-gold" />
                 </div>
                 <div>
                   <p className="font-black text-lg">{merchant.merchantName}</p>
                   <p className="text-zinc-500 text-sm">{merchant.merchantUpiId}</p>
                   {merchant.merchantCategory && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded mt-1 inline-block">{merchant.merchantCategory}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-gold bg-gold/10 px-2 py-0.5 rounded mt-1 inline-block">{merchant.merchantCategory}</span>
                   )}
                 </div>
               </div>
@@ -605,7 +605,7 @@ export default function MerchantPayPage() {
                 <Input
                   type="number"
                   placeholder="0"
-                  className="bg-white/5 border-white/10 pl-14 h-20 text-4xl font-black rounded-2xl focus:border-[#D4AF37]/50"
+                  className="bg-white/5 border-white/10 pl-14 h-20 text-4xl font-black rounded-2xl focus:border-gold/50"
                   value={inrAmount}
                   onChange={(e) => setInrAmount(e.target.value)}
                   autoFocus
@@ -624,7 +624,7 @@ export default function MerchantPayPage() {
                     className={cn(
                       "p-3 rounded-xl text-left transition-all text-xs",
                       purposeCode === pc.code 
-                        ? "bg-[#D4AF37]/20 border-2 border-[#D4AF37]/50" 
+                        ? "bg-gold/20 border-2 border-gold/50" 
                         : "bg-white/5 border border-white/10 hover:border-white/20"
                     )}
                   >
@@ -635,7 +635,7 @@ export default function MerchantPayPage() {
               </div>
             </div>
 
-            <Button onClick={generateQuote} disabled={quoteLoading || !inrAmount || parseFloat(inrAmount) <= 0} className="w-full h-16 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black text-xl rounded-2xl">
+            <Button onClick={generateQuote} disabled={quoteLoading || !inrAmount || parseFloat(inrAmount) <= 0} className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl">
               {quoteLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GET QUOTE"}
             </Button>
             <Button variant="outline" onClick={() => { setStep('home'); setMerchant(null); setInrAmount(''); }} className="w-full h-12 border-white/10 rounded-xl">
@@ -648,8 +648,8 @@ export default function MerchantPayPage() {
           <motion.div key="confirm" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
             <div className="glass-card p-6 rounded-2xl space-y-4">
               <div className="flex items-center gap-4 pb-4 border-b border-white/5">
-                <div className="w-12 h-12 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center">
-                  <Store className="w-6 h-6 text-[#D4AF37]" />
+                <div className="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                  <Store className="w-6 h-6 text-gold" />
                 </div>
                 <div>
                   <p className="font-black">{merchant.merchantName}</p>
@@ -664,7 +664,7 @@ export default function MerchantPayPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-zinc-500 text-sm">You spend (XLM)</span>
-                  <span className="text-lg font-bold text-[#D4AF37]">{quote.xlm_amount} XLM</span>
+                  <span className="text-lg font-bold text-gold">{quote.xlm_amount} XLM</span>
                 </div>
                 <div className="flex justify-between items-center text-xs text-zinc-600">
                   <span>Exchange rate</span>
@@ -717,7 +717,7 @@ export default function MerchantPayPage() {
               </div>
             </div>
 
-            <Button onClick={() => { setStep('pin'); setPin(['', '', '', '']); setTimeout(() => pinInputRefs.current[0]?.focus(), 100); }} disabled={countdown === 0} className="w-full h-16 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-black text-xl rounded-2xl">
+            <Button onClick={() => { setStep('pin'); setPin(['', '', '', '']); setTimeout(() => pinInputRefs.current[0]?.focus(), 100); }} disabled={countdown === 0} className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl">
               CONFIRM & PAY
             </Button>
           </motion.div>
@@ -726,8 +726,8 @@ export default function MerchantPayPage() {
         {step === 'pin' && (
           <motion.div key="pin" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="space-y-8">
             <div className="glass-card p-8 rounded-[2rem] text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center">
-                <Shield className="w-8 h-8 text-[#D4AF37]" />
+              <div className="w-16 h-16 mx-auto bg-gold/20 rounded-2xl flex items-center justify-center">
+                <Shield className="w-8 h-8 text-gold" />
               </div>
               <div>
                 <h2 className="text-2xl font-black uppercase mb-2">Enter PIN</h2>
@@ -745,7 +745,7 @@ export default function MerchantPayPage() {
                     value={pin[index]}
                     onChange={(e) => handlePinChange(index, e.target.value)}
                     onKeyDown={(e) => handlePinKeyDown(index, e)}
-                    className="w-14 h-14 text-center text-2xl font-black bg-white/5 border-2 border-white/10 rounded-xl focus:border-[#D4AF37] focus:outline-none"
+                    className="w-14 h-14 text-center text-2xl font-black bg-white/5 border-2 border-white/10 rounded-xl focus:border-gold focus:outline-none"
                   />
                 ))}
               </div>
@@ -759,7 +759,7 @@ export default function MerchantPayPage() {
 
         {step === 'processing' && (
           <motion.div key="processing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-12 rounded-[2rem] text-center space-y-6">
-            <Loader2 className="w-16 h-16 animate-spin text-[#D4AF37] mx-auto" />
+            <Loader2 className="w-16 h-16 animate-spin text-gold mx-auto" />
             <div>
               <h2 className="text-2xl font-black uppercase mb-2">Processing</h2>
               <p className="text-zinc-500 text-sm">Executing cross-border payment...</p>

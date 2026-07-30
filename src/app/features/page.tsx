@@ -31,8 +31,8 @@ const FeatureRow = ({
   >
     {/* Text Content */}
     <div className="flex-1 space-y-6">
-      <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-8">
-        <Icon className="w-7 h-7 text-[#D4AF37]" />
+      <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-8">
+        <Icon className="w-7 h-7 text-gold" />
       </div>
       <h2 className="text-4xl md:text-5xl font-black tracking-tight">{title}</h2>
       <p className="text-xl text-white/60 leading-relaxed font-medium">
@@ -44,7 +44,7 @@ const FeatureRow = ({
     <div className="flex-1 w-full">
       <div className="relative group rounded-3xl overflow-hidden border border-white/10 bg-black aspect-video shadow-[0_0_40px_rgba(0,0,0,0.8)]">
         {/* Subtle gold gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent mix-blend-overlay z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-gold/20 to-transparent mix-blend-overlay z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
         
         {/* Image */}
         <img 
@@ -54,8 +54,8 @@ const FeatureRow = ({
         />
         
         {/* Decorative corner accents */}
-        <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 z-20 group-hover:border-[#D4AF37] transition-colors duration-500" />
-        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 z-20 group-hover:border-[#D4AF37] transition-colors duration-500" />
+        <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-white/20 z-20 group-hover:border-gold transition-colors duration-500" />
+        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/20 z-20 group-hover:border-gold transition-colors duration-500" />
       </div>
     </div>
   </motion.div>
@@ -63,7 +63,7 @@ const FeatureRow = ({
 
 export default function FeaturesPage() {
   return (
-    <main className="min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-x-hidden">
+    <main className="min-h-screen bg-transparent text-white selection:bg-gold/30 overflow-x-hidden">
       <Navbar />
       
       {/* Hero Section */}
@@ -75,12 +75,12 @@ export default function FeaturesPage() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto"
           >
-            <span className="px-5 py-2 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37] mb-8 inline-block shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+            <span className="px-5 py-2 rounded-full border border-gold/20 bg-gold/5 text-xs font-black uppercase tracking-[0.2em] text-gold mb-8 inline-block shadow-[0_0_20px_rgba(212,175,55,0.1)]">
               The Protocol
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.95]">
               Architected for <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#D4AF37] to-[#FBBF24]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-gold to-[#FBBF24]">
                 Dominance.
               </span>
             </h1>
@@ -172,7 +172,7 @@ export default function FeaturesPage() {
           <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tight">Ready to integrate?</h2>
           <Link 
             href="/auth/signup"
-            className="inline-flex h-16 items-center justify-center rounded-full bg-[#D4AF37] px-12 text-black font-black text-lg uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)]"
+            className="inline-flex h-16 items-center justify-center rounded-full bg-gold px-12 text-black font-black text-lg uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)]"
           >
             Create Developer Account
           </Link>

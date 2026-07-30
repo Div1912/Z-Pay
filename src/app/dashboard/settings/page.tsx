@@ -111,7 +111,7 @@ function Toggle({
       onClick={() => onChange(!checked)}
       className={`relative inline-flex shrink-0 items-center w-14 h-7 rounded-md outline-none focus:outline-none transition-all duration-300 ${
         checked
-          ? "bg-[#D4AF37] shadow-[0_0_12px_rgba(198,148,249,0.4)]"
+          ? "bg-gold shadow-[0_0_12px_rgba(198,148,249,0.4)]"
           : "bg-white/10"
       }`}
     >
@@ -376,7 +376,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
+        <Loader2 className="w-10 h-10 animate-spin text-gold" />
       </div>
     );
   }
@@ -391,7 +391,7 @@ export default function SettingsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => setShowPinModal(false)}
           >
             <motion.div
@@ -433,7 +433,7 @@ export default function SettingsPage() {
               <button
                 onClick={handlePinChange}
                 disabled={savingPin}
-                className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                className="w-full h-12 rounded-xl bg-gold hover:bg-gold/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
               >
                 {savingPin ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4" /> Save PIN</>}
               </button>
@@ -446,7 +446,7 @@ export default function SettingsPage() {
       <AnimatePresence>
         {showEmailModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => { setShowEmailModal(false); setOtpSent(false); setNewEmail(""); setEmailOtp(""); }}
           >
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
@@ -474,7 +474,7 @@ export default function SettingsPage() {
                   <button
                     onClick={handleSendEmailOtp}
                     disabled={savingEmail}
-                    className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                    className="w-full h-12 rounded-xl bg-gold hover:bg-gold/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
                   >
                     {savingEmail ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send OTP"}
                   </button>
@@ -501,7 +501,7 @@ export default function SettingsPage() {
                     <button
                       onClick={handleVerifyEmailOtp}
                       disabled={savingEmail}
-                      className="flex-1 h-11 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                      className="flex-1 h-11 rounded-xl bg-gold hover:bg-gold/90 text-black font-bold text-sm flex items-center justify-center gap-2 transition-all"
                     >
                       {savingEmail ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify & Save"}
                     </button>
@@ -520,7 +520,7 @@ export default function SettingsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => { setShowExportModal(false); setExportedKey(null); setExportPin(""); }}
           >
             <motion.div
@@ -615,7 +615,7 @@ export default function SettingsPage() {
       >
         {/* Avatar placeholder */}
         <div className="flex items-center gap-4 pb-4 border-b border-white/5">
-          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#27272a] flex items-center justify-center text-2xl font-black shadow-lg bg-cover bg-center" style={{ backgroundImage: profile?.avatar_url ? `url(${profile.avatar_url})` : undefined }}>
+          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-gold to-[#27272a] flex items-center justify-center text-2xl font-black shadow-lg bg-cover bg-center" style={{ backgroundImage: profile?.avatar_url ? `url(${profile.avatar_url})` : undefined }}>
             {!profile?.avatar_url && (profile?.full_name?.[0]?.toUpperCase() || "U")}
             <label className="absolute -bottom-1 -right-1 w-7 h-7 bg-zinc-800 border-2 border-[#121212] rounded-full flex items-center justify-center cursor-pointer hover:bg-zinc-700 transition-colors">
               <Camera className="w-3.5 h-3.5 text-white/80" />
@@ -668,7 +668,7 @@ export default function SettingsPage() {
             <p className="font-bold">{profile?.full_name || "—"}</p>
             <p className="text-zinc-500 text-sm">{profile?.email}</p>
             {profile?.universal_id && (
-              <p className="text-[#D4AF37] text-xs font-bold mt-0.5">
+              <p className="text-gold text-xs font-bold mt-0.5">
                 {profile.universal_id}@Zp
               </p>
             )}
@@ -711,7 +711,7 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => setShowEmailModal(true)}
-                className="text-[10px] font-black uppercase tracking-widest text-[#D4AF37] hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-[#D4AF37]/10"
+                className="text-[10px] font-black uppercase tracking-widest text-gold hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-gold/10"
               >
                 Change
               </button>
@@ -723,7 +723,7 @@ export default function SettingsPage() {
         <button
           onClick={handleSaveInfo}
           disabled={savingInfo}
-          className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold text-sm transition-all flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-gold hover:bg-gold/90 text-black font-bold text-sm transition-all flex items-center justify-center gap-2"
         >
           {savingInfo ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -1016,12 +1016,12 @@ export default function SettingsPage() {
             onChange={(e) => setFeedbackText(e.target.value)}
             placeholder="Tell us what you think…"
             rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#D4AF37]/40 resize-none"
+            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-gold/40 resize-none"
           />
           <button
             onClick={handleFeedback}
             disabled={sendingFeedback}
-            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#27272a] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl bg-gradient-to-r from-gold to-[#27272a] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
           >
             {sendingFeedback ? (
               <Loader2 className="w-4 h-4 animate-spin" />

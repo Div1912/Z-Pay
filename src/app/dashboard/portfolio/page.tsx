@@ -127,13 +127,13 @@ export default function PortfolioPage() {
       {/* ── Tabs for Assets ── */}
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="w-full justify-start bg-transparent border-b border-white/10 rounded-none p-0 h-auto mb-6 gap-6">
-          <TabsTrigger value="overview" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-[#D4AF37] px-0">
+          <TabsTrigger value="overview" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-gold px-0">
             Overview
           </TabsTrigger>
-          <TabsTrigger value="coins" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-[#D4AF37] px-0">
+          <TabsTrigger value="coins" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-gold px-0">
             Coins
           </TabsTrigger>
-          <TabsTrigger value="funds" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-[#D4AF37] px-0">
+          <TabsTrigger value="funds" className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-white text-zinc-500 font-bold text-base pb-4 rounded-none border-b-2 border-transparent data-[state=active]:border-gold px-0">
             Funds
           </TabsTrigger>
         </TabsList>
@@ -231,7 +231,7 @@ export default function PortfolioPage() {
       {/* ── Deposit Modal ── */}
       <AnimatePresence>
         {depositModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/80 backdrop-blur-sm"

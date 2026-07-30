@@ -48,7 +48,7 @@ export default function PoolDepositPage() {
         <div>
           <h2 className="text-2xl font-black uppercase">Deposited! 💧</h2>
           <p className="text-white/50 text-sm mt-2">{success.message}</p>
-          <p className="text-[#D4AF37] font-black mt-3">
+          <p className="text-gold font-black mt-3">
             ~{dailyExpo.toFixed(4)} ZPAY / day accruing
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function PoolDepositPage() {
         </a>
         <button
           onClick={() => router.push("/dashboard/savings")}
-          className="w-full max-w-xs h-12 bg-gradient-to-r from-blue-500 to-[#D4AF37] rounded-2xl font-black text-sm uppercase tracking-wider"
+          className="w-full max-w-xs h-12 bg-gradient-to-r from-blue-500 to-gold rounded-2xl font-black text-sm uppercase tracking-wider"
         >
           Back to Vault
         </button>
@@ -129,11 +129,11 @@ export default function PoolDepositPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">Per Day</p>
-              <p className="font-black text-xl text-[#D4AF37]">{dailyExpo.toFixed(4)} <span className="text-xs text-white/30">ZPAY</span></p>
+              <p className="font-black text-xl text-gold">{dailyExpo.toFixed(4)} <span className="text-xs text-white/30">ZPAY</span></p>
             </div>
             <div>
               <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">Per Month</p>
-              <p className="font-black text-xl text-[#D4AF37]">{monthlyExpo.toFixed(3)} <span className="text-xs text-white/30">ZPAY</span></p>
+              <p className="font-black text-xl text-gold">{monthlyExpo.toFixed(3)} <span className="text-xs text-white/30">ZPAY</span></p>
             </div>
           </div>
           <p className="text-[10px] text-white/30 font-bold">*Variable rate. Based on current reward pool size.</p>
@@ -159,7 +159,7 @@ export default function PoolDepositPage() {
         id="pool-deposit-submit"
         onClick={handleDeposit}
         disabled={loading || !amount}
-        className="w-full h-14 bg-gradient-to-r from-blue-500 to-[#D4AF37] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-blue-500/20 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full h-14 bg-gradient-to-r from-blue-500 to-gold rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-blue-500/20 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading
           ? <><Loader2 className="w-5 h-5 animate-spin" /> Depositing...</>

@@ -169,10 +169,10 @@ export function InactivityGuard({ children }: { children: React.ReactNode }) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 20, stiffness: 200 }}
-              className="w-full max-w-sm bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 text-center relative overflow-hidden shadow-2xl"
+              className="w-full max-w-sm bg-surface border border-white/10 rounded-3xl p-8 text-center relative overflow-hidden shadow-2xl"
             >
               {/* gradient bar */}
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a]" />
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a]" />
 
               {/* Icon */}
               <div className="w-16 h-16 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
@@ -230,7 +230,7 @@ export function InactivityGuard({ children }: { children: React.ReactNode }) {
                 </button>
                 <button
                   onClick={handleStayLoggedIn}
-                  className="flex-1 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#27272a] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
+                  className="flex-1 h-12 rounded-xl bg-gradient-to-r from-gold to-[#27272a] text-white font-bold text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
                   Stay Logged In

@@ -32,7 +32,7 @@ function Avatar({ url, name, size = "md" }: { url?: string | null; name: string;
       className={cn(
         dim,
         "shrink-0 rounded-2xl flex items-center justify-center font-black uppercase overflow-hidden bg-cover bg-center",
-        !url && "bg-gradient-to-br from-[#D4AF37]/30 to-[#27272a]/30 border border-[#D4AF37]/20 text-[#D4AF37]",
+        !url && "bg-gradient-to-br from-gold/30 to-[#27272a]/30 border border-gold/20 text-gold",
         text
       )}
       style={{ backgroundImage: url ? `url(${url})` : undefined }}
@@ -121,11 +121,11 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
         className={cn(
           "relative flex items-center gap-3 px-4 h-14 sm:h-16 rounded-2xl border transition-all duration-300",
           isFocused
-            ? "bg-white/[0.07] border-[#D4AF37]/40 shadow-[0_0_30px_-5px_rgba(198,148,249,0.25)]"
+            ? "bg-white/[0.07] border-gold/40 shadow-[0_0_30px_-5px_rgba(198,148,249,0.25)]"
             : "bg-white/[0.04] border-white/[0.08] hover:border-white/20 hover:bg-white/[0.06]"
         )}
       >
-        <Search className={cn("w-5 h-5 shrink-0 transition-colors duration-300", isFocused ? "text-[#D4AF37]" : "text-white/35")} />
+        <Search className={cn("w-5 h-5 shrink-0 transition-colors duration-300", isFocused ? "text-gold" : "text-white/35")} />
         <input
           ref={inputRef}
           value={query}
@@ -137,7 +137,7 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
         <AnimatePresence mode="wait">
           {searching && query ? (
             <motion.div key="spin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Loader2 className="w-4 h-4 text-[#D4AF37] animate-spin" />
+              <Loader2 className="w-4 h-4 text-gold animate-spin" />
             </motion.div>
           ) : query ? (
             <motion.button
@@ -186,8 +186,8 @@ export function PaySearch({ recentContacts }: { recentContacts: RecentPerson[] }
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <span className="text-xs font-bold text-white/30 uppercase">{r.preferred_currency}</span>
-                      <div className="w-8 h-8 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowUpRight className="w-4 h-4 text-[#D4AF37]" />
+                      <div className="w-8 h-8 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowUpRight className="w-4 h-4 text-gold" />
                       </div>
                     </div>
                   </button>

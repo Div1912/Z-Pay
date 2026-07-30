@@ -195,10 +195,10 @@ export default function OnboardingPage() {
 
   if (success) {
     return (
-      <div className="relative min-h-screen bg-black text-white flex items-center justify-center p-4 selection:bg-[#D4AF37]/30">
+      <div className="relative min-h-screen bg-black text-white flex items-center justify-center p-4 selection:bg-gold/30">
         <div className="absolute inset-0 bg-grid opacity-20" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-[#D4AF37]/15 blur-[100px] md:blur-[150px]" />
+          <div className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-gold/15 blur-[100px] md:blur-[150px]" />
           <div className="absolute bottom-1/3 right-1/4 w-[35vw] max-w-[400px] aspect-square rounded-full bg-[#27272a]/10 blur-[80px] md:blur-[120px]" />
         </div>
         
@@ -208,19 +208,19 @@ export default function OnboardingPage() {
           transition={{ type: "spring", damping: 20, stiffness: 100 }}
           className="max-w-md w-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 md:p-10 text-center relative overflow-hidden z-10"
         >
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a]" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a]" />
           
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
-            className="w-20 sm:w-24 aspect-square bg-[#D4AF37]/20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 relative"
+            className="w-20 sm:w-24 aspect-square bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 relative"
           >
-            <Check className="w-10 sm:w-12 h-10 sm:h-12 text-[#D4AF37]" />
+            <Check className="w-10 sm:w-12 h-10 sm:h-12 text-gold" />
             <motion.div
               animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute inset-0 bg-[#D4AF37] rounded-full"
+              className="absolute inset-0 bg-gold rounded-full"
             />
           </motion.div>
 
@@ -253,7 +253,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-black text-white selection:bg-[#D4AF37]/30">
+    <div className="relative min-h-screen bg-black text-white selection:bg-gold/30">
       <div className="absolute inset-0 bg-grid opacity-20" />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -270,7 +270,7 @@ export default function OnboardingPage() {
             {steps.map((s, i) => (
                 <div 
                     key={s.id} 
-                    className={`w-8 h-1 rounded-full transition-all duration-500 ${i <= step ? 'bg-[#D4AF37]' : 'bg-white/10'}`} 
+                    className={`w-8 h-1 rounded-full transition-all duration-500 ${i <= step ? 'bg-gold' : 'bg-white/10'}`} 
                 />
             ))}
         </div>
@@ -297,7 +297,7 @@ export default function OnboardingPage() {
                   <div className="relative">
                     <Input
                       placeholder="yourname"
-                      className="bg-white/[0.03] border-white/[0.08] h-16 text-2xl font-black pr-24 rounded-2xl focus:border-[#D4AF37]/50"
+                      className="bg-white/[0.03] border-white/[0.08] h-16 text-2xl font-black pr-24 rounded-2xl focus:border-gold/50"
                       value={username}
                       onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))}
                     />
@@ -306,7 +306,7 @@ export default function OnboardingPage() {
                   <div className="h-6">
                     {checking ? (
                       <p className="text-[10px] font-bold text-white/40 flex items-center gap-2">
-                        <Loader2 className="w-3 animate-spin text-[#D4AF37]" /> CHECKING...
+                        <Loader2 className="w-3 animate-spin text-gold" /> CHECKING...
                       </p>
                     ) : isAvailable === true ? (
                       <p className="text-[10px] font-bold text-green-500 flex items-center gap-2">
@@ -335,7 +335,7 @@ export default function OnboardingPage() {
                   <div className="flex flex-col items-center gap-3">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Profile Photo (optional)</label>
                     <label className="relative cursor-pointer group">
-                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#27272a] flex items-center justify-center text-3xl font-black overflow-hidden border-2 border-white/10 group-hover:border-[#D4AF37]/50 transition-all">
+                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gold to-[#27272a] flex items-center justify-center text-3xl font-black overflow-hidden border-2 border-white/10 group-hover:border-gold/50 transition-all">
                         {avatarUrl
                           ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
                           : <span>{fullName?.[0]?.toUpperCase() || <Camera className="w-8 h-8 text-white/60" />}</span>
@@ -374,7 +374,7 @@ export default function OnboardingPage() {
                           <User className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
                           <Input
                           placeholder="John Doe"
-                          className="bg-white/[0.03] border-white/[0.08] h-14 pl-14 rounded-xl focus:border-[#D4AF37]/50"
+                          className="bg-white/[0.03] border-white/[0.08] h-14 pl-14 rounded-xl focus:border-gold/50"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           />
@@ -405,7 +405,7 @@ export default function OnboardingPage() {
                                     key={c.code}
                                     type="button"
                                     onClick={() => { setCountryCode(c.code); setShowCountryPicker(false); }}
-                                    className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors ${countryCode === c.code ? 'bg-[#D4AF37]/20' : ''}`}
+                                    className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors ${countryCode === c.code ? 'bg-gold/20' : ''}`}
                                   >
                                     <span className="text-lg">{c.flag}</span>
                                     <span className="font-bold text-sm">{c.code}</span>
@@ -423,7 +423,7 @@ export default function OnboardingPage() {
                             inputMode="numeric"
                             placeholder="1234567890"
                             maxLength={10}
-                            className="bg-white/[0.03] border-white/[0.08] h-14 pl-12 rounded-xl focus:border-[#D4AF37]/50"
+                            className="bg-white/[0.03] border-white/[0.08] h-14 pl-12 rounded-xl focus:border-gold/50"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
                           />
@@ -433,7 +433,7 @@ export default function OnboardingPage() {
                         {phoneNumber.length === 10 && (
                           phoneChecking ? (
                             <p className="text-[10px] font-bold text-white/40 flex items-center gap-1">
-                              <Loader2 className="w-3 h-3 animate-spin text-[#D4AF37]" /> CHECKING...
+                              <Loader2 className="w-3 h-3 animate-spin text-gold" /> CHECKING...
                             </p>
                           ) : phoneTaken === true ? (
                             <p className="text-[10px] font-bold text-red-500 flex items-center gap-1">
@@ -494,7 +494,7 @@ export default function OnboardingPage() {
                             data-pin-index={i}
                             autoFocus={i === 0}
                             className={`w-12 h-14 rounded-xl border-2 flex items-center justify-center text-2xl font-black transition-all text-center bg-white/5 focus:outline-none ${
-                              pin[i] ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-white' : 'border-white/10 text-white/20'
+                              pin[i] ? 'border-gold bg-gold/10 text-white' : 'border-white/10 text-white/20'
                             }`}
                           />
                         ))}
@@ -509,7 +509,7 @@ export default function OnboardingPage() {
                           key={c.code}
                           onClick={() => setCurrency(c.code)}
                           className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
-                            currency === c.code ? 'border-[#D4AF37] bg-[#D4AF37]/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
+                            currency === c.code ? 'border-gold bg-gold/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
                           }`}
                         >
                           <span className="text-lg mb-1">{c.flag}</span>
@@ -525,7 +525,7 @@ export default function OnboardingPage() {
                 <Button 
                   disabled={submitting || pin.length !== 4}
                   onClick={handleFinish}
-                  className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] text-white text-lg font-black rounded-full transition-all shadow-xl shadow-[#D4AF37]/20"
+                  className="w-full h-16 bg-gradient-to-r from-gold to-[#27272a] text-white text-lg font-black rounded-full transition-all shadow-xl shadow-gold/20"
                 >
                   {submitting ? (
                     <span className="flex items-center gap-3">

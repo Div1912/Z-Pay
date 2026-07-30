@@ -40,7 +40,7 @@ export default function X402DashboardPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
+        <Loader2 className="w-10 h-10 animate-spin text-gold" />
         <p className="text-white/40 font-black tracking-widest uppercase text-xs animate-pulse">Loading API Analytics</p>
       </div>
     );
@@ -74,13 +74,13 @@ export default function X402DashboardPage() {
           transition={{ duration: 0.5 }}
           className="relative group"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] to-[#FBBF24] rounded-3xl blur-xl opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
-          <div className="relative bg-white/[0.03] border border-[#D4AF37]/20 p-6 sm:p-8 rounded-[1.5rem] overflow-hidden flex flex-col justify-between h-full">
+          <div className="absolute -inset-1 bg-gradient-to-r from-gold to-[#FBBF24] rounded-3xl blur-xl opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
+          <div className="relative bg-white/[0.03] border border-gold/20 p-6 sm:p-8 rounded-[1.5rem] overflow-hidden flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-8">
-              <div className="p-3 bg-[#D4AF37]/10 rounded-xl">
-                <DollarSign className="w-6 h-6 text-[#D4AF37]" />
+              <div className="p-3 bg-gold/10 rounded-xl">
+                <DollarSign className="w-6 h-6 text-gold" />
               </div>
-              <span className="text-[#D4AF37] text-xs font-black uppercase tracking-widest bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/20">
+              <span className="text-gold text-xs font-black uppercase tracking-widest bg-gold/10 px-3 py-1 rounded-full border border-gold/20">
                 Revenue
               </span>
             </div>
@@ -122,16 +122,16 @@ export default function X402DashboardPage() {
       {/* Integration Guide */}
       <section className="space-y-6 pt-6">
         <h3 className="text-xl sm:text-2xl font-black tracking-tight uppercase flex items-center gap-2" style={{ fontFamily: 'var(--font-syne)' }}>
-          <Code className="w-6 h-6 text-[#D4AF37]" /> INTEGRATION CONFIG
+          <Code className="w-6 h-6 text-gold" /> INTEGRATION CONFIG
         </h3>
         
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4AF37] to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold to-transparent" />
           
           <div className="mb-6">
             <h4 className="text-sm font-black text-white/50 uppercase tracking-widest mb-2">Your Destination Address</h4>
             <div className="flex items-center justify-between bg-black/40 p-3 rounded-lg border border-white/[0.05]">
-              <code className="text-[#D4AF37] text-sm break-all">{stellarAddress || 'Loading...'}</code>
+              <code className="text-gold text-sm break-all">{stellarAddress || 'Loading...'}</code>
             </div>
             <p className="text-xs text-white/40 mt-2">Pass this address to the SDK. AI agents will automatically route micro-payments to this wallet before executing your code.</p>
           </div>

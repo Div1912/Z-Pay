@@ -9,12 +9,12 @@ import { Spotlight } from "@/components/ui/spotlight";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-[#D4AF37]/30 overflow-x-hidden relative">
+    <main className="min-h-screen bg-black text-white selection:bg-gold/30 overflow-x-hidden relative">
       <Navbar />
       
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D4AF37]/10 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold/10 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/10 blur-[150px]" />
       </div>
 
@@ -30,7 +30,7 @@ export default function AboutPage() {
             className="max-w-5xl mx-auto text-center"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl w-fit mb-8 shadow-2xl mx-auto">
-              <div className="w-2 h-2 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37] animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-gold shadow-[0_0_8px_#D4AF37] animate-pulse" />
               <span className="text-white/80 text-[11px] font-bold tracking-[0.2em] uppercase">
                 Our Origin Story
               </span>
@@ -95,7 +95,7 @@ export default function AboutPage() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-32"
           >
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent mix-blend-overlay z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-gold/20 to-transparent mix-blend-overlay z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
               <img 
                 src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop" 
                 alt="Global Network" 
@@ -103,8 +103,8 @@ export default function AboutPage() {
               />
             </div>
             <div className="space-y-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-6">
-                <Lightbulb className="w-6 h-6 text-[#D4AF37]" />
+              <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-6">
+                <Lightbulb className="w-6 h-6 text-gold" />
               </div>
               <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">The Bridge.</h2>
               <div className="space-y-4 text-lg text-white/60 leading-relaxed font-medium">

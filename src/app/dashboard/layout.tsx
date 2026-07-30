@@ -68,7 +68,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <InactivityGuard>
-    <div className="min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30">
+    <div className="min-h-screen bg-transparent text-white selection:bg-gold/30">
       <Background />
       {currentUser && (
         <PaymentNotification
@@ -98,15 +98,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               className={cn(
                 "group flex items-center gap-3 px-3 h-11 rounded-xl transition-all relative overflow-hidden",
                 mounted && pathname === item.href
-                  ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                  ? "bg-gold/10 text-gold border border-gold/20"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >
               <item.icon className={cn("w-5 h-5 shrink-0 transition-transform group-hover:scale-110",
-                mounted && pathname === item.href ? "text-[#D4AF37]" : "text-white/40")} />
+                mounted && pathname === item.href ? "text-gold" : "text-white/40")} />
               <span className="font-bold tracking-tight text-sm">{item.label}</span>
               {mounted && pathname === item.href && (
-                <motion.div layoutId="sidebar-active" className="absolute left-0 w-1 h-5 bg-[#D4AF37] rounded-r-full" />
+                <motion.div layoutId="sidebar-active" className="absolute left-0 w-1 h-5 bg-gold rounded-r-full" />
               )}
             </Link>
           ))}
@@ -121,12 +121,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   className={cn(
                     "group flex items-center gap-3 px-3 h-10 rounded-xl transition-all relative overflow-hidden",
                     mounted && pathname === item.href
-                      ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                      ? "bg-gold/10 text-gold border border-gold/20"
                       : "text-white/30 hover:text-white/70 hover:bg-white/5"
                   )}
                 >
                   <item.icon className={cn("w-4 h-4 shrink-0 transition-transform group-hover:scale-110",
-                    mounted && pathname === item.href ? "text-[#D4AF37]" : "text-white/25")} />
+                    mounted && pathname === item.href ? "text-gold" : "text-white/25")} />
                   <span className="font-bold tracking-tight text-xs">{item.label}</span>
                 </Link>
               ))}
@@ -209,11 +209,11 @@ function MobileNav({ navItems, sidebarItems, pathname }: {
             href={item.href}
             className={cn(
               "flex flex-col items-center gap-0.5 transition-all relative flex-1",
-              pathname === item.href ? "text-[#D4AF37]" : "text-white/35"
+              pathname === item.href ? "text-gold" : "text-white/35"
             )}
           >
             {item.primary ? (
-              <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#27272a] rounded-full flex items-center justify-center -mt-7 border-4 border-black shadow-xl shadow-[#D4AF37]/40 active:scale-90 transition-transform">
+              <div className="w-12 h-12 bg-gradient-to-br from-gold to-[#27272a] rounded-full flex items-center justify-center -mt-7 border-4 border-black shadow-xl shadow-gold/40 active:scale-90 transition-transform">
                 <item.icon className="w-6 h-6 text-white" />
               </div>
             ) : (
@@ -221,7 +221,7 @@ function MobileNav({ navItems, sidebarItems, pathname }: {
                 <item.icon className="w-5 h-5" />
                 {pathname === item.href && (
                   <motion.div layoutId="mobile-dot"
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#D4AF37] rounded-full" />
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-gold rounded-full" />
                 )}
                 <span className="text-[8px] font-bold">{item.label}</span>
               </div>
@@ -232,7 +232,7 @@ function MobileNav({ navItems, sidebarItems, pathname }: {
         {/* More button */}
         <button
           onClick={() => setDrawerOpen(true)}
-          className={cn("flex flex-col items-center gap-0.5 flex-1 transition-all", drawerOpen ? "text-[#D4AF37]" : "text-white/35")}
+          className={cn("flex flex-col items-center gap-0.5 flex-1 transition-all", drawerOpen ? "text-gold" : "text-white/35")}
         >
           <div className="w-5 h-5 flex flex-col items-center justify-center gap-[3px]">
             <span className="w-4 h-[2px] bg-current rounded-full" />
@@ -250,12 +250,12 @@ function MobileNav({ navItems, sidebarItems, pathname }: {
             <motion.div key="bd"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setDrawerOpen(false)}
-              className="lg:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+              className="lg:hidden fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
             />
             <motion.div key="dr"
               initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0a0a0a] border-t border-white/10 rounded-t-3xl px-5 pt-5 pb-10 max-h-[90vh] overflow-y-auto"
+              className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] bg-surface border-t border-white/10 rounded-t-3xl px-5 pt-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] max-h-[90vh] overflow-y-auto"
             >
               {/* Handle */}
               <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-6" />
@@ -267,7 +267,7 @@ function MobileNav({ navItems, sidebarItems, pathname }: {
                     className={cn(
                       "flex flex-col items-center gap-2.5 p-4 rounded-2xl border transition-all active:scale-95",
                       pathname === item.href
-                        ? "bg-[#D4AF37]/10 border-[#D4AF37]/25 text-[#D4AF37]"
+                        ? "bg-gold/10 border-gold/25 text-gold"
                         : "bg-white/[0.03] border-white/[0.07] text-white/50"
                     )}
                   >

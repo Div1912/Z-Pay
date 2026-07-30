@@ -45,7 +45,7 @@ export function Background() {
           {/* Mouse tracking orb */}
           <motion.div
             style={{ x: springX, y: springY }}
-            className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-[#D4AF37]/40 blur-[100px] md:blur-[150px]"
+            className="absolute top-1/4 left-1/4 w-[40vw] max-w-[500px] aspect-square rounded-full bg-gold/40 blur-[100px] md:blur-[150px]"
           />
 
           {/* Slow floating orb */}

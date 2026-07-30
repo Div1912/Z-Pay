@@ -7,7 +7,7 @@ import { Logo } from "@/components/ui/Logo";
 
 export default function X402DocsPage() {
   return (
-    <div className="relative min-h-screen bg-black text-white selection:bg-[#D4AF37]/30 font-[family-name:var(--font-jakarta)]">
+    <div className="relative min-h-screen bg-black text-white selection:bg-gold/30 font-[family-name:var(--font-jakarta)]">
       {/* Navbar */}
       <nav className="sticky top-0 z-[100] border-b border-white/5 bg-black/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -36,7 +36,7 @@ export default function X402DocsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-16 text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/10 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/10 text-gold text-xs font-bold uppercase tracking-widest mb-6">
             <BookOpen className="w-4 h-4" /> Official Documentation
           </div>
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6" style={{ fontFamily: 'var(--font-syne)' }}>
@@ -67,7 +67,7 @@ export default function X402DocsPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 pt-4">
                 <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                  <Shield className="w-6 h-6 text-[#D4AF37] mb-3" />
+                  <Shield className="w-6 h-6 text-gold mb-3" />
                   <h3 className="text-white font-bold mb-1">Gate API</h3>
                   <p className="text-sm">Wrap your API with our SDK to lock it behind a paywall.</p>
                 </div>
@@ -125,7 +125,7 @@ export default function X402DocsPage() {
             </div>
             <div className="bg-white/[0.02] border border-white/5 rounded-[2rem] p-6 sm:p-10 shadow-xl">
               <p className="text-white/70 mb-6">
-                Use the <code className="text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded font-mono text-sm">withX402</code> wrapper in your API routes to require payment before execution. 
+                Use the <code className="text-gold bg-gold/10 px-2 py-0.5 rounded font-mono text-sm">withX402</code> wrapper in your API routes to require payment before execution. 
                 You'll need a Stellar wallet address where the funds will be deposited.
               </p>
               
@@ -169,7 +169,7 @@ export const GET = withX402(
             </div>
             <div className="bg-white/[0.02] border border-white/5 rounded-[2rem] p-6 sm:p-10 shadow-xl">
               <p className="text-white/70 mb-6">
-                Now, when your AI Agent or frontend needs to access that API, it uses the <code className="text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded font-mono text-sm">ZpayClient</code> to send the payment automatically!
+                Now, when your AI Agent or frontend needs to access that API, it uses the <code className="text-gold bg-gold/10 px-2 py-0.5 rounded font-mono text-sm">ZpayClient</code> to send the payment automatically!
               </p>
               
               <div className="relative">

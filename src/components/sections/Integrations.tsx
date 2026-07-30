@@ -169,7 +169,7 @@ const Integrations = () => {
           
           <Link
             href="/auth/signup"
-            className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-[#D4AF37] text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(212,175,55,0.2)]"
+            className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-gold text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(212,175,55,0.2)]"
           >
             Get the app
           </Link>

@@ -174,7 +174,7 @@ export default function WithdrawCryptoPage() {
               </div>
               <Button 
                 type="submit" 
-                className="w-full bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-bold" 
+                className="w-full bg-gold hover:bg-gold/90 text-black font-bold" 
                 disabled={selling}
               >
                 {selling ? "Processing..." : "Sell for INR"}

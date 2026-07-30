@@ -43,7 +43,7 @@ export default function SplitPage() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-[#D4AF37]/30"
+            className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-gold to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-gold/30"
           >
             <Plus className="w-4 h-4" />
             New Split
@@ -53,7 +53,7 @@ export default function SplitPage() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-[#D4AF37]" />
+          <Loader2 className="w-8 h-8 animate-spin text-gold" />
           <p className="text-white/30 text-xs font-black uppercase tracking-widest">Loading splits...</p>
         </div>
       ) : splits.length === 0 ? (
@@ -120,7 +120,7 @@ function SplitCard({ split, index, currentUserId }: any) {
                 "w-12 h-12 rounded-2xl flex items-center justify-center border transition-transform group-hover:scale-110 shrink-0",
                 split.status === 'completed'
                   ? "bg-green-500/10 border-green-500/20 text-green-500"
-                  : "bg-[#D4AF37]/10 border-[#D4AF37]/20 text-[#D4AF37]"
+                  : "bg-gold/10 border-gold/20 text-gold"
               )}>
                 {split.status === 'completed'
                   ? <CheckCircle2 className="w-6 h-6" />
@@ -146,7 +146,7 @@ function SplitCard({ split, index, currentUserId }: any) {
                   "text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full",
                   iHavePaid
                     ? "text-green-400 bg-green-500/10"
-                    : "text-[#D4AF37] bg-[#D4AF37]/10"
+                    : "text-gold bg-gold/10"
                 )}>
                   {iHavePaid ? "✓ Paid" : `You owe ${myEntry.amount_owed} ${split.currency}`}
                 </span>
@@ -161,7 +161,7 @@ function SplitCard({ split, index, currentUserId }: any) {
                 {paidCount}/{totalCount} paid
               </span>
               {split.status === 'active' && !isCreator && !iHavePaid && (
-                <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-wider flex items-center gap-1">
+                <span className="text-[10px] font-black text-gold uppercase tracking-wider flex items-center gap-1">
                   Tap to pay <ArrowRight className="w-3 h-3" />
                 </span>
               )}
@@ -175,7 +175,7 @@ function SplitCard({ split, index, currentUserId }: any) {
                   "h-full rounded-full",
                   progress === 100
                     ? "bg-green-500"
-                    : "bg-gradient-to-r from-[#D4AF37] to-[#27272a]"
+                    : "bg-gradient-to-r from-gold to-[#27272a]"
                 )}
               />
             </div>
@@ -193,8 +193,8 @@ function EmptyState() {
       animate={{ opacity: 1, y: 0 }}
       className="flex flex-col items-center justify-center py-24 gap-6 text-center"
     >
-      <div className="w-20 h-20 rounded-3xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
-        <Receipt className="w-10 h-10 text-[#D4AF37]/60" />
+      <div className="w-20 h-20 rounded-3xl bg-gold/10 border border-gold/20 flex items-center justify-center">
+        <Receipt className="w-10 h-10 text-gold/60" />
       </div>
       <div>
         <h3 className="font-black text-xl uppercase tracking-tight">No Splits Yet</h3>
@@ -206,7 +206,7 @@ function EmptyState() {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-[#D4AF37]/30"
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-gold/30"
         >
           <Plus className="w-4 h-4" />
           Create your first split

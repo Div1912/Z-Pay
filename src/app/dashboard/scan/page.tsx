@@ -138,12 +138,12 @@ export default function ScanPage() {
           >
             <div className="text-center space-y-4">
               <div className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center ${
-                detectedType === 'upi' ? 'bg-green-500/20' : 'bg-[#D4AF37]/20'
+                detectedType === 'upi' ? 'bg-green-500/20' : 'bg-gold/20'
               }`}>
                 {detectedType === 'upi' ? (
                   <Store className="w-10 h-10 text-green-500" />
                 ) : (
-                  <Send className="w-10 h-10 text-[#D4AF37]" />
+                  <Send className="w-10 h-10 text-gold" />
                 )}
               </div>
               <div>
@@ -171,7 +171,7 @@ export default function ScanPage() {
                 className={`w-full h-16 font-black text-lg rounded-2xl ${
                   detectedType === 'upi' 
                     ? 'bg-green-500 hover:bg-green-600 text-black' 
-                    : 'bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black'
+                    : 'bg-gold hover:bg-gold/90 text-black'
                 }`}
               >
                 {detectedType === 'upi' ? 'PAY MERCHANT' : 'SEND TO USER'}

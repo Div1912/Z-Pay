@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { Terminal, Code2, Bot, Sparkles } from 'lucide-react';
+import { GlowOrb } from "@/components/ui/glow-orb";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Spotlight } from "@/components/ui/spotlight";
@@ -75,8 +76,8 @@ export default function AgenticSection() {
     >
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-[50vw] max-w-[600px] aspect-square rounded-full bg-purple-600/10 blur-[150px] md:blur-[200px]" />
-        <div className="absolute bottom-0 right-0 w-[45vw] max-w-[500px] aspect-square rounded-full bg-blue-600/10 blur-[130px] md:blur-[180px]" />
+        <GlowOrb color="purple" position="absolute top-1/4 left-0" size="w-[50vw] max-w-[600px] aspect-square" blur="blur-[150px] md:blur-[200px]" />
+        <GlowOrb color="blue" position="absolute bottom-0 right-0" size="w-[45vw] max-w-[500px] aspect-square" blur="blur-[130px] md:blur-[180px]" />
       </div>
 
       <div 
@@ -137,7 +138,7 @@ export default function AgenticSection() {
             <div className="mt-8 lg:mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <Link 
                 href="/docs/mcp" 
-                className="group relative h-12 lg:h-14 rounded-full bg-[#D4AF37] text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
+                className="group relative h-12 lg:h-14 rounded-full bg-gold text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   EXPLORE MCP DOCS

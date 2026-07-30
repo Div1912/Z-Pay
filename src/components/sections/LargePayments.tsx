@@ -98,7 +98,7 @@ const LargePayments = () => {
               <div className="relative w-full max-w-[380px] sm:max-w-[420px] md:max-w-[450px] mx-auto">
                 <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-white/10 to-transparent rounded-[40px] sm:rounded-[56px] blur-2xl sm:blur-3xl" />
                 
-                <div className="relative bg-gradient-to-br from-[#141414] to-[#0a0a0a] rounded-[28px] sm:rounded-[36px] md:rounded-[40px] p-6 sm:p-8 md:p-10 border border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+                <div className="relative bg-gradient-to-br from-[#141414] to-surface rounded-[28px] sm:rounded-[36px] md:rounded-[40px] p-6 sm:p-8 md:p-10 border border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
                   <div className="text-center space-y-6 sm:space-y-8 md:space-y-10">
                     <div>
                       <p className="text-white/50 text-xs sm:text-sm mb-2 sm:mb-3 font-medium">You're sending</p>

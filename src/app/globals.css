@@ -18,6 +18,9 @@
 
   --color-primary: #ffffff;
   --color-primary-foreground: #000000;
+  
+  --color-gold: #D4AF37;
+  --color-surface: #0a0a0a;
 
   --color-secondary: #1a1a1a;
   --color-secondary-foreground: #ffffff;
@@ -166,7 +169,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    max-width: 100vw;
+    max-width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -310,7 +313,7 @@
 
   .no-overflow {
     overflow-x: hidden;
-    max-width: 100vw;
+    max-width: 100%;
   }
 
   .perspective-1000 {

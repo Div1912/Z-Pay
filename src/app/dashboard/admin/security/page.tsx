@@ -125,14 +125,14 @@ export default function SecurityPage() {
         animate={{ opacity: 1, y: 0 }}
         className="relative bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 overflow-hidden"
       >
-        <div className="absolute -top-16 -right-16 w-48 h-48 bg-[#D4AF37]/5 rounded-full blur-[60px]" />
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-gold/5 rounded-full blur-[60px]" />
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 relative z-10">
-          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-[#D4AF37]/20 to-[#27272a]/20 border border-[#D4AF37]/20">
-            <Shield className="w-9 h-9 text-[#D4AF37]" />
+          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-gold/20 to-[#27272a]/20 border border-gold/20">
+            <Shield className="w-9 h-9 text-gold" />
           </div>
           <div className="flex-1">
             <div className="flex items-end gap-2 mb-2">
-              <span className="text-5xl font-black text-[#D4AF37]">{score}%</span>
+              <span className="text-5xl font-black text-gold">{score}%</span>
               <span className="text-white/40 font-bold mb-1">secure</span>
             </div>
             <div className="flex gap-4 text-xs font-bold">
@@ -145,7 +145,7 @@ export default function SecurityPage() {
             href="https://github.com/Div1912/Zpay/blob/main/SECURITY.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-xl text-[#D4AF37] text-sm font-bold hover:bg-[#D4AF37]/20 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-xl text-gold text-sm font-bold hover:bg-gold/20 transition-all"
           >
             <ExternalLink className="w-4 h-4" />
             SECURITY.md
@@ -158,7 +158,7 @@ export default function SecurityPage() {
             initial={{ width: 0 }}
             animate={{ width: `${score}%` }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-[#27272a]"
+            className="h-full rounded-full bg-gradient-to-r from-gold to-[#27272a]"
           />
         </div>
       </motion.div>
@@ -187,7 +187,7 @@ export default function SecurityPage() {
                   </div>
                   <p className="text-white/40 text-xs mt-1 leading-relaxed">{item.description}</p>
                   {item.link && (
-                    <a href={item.link} className="text-[#D4AF37] text-xs font-bold flex items-center gap-1 mt-2">
+                    <a href={item.link} className="text-gold text-xs font-bold flex items-center gap-1 mt-2">
                       <ExternalLink className="w-3 h-3" /> View
                     </a>
                   )}
@@ -199,11 +199,11 @@ export default function SecurityPage() {
       </div>
 
       {/* Advanced Security Note */}
-      <div className="p-5 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/15">
+      <div className="p-5 rounded-xl bg-gold/5 border border-gold/15">
         <div className="flex items-start gap-3">
-          <Zap className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+          <Zap className="w-5 h-5 text-gold shrink-0 mt-0.5" />
           <div>
-            <h4 className="font-black text-sm text-[#D4AF37] mb-1">Advanced: Fee Bump Privacy</h4>
+            <h4 className="font-black text-sm text-gold mb-1">Advanced: Fee Bump Privacy</h4>
             <p className="text-white/40 text-xs leading-relaxed">
               Gasless transactions via fee_bump_transaction keep the sender&apos;s keypair server-side. On-chain, the 
               <span className="text-white/60 font-bold"> fee_source</span> is the platform wallet, not the user. 

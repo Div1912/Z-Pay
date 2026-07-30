@@ -139,7 +139,7 @@ function NotifIcon({ type }: { type: AppNotification["type"] }) {
   const map: Record<AppNotification["type"], { icon: React.ReactNode; bg: string }> = {
     payment_received:   { icon: <ArrowDownLeft className="w-4 h-4 text-green-400" />,   bg: "bg-green-500/15 border-green-500/25" },
     payment_sent:       { icon: <ArrowUpRight  className="w-4 h-4 text-blue-400"  />,   bg: "bg-blue-500/15  border-blue-500/25"  },
-    contract_created:   { icon: <FileText      className="w-4 h-4 text-[#D4AF37]" />,   bg: "bg-[#D4AF37]/15 border-[#D4AF37]/25" },
+    contract_created:   { icon: <FileText      className="w-4 h-4 text-gold" />,   bg: "bg-gold/15 border-gold/25" },
     contract_delivered: { icon: <CheckCircle2  className="w-4 h-4 text-amber-400" />,   bg: "bg-amber-500/15 border-amber-500/25" },
     contract_released:  { icon: <DollarSign    className="w-4 h-4 text-green-400" />,   bg: "bg-green-500/15 border-green-500/25" },
     contract_disputed:  { icon: <AlertTriangle className="w-4 h-4 text-red-400"   />,   bg: "bg-red-500/15   border-red-500/25"   },
@@ -271,7 +271,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="absolute -top-1 -right-1 w-5 h-5 bg-[#D4AF37] text-black text-[9px] font-black rounded-full flex items-center justify-center"
+              className="absolute -top-1 -right-1 w-5 h-5 bg-gold text-black text-[9px] font-black rounded-full flex items-center justify-center"
             >
               {unread > 9 ? "9+" : unread}
             </motion.span>
@@ -287,15 +287,15 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.96 }}
             transition={{ type: "spring", damping: 24, stiffness: 320 }}
-            className="absolute -right-[3rem] lg:right-auto lg:-left-2 top-14 w-[calc(100vw-2rem)] sm:w-[360px] max-h-[85vh] sm:max-h-[520px] bg-[#0d0d0d] border border-white/10 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-50 flex flex-col"
+            className="fixed top-20 left-4 right-4 sm:absolute sm:-right-[3rem] lg:right-auto lg:-left-2 sm:top-14 w-auto sm:w-[360px] max-h-[85vh] sm:max-h-[520px] bg-surface border border-white/10 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-[100] flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 shrink-0">
               <div className="flex items-center gap-2">
-                <Bell className="w-4 h-4 text-[#D4AF37]" />
+                <Bell className="w-4 h-4 text-gold" />
                 <span className="font-black text-sm uppercase tracking-wider">Notifications</span>
                 {unread > 0 && (
-                  <span className="px-2 py-0.5 bg-[#D4AF37]/20 text-[#D4AF37] text-[9px] font-black rounded-full uppercase tracking-widest">
+                  <span className="px-2 py-0.5 bg-gold/20 text-gold text-[9px] font-black rounded-full uppercase tracking-widest">
                     {unread} new
                   </span>
                 )}
@@ -338,7 +338,7 @@ export function NotificationCenter({ currentUserId, currentUniversalId }: Props)
                         <div className="flex items-center gap-2 mb-0.5">
                           <p className="text-sm font-black text-white leading-none">{n.title}</p>
                           {!n.read && (
-                            <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full shrink-0" />
+                            <span className="w-1.5 h-1.5 bg-gold rounded-full shrink-0" />
                           )}
                         </div>
                         <p className="text-xs text-zinc-400 leading-snug truncate">{n.body}</p>

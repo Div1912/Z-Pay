@@ -55,20 +55,20 @@ export default function SavingsPage() {
 
       {/* ── Hero Header ── */}
       <section className="relative">
-        <div className="absolute -top-8 left-0 w-64 h-64 bg-[#D4AF37]/8 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute -top-8 left-0 w-64 h-64 bg-gold/8 rounded-full blur-[80px] pointer-events-none" />
         <div className="relative">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#27272a] flex items-center justify-center shadow-lg shadow-[#D4AF37]/30 shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-gold to-[#27272a] flex items-center justify-center shadow-lg shadow-gold/30 shrink-0">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#D4AF37]/70">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-gold/70">
               Zpay Vault
             </span>
           </div>
           <h1 className="text-[clamp(2rem,9vw,4.5rem)] font-black tracking-tight uppercase leading-[0.85] mb-4 break-words"
             style={{ fontFamily: "var(--font-syne)" }}>
             EARN<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a]">
               REWARDS
             </span>
           </h1>
@@ -88,8 +88,8 @@ export default function SavingsPage() {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <div className="relative">
-            <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
-            <div className="absolute inset-0 blur-xl bg-[#D4AF37]/20 rounded-full" />
+            <Loader2 className="w-10 h-10 animate-spin text-gold" />
+            <div className="absolute inset-0 blur-xl bg-gold/20 rounded-full" />
           </div>
           <p className="text-white/30 text-xs font-black uppercase tracking-widest">Loading positions…</p>
         </div>
@@ -148,13 +148,13 @@ export default function SavingsPage() {
                 {activeTab === tab && (
                   <motion.div
                     layoutId="vault-tab"
-                    className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/20 to-[#27272a]/10 rounded-xl border border-[#D4AF37]/30"
+                    className="absolute inset-0 bg-gradient-to-r from-gold/20 to-[#27272a]/10 rounded-xl border border-gold/30"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
                   />
                 )}
                 <span className={cn(
                   "relative z-10 transition-colors",
-                  activeTab === tab ? "text-[#D4AF37]" : "text-white/30"
+                  activeTab === tab ? "text-gold" : "text-white/30"
                 )}>
                   {tab === "staking" ? "ZPAY Staking" : "XLM Pool"}
                 </span>
@@ -214,7 +214,7 @@ export default function SavingsPage() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full h-16 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-sm sm:text-base shadow-2xl shadow-[#D4AF37]/30 flex items-center justify-center gap-3 group"
+                    className="w-full h-16 bg-gradient-to-r from-gold to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-sm sm:text-base shadow-2xl shadow-gold/30 flex items-center justify-center gap-3 group"
                   >
                     <Lock className="w-5 h-5" />
                     <span className="truncate">Stake ZPAY Now</span>
@@ -271,7 +271,7 @@ export default function SavingsPage() {
                 {/* Pool hero card */}
                 <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 to-[#27272a]/10 p-5 sm:p-6">
                   <div className="absolute -top-12 -right-12 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
-                  <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-[#D4AF37]/10 rounded-full blur-3xl" />
+                  <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-gold/10 rounded-full blur-3xl" />
                   <div className="relative z-10 space-y-5">
                     <div className="flex items-center gap-3">
                       <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center shrink-0">
@@ -288,7 +288,7 @@ export default function SavingsPage() {
                       {[
                         { label: "Est. APR", value: "~18%", color: "text-cyan-400" },
                         { label: "Lock-up",  value: "None",  color: "text-green-400" },
-                        { label: "Rewards",  value: "ZPAY",  color: "text-[#D4AF37]" },
+                        { label: "Rewards",  value: "ZPAY",  color: "text-gold" },
                       ].map(({ label, value, color }) => (
                         <div key={label} className="bg-white/5 rounded-2xl p-3 text-center">
                           <p className={cn("font-black text-base sm:text-xl", color)}>{value}</p>
@@ -308,7 +308,7 @@ export default function SavingsPage() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full h-16 bg-gradient-to-r from-cyan-500 to-[#D4AF37] rounded-2xl font-black uppercase tracking-wider text-sm sm:text-base shadow-2xl shadow-cyan-500/20 flex items-center justify-center gap-3 group"
+                    className="w-full h-16 bg-gradient-to-r from-cyan-500 to-gold rounded-2xl font-black uppercase tracking-wider text-sm sm:text-base shadow-2xl shadow-cyan-500/20 flex items-center justify-center gap-3 group"
                   >
                     <Droplets className="w-5 h-5" />
                     <span className="truncate">Deposit to Pool</span>
@@ -374,7 +374,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function StatCard({ label, value, sub, icon, color }: any) {
   const styles: any = {
-    purple: { ring: "from-[#D4AF37]/20 to-[#27272a]/10", icon: "bg-[#D4AF37]/15 border-[#D4AF37]/25 text-[#D4AF37]" },
+    purple: { ring: "from-gold/20 to-[#27272a]/10", icon: "bg-gold/15 border-gold/25 text-gold" },
     cyan:   { ring: "from-cyan-500/15 to-cyan-400/5",     icon: "bg-cyan-500/15   border-cyan-500/25   text-cyan-400" },
     orange: { ring: "from-orange-500/15 to-red-400/5",    icon: "bg-orange-500/15 border-orange-500/25 text-orange-400" },
     green:  { ring: "from-green-500/15 to-emerald-400/5", icon: "bg-green-500/15  border-green-500/25  text-green-400" },
@@ -415,12 +415,12 @@ function LiveEarningsStrip({
     <motion.section
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-[#27272a]/10 p-4"
+      className="relative overflow-hidden rounded-2xl border border-gold/20 bg-gradient-to-br from-gold/10 via-transparent to-[#27272a]/10 p-4"
     >
-      <div className="absolute -top-8 -right-8 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-3xl" />
+      <div className="absolute -top-8 -right-8 w-32 h-32 bg-gold/10 rounded-full blur-3xl" />
       <div className="relative flex items-center justify-between gap-3 min-w-0">
         <div className="min-w-0 flex-1">
-          <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#D4AF37]/70 mb-1 truncate">
+          <p className="text-[9px] font-black uppercase tracking-[0.22em] text-gold/70 mb-1 truncate">
             Total Earning Right Now
           </p>
           <p className="font-black text-2xl sm:text-3xl text-white tabular-nums break-all leading-tight">
@@ -475,8 +475,8 @@ function CompoundProjection() {
     >
       <div className="flex items-center justify-between gap-2 min-w-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#D4AF37]/20 to-[#27272a]/10 border border-[#D4AF37]/25 flex items-center justify-center shrink-0">
-            <Repeat className="w-4 h-4 text-[#D4AF37]" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold/20 to-[#27272a]/10 border border-gold/25 flex items-center justify-center shrink-0">
+            <Repeat className="w-4 h-4 text-gold" />
           </div>
           <div className="min-w-0">
             <p className="font-black text-sm uppercase tracking-wider truncate">Compound Projection</p>
@@ -485,7 +485,7 @@ function CompoundProjection() {
             </p>
           </div>
         </div>
-        <span className="text-[9px] font-black uppercase tracking-wider bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#D4AF37] px-2 py-1 rounded-full shrink-0">
+        <span className="text-[9px] font-black uppercase tracking-wider bg-gold/10 border border-gold/25 text-gold px-2 py-1 rounded-full shrink-0">
           {projection.apy.toFixed(1)}% APY
         </span>
       </div>
@@ -503,7 +503,7 @@ function CompoundProjection() {
           step={100}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full accent-[#D4AF37] h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer"
+          className="w-full accent-gold h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer"
         />
       </div>
 
@@ -516,7 +516,7 @@ function CompoundProjection() {
             className={cn(
               "py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all",
               tierIdx === i
-                ? "bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37]"
+                ? "bg-gold/15 border border-gold/30 text-gold"
                 : "bg-white/[0.03] border border-white/[0.06] text-white/40"
             )}
           >
@@ -537,7 +537,7 @@ function CompoundProjection() {
           label="Compounded"
           value={projection.compound}
           max={projection.compound}
-          color="from-[#D4AF37] to-[#27272a]"
+          color="from-gold to-[#27272a]"
           highlight
         />
       </div>
@@ -573,7 +573,7 @@ function ProjectionBar({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-bold gap-2">
-        <span className={cn("uppercase tracking-wider truncate", highlight ? "text-[#D4AF37]" : "text-white/40")}>
+        <span className={cn("uppercase tracking-wider truncate", highlight ? "text-gold" : "text-white/40")}>
           {label}
         </span>
         <span className={cn("font-black tabular-nums shrink-0", highlight ? "text-white" : "text-white/60")}>
@@ -752,7 +752,7 @@ function StakeCard({
                 "h-full rounded-full",
                 live.progressPct >= 100
                   ? "bg-green-500"
-                  : "bg-gradient-to-r from-[#D4AF37] to-[#27272a]"
+                  : "bg-gradient-to-r from-gold to-[#27272a]"
               )}
             />
           </div>
@@ -808,7 +808,7 @@ function DetailCell({
     <div className="text-center min-w-0">
       <p className={cn(
         "font-black text-xs sm:text-sm tabular-nums break-words leading-tight",
-        color ? color : highlight ? "text-[#D4AF37]" : "text-white"
+        color ? color : highlight ? "text-gold" : "text-white"
       )}>
         {value}
       </p>
@@ -865,7 +865,7 @@ function PoolCard({
       animate={{ opacity: 1, y: 0 }}
       className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 sm:p-5 space-y-4"
     >
-      <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-[#D4AF37] opacity-60" />
+      <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-gold opacity-60" />
       <div className="flex items-start justify-between gap-3 min-w-0">
         <div className="flex items-center gap-3 min-w-0 flex-1">
           <div className={cn(
@@ -890,7 +890,7 @@ function PoolCard({
             key={`${ticker}-${position.id}`}
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
-            className="font-black text-xs sm:text-sm text-[#D4AF37] tabular-nums"
+            className="font-black text-xs sm:text-sm text-gold tabular-nums"
           >
             +{liveAccrued.toFixed(4)} ZPAY
           </motion.p>
@@ -922,7 +922,7 @@ function PoolCard({
         <button
           onClick={handleWithdraw}
           disabled={withdrawing}
-          className="w-full h-12 bg-gradient-to-r from-cyan-500 to-[#D4AF37] rounded-xl font-black text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
+          className="w-full h-12 bg-gradient-to-r from-cyan-500 to-gold rounded-xl font-black text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
         >
           {withdrawing
             ? <><Loader2 className="w-4 h-4 animate-spin" /> Withdrawing…</>

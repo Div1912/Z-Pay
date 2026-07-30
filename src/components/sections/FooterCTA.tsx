@@ -98,7 +98,7 @@ const FooterCTA = () => {
           >
             <Link
               href="/auth/signup"
-              className="group relative flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full bg-[#D4AF37] px-6 sm:px-8 md:px-12 transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full bg-gold px-6 sm:px-8 md:px-12 transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="text-sm sm:text-base font-black text-black flex items-center gap-2 sm:gap-3 uppercase tracking-wide sm:tracking-wider">
                 Create Account

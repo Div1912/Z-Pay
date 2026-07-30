@@ -154,7 +154,7 @@ export default function ZubDepositPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white p-4 sm:p-6 md:p-8 pt-20">
+    <div className="min-h-screen bg-surface text-white p-4 sm:p-6 md:p-8 pt-20">
       <div className="max-w-md mx-auto relative z-10">
         
         {/* Header */}
@@ -166,14 +166,14 @@ export default function ZubDepositPage() {
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div>
-            <h1 className="text-2xl font-black tracking-widest text-[#D4AF37]">DEPOSIT ZUB</h1>
+            <h1 className="text-2xl font-black tracking-widest text-gold">DEPOSIT ZUB</h1>
             <p className="text-xs text-white/40 tracking-widest uppercase">Cross-Chain Ledger Top Up</p>
           </div>
         </div>
 
         {/* Main Card */}
         <div className="bg-[#111] border border-white/10 rounded-3xl p-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/5 blur-[80px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 blur-[80px] rounded-full pointer-events-none" />
           
           <div className="space-y-8 relative z-10">
             
@@ -187,7 +187,7 @@ export default function ZubDepositPage() {
                     onClick={() => setNetwork(key)}
                     className={`py-3 px-2 rounded-xl text-xs font-bold tracking-wider uppercase transition-all ${
                       network === key 
-                        ? 'bg-[#D4AF37] text-black shadow-[0_0_15px_rgba(212,175,55,0.3)]' 
+                        ? 'bg-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.3)]' 
                         : 'bg-white/5 text-white/50 hover:bg-white/10'
                     }`}
                   >
@@ -205,7 +205,7 @@ export default function ZubDepositPage() {
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full bg-black border border-white/10 rounded-2xl p-5 text-4xl font-black text-white focus:outline-none focus:border-[#D4AF37]/50 transition-colors placeholder:text-white/10"
+                  className="w-full bg-black border border-white/10 rounded-2xl p-5 text-4xl font-black text-white focus:outline-none focus:border-gold/50 transition-colors placeholder:text-white/10"
                   placeholder="0.00"
                 />
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -231,7 +231,7 @@ export default function ZubDepositPage() {
               <button
                 onClick={handleDeposit}
                 disabled={status !== 'idle' && status !== 'error'}
-                className="w-full py-4 rounded-2xl bg-white text-black font-black tracking-widest uppercase text-sm hover:bg-[#D4AF37] transition-all disabled:opacity-50 flex items-center justify-center gap-2 group"
+                className="w-full py-4 rounded-2xl bg-white text-black font-black tracking-widest uppercase text-sm hover:bg-gold transition-all disabled:opacity-50 flex items-center justify-center gap-2 group"
               >
                 {!account ? (
                   <>

@@ -54,7 +54,7 @@ function LoginInner() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white selection:bg-[#D4AF37]/30 overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-white selection:bg-gold/30 overflow-hidden">
 
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 sm:px-6 md:px-12 py-4 bg-transparent">
         <Link href="/">
@@ -92,7 +92,7 @@ function LoginInner() {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(2rem,8vw,3.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-3 sm:mb-4"
             >
-              <span className="block bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="block bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
                 Welcome
               </span>
               <span className="block text-white whitespace-nowrap">Back</span>
@@ -121,7 +121,7 @@ function LoginInner() {
               <Input
                 type="email"
                 placeholder="name@example.com"
-                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-gold/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -135,7 +135,7 @@ function LoginInner() {
                 </label>
                 <Link
                   href="/auth/forgot-password"
-                  className="text-[10px] sm:text-xs font-medium text-white/40 hover:text-[#D4AF37] transition-colors"
+                  className="text-[10px] sm:text-xs font-medium text-white/40 hover:text-gold transition-colors"
                 >
                   Forgot?
                 </Link>
@@ -143,7 +143,7 @@ function LoginInner() {
               <Input
                 type="password"
                 placeholder="••••••••"
-                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
+                className="w-full h-12 sm:h-14 bg-white/[0.03] border border-white/[0.08] rounded-xl sm:rounded-2xl px-4 sm:px-5 text-white text-sm sm:text-base placeholder:text-white/25 focus:border-gold/40 focus:bg-white/[0.05] focus:ring-0 transition-all duration-300"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -249,7 +249,7 @@ function LoginInner() {
             New here?{" "}
             <Link
               href="/auth/signup"
-              className="text-white font-medium hover:text-[#D4AF37] transition-colors"
+              className="text-white font-medium hover:text-gold transition-colors"
             >
               Create an account
             </Link>

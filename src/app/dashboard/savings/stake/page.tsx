@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const TIERS = [
   { days: 30, reward: "1.25%", apr: "~15% APR", icon: "🥉", color: "border-blue-500/30   bg-blue-500/5   text-blue-400" },
-  { days: 60, reward: "3.00%", apr: "~18% APR", icon: "🥈", color: "border-[#D4AF37]/30 bg-[#D4AF37]/5 text-[#D4AF37]" },
+  { days: 60, reward: "3.00%", apr: "~18% APR", icon: "🥈", color: "border-gold/30 bg-gold/5 text-gold" },
   { days: 90, reward: "6.00%", apr: "~24% APR", icon: "🥇", color: "border-green-500/30 bg-green-500/5 text-green-400", best: true },
 ];
 
@@ -61,13 +61,13 @@ export default function StakePage() {
         <a
           href={`https://stellar.expert/explorer/${process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'mainnet' ? 'public' : 'testnet'}/tx/${success.tx_hash}`}
           target="_blank" rel="noopener noreferrer"
-          className="text-[#D4AF37] text-sm font-bold underline underline-offset-2"
+          className="text-gold text-sm font-bold underline underline-offset-2"
         >
           View on Stellar Explorer →
         </a>
         <button
           onClick={() => router.push("/dashboard/savings")}
-          className="w-full max-w-xs h-12 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider"
+          className="w-full max-w-xs h-12 bg-gradient-to-r from-gold to-[#27272a] rounded-2xl font-black text-sm uppercase tracking-wider"
         >
           Back to Vault
         </button>
@@ -126,7 +126,7 @@ export default function StakePage() {
       {/* Amount input */}
       <section className="space-y-3">
         <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Amount to Stake</p>
-        <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 focus-within:border-[#D4AF37]/50 transition-all">
+        <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 focus-within:border-gold/50 transition-all">
           <input
             id="stake-amount"
             type="number"
@@ -177,7 +177,7 @@ export default function StakePage() {
         id="stake-submit"
         onClick={handleStake}
         disabled={loading || !amount}
-        className="w-full h-14 bg-gradient-to-r from-[#D4AF37] to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-[#D4AF37]/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full h-14 bg-gradient-to-r from-gold to-[#27272a] rounded-2xl font-black uppercase tracking-wider text-base shadow-2xl shadow-gold/30 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading
           ? <><Loader2 className="w-5 h-5 animate-spin" /> Staking on Stellar...</>
@@ -194,7 +194,7 @@ function Row({ label, value, highlight, green, bold }: any) {
       <span className="text-sm text-white/50 font-bold">{label}</span>
       <span className={cn(
         "font-black text-sm",
-        highlight ? "text-[#D4AF37]" : green ? "text-green-400" : bold ? "text-white" : "text-white/80"
+        highlight ? "text-gold" : green ? "text-green-400" : bold ? "text-white" : "text-white/80"
       )}>
         {value}
       </span>

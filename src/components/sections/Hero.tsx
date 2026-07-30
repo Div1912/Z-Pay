@@ -83,7 +83,7 @@ const Hero = () => {
       
       <div 
         ref={contentRef}
-        className="flex flex-row min-h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20 pb-20 lg:pb-0"
+        className="flex flex-row min-h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20 pb-20 lg:pb-0 will-change-transform will-change-opacity"
       >
         
         {/* Left content: Typography and Call to Action */}
@@ -111,7 +111,7 @@ const Hero = () => {
           <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Link 
               href="/auth/signup" 
-              className="group relative h-12 lg:h-14 rounded-full bg-[#D4AF37] text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
+              className="group relative h-12 lg:h-14 rounded-full bg-gold text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
             >
               <span className="relative z-10 flex items-center gap-2">
                 GET STARTED
