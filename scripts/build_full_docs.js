@@ -1,4 +1,7 @@
-"use client";
+const fs = require('fs');
+const path = require('path');
+
+const docsContentScript = `"use client";
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -29,7 +32,7 @@ const docsData: Record<string, DocArticle> = {
     codeSnippet: {
       language: 'typescript',
       filename: 'quickstart.ts',
-      code: `import { ZPay } from '@zpay/sdk';
+      code: \`import { ZPay } from '@zpay/sdk';
 
 const client = new ZPay({
   apiKey: process.env.ZPAY_SECRET_KEY,
@@ -44,7 +47,7 @@ const payment = await client.payments.create({
   agentMemo: 'API compute micro-settlement'
 });
 
-console.log(`Payment settled! Hash: ${payment.hash}`);`
+console.log(\`Payment settled! Hash: \${payment.hash}\`);\`
     },
     sections: [
       {
@@ -69,10 +72,10 @@ console.log(`Payment settled! Hash: ${payment.hash}`);`
     codeSnippet: {
       language: 'bash',
       filename: 'cURL',
-      code: `curl -X POST https://api.zpay.route/v1/payments \
-  -H "Authorization: Bearer sk_live_99f01ab8c341" \
-  -H "Content-Type: application/json" \
-  -d '{"to":"bob@zpay", "amount":10.0, "currency":"USDC"}'`
+      code: \`curl -X POST https://api.zpay.route/v1/payments \\
+  -H "Authorization: Bearer sk_live_99f01ab8c341" \\
+  -H "Content-Type: application/json" \\
+  -d '{"to":"bob@zpay", "amount":10.0, "currency":"USDC"}'\`
     },
     sections: [
       {
@@ -93,13 +96,13 @@ console.log(`Payment settled! Hash: ${payment.hash}`);`
     codeSnippet: {
       language: 'typescript',
       filename: 'payment_example.ts',
-      code: `const res = await client.payments.create({
+      code: \`const res = await client.payments.create({
   to: 'vendor@zpay',
   amount: 100,
   currency: 'USDC',
   slippageTolerance: 0.005, // 0.5% max slippage
   pathPayment: true // Auto-route from XLM liquidity pools
-});`
+});\`
     },
     sections: [
       {
@@ -116,9 +119,9 @@ console.log(`Payment settled! Hash: ${payment.hash}`);`
     codeSnippet: {
       language: 'typescript',
       filename: 'resolve_id.ts',
-      code: `const handleInfo = await client.id.resolve('alice@zpay');
+      code: \`const handleInfo = await client.id.resolve('alice@zpay');
 console.log(handleInfo);
-// { publicAddress: "GABX3...77P", upiVpa: "alice@okaxis", status: "active" }`
+// { publicAddress: "GABX3...77P", upiVpa: "alice@okaxis", status: "active" }\`
     },
     sections: [
       {
@@ -136,16 +139,7 @@ console.log(handleInfo);
     codeSnippet: {
       language: 'json',
       filename: 'Response Format',
-      code: `{
-  "object": "payment",
-  "id": "pay_90218412",
-  "status": "succeeded",
-  "amount": "15.00",
-  "currency": "USDC",
-  "fee_sponsored": true,
-  "ledger_sequence": 51204912,
-  "created_at": "2026-07-31T23:20:00Z"
-}`
+      code: \`{\n  "object": "payment",\n  "id": "pay_90218412",\n  "status": "succeeded",\n  "amount": "15.00",\n  "currency": "USDC",\n  "fee_sponsored": true,\n  "ledger_sequence": 51204912,\n  "created_at": "2026-07-31T23:20:00Z"\n}\`
     },
     sections: [
       {
@@ -162,9 +156,7 @@ console.log(handleInfo);
     codeSnippet: {
       language: 'bash',
       filename: 'HTTP Request',
-      code: `GET /v1/payments?limit=10&status=succeeded HTTP/1.1
-Host: api.zpay.route
-Authorization: Bearer sk_live_99f01ab8c341`
+      code: \`GET /v1/payments?limit=10&status=succeeded HTTP/1.1\nHost: api.zpay.route\nAuthorization: Bearer sk_live_99f01ab8c341\`
     },
     sections: [
       {
@@ -185,7 +177,7 @@ Authorization: Bearer sk_live_99f01ab8c341`
     codeSnippet: {
       language: 'typescript',
       filename: 'webhook_handler.ts',
-      code: `import { verifySignature } from '@zpay/sdk';
+      code: \`import { verifySignature } from '@zpay/sdk';
 
 app.post('/webhook', (req, res) => {
   const isVerified = verifySignature({
@@ -197,7 +189,7 @@ app.post('/webhook', (req, res) => {
     // Process payment.succeeded event
     res.status(200).send('OK');
   }
-});`
+});\`
     },
     sections: [
       {
@@ -214,9 +206,7 @@ app.post('/webhook', (req, res) => {
     codeSnippet: {
       language: 'json',
       filename: 'HTTP Headers',
-      code: `X-RateLimit-Limit: 1000
-X-RateLimit-Remaining: 998
-X-RateLimit-Reset: 1785516000`
+      code: \`X-RateLimit-Limit: 1000\nX-RateLimit-Remaining: 998\nX-RateLimit-Reset: 1785516000\`
     },
     sections: [
       {
@@ -234,7 +224,7 @@ X-RateLimit-Reset: 1785516000`
     codeSnippet: {
       language: 'python',
       filename: 'agent_wallet.py',
-      code: `from zpay import AgentWallet
+      code: \`from zpay import AgentWallet
 
 wallet = AgentWallet.from_secret_key(os.getenv("AGENT_KEY"))
 
@@ -243,7 +233,7 @@ receipt = wallet.pay_x402(
     url="https://api.valuable-data.com/query",
     max_fee_usdc=0.001
 )
-print(f"Data unlocked! Receipt: {receipt.tx_hash}")`
+print(f"Data unlocked! Receipt: {receipt.tx_hash}")\`
     },
     sections: [
       {
@@ -260,14 +250,14 @@ print(f"Data unlocked! Receipt: {receipt.tx_hash}")`
     codeSnippet: {
       language: 'typescript',
       filename: 'agent_worker.ts',
-      code: `import { ZPayAgentWorker } from '@zpay/sdk';
+      code: \`import { ZPayAgentWorker } from '@zpay/sdk';
 
 const agent = new ZPayAgentWorker({
   spendingCapDaily: 50.00, // $50 USDC daily limit
   autoApproveWhitelist: ['server@zpay', 'openai@zpay']
 });
 
-agent.startListening();`
+agent.startListening();\`
     },
     sections: [
       {
@@ -284,13 +274,13 @@ agent.startListening();`
     codeSnippet: {
       language: 'typescript',
       filename: 'policy.ts',
-      code: `const policy = {
+      code: \`const policy = {
   maxTransactionUsdc: 5.00,
   dailyBudgetUsdc: 100.00,
   allowedCurrencies: ['USDC', 'XLM'],
   requireApprovalIfOver: 20.00
 };
-client.agent.setPolicy(policy);`
+client.agent.setPolicy(policy);\`
     },
     sections: [
       {
@@ -307,13 +297,7 @@ client.agent.setPolicy(policy);`
     codeSnippet: {
       language: 'json',
       filename: 'receipt.json',
-      code: `{
-  "protocol": "x402",
-  "tx_hash": "a910bf23c847...",
-  "sender": "agent_alpha@zpay",
-  "recipient": "data_provider@zpay",
-  "proof": "ed25519_sig_990141..."
-}`
+      code: \`{\n  "protocol": "x402",\n  "tx_hash": "a910bf23c847...",\n  "sender": "agent_alpha@zpay",\n  "recipient": "data_provider@zpay",\n  "proof": "ed25519_sig_990141..."\n}\`
     },
     sections: [
       {
@@ -331,9 +315,9 @@ client.agent.setPolicy(policy);`
     codeSnippet: {
       language: 'text',
       filename: 'Architecture',
-      code: `[Client SDK] ---> Encrypted Payload ---> [Stellar Horizon Node]
+      code: \`[Client SDK] ---> Encrypted Payload ---> [Stellar Horizon Node]
      |                                                  |
-     +--- (Private Key stays on local HSM/Device) ------+`
+     +--- (Private Key stays on local HSM/Device) ------+\`
     },
     sections: [
       {
@@ -350,12 +334,12 @@ client.agent.setPolicy(policy);`
     codeSnippet: {
       language: 'typescript',
       filename: 'kms_signer.ts',
-      code: `import { KmsSigner } from '@zpay/kms';
+      code: \`import { KmsSigner } from '@zpay/kms';
 
 const signer = new KmsSigner({
   keyId: 'arn:aws:kms:us-east-1:123456789:key/zpay-agent-key'
 });
-const client = new ZPay({ signer });`
+const client = new ZPay({ signer });\`
     },
     sections: [
       {
@@ -372,11 +356,11 @@ const client = new ZPay({ signer });`
     codeSnippet: {
       language: 'typescript',
       filename: 'audit.ts',
-      code: `const logs = await client.audit.getLogs({
+      code: \`const logs = await client.audit.getLogs({
   fromLedger: 51200000,
   toLedger: 51204912
 });
-console.log(`Verified ${logs.length} on-chain state changes.`);`
+console.log(\`Verified \${logs.length} on-chain state changes.\`);\`
     },
     sections: [
       {
@@ -393,11 +377,7 @@ console.log(`Verified ${logs.length} on-chain state changes.`);`
     codeSnippet: {
       language: 'json',
       filename: 'Compliance Status',
-      code: `{
-  "sanctions_screen": "PASSED",
-  "ofac_status": "CLEARED",
-  "sep12_kyc_level": "LEVEL_2_VERIFIED"
-}`
+      code: \`{\n  "sanctions_screen": "PASSED",\n  "ofac_status": "CLEARED",\n  "sep12_kyc_level": "LEVEL_2_VERIFIED"\n}\`
     },
     sections: [
       {
@@ -460,10 +440,10 @@ export default function DocsPage() {
       </div>
 
       {/* Sidebar */}
-      <aside className={`
+      <aside className={\`
         fixed md:sticky top-[61px] md:top-0 h-[calc(100vh-61px)] md:h-screen w-full md:w-72 lg:w-80 bg-[#050505] border-r border-white/5 flex flex-col z-40 transition-transform duration-300 ease-in-out
-        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-      `}>
+        \${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      \`}>
         <div className="hidden md:flex items-center gap-3 p-6 border-b border-white/5">
           <Logo className="w-7 h-7" />
           <span className="font-bold text-lg tracking-tight">ZPAY Documentation</span>
@@ -497,11 +477,11 @@ export default function DocsPage() {
                               setActiveItem(item);
                               setMobileMenuOpen(false);
                             }}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                            className={\`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all \${
                               isSelected
                                 ? 'bg-gold/10 text-gold border border-gold/20 font-bold'
                                 : 'text-white/60 hover:text-white hover:bg-white/5'
-                            }`}
+                            }\`}
                           >
                             {item}
                           </button>
@@ -598,3 +578,7 @@ export default function DocsPage() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync(path.join(__dirname, '..', 'src', 'app', 'docs', 'page.tsx'), docsContentScript);
+console.log('Successfully written complete documentation for all 16 topics in docs/page.tsx');
