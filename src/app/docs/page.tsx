@@ -30,6 +30,8 @@ const sidebarLinks = [
 
 export default function DocsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('Getting Started');
+  const [activeItem, setActiveItem] = useState('Quick Start');
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/20 font-[family-name:var(--font-jakarta)] flex flex-col md:flex-row">
@@ -73,10 +75,16 @@ export default function DocsPage() {
                     {section.category}
                   </h4>
                   <ul className="space-y-1">
-                    {section.items.map((item, i) => (
+                    {section.items.map((item) => (
                       <li key={item}>
-                        <button className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
-                          i === 0 && section.category === 'Getting Started'
+                        <button 
+                          onClick={() => {
+                            setActiveCategory(section.category);
+                            setActiveItem(item);
+                            setMobileMenuOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                          item === activeItem && section.category === activeCategory
                             ? 'bg-white/10 text-white font-medium'
                             : 'text-white/60 hover:text-white hover:bg-white/5'
                         }`}>
@@ -106,19 +114,21 @@ export default function DocsPage() {
           <div className="flex items-center gap-2 text-sm text-white/40 mb-8 font-medium">
             <span>Docs</span>
             <ChevronRight size={14} />
-            <span>Getting Started</span>
+            <span>{activeCategory}</span>
             <ChevronRight size={14} />
-            <span className="text-white">Quick Start</span>
+            <span className="text-white">{activeItem}</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-6">Quick Start</h1>
-          <p className="text-white/60 text-lg leading-relaxed mb-10">
-            Welcome to ZPAY. This guide will walk you through setting up your first autonomous payment agent on the Stellar network. You'll be ready to route transactions in less than 5 minutes.
-          </p>
-
-          <div className="space-y-12">
-            
-            {/* Step 1 */}
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-6">{activeItem}</h1>
+          
+          {activeItem === 'Quick Start' ? (
+            <>
+              <p className="text-white/60 text-lg leading-relaxed mb-10">
+                Welcome to ZPAY. This guide will walk you through setting up your first autonomous payment agent on the Stellar network. You'll be ready to route transactions in less than 5 minutes.
+              </p>
+              
+              <div className="space-y-12">
+                {/* Step 1 */}
             <section>
               <h2 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-3">
                 <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-sm font-bold">1</span>
@@ -191,6 +201,17 @@ export default function DocsPage() {
               </div>
             </section>
           </div>
+          </>
+          ) : (
+            <div className="py-20 text-center border border-white/5 bg-white/[0.02] rounded-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-6">
+                <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/60">Coming Soon</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Content under construction</h3>
+              <p className="text-white/50">The documentation for {activeItem} is currently being written.</p>
+            </div>
+          )}
 
           <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
             <button className="text-white/40 hover:text-white text-sm font-medium transition-colors">

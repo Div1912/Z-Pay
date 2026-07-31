@@ -12,6 +12,7 @@ const CardsSection = dynamic(() => import('@/components/sections/CardsSection'),
 const LargePayments = dynamic(() => import('@/components/sections/LargePayments'), { ssr: false });
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'), { ssr: false });
 const Integrations = dynamic(() => import('@/components/sections/Integrations'), { ssr: false });
+const FAQ = dynamic(() => import('@/components/sections/FAQ'), { ssr: false });
 const FooterCTA = dynamic(() => import('@/components/sections/FooterCTA'), { ssr: false });
 
 export default function LandingPage() {
@@ -27,6 +28,7 @@ export default function LandingPage() {
       <LargePayments />
       <Testimonials />
       <Integrations />
+      <FAQ />
       <FooterCTA />
     </main>
   );

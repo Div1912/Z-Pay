@@ -14,9 +14,9 @@ export default function Page() {
           background: 'radial-gradient(circle 800px at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 100%)',
         }} />
         
-        <h1 className="text-5xl sm:text-7xl font-black tracking-tight mb-6">About ZPAY</h1>
+        <h1 className="text-5xl sm:text-7xl font-black tracking-tight mb-6">Compliance</h1>
         <p className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto font-medium mb-12">
-          We are building the autonomous financial layer for the internet.
+          Global regulatory compliance and KYC/AML standards.
         </p>
         
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5">
