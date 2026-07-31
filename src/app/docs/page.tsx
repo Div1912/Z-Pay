@@ -44,7 +44,7 @@ const payment = await client.payments.create({
   agentMemo: 'API compute micro-settlement'
 });
 
-console.log(`Payment settled! Hash: ${payment.hash}`);`
+console.log(\`Payment settled! Hash: \${payment.hash}\`);`
     },
     sections: [
       {
@@ -69,9 +69,9 @@ console.log(`Payment settled! Hash: ${payment.hash}`);`
     codeSnippet: {
       language: 'bash',
       filename: 'cURL',
-      code: `curl -X POST https://api.zpay.route/v1/payments \
-  -H "Authorization: Bearer sk_live_99f01ab8c341" \
-  -H "Content-Type: application/json" \
+      code: `curl -X POST https://api.zpay.route/v1/payments \\
+  -H "Authorization: Bearer sk_live_99f01ab8c341" \\
+  -H "Content-Type: application/json" \\
   -d '{"to":"bob@zpay", "amount":10.0, "currency":"USDC"}'`
     },
     sections: [
@@ -136,16 +136,7 @@ console.log(handleInfo);
     codeSnippet: {
       language: 'json',
       filename: 'Response Format',
-      code: `{
-  "object": "payment",
-  "id": "pay_90218412",
-  "status": "succeeded",
-  "amount": "15.00",
-  "currency": "USDC",
-  "fee_sponsored": true,
-  "ledger_sequence": 51204912,
-  "created_at": "2026-07-31T23:20:00Z"
-}`
+      code: `{\n  "object": "payment",\n  "id": "pay_90218412",\n  "status": "succeeded",\n  "amount": "15.00",\n  "currency": "USDC",\n  "fee_sponsored": true,\n  "ledger_sequence": 51204912,\n  "created_at": "2026-07-31T23:20:00Z"\n}`
     },
     sections: [
       {
@@ -162,9 +153,7 @@ console.log(handleInfo);
     codeSnippet: {
       language: 'bash',
       filename: 'HTTP Request',
-      code: `GET /v1/payments?limit=10&status=succeeded HTTP/1.1
-Host: api.zpay.route
-Authorization: Bearer sk_live_99f01ab8c341`
+      code: `GET /v1/payments?limit=10&status=succeeded HTTP/1.1\nHost: api.zpay.route\nAuthorization: Bearer sk_live_99f01ab8c341`
     },
     sections: [
       {
@@ -214,9 +203,7 @@ app.post('/webhook', (req, res) => {
     codeSnippet: {
       language: 'json',
       filename: 'HTTP Headers',
-      code: `X-RateLimit-Limit: 1000
-X-RateLimit-Remaining: 998
-X-RateLimit-Reset: 1785516000`
+      code: `X-RateLimit-Limit: 1000\nX-RateLimit-Remaining: 998\nX-RateLimit-Reset: 1785516000`
     },
     sections: [
       {
@@ -307,13 +294,7 @@ client.agent.setPolicy(policy);`
     codeSnippet: {
       language: 'json',
       filename: 'receipt.json',
-      code: `{
-  "protocol": "x402",
-  "tx_hash": "a910bf23c847...",
-  "sender": "agent_alpha@zpay",
-  "recipient": "data_provider@zpay",
-  "proof": "ed25519_sig_990141..."
-}`
+      code: `{\n  "protocol": "x402",\n  "tx_hash": "a910bf23c847...",\n  "sender": "agent_alpha@zpay",\n  "recipient": "data_provider@zpay",\n  "proof": "ed25519_sig_990141..."\n}`
     },
     sections: [
       {
@@ -376,7 +357,7 @@ const client = new ZPay({ signer });`
   fromLedger: 51200000,
   toLedger: 51204912
 });
-console.log(`Verified ${logs.length} on-chain state changes.`);`
+console.log(\`Verified \${logs.length} on-chain state changes.\`);`
     },
     sections: [
       {
@@ -393,11 +374,7 @@ console.log(`Verified ${logs.length} on-chain state changes.`);`
     codeSnippet: {
       language: 'json',
       filename: 'Compliance Status',
-      code: `{
-  "sanctions_screen": "PASSED",
-  "ofac_status": "CLEARED",
-  "sep12_kyc_level": "LEVEL_2_VERIFIED"
-}`
+      code: `{\n  "sanctions_screen": "PASSED",\n  "ofac_status": "CLEARED",\n  "sep12_kyc_level": "LEVEL_2_VERIFIED"\n}`
     },
     sections: [
       {
