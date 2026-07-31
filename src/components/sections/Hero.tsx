@@ -81,7 +81,7 @@ const Hero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen lg:h-[200vh] w-full bg-black overflow-x-hidden"
+      className="relative min-h-[100dvh] w-full bg-black overflow-x-hidden"
     >
       {/* Subtle grain texture — premium depth, no performance cost */}
       <div

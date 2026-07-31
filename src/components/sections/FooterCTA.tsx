@@ -45,10 +45,8 @@ const footerColumns = [
 ];
 
 const connectLinks = [
-  { label: 'Twitter / X', href: 'https://x.com/zpay', Icon: Twitter },
+  { label: 'Twitter / X', href: 'https://x.com/Zpayroute', Icon: Twitter },
   { label: 'GitHub', href: 'https://github.com/Div1912/Z-Pay', Icon: Github },
-  { label: 'Discord', href: 'https://discord.gg/zpay', Icon: MessageCircle },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/zpay', Icon: Linkedin },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────

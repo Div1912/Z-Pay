@@ -1,140 +1,208 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Terminal, Zap, Shield, Globe, Bot } from 'lucide-react';
+import { ArrowLeft, BookOpen, Terminal, Zap, Shield, Search, ChevronRight, Menu, X } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 
-const categories = [
+const sidebarLinks = [
   {
+    category: 'Getting Started',
     icon: Zap,
-    title: 'Getting Started',
-    description: 'Set up your ZPAY account, create your ID, and make your first payment in minutes.',
-    links: ['Quick Start', 'Authentication', 'Your First Payment', 'ZPAY ID Guide'],
+    items: ['Quick Start', 'Authentication', 'Your First Payment', 'ZPAY ID Guide'],
   },
   {
+    category: 'API Reference',
     icon: Terminal,
-    title: 'API Reference',
-    description: 'Full REST and WebSocket API documentation for integrating ZPAY into your application.',
-    links: ['API Overview', 'Payments API', 'Webhooks', 'Rate Limits'],
+    items: ['API Overview', 'Payments API', 'Webhooks', 'Rate Limits'],
   },
   {
-    icon: Bot,
-    title: 'AI Agent SDK',
-    description: 'Build autonomous payment agents that transact on your behalf using our Agent SDK.',
-    links: ['Agent SDK Intro', 'Deploying Agents', 'Agent Permissions', 'Agent Receipts'],
-  },
-  {
-    icon: Shield,
-    title: 'Security',
-    description: 'Learn how ZPAY secures your funds with bank-grade encryption and Stellar\'s consensus.',
-    links: ['Security Model', 'Key Management', 'Audit Logs', 'Compliance'],
-  },
-  {
-    icon: Globe,
-    title: 'Integrations',
-    description: 'Connect ZPAY with Stripe, PayPal, UPI, and 100+ other payment providers.',
-    links: ['Stripe Bridge', 'UPI Connect', 'Circle USDC', 'Wise Payout'],
-  },
-  {
+    category: 'AI Agent SDK',
     icon: BookOpen,
-    title: 'Guides',
-    description: 'In-depth tutorials for payroll, escrow, split payments, and recurring billing.',
-    links: ['Global Payroll', 'Smart Escrow', 'Split Contracts', 'Recurring Billing'],
+    items: ['Agent SDK Intro', 'Deploying Agents', 'Agent Permissions', 'Receipts'],
+  },
+  {
+    category: 'Security & Auth',
+    icon: Shield,
+    items: ['Security Model', 'Key Management', 'Audit Logs', 'Compliance'],
   },
 ];
 
 export default function DocsPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="relative overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 100%)',
-        }} />
+    <div className="min-h-screen bg-black text-white selection:bg-white/20 font-[family-name:var(--font-jakarta)] flex flex-col md:flex-row">
+      
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-black sticky top-0 z-50">
+        <div className="flex items-center gap-2">
+          <Logo className="w-6 h-6" />
+          <span className="font-bold tracking-tight">ZPAY Docs</span>
+        </div>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white/70">
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
 
-        {/* Header */}
-        <div className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 px-4 sm:px-6 md:px-8 max-w-[1200px] mx-auto">
-          <Link href="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors text-sm mb-10 group">
-            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-            Back to ZPAY
-          </Link>
-
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 mb-6">
-            <BookOpen size={12} className="text-white/50" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Documentation</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-4 leading-[0.95]">
-            ZPAY Docs
-          </h1>
-          <p className="text-white/45 text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed">
-            Everything you need to build with ZPAY — from quick start guides to deep API references and AI agent tutorials.
-          </p>
-
-          {/* Search bar */}
-          <div className="mt-8 max-w-xl">
-            <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/25 flex-shrink-0">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-              </svg>
-              <span className="text-white/25 text-sm">Search documentation...</span>
-              <span className="ml-auto text-[10px] font-mono text-white/20 border border-white/10 rounded px-1.5 py-0.5">⌘K</span>
-            </div>
-          </div>
+      {/* Sidebar */}
+      <aside className={`
+        fixed md:sticky top-[61px] md:top-0 h-[calc(100vh-61px)] md:h-screen w-full md:w-72 lg:w-80 bg-[#050505] border-r border-white/5 flex flex-col z-40 transition-transform duration-300 ease-in-out
+        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        <div className="hidden md:flex items-center gap-3 p-6 border-b border-white/5">
+          <Logo className="w-7 h-7" />
+          <span className="font-bold text-lg tracking-tight">ZPAY Docs</span>
         </div>
 
-        {/* Separator */}
-        <div className="h-px mx-4 sm:mx-6 md:mx-8 max-w-[1200px] mx-auto bg-gradient-to-r from-transparent via-white/[0.07] to-transparent" />
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+          {/* Search */}
+          <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 mb-8 text-white/40">
+            <Search size={16} />
+            <span className="text-sm">Search docs...</span>
+            <span className="ml-auto text-[10px] border border-white/10 rounded px-1.5 py-0.5">⌘K</span>
+          </div>
 
-        {/* Categories grid */}
-        <div className="relative px-4 sm:px-6 md:px-8 max-w-[1200px] mx-auto py-14 sm:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {categories.map((cat) => {
-              const { icon: Icon } = cat;
+          <div className="space-y-8">
+            {sidebarLinks.map((section) => {
+              const { icon: Icon } = section;
               return (
-                <div
-                  key={cat.title}
-                  className="group relative bg-[#0d0d0d] border border-white/[0.06] rounded-2xl p-6 sm:p-7 hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
-                >
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative">
-                    <div className="w-10 h-10 rounded-xl border border-white/[0.08] bg-white/[0.04] flex items-center justify-center text-white/55 group-hover:text-white/85 group-hover:border-white/[0.14] transition-all duration-300 mb-4">
-                      <Icon size={18} strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-white font-bold text-base sm:text-lg mb-2">{cat.title}</h3>
-                    <p className="text-white/40 text-xs sm:text-sm leading-relaxed mb-5">{cat.description}</p>
-                    <ul className="space-y-1.5">
-                      {cat.links.map((link) => (
-                        <li key={link}>
-                          <a href="#" className="text-white/35 text-xs sm:text-[0.8rem] hover:text-white/65 transition-colors flex items-center gap-2">
-                            <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
-                            {link}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div key={section.category}>
+                  <h4 className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white/50 mb-3">
+                    <Icon size={12} />
+                    {section.category}
+                  </h4>
+                  <ul className="space-y-1">
+                    {section.items.map((item, i) => (
+                      <li key={item}>
+                        <button className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                          i === 0 && section.category === 'Getting Started'
+                            ? 'bg-white/10 text-white font-medium'
+                            : 'text-white/60 hover:text-white hover:bg-white/5'
+                        }`}>
+                          {item}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="relative px-4 sm:px-6 md:px-8 max-w-[1200px] mx-auto pb-20 text-center">
-          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-8 sm:p-10">
-            <p className="text-white/50 text-sm sm:text-base mb-4">Need help getting started?</p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Link href="/support" className="px-5 py-2.5 rounded-full border border-white/10 text-white/60 text-sm font-medium hover:text-white hover:border-white/20 transition-all">
-                Contact Support
-              </Link>
-              <a href="https://discord.gg/zpay" target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 rounded-full bg-white/5 text-white/60 text-sm font-medium hover:text-white hover:bg-white/10 transition-all">
-                Join Discord
-              </a>
-            </div>
-          </div>
+        <div className="p-4 sm:p-6 border-t border-white/5 mt-auto">
+          <Link href="/" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
+            <ArrowLeft size={16} />
+            Back to main site
+          </Link>
         </div>
-      </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="flex-1 bg-black min-h-screen">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-20">
+          
+          <div className="flex items-center gap-2 text-sm text-white/40 mb-8 font-medium">
+            <span>Docs</span>
+            <ChevronRight size={14} />
+            <span>Getting Started</span>
+            <ChevronRight size={14} />
+            <span className="text-white">Quick Start</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-6">Quick Start</h1>
+          <p className="text-white/60 text-lg leading-relaxed mb-10">
+            Welcome to ZPAY. This guide will walk you through setting up your first autonomous payment agent on the Stellar network. You'll be ready to route transactions in less than 5 minutes.
+          </p>
+
+          <div className="space-y-12">
+            
+            {/* Step 1 */}
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-sm font-bold">1</span>
+                Create your API Key
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed mb-6">
+                Before you can instantiate the ZPAY client, you need a secret key. Go to your dashboard and generate a new key with `Payment` permissions.
+              </p>
+              <div className="rounded-xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
+                <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                  <span className="text-xs text-white/40 font-mono">Terminal</span>
+                </div>
+                <div className="p-4 sm:p-6 overflow-x-auto">
+                  <code className="text-sm font-mono text-emerald-400">
+                    export ZPAY_SECRET_KEY="sk_test_123456789"
+                  </code>
+                </div>
+              </div>
+            </section>
+
+            {/* Step 2 */}
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-sm font-bold">2</span>
+                Initialize the Client
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed mb-6">
+                Install the SDK via npm and initialize it with your secret key. The SDK automatically resolves Stellar network requirements in the background.
+              </p>
+              <div className="rounded-xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
+                <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                  <span className="text-xs text-white/40 font-mono">index.ts</span>
+                </div>
+                <div className="p-4 sm:p-6 overflow-x-auto">
+                  <pre className="text-sm font-mono text-white/80 leading-relaxed">
+                    <span className="text-blue-400">import</span> {'{ ZPay }'} <span className="text-blue-400">from</span> <span className="text-green-400">'@zpay/sdk'</span>;<br/><br/>
+                    <span className="text-blue-400">const</span> client = <span className="text-blue-400">new</span> ZPay({'{'}<br/>
+                    {'  '}apiKey: process.env.ZPAY_SECRET_KEY,<br/>
+                    {'  '}network: <span className="text-green-400">'testnet'</span><br/>
+                    {'}'});
+                  </pre>
+                </div>
+              </div>
+            </section>
+
+            {/* Step 3 */}
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-sm font-bold">3</span>
+                Send a Payment
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed mb-6">
+                You can route payments using simple ZPAY IDs (like an email address) instead of complex wallet hashes.
+              </p>
+              <div className="rounded-xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
+                <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                  <span className="text-xs text-white/40 font-mono">payment.ts</span>
+                </div>
+                <div className="p-4 sm:p-6 overflow-x-auto">
+                  <pre className="text-sm font-mono text-white/80 leading-relaxed">
+                    <span className="text-blue-400">const</span> tx = <span className="text-blue-400">await</span> client.payments.create({'{'}<br/>
+                    {'  '}to: <span className="text-green-400">'alice@zpay'</span>,<br/>
+                    {'  '}amount: <span className="text-orange-400">50.00</span>,<br/>
+                    {'  '}currency: <span className="text-green-400">'USDC'</span>,<br/>
+                    {'  '}agent_memo: <span className="text-green-400">'Invoice #1024 settlement'</span><br/>
+                    {'}'});<br/><br/>
+                    console.log(`Success! Tx Hash: ${'{'}tx.hash{'}'}`);
+                  </pre>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
+            <button className="text-white/40 hover:text-white text-sm font-medium transition-colors">
+              Authentication
+            </button>
+            <button className="flex items-center gap-2 text-white hover:text-gold text-sm font-medium transition-colors">
+              Your First Payment <ChevronRight size={16} />
+            </button>
+          </div>
+
+        </div>
+      </main>
     </div>
   );
 }
