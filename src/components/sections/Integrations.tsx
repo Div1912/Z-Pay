@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from 'react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Spotlight } from "@/components/ui/spotlight";
 import Link from 'next/link';
+
+// ─── Logo Components ────────────────────────────────────────────────────────
 
 const StellarLogo = () => (
   <svg viewBox="0 0 32 32" className="w-full h-full">
@@ -75,68 +76,113 @@ const BankLogo = () => (
   </svg>
 );
 
-const orbitIcons = [
-  { name: "Stellar", Logo: StellarLogo, angle: 0, orbit: 1 },
-  { name: "Stripe", Logo: StripeLogo, angle: 72, orbit: 1 },
-  { name: "PayPal", Logo: PayPalLogo, angle: 144, orbit: 1 },
-  { name: "Apple", Logo: ApplePayLogo, angle: 216, orbit: 1 },
-  { name: "Google", Logo: GooglePayLogo, angle: 288, orbit: 1 },
-  { name: "Circle", Logo: CircleLogo, angle: 30, orbit: 2 },
-  { name: "Wise", Logo: WiseLogo, angle: 120, orbit: 2 },
-  { name: "Bitcoin", Logo: BitcoinLogo, angle: 210, orbit: 2 },
-  { name: "Bank", Logo: BankLogo, angle: 300, orbit: 2 },
+// ─── Orbit data ──────────────────────────────────────────────────────────────
+
+const orbit1Icons = [
+  { name: "Stellar", Logo: StellarLogo, angle: 0 },
+  { name: "Stripe", Logo: StripeLogo, angle: 72 },
+  { name: "PayPal", Logo: PayPalLogo, angle: 144 },
+  { name: "Apple", Logo: ApplePayLogo, angle: 216 },
+  { name: "Google", Logo: GooglePayLogo, angle: 288 },
 ];
 
-const OrbitIcon = ({ icon, orbitRadius, counterRotate }: { 
-  icon: typeof orbitIcons[0], 
-  orbitRadius: number, 
-  counterRotate: boolean 
+const orbit2Icons = [
+  { name: "Circle", Logo: CircleLogo, angle: 30 },
+  { name: "Wise", Logo: WiseLogo, angle: 120 },
+  { name: "Bitcoin", Logo: BitcoinLogo, angle: 210 },
+  { name: "Bank", Logo: BankLogo, angle: 300 },
+];
+
+// ─── CSS-based orbit (zero JS re-renders per second) ─────────────────────────
+
+/**
+ * Pure CSS orbit approach:
+ * - The ring wrapper div rotates via CSS animation
+ * - Each icon counter-rotates via CSS animation to stay upright
+ * - Zero setInterval, zero useState, zero React re-renders per second
+ */
+const CSSOrbitIcon = ({
+  icon,
+  radiusPercent,
+  orbitDuration,
+  counterRotate,
+}: {
+  icon: { name: string; Logo: React.FC; angle: number };
+  radiusPercent: number;
+  orbitDuration: number;
+  counterRotate: boolean;
 }) => {
-  const [rotation, setRotation] = useState(icon.angle);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation(prev => prev + (counterRotate ? -0.3 : 0.3));
-    }, 50);
-    return () => clearInterval(interval);
-  }, [counterRotate]);
-  
-  const angleRad = (rotation * Math.PI) / 180;
-  const x = Math.cos(angleRad) * orbitRadius;
-  const y = Math.sin(angleRad) * orbitRadius;
+  // Position on orbit using the initial angle only — CSS handles the rotation
+  const angleRad = (icon.angle * Math.PI) / 180;
+  const x = Math.cos(angleRad) * radiusPercent;
+  const y = Math.sin(angleRad) * radiusPercent;
+
+  const spinKeyframe = counterRotate
+    ? 'zpay-spin-ccw'
+    : 'zpay-spin-cw';
 
   return (
-    <motion.div
-      className="absolute"
+    <div
+      className="absolute group"
       style={{
         left: `calc(50% + ${x}%)`,
         top: `calc(50% + ${y}%)`,
-        transform: `translate(-50%, -50%)`,
+        transform: 'translate(-50%, -50%)',
       }}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, delay: icon.angle / 360 }}
     >
-      <div 
-        className="w-10 sm:w-12 md:w-14 lg:w-16 aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/20 bg-black/80 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:scale-110 transition-transform cursor-pointer overflow-hidden group"
+      {/* Counter-rotate the icon itself so it stays upright */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: icon.angle / 360 }}
+        style={{
+          animation: `${spinKeyframe} ${orbitDuration}s linear infinite`,
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <div className="relative w-6 sm:w-7 md:w-8 lg:w-9 aspect-square">
-          <icon.Logo />
+        <div className="w-10 sm:w-12 md:w-14 lg:w-16 aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/20 bg-black/80 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:scale-110 transition-transform cursor-pointer overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="relative w-6 sm:w-7 md:w-8 lg:w-9 aspect-square">
+            <icon.Logo />
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
+// ─── Main section ─────────────────────────────────────────────────────────────
+
 const Integrations = () => {
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <section 
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-black py-20 sm:py-28 md:py-40 lg:py-56"
     >
+      {/*
+        CSS keyframe definitions injected inline — keeps everything self-contained.
+        orbit ring divs rotate CW/CCW, icons counter-rotate to stay upright.
+      */}
+      <style>{`
+        @keyframes zpay-orbit-cw {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @keyframes zpay-orbit-ccw {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(-360deg); }
+        }
+        @keyframes zpay-spin-cw {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(-360deg); }
+        }
+        @keyframes zpay-spin-ccw {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+      `}</style>
+
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] aspect-square rounded-full bg-gradient-to-br from-white/10 to-transparent blur-[180px] md:blur-[250px]" />
@@ -155,10 +201,7 @@ const Integrations = () => {
             <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Ecosystem</span>
           </div>
           
-          <h2 
-            className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8"
-
-          >
+          <h2 className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8">
             <span className="block text-white text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">Integrate with</span>
             <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">any apps</span>
           </h2>
@@ -175,7 +218,10 @@ const Integrations = () => {
           </Link>
         </motion.div>
 
+        {/* Orbit container — pure CSS rotation, no JS timers */}
         <div className="relative w-full max-w-[300px] sm:max-w-[500px] md:max-w-[650px] lg:max-w-[800px] aspect-square mx-auto">
+
+          {/* Static orbit ring visuals */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-[30%] aspect-square border border-white/[0.08] rounded-full shadow-[0_0_15px_rgba(255,255,255,0.02)]" />
             <div className="absolute w-[50%] aspect-square border border-white/[0.1] rounded-full shadow-[0_0_25px_rgba(255,255,255,0.03)]" />
@@ -183,28 +229,45 @@ const Integrations = () => {
             <div className="absolute w-[90%] aspect-square border border-white/[0.08] rounded-full shadow-[0_0_45px_rgba(255,255,255,0.02)]" />
           </div>
 
-          <div className="absolute inset-0">
-            {orbitIcons.filter(icon => icon.orbit === 1).map((icon) => (
-              <OrbitIcon 
-                key={icon.name} 
-                icon={icon} 
-                orbitRadius={35} 
+          {/*
+            Outer orbit (orbit1): CW rotation
+            The ring div itself rotates; icons counter-rotate to stay upright.
+            This means zero useState and zero setInterval — only GPU-composited CSS.
+          */}
+          <div
+            className="absolute inset-0"
+            style={{ animation: 'zpay-orbit-cw 22s linear infinite' }}
+          >
+            {orbit1Icons.map((icon) => (
+              <CSSOrbitIcon
+                key={icon.name}
+                icon={icon}
+                radiusPercent={35}
+                orbitDuration={22}
                 counterRotate={false}
               />
             ))}
           </div>
 
-          <div className="absolute inset-0">
-            {orbitIcons.filter(icon => icon.orbit === 2).map((icon) => (
-              <OrbitIcon 
-                key={icon.name} 
-                icon={icon} 
-                orbitRadius={22} 
+          {/*
+            Inner orbit (orbit2): CCW rotation
+          */}
+          <div
+            className="absolute inset-0"
+            style={{ animation: 'zpay-orbit-ccw 16s linear infinite' }}
+          >
+            {orbit2Icons.map((icon) => (
+              <CSSOrbitIcon
+                key={icon.name}
+                icon={icon}
+                radiusPercent={22}
+                orbitDuration={16}
                 counterRotate={true}
               />
             ))}
           </div>
 
+          {/* Center Z logo */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}

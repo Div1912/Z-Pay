@@ -67,6 +67,17 @@ const Hero = () => {
       className="relative min-h-screen lg:h-[200vh] w-full bg-black/[0.96] overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
+      {/* Grain / Noise texture overlay for premium depth */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '128px 128px',
+        }}
+      />
+
       {/* Interactive Mouse Orb */}
       {isMounted && (
         <motion.div
@@ -108,8 +119,9 @@ const Hero = () => {
           </h1>
           
           <p className="mt-4 lg:mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-lg leading-relaxed font-medium">
-            Empower AI agents to transact autonomously on your behalf. <br className="hidden md:block" />
-            Zero friction. Infinite scale. The intelligent financial protocol.
+            Send money to anyone, anywhere — instantly. Your AI agents transact on your behalf,{' '}
+            <span className="text-neutral-200 font-semibold">24/7</span>, with zero friction and{' '}
+            <span className="text-neutral-200 font-semibold">sub-cent fees</span>.
           </p>
 
           <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -132,6 +144,23 @@ const Hero = () => {
             >
               Explore Features
             </Link>
+          </div>
+
+          {/* Trust Badge Pills */}
+          <div className="mt-6 lg:mt-8 flex flex-wrap gap-2 sm:gap-3">
+            {[
+              { icon: '🔒', label: 'Bank-Grade Security' },
+              { icon: '⚡', label: 'Stellar Network' },
+              { icon: '🌍', label: '140+ Countries' },
+            ].map((badge) => (
+              <div
+                key={badge.label}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm"
+              >
+                <span className="text-[11px]">{badge.icon}</span>
+                <span className="text-[10px] sm:text-[11px] font-semibold text-white/50 tracking-wide">{badge.label}</span>
+              </div>
+            ))}
           </div>
         </div>
 

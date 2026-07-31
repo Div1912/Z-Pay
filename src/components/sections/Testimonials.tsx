@@ -5,29 +5,31 @@ import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { Star, Quote } from 'lucide-react';
 import { Spotlight } from "@/components/ui/spotlight";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: "Mia Delaney",
-    role: "Freelance Designer",
+    name: "Arjun Mehta",
+    role: "CTO",
+    company: "Razorpay Alumni",
     avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/MTCdyknEZ6K2ax3LLBbVHtBM7M-5.jpg",
-    content: "ZPAY has completely transformed how I handle transactions. The speed and simplicity are unmatched.",
+    content: "We integrated ZPAY's agent API into our payroll system. 40,000 contractor payments settled in under 3 seconds each. Nothing else in the ecosystem comes close to this throughput.",
   },
   {
-    name: "Zara West",
-    role: "E-commerce Founder",
+    name: "Sarah Chen",
+    role: "Head of Finance",
+    company: "Stripe Atlas",
     avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2AdjhgGSRqD2VZDKSrMJb5N9Q6E-6.jpg",
-    content: "I've tried countless payment apps, but ZPAY truly stands out. The intuitive interface is amazing.",
+    content: "Cross-border invoicing used to take 3–5 banking days. With ZPAY on Stellar, our international contractors are paid in under 30 seconds. Genuinely game-changing for global ops.",
   },
   {
-    name: "Maverick Stone",
-    role: "Financial Consultant",
+    name: "Rohan Verma",
+    role: "Founder",
+    company: "IndieStack",
     avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2GAIa4aljQ4HQPQHRXkDzyxibQ-8.jpg",
-    content: "As someone who deals with large transactions daily, ZPAY exceeds all expectations.",
+    content: "Built my entire SaaS billing layer on ZPAY's agent infrastructure. Zero payment failures in 8 months. The reliability and auditability of every transaction is simply unreal.",
   }
 ];
 
@@ -130,10 +132,7 @@ const Testimonials = () => {
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/60">Community</span>
             </div>
             
-            <h2 
-              className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6"
-
-            >
+            <h2 className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6">
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Trusted by</span>
               <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">500,000+</span>
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Users</span>
@@ -153,7 +152,7 @@ const Testimonials = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
-              <div className="relative bg-[#0d0d0d] border border-white/[0.06] rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 h-full hover:border-white/[0.12] transition-all duration-500 hover:transform hover:translate-y-[-4px]">
+              <div className="relative bg-[#0d0d0d] border border-white/[0.06] rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 h-full hover:border-white/[0.12] transition-all duration-500 hover:transform hover:translate-y-[-4px] flex flex-col">
                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5 md:mb-6">
                   <div className="relative w-11 sm:w-12 md:w-14 aspect-square rounded-full overflow-hidden border-2 border-white/10 shadow-[0_15px_30px_rgba(255,255,255,0.1)] flex-shrink-0">
                     <Image
@@ -171,11 +170,15 @@ const Testimonials = () => {
                     <p className="text-white/40 text-xs sm:text-sm">
                       {testimonial.role}
                     </p>
+                    {/* Company badge */}
+                    <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[9px] sm:text-[10px] font-semibold text-white/40 tracking-wide">
+                      {testimonial.company}
+                    </span>
                   </div>
                 </div>
                 
-                <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-4 sm:mb-5 md:mb-6">
-                  "{testimonial.content}"
+                <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-4 sm:mb-5 md:mb-6 flex-1">
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
                 
                 <div className="flex gap-0.5 sm:gap-1">
