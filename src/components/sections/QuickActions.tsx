@@ -209,14 +209,80 @@ export default function QuickActions() {
                     </div>
                   </div>
 
-                  {/* Phone Content (Image) */}
-                  <div className="relative flex-1 w-full z-0 bg-[#050505]">
-                    <Image 
-                      src="/images/quick_action_phone.jpg" 
-                      alt="Quick Action UI" 
-                      fill 
-                      className="object-cover object-top opacity-100"
-                    />
+                  {/* Phone Content (Live Interactive Dashboard Mockup) */}
+                  <div className="relative flex-1 w-full z-0 bg-[#070707] p-4 flex flex-col justify-between overflow-hidden font-[family-name:var(--font-jakarta)]">
+                    
+                    {/* App Header */}
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-[10px] font-black text-gold">ZP</div>
+                          <span className="text-xs font-bold text-white tracking-tight">alice@zpay</span>
+                        </div>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-semibold">Stellar Mainnet</span>
+                      </div>
+
+                      {/* Main Balance Card */}
+                      <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.02] p-4 mb-4">
+                        <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider block mb-1">Total Balance</span>
+                        <div className="text-2xl font-black text-white tracking-tight mb-2">$142,850.00 <span className="text-xs font-normal text-white/40">USDC</span></div>
+                        
+                        <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px]">
+                          <span className="text-emerald-400 font-semibold flex items-center gap-1">↑ +14.2% <span className="text-white/40">this week</span></span>
+                          <span className="text-white/40 font-mono">0.00001 XLM fee</span>
+                        </div>
+                      </div>
+
+                      {/* Agent Active Pill */}
+                      <div className="rounded-xl border border-gold/30 bg-gold/5 p-2.5 mb-4 flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                        <div className="text-[10px] text-white/80 font-medium leading-tight flex-1">
+                          <span className="font-bold text-gold">Agent Alpha:</span> Auto-routing via Stellar DEX
+                        </div>
+                      </div>
+
+                      {/* Action Grid */}
+                      <div className="grid grid-cols-4 gap-2 mb-4">
+                        {[
+                          { label: 'Send', color: 'bg-gold text-black font-bold' },
+                          { label: 'Receive', color: 'bg-white/10 text-white' },
+                          { label: 'Split', color: 'bg-white/10 text-white' },
+                          { label: 'Escrow', color: 'bg-white/10 text-white' },
+                        ].map((act) => (
+                          <div key={act.label} className={`py-2 rounded-xl text-[10px] text-center font-semibold ${act.color}`}>
+                            {act.label}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Recent Transactions List */}
+                    <div className="space-y-2">
+                      <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest block">Recent Activity</span>
+                      
+                      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-2.5 flex items-center justify-between">
+                        <div>
+                          <div className="text-[11px] font-bold text-white">Sent to bob@zpay</div>
+                          <div className="text-[9px] text-white/40">Stellar Path • 1.8s finality</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-[11px] font-bold text-white">-$50.00</div>
+                          <div className="text-[9px] text-emerald-400 font-mono">Settled</div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-2.5 flex items-center justify-between">
+                        <div>
+                          <div className="text-[11px] font-bold text-white">x402 Micro-API Call</div>
+                          <div className="text-[9px] text-white/40">Pay-per-query • Auto</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-[11px] font-bold text-gold">-$0.001</div>
+                          <div className="text-[9px] text-emerald-400 font-mono">Unlocked</div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
