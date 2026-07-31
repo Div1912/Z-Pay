@@ -60,20 +60,23 @@ export default function QuickActions() {
           tl.to(titleRef.current, {
             opacity: 1,
             y: 0,
-            duration: 1,
+            duration: 0.9,
             ease: "power3.out",
+            force3D: true,
           })
           .to(cardsRef.current, {
             opacity: 1,
             y: 0,
-            duration: 1,
+            duration: 0.9,
             ease: "power3.out",
+            force3D: true,
           }, "-=0.7")
           .to(phoneRef.current, {
             opacity: 1,
             y: 0,
-            duration: 1,
+            duration: 0.9,
             ease: "power3.out",
+            force3D: true,
           }, "-=0.8");
         },
         once: true,
@@ -112,8 +115,8 @@ export default function QuickActions() {
     >
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-0 w-[50vw] max-w-[600px] aspect-square rounded-full bg-purple-600/10 blur-[150px] md:blur-[200px]" />
-        <div className="absolute bottom-0 left-0 w-[45vw] max-w-[500px] aspect-square rounded-full bg-blue-600/10 blur-[130px] md:blur-[180px]" />
+        <div className="absolute top-1/4 right-0 w-[40vw] max-w-[500px] aspect-square rounded-full bg-purple-600/8 blur-[80px]" />
+        <div className="absolute bottom-0 left-0 w-[35vw] max-w-[400px] aspect-square rounded-full bg-blue-600/8 blur-[70px]" />
       </div>
 
       <div ref={contentRef} className="relative">

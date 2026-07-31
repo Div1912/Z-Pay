@@ -399,13 +399,53 @@
   }
 }
 
+/* ===== PRODUCTION PERFORMANCE: GPU ACCELERATION ===== */
+
+/* Promote sections to their own GPU composite layer — prevents scroll repaint cascades */
+main > section {
+  contain: layout paint;
+  transform: translateZ(0);
+}
+
+/* All scroll-animated GSAP elements get hardware acceleration */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Blur decorations: isolate compositing so they don't repaint on scroll */
+[class*="blur-["] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Framer motion animated elements */
+[data-framer-motion-optimized] {
+  will-change: transform, opacity;
+}
+
+/* Reduce expensive backdrop-blur on low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
 /* ===== GREEN BELT: MOBILE RESPONSIVE ===== */
 
 /* Base touch targets */
 button, a, [role="button"] {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 40px;
+  min-width: 40px;
 }
+
 
 /* Fluid typography — no text below 14px on mobile */
 body {

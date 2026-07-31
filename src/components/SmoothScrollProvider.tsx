@@ -7,8 +7,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LenisContext = createContext<Lenis | null>(null);
+// Configure GSAP for maximum performance
+gsap.config({
+  force3D: true,       // Always use 3D transforms (GPU compositing)
+  nullTargetWarn: false,
+});
 
+const LenisContext = createContext<Lenis | null>(null);
 export const useLenis = () => useContext(LenisContext);
 
 export default function SmoothScrollProvider({
@@ -20,27 +25,31 @@ export default function SmoothScrollProvider({
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.1,              // Slightly faster — snappier feel
+      easing: (t) => 1 - Math.pow(1 - t, 3), // Ease out cubic — natural decel
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      touchMultiplier: 2,
+      wheelMultiplier: 1,         // Native feel
+      touchMultiplier: 1.5,       // Responsive touch
+      infinite: false,
     });
 
     lenisRef.current = lenis;
 
+    // Sync Lenis scroll with GSAP ScrollTrigger via the shared ticker
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Use gsap.ticker for the RAF loop — single RAF, not two competing ones
+    const onTick = (time: number) => {
       lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
+    };
+    gsap.ticker.add(onTick);
+    gsap.ticker.lagSmoothing(0); // Disable lag smoothing — prevents frame skips
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      gsap.ticker.remove(onTick);
     };
   }, []);
 
