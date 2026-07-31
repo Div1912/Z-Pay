@@ -98,14 +98,16 @@ const HowItWorks = () => {
             const { Icon } = step;
             return (
               <motion.div key={step.number} variants={cardVariants} className="group relative">
-                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+                {/* Glowing Premium Border Halo */}
+                <div className="absolute -inset-[1px] rounded-2xl sm:rounded-3xl bg-gradient-to-r from-gold/40 via-amber-500/20 to-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px] pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
 
-                <div className="relative h-full bg-[#0d0d0d] border border-white/[0.06] rounded-2xl sm:rounded-3xl p-7 sm:p-8 md:p-10 hover:border-white/[0.11] transition-all duration-500 hover:-translate-y-1">
+                <div className="relative h-full bg-[#0c0c0c] border border-white/[0.08] group-hover:border-gold/40 rounded-2xl sm:rounded-3xl p-7 sm:p-8 md:p-10 transition-all duration-500 hover:-translate-y-1.5 shadow-[0_0_0_1px_rgba(212,175,55,0.05)] group-hover:shadow-[0_10px_40px_rgba(212,175,55,0.15)]">
                   {/* Step number + icon */}
                   <div className="flex items-start justify-between mb-7 sm:mb-8">
                     <span className="text-6xl sm:text-7xl font-black leading-none tracking-tighter select-none"
                       style={{ 
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 100%)',
+                        background: 'linear-gradient(180deg, rgba(212,175,55,0.4) 0%, rgba(255,255,255,0.03) 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
@@ -114,12 +116,12 @@ const HowItWorks = () => {
                       {step.number}
                     </span>
 
-                    <div className="flex-shrink-0 w-14 h-14 sm:w-15 sm:h-15 rounded-2xl border border-white/[0.08] bg-white/[0.04] flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/[0.14] group-hover:bg-white/[0.07] transition-all duration-300">
+                    <div className="flex-shrink-0 w-14 h-14 sm:w-15 sm:h-15 rounded-2xl border border-white/[0.08] bg-white/[0.04] flex items-center justify-center text-white/60 group-hover:text-gold group-hover:border-gold/30 group-hover:bg-gold/10 transition-all duration-300">
                       <Icon size={22} strokeWidth={1.5} />
                     </div>
                   </div>
 
-                  <h3 className="text-white font-bold text-lg sm:text-xl md:text-[1.35rem] mb-3 sm:mb-4 leading-tight">
+                  <h3 className="text-white font-bold text-lg sm:text-xl md:text-[1.35rem] mb-3 sm:mb-4 leading-tight group-hover:text-gold transition-colors">
                     {step.title}
                   </h3>
                   <p className="text-white/45 text-sm sm:text-[0.9rem] leading-relaxed">
@@ -128,8 +130,8 @@ const HowItWorks = () => {
 
                   {/* Arrow connector */}
                   {idx < steps.length - 1 && (
-                    <div className="hidden md:flex absolute -right-[17px] top-[76px] z-10 w-8 h-8 rounded-full bg-black border border-white/[0.09] items-center justify-center">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/25">
+                    <div className="hidden md:flex absolute -right-[17px] top-[76px] z-10 w-8 h-8 rounded-full bg-black border border-white/[0.12] group-hover:border-gold/50 items-center justify-center transition-colors">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/40 group-hover:text-gold transition-colors">
                         <path d="M5 12h14m-7-7 7 7-7 7" />
                       </svg>
                     </div>

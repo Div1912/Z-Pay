@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, Terminal, Zap, Shield, Search, ChevronRight, Menu, X, Check, Copy, Code, Cpu, Lock, FileText, Server } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
@@ -412,7 +412,26 @@ export default function DocsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Getting Started');
   const [activeItem, setActiveItem] = useState('Quick Start');
+  const [searchQuery, setSearchQuery] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // Live real-time search filtering
+  const filteredSections = useMemo(() => {
+    if (!searchQuery.trim()) return sidebarLinks;
+    const q = searchQuery.toLowerCase();
+    
+    return sidebarLinks.map(section => ({
+      ...section,
+      items: section.items.filter(item => {
+        const doc = docsData[item];
+        return (
+          item.toLowerCase().includes(q) ||
+          section.category.toLowerCase().includes(q) ||
+          (doc && doc.summary.toLowerCase().includes(q))
+        );
+      })
+    })).filter(section => section.items.length > 0);
+  }, [searchQuery]);
 
   const currentDoc = docsData[activeItem] || docsData['Quick Start'];
 
@@ -426,19 +445,23 @@ export default function DocsPage() {
     <div className="min-h-screen bg-black text-white selection:bg-white/20 font-[family-name:var(--font-jakarta)] flex flex-col md:flex-row">
       
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-black sticky top-0 z-50">
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-[#070707] sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <Logo className="w-6 h-6" />
-          <span className="font-bold tracking-tight">ZPAY Docs</span>
+          <span className="font-bold text-sm tracking-tight text-white">ZPAY Docs</span>
         </div>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white/70">
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        <button 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+          className="p-2 text-white/80 rounded-lg border border-white/10 bg-white/5"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
       {/* Sidebar */}
       <aside className={`
-        fixed md:sticky top-[61px] md:top-0 h-[calc(100vh-61px)] md:h-screen w-full md:w-72 lg:w-80 bg-[#050505] border-r border-white/5 flex flex-col z-40 transition-transform duration-300 ease-in-out
+        fixed md:sticky top-[57px] md:top-0 h-[calc(100vh-57px)] md:h-screen w-full md:w-72 lg:w-80 bg-[#070707] border-r border-white/10 flex flex-col z-40 transition-transform duration-300 ease-in-out
         ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div className="hidden md:flex items-center gap-3 p-6 border-b border-white/5">
@@ -447,52 +470,71 @@ export default function DocsPage() {
         </div>
 
         <div className="p-4 sm:p-6 overflow-y-auto flex-1">
-          {/* Search */}
-          <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 mb-8 text-white/40">
-            <Search size={16} />
-            <span className="text-sm">Search documentation...</span>
-            <span className="ml-auto text-[10px] border border-white/10 rounded px-1.5 py-0.5 font-mono">⌘K</span>
+          {/* Functional Real-time Search Input */}
+          <div className="relative mb-6">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
+            <input 
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search documentation..."
+              className="w-full pl-9 pr-8 py-2.5 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-gold/50 transition-colors"
+            />
+            {searchQuery && (
+              <button 
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
 
           <div className="space-y-8">
-            {sidebarLinks.map((section) => {
-              const { icon: Icon } = section;
-              return (
-                <div key={section.category}>
-                  <h4 className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white/50 mb-3">
-                    <Icon size={13} className="text-gold" />
-                    {section.category}
-                  </h4>
-                  <ul className="space-y-1">
-                    {section.items.map((item) => {
-                      const isSelected = item === activeItem;
-                      return (
-                        <li key={item}>
-                          <button 
-                            onClick={() => {
-                              setActiveCategory(section.category);
-                              setActiveItem(item);
-                              setMobileMenuOpen(false);
-                            }}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                              isSelected
-                                ? 'bg-gold/10 text-gold border border-gold/20 font-bold'
-                                : 'text-white/60 hover:text-white hover:bg-white/5'
-                            }`}
-                          >
-                            {item}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
+            {filteredSections.length > 0 ? (
+              filteredSections.map((section) => {
+                const { icon: Icon } = section;
+                return (
+                  <div key={section.category}>
+                    <h4 className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white/50 mb-3">
+                      <Icon size={13} className="text-gold" />
+                      {section.category}
+                    </h4>
+                    <ul className="space-y-1">
+                      {section.items.map((item) => {
+                        const isSelected = item === activeItem;
+                        return (
+                          <li key={item}>
+                            <button 
+                              onClick={() => {
+                                setActiveCategory(section.category);
+                                setActiveItem(item);
+                                setMobileMenuOpen(false);
+                              }}
+                              className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                                isSelected
+                                  ? 'bg-gold/15 text-gold border border-gold/30 font-bold'
+                                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                              }`}
+                            >
+                              {item}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="text-center py-8 text-white/40 text-xs font-medium">
+                No matching topics found for "{searchQuery}"
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="p-4 sm:p-6 border-t border-white/5 mt-auto">
+        <div className="p-4 sm:p-6 border-t border-white/10 mt-auto bg-[#050505]">
           <Link href="/" className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
             <ArrowLeft size={16} />
             Back to ZPAY Home
@@ -500,12 +542,12 @@ export default function DocsPage() {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 bg-black min-h-screen">
-        <div className="max-w-4xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-16">
+      {/* Main Content Area - Mobile & Low End Device Optimized */}
+      <main className="flex-1 bg-black min-h-screen overflow-x-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 md:py-16">
           
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs text-white/40 mb-8 font-medium">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-white/40 mb-6 sm:mb-8 font-medium">
             <Link href="/" className="hover:text-white transition-colors">Docs</Link>
             <ChevronRight size={14} />
             <span>{currentDoc.category}</span>
@@ -514,31 +556,31 @@ export default function DocsPage() {
           </div>
 
           {/* Article Header */}
-          <div className="mb-10 border-b border-white/10 pb-8">
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">{currentDoc.title}</h1>
-            <p className="text-white/60 text-lg leading-relaxed font-medium">
+          <div className="mb-8 sm:mb-10 border-b border-white/10 pb-6 sm:pb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 text-white">{currentDoc.title}</h1>
+            <p className="text-white/60 text-base sm:text-lg leading-relaxed font-medium">
               {currentDoc.summary}
             </p>
           </div>
 
           {/* Code Snippet */}
           {currentDoc.codeSnippet && (
-            <div className="mb-12 rounded-2xl border border-white/10 bg-[#0c0c0c] overflow-hidden shadow-2xl">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 bg-white/[0.03]">
+            <div className="mb-10 sm:mb-12 rounded-2xl border border-white/10 bg-[#0c0c0c] overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/10 bg-white/[0.03]">
                 <div className="flex items-center gap-2">
                   <Code size={14} className="text-gold" />
                   <span className="text-xs font-mono text-white/70">{currentDoc.codeSnippet.filename}</span>
                 </div>
                 <button 
                   onClick={() => copyCode(currentDoc.codeSnippet!.code)}
-                  className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition-colors py-1 px-2.5 rounded bg-white/5 border border-white/10"
+                  className="flex items-center gap-1.5 text-xs text-white/60 hover:text-white transition-colors py-1 px-2.5 rounded bg-white/5 border border-white/10"
                 >
                   {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-                  <span>{copied ? 'Copied' : 'Copy Code'}</span>
+                  <span>{copied ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
-              <div className="p-5 sm:p-6 overflow-x-auto">
-                <pre className="text-sm font-mono text-white/90 leading-relaxed">
+              <div className="p-4 sm:p-6 overflow-x-auto">
+                <pre className="text-xs sm:text-sm font-mono text-white/90 leading-relaxed">
                   <code>{currentDoc.codeSnippet.code}</code>
                 </pre>
               </div>
@@ -546,13 +588,13 @@ export default function DocsPage() {
           )}
 
           {/* Article Sections */}
-          <div className="space-y-10">
+          <div className="space-y-8 sm:space-y-10">
             {currentDoc.sections.map((sec, idx) => (
               <section key={idx} className="space-y-3">
-                <h2 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
                   {sec.heading}
                 </h2>
-                <p className="text-white/60 text-base leading-relaxed font-medium">
+                <p className="text-white/60 text-sm sm:text-base leading-relaxed font-medium">
                   {sec.content}
                 </p>
               </section>
@@ -560,7 +602,7 @@ export default function DocsPage() {
           </div>
 
           {/* Footer Navigation */}
-          <div className="mt-20 pt-8 border-t border-white/10 flex items-center justify-between">
+          <div className="mt-16 sm:mt-20 pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span className="text-xs text-white/40 font-mono">ZPAY Protocol Documentation v1.4</span>
             <Link 
               href="/support"

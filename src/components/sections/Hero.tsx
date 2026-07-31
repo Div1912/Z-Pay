@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
+import { ShieldCheck, Zap, Globe } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -163,18 +164,21 @@ const Hero = () => {
           {/* Trust badges */}
           <div className="mt-6 lg:mt-8 flex flex-wrap gap-2 sm:gap-3">
             {[
-              { emoji: '🔒', label: 'Bank-Grade Security' },
-              { emoji: '⚡', label: 'Stellar Network' },
-              { emoji: '🌍', label: '140+ Countries' },
-            ].map((b) => (
-              <div
-                key={b.label}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.07] bg-white/[0.03]"
-              >
-                <span className="text-[11px]">{b.emoji}</span>
-                <span className="text-[10px] sm:text-[11px] font-semibold text-white/40 tracking-wide">{b.label}</span>
-              </div>
-            ))}
+              { Icon: ShieldCheck, label: 'Bank-Grade Security' },
+              { Icon: Zap, label: 'Stellar Network' },
+              { Icon: Globe, label: '140+ Countries' },
+            ].map((b) => {
+              const Icon = b.Icon;
+              return (
+                <div
+                  key={b.label}
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md hover:border-gold/30 hover:bg-white/[0.08] transition-all"
+                >
+                  <Icon className="w-3.5 h-3.5 text-gold" />
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-white/60 tracking-wide">{b.label}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
