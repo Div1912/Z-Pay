@@ -113,30 +113,34 @@ const LargePayments = () => {
 
                     <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-5">
                       <div className="flex items-center gap-2 sm:gap-3">
-                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-zinc-100 to-neutral-500 shadow-[0_15px_30px_rgba(255,255,255,0.1)]" />
+                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gold/20 border border-gold/40 text-gold flex items-center justify-center font-black text-xs shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                          YOU
+                        </div>
                         <span className="text-white/70 text-xs sm:text-sm font-medium">You</span>
                       </div>
-                      <div className="flex-1 h-[2px] bg-gradient-to-r from-zinc-400/60 via-white/30 to-[#a3a3a3]/60 relative rounded-full max-w-[100px] sm:max-w-[120px]">
+                      <div className="flex-1 h-[2px] bg-gradient-to-r from-gold/60 via-white/40 to-emerald-400/60 relative rounded-full max-w-[100px] sm:max-w-[120px]">
                         <motion.div 
                           animate={{ x: [0, 80, 0] }}
                           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                          className="absolute top-1/2 -translate-y-1/2 w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-white shadow-[0_0_12px_white,0_0_25px_rgba(255,255,255,0.4)]"
+                          className="absolute top-1/2 -translate-y-1/2 w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-gold shadow-[0_0_12px_#d4af37,0_0_25px_rgba(212,175,55,0.6)]"
                         />
                       </div>
                       <div className="flex items-center gap-2 sm:gap-3">
                         <span className="text-white/70 text-xs sm:text-sm font-medium">Alex</span>
-                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-gradient-to-br from-neutral-200 to-neutral-500 shadow-[0_15px_30px_rgba(255,255,255,0.1)]" />
+                        <div className="w-10 sm:w-11 md:w-12 aspect-square rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-black text-xs shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+                          ALEX
+                        </div>
                       </div>
                     </div>
 
                     <div className="space-y-3 sm:space-y-4 py-4 sm:py-5 md:py-6 border-y border-white/[0.06]">
                       <div className="flex items-center justify-between text-xs sm:text-sm">
                         <span className="text-white/40">Network Fee</span>
-                        <span className="text-white/70 font-medium">$0.01</span>
+                        <span className="text-white/80 font-mono font-medium">0.00001 XLM ($0.00001)</span>
                       </div>
                       <div className="flex items-center justify-between text-xs sm:text-sm">
                         <span className="text-white/40">Processing Time</span>
-                        <span className="text-green-400 font-bold">~3 seconds</span>
+                        <span className="text-emerald-400 font-bold">~1.8 seconds (Finalized)</span>
                       </div>
                     </div>
 
