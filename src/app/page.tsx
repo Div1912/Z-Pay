@@ -5,6 +5,8 @@ import Hero from "@/components/sections/Hero";
 import StatsBar from "@/components/sections/StatsBar";
 import QuickActions from "@/components/sections/QuickActions";
 import AgenticSection from "@/components/sections/AgenticSection";
+import EscrowSection from "@/components/sections/EscrowSection";
+import X402Section from "@/components/sections/X402Section";
 import HowItWorks from "@/components/sections/HowItWorks";
 import CardsSection from "@/components/sections/CardsSection";
 import LargePayments from "@/components/sections/LargePayments";
@@ -21,6 +23,8 @@ export default function LandingPage() {
       <StatsBar />
       <QuickActions />
       <AgenticSection />
+      <EscrowSection />
+      <X402Section />
       <HowItWorks />
       <CardsSection />
       <LargePayments />
