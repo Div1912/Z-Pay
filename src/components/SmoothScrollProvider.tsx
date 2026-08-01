@@ -25,27 +25,29 @@ export default function SmoothScrollProvider({
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.1,              // Slightly faster — snappier feel
-      easing: (t) => 1 - Math.pow(1 - t, 3), // Ease out cubic — natural decel
+      duration: 1.0,              // Fast, responsive smooth scroll
+      easing: (t) => 1 - Math.pow(1 - t, 3), // Natural deceleration
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,         // Native feel
-      touchMultiplier: 1.5,       // Responsive touch
+      wheelMultiplier: 1.1,       // Snappy response
+      touchMultiplier: 1.2,       // Responsive mobile touch
       infinite: false,
     });
 
     lenisRef.current = lenis;
 
-    // Sync Lenis scroll with GSAP ScrollTrigger via the shared ticker
+    // Sync Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Use gsap.ticker for the RAF loop — single RAF, not two competing ones
+    // Single RAF loop using GSAP ticker
     const onTick = (time: number) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(onTick);
-    gsap.ticker.lagSmoothing(0); // Disable lag smoothing — prevents frame skips
+    
+    // Enable adaptive lag smoothing: if a heavy frame occurs, catch up smoothly over 33ms instead of janking
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       lenis.destroy();

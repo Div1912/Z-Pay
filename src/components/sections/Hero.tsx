@@ -15,30 +15,33 @@ const Hero = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const orbRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
-  const [showSpline, setShowSpline] = useState(false);
 
-  // RAF-based mouse tracking — zero framer-motion overhead, pure GPU transforms
+  // RAF-based mouse tracking with throttle
   const targetX = useRef(0);
   const targetY = useRef(0);
   const currentX = useRef(0);
   const currentY = useRef(0);
   const rafId = useRef<number>(0);
+  const isHovering = useRef(false);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    targetX.current = e.clientX - 300;
-    targetY.current = e.clientY - 300;
+    isHovering.current = true;
+    targetX.current = e.clientX - 250;
+    targetY.current = e.clientY - 250;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    isHovering.current = false;
   }, []);
 
   useEffect(() => {
     setIsMounted(true);
-    const timer = setTimeout(() => setShowSpline(true), 600);
 
-    // Smooth lerp loop — much faster than framer-motion springs
     const loop = () => {
-      currentX.current += (targetX.current - currentX.current) * 0.06;
-      currentY.current += (targetY.current - currentY.current) * 0.06;
-      if (orbRef.current) {
-        orbRef.current.style.transform = `translate(${currentX.current}px, ${currentY.current}px)`;
+      if (isHovering.current && orbRef.current) {
+        currentX.current += (targetX.current - currentX.current) * 0.08;
+        currentY.current += (targetY.current - currentY.current) * 0.08;
+        orbRef.current.style.transform = `translate3d(${currentX.current}px, ${currentY.current}px, 0)`;
       }
       rafId.current = requestAnimationFrame(loop);
     };
@@ -46,65 +49,68 @@ const Hero = () => {
 
     const el = sectionRef.current;
     el?.addEventListener('mousemove', handleMouseMove, { passive: true });
+    el?.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     return () => {
-      clearTimeout(timer);
       cancelAnimationFrame(rafId.current);
       el?.removeEventListener('mousemove', handleMouseMove);
+      el?.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, handleMouseLeave]);
 
+  // Smooth GSAP timeline for scroll fade out
   useEffect(() => {
     if (!isMounted) return;
 
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 1024px)", () => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        pin: contentRef.current,
-        pinSpacing: false,
-        scrub: 1,
-        onUpdate: (self) => {
-          const p = self.progress;
-          if (contentRef.current) {
-            contentRef.current.style.opacity = String(Math.max(0, 1 - p * 1.5));
-            contentRef.current.style.transform = `scale(${1 - p * 0.05}) translateY(${p * -80}px) translateZ(0)`;
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
+        gsap.to(contentRef.current, {
+          opacity: 0.2,
+          y: -40,
+          scale: 0.98,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
           }
-        }
+        });
       });
-    });
+    }, sectionRef);
 
-    return () => mm.revert();
+    return () => ctx.revert();
   }, [isMounted]);
 
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full bg-black overflow-x-hidden"
+      className="relative min-h-[100dvh] w-full bg-black overflow-hidden"
     >
-      {/* Subtle grain texture — premium depth, no performance cost */}
+      {/* Grain overlay */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-[1] mix-blend-overlay select-none"
         style={{
-          opacity: 0.03,
+          opacity: 0.025,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           backgroundSize: '128px 128px',
         }}
       />
 
-      {/* Mouse orb — direct DOM, no React state */}
+      {/* Mouse Orb - GPU accelerated */}
       {isMounted && (
         <div
           ref={orbRef}
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] rounded-full hidden lg:block"
+          className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] rounded-full hidden lg:block opacity-40"
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 70%)',
-            filter: 'blur(60px)',
+            background: 'radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(255,255,255,0) 70%)',
+            filter: 'blur(50px)',
             willChange: 'transform',
+            transform: 'translate3d(0,0,0)',
           }}
         />
       )}
@@ -113,21 +119,21 @@ const Hero = () => {
       
       <div 
         ref={contentRef}
-        className="flex flex-row min-h-[100dvh] lg:h-screen w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center pt-24 lg:pt-20 pb-20 lg:pb-0"
+        className="flex flex-col lg:flex-row min-h-[100dvh] w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center justify-between pt-28 lg:pt-20 pb-16 lg:pb-0"
         style={{ willChange: 'transform, opacity' }}
       >
         {/* Left: Typography + CTA */}
-        <div className="w-[55%] sm:w-[60%] lg:flex-1 flex flex-col justify-center py-4 lg:py-0 relative z-20">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center py-4 lg:py-0 relative z-20">
           
           {/* Live badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl w-fit mb-6 lg:mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit mb-6 lg:mb-8">
             <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
             <span className="text-white/70 text-[10px] lg:text-[11px] font-bold tracking-widest uppercase">
               Live on Stellar Mainnet
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-widest bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 pb-2">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-widest bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 pb-2">
             Agentic <br />
             Payment <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500">Router</span>
@@ -182,16 +188,12 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right: Spline 3D */}
-        <div className="w-[45%] sm:w-[40%] h-[40vh] min-h-[300px] sm:min-h-[500px] lg:flex-1 lg:h-[90vh] relative lg:ml-10 overflow-visible pointer-events-auto flex items-center justify-center">
-          {showSpline && (
-            <div className="w-[200%] sm:w-[140%] lg:w-[140%] h-[200%] sm:h-[140%] lg:h-[140%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <SplineScene 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full relative z-10"
-              />
-            </div>
-          )}
+        {/* Right: Spline 3D Scene / Cyber Agent Visual */}
+        <div className="w-full lg:w-1/2 h-[45vh] min-h-[350px] lg:h-[80vh] relative lg:ml-6 flex items-center justify-center">
+          <SplineScene 
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full relative z-10"
+          />
         </div>
       </div>
       
