@@ -13,23 +13,23 @@ interface GlowOrbProps {
 export const GlowOrb: React.FC<GlowOrbProps> = ({
   className,
   color = 'gold',
-  size = 'w-[40vw] max-w-[500px] aspect-square',
+  size = 'w-[40vw] max-w-[400px] aspect-square',
   position = 'absolute top-1/4 left-1/4',
-  blur = 'blur-[100px] md:blur-[150px]',
-  opacity = 'opacity-100',
+  blur = 'blur-[40px] md:blur-[50px]',
+  opacity = 'opacity-40',
 }) => {
   const colorMap = {
-    primary: 'bg-primary/40',
-    gold: 'bg-gold/40',
+    primary: 'bg-primary/20',
+    gold: 'bg-gold/20',
     purple: 'bg-purple-600/10',
     blue: 'bg-blue-600/10',
-    zinc: 'bg-[#27272a]/30'
+    zinc: 'bg-[#27272a]/20'
   };
 
   return (
     <div 
       className={cn(
-        "rounded-full pointer-events-none z-0",
+        "rounded-full pointer-events-none z-0 gpu-accelerate",
         position,
         size,
         blur,
@@ -37,6 +37,7 @@ export const GlowOrb: React.FC<GlowOrbProps> = ({
         colorMap[color],
         className
       )}
+      style={{ willChange: 'transform' }}
     />
   );
 };
