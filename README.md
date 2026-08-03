@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="380" alt="Zpay logo" src="./public/logo.png" className="rounded-[3rem] shadow-2xl shadow-blue-500/20" />
+<img width="180" alt="ZPAY Logo" src="./assets/brand/Logo.png" style="border-radius: 50%; box-shadow: 0 0 40px rgba(212,175,55,0.3);" />
 
 # Zpay — Agentic Global Payment Router
 
@@ -48,43 +48,43 @@ Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), sett
 
 ### Landing page
 
-<img width="800" alt="Landing page" src="./screenshots/Dashboard overview.png" />
+<img width="800" alt="Landing page" src="./assets/screenshots/Dashboard overview.png" />
 
 ### 1 · Dashboard overview
 
 The home of the app — wallet balance, recent transactions, quick actions for Send/Scan/Split/Vault.
 
-<img width="800" alt="Dashboard overview" src="./screenshots/Dashbaord.png" />
+<img width="800" alt="Dashboard overview" src="./assets/screenshots/Dashbaord.png" />
 
 ### 2 · Pay Indian merchants with crypto
 
 Scan any UPI QR or pick a demo merchant. The platform converts XLM/USDC to INR at a locked rate and settles UPI to the merchant.
 
-<img width="320" alt="Merchant payment flow" src="./screenshots/Pay Merchant.png" />
+<img width="320" alt="Merchant payment flow" src="./assets/screenshots/Pay Merchant.png" />
 
 ### 3 · P2P send
 
 Send to `bob@Zp` instead of `GAB6F…`. Cross-currency sends show a live FX quote with a locked window.
 
-<img width="320" alt="Send money to Universal ID" src="./screenshots/P2p.png" />
+<img width="320" alt="Send money to Universal ID" src="./assets/screenshots/P2p.png" />
 
 ### 4 · Transaction history
 
 Every payment, escrow action, split contribution, and vault event in one place — each row links to Stellar Expert for on-chain verification.
 
-<img width="700" alt="Transaction history" src="./screenshots/Transaction History.png" />
+<img width="700" alt="Transaction history" src="./assets/screenshots/Transaction History.png" />
 
-<img width="1200" alt="Verify transaction on Stellar Explorer" src="./screenshots/Transactio History1.png" />
+<img width="1200" alt="Verify transaction on Stellar Explorer" src="./assets/screenshots/Transactio History1.png" />
 
 ### 5 · Soroban escrow contracts
 
 Lock funds in a Soroban contract, mark delivered, release on completion. If something goes wrong, either party can dispute and an arbiter resolves it on-chain.
 
-<img width="1200" alt="Escrow contract dashboard" src="./screenshots/contract.png" />
+<img width="1200" alt="Escrow contract dashboard" src="./assets/screenshots/contract.png" />
 
 **ARBITER CONSOLE** - For solving Dispute between two contracted Parties.
 
-<img width="1200" alt="Escrow contract dashboard" src="./screenshots/Arbiter.png" />
+<img width="1200" alt="Escrow contract dashboard" src="./assets/screenshots/Arbiter.png" />
 
 ### 6 · Autonomous AI Agents (X-402 Protocol)
 
@@ -93,19 +93,19 @@ Z-Pay implements the cutting-edge **X-402 Protocol**, allowing autonomous AI age
 **Model Context Protocol (MCP) Server Integration:** 
 We have built a dedicated MCP server that connects directly to the Z-Pay backend. Agents can use the MCP server to query balances, resolve Universal IDs (`alice@Zp`), and securely send payments on behalf of users or as independent entities via code!
 
-![AI Agent X-402 Protocol](./screenshots/x402.png)
+![AI Agent X-402 Protocol](./assets/screenshots/x402.png)
 <br/>
-![AI Agent MCP Action](./screenshots/zpay_mcp.png)
+![AI Agent MCP Action](./assets/screenshots/zpay_mcp.png)
 
 ### 7 · Split bills *(new)*
 
 Create a bill, pick `@Zp` participants, choose **Equal** or **Custom shares**, and the app tracks who's paid and who hasn't. Each participant pays from their own balance with a single tap; the split updates in real time for everyone.
 
-![Create new split](./screenshots/split-new.png)
+![Create new split](./assets/screenshots/split-new.png)
 
-![Split detail and tracking](./screenshots/split-detail.png)
+![Split detail and tracking](./assets/screenshots/split-detail.png)
 
-![Participant paying their share](./screenshots/split-pay.png)
+![Participant paying their share](./assets/screenshots/split-pay.png)
 
 What's under the hood:
 
@@ -121,23 +121,23 @@ Two products in one tab. Live earnings ticker, animated stake progress, and a bu
 
 Lock ZPAY for 30, 60, or 90 days for **1.25% / 3.00% / 6.00%** flat reward (≈15 / 18 / 24% APR). Each active stake card shows current value, time remaining, accrued reward (animated 1 Hz), and a one-tap claim when the lock expires.
 
-![Vault overview with tier cards](./screenshots/vault-overview.png)
+![Vault overview with tier cards](./assets/screenshots/vault-overview.png)
 
-![Active stake with live current value and countdown](./screenshots/vault-active-stake.png)
+![Active stake with live current value and countdown](./assets/screenshots/vault-active-stake.png)
 
-![Stake amount and lock period selection](./screenshots/vault-stake-form.png)
+![Stake amount and lock period selection](./assets/screenshots/vault-stake-form.png)
 
 #### Compound projection (innovation)
 
 Drag the slider for amount, tap a tier — see what auto-rolling that tier yields vs simple interest over a year, with the true APY computed via discrete compounding `P × (1+r)^n − P`.
 
-![Compound vs simple interest projection](./screenshots/vault-compound.png)
+![Compound vs simple interest projection](./assets/screenshots/vault-compound.png)
 
 #### XLM Yield Pool
 
 Deposit XLM with **no lock-up**, earn ZPAY at 0.5% per XLM per day (~18% APR). Withdraw anytime; rewards accrue linearly and are paid out in ZPAY from the pool's reward bucket on withdrawal.
 
-![XLM yield pool tab](./screenshots/vault-pool.png)
+![XLM yield pool tab](./assets/screenshots/vault-pool.png)
 
 ### 9 · ZUB (ZPay Unified Balance) *(new)*
 
@@ -145,13 +145,13 @@ Abstracting blockchain fragmentation. Connect your MetaMask and deposit USDC fro
 ZPay's backend cryptographically verifies the transaction via raw RPC logs and credits your Unified Ledger. 
 Spend your cross-chain wealth instantly at any ZPay merchant on the Stellar network. No bridging delays, no gas fees at checkout.
 
-![ZPay Unified Balance](./screenshots/Zub.png)
+![ZPay Unified Balance](./assets/screenshots/Zub.png)
 
 ### 10 · CI / CD
 
 Every push runs the `ci.yml` workflow: typecheck, lint, build, contract test suite. Plus, automated Vercel deployments.
 
-[![CI passing](./screenshots/ci-passing.png)](https://github.com/Div1912/Z-Pay/actions)
+[![CI passing](./assets/screenshots/ci-passing.png)](https://github.com/Div1912/Z-Pay/actions)
 
 ### Advanced Feature: Fee Sponsorship (Gasless Transactions)
 
@@ -167,13 +167,13 @@ Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM ne
 
 **Proof:** 
 
-![fee live](./screenshots/fee.png)
+![fee live](./assets/screenshots/fee.png)
 
 
 
 ### **Metrics Dashboard**
 
-![Metric Dashboard live](./screenshots/Metric.png)
+![Metric Dashboard live](./assets/screenshots/Metric.png)
 
 **Live dashboard  showing**:
 - **DAU** (daily active users — last 14 days bar chart)
@@ -186,7 +186,7 @@ Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM ne
 
 ### Production Monitoring
 
-![Metric Dashboard live](./screenshots/Monitoring.png)
+![Metric Dashboard live](./assets/screenshots/Monitoring.png)
 
 **Real time log stream  showing** :
 - Structured event log from all API routes (level: info/warn/error)
@@ -197,7 +197,7 @@ Zpay implements **Stellar fee_bump_transaction** so the platform sponsors XLM ne
 
 We are actively building our community of developers and early adopters!
 
-![X Follower](./screenshots/x_follower.png)
+![X Follower](./assets/screenshots/x_follower.png)
 
 ---
 ### Security Checklist
@@ -386,7 +386,7 @@ Reward math: linear time-based accrual `accrued_expo = xlm_amount × BASE_REWARD
 
 ### Inter-contract call proof
 
-![Invoked Contract](./screenshots/Invoked%20Contract.png)
+![Invoked Contract](./assets/screenshots/Invoked%20Contract.png)
 
 - **Tx Hash:** `1bb09bca074eda29cb93938323c1033ea87459d683c59a05f8ce066083226faa`
 - **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/public/tx/1bb09bca074eda29cb93938323c1033ea87459d683c59a05f8ce066083226faa)
@@ -545,9 +545,30 @@ Zpay/
 │   │   └── supabase-server.ts        # Server-side getUser()
 │   └── middleware.ts                 # Auth gate for /dashboard/* and /auth/*
 ├── supabase_migration.sql
-├── supabase_split_migration.sql      # NEW
-├── supabase_savings_migration.sql    # NEW
-└── screenshots/                      # README assets
+├── supabase_split_migration.sql      # Split bill schema
+├── supabase_savings_migration.sql    # Vault/savings schema
+└── assets/                           # All project assets (organized)
+    ├── brand/                        # Official brand assets
+    │   ├── Logo.png                  # Official ZPAY logo (used on website)
+    │   ├── circuit_nodes.png         # Section background assets
+    │   ├── dashboard_hero.png
+    │   ├── gold_liquidity.png
+    │   ├── how_it_works.png
+    │   ├── quick_action_phone.jpg
+    │   ├── vision_core.png
+    │   └── crypto_vault.png
+    └── screenshots/                  # README & documentation screenshots
+        ├── Dashbaord.png
+        ├── Dashboard overview.png
+        ├── Pay Merchant.png
+        ├── P2p.png
+        ├── Transaction History.png
+        ├── contract.png
+        ├── x402.png
+        ├── split-new.png  split-detail.png  split-pay.png
+        ├── vault-overview.png  vault-active-stake.png
+        ├── Metric.png  Monitoring.png  fee.png
+        └── ... (30 total)
 ```
 
 ---

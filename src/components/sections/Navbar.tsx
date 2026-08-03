@@ -41,10 +41,9 @@ const Navbar = () => {
             scrolled ? 'bg-black/40 backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4)]' : 'bg-transparent'
           }`}>
             <Link href="/" className="flex items-center gap-3 group">
-              <Logo className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
+              <Logo className="group-hover:scale-105 transition-transform duration-300" size="default" />
               <span 
-                className="text-white font-black text-2xl tracking-tighter group-hover:text-iridescent transition-colors duration-300"
-
+                className="text-white font-black text-2xl tracking-tighter group-hover:opacity-80 transition-opacity duration-300"
               >
                 ZPAY
               </span>

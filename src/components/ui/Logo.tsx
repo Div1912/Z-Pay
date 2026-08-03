@@ -1,48 +1,87 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
 
-export function Logo({ className = "w-8 h-8", size }: { className?: string; size?: string }) {
+/**
+ * Official ZPAY Logo — uses the uploaded brand asset from /images/Logo.png.
+ * 
+ * Props:
+ *  - className   : wrapping div className
+ *  - size        : "small" | "default" | "large" — controls icon size
+ *  - showText    : whether to render the "ZPAY" wordmark next to the icon
+ */
+export function Logo({
+  className = "",
+  showText = false,
+  size = "default",
+}: {
+  className?: string;
+  showText?: boolean;
+  size?: "small" | "default" | "large";
+}) {
+  const sizePx: Record<string, number> = {
+    small: 28,
+    default: 36,
+    large: 48,
+  };
+
+  const textSizeClass: Record<string, string> = {
+    small: "text-lg",
+    default: "text-2xl",
+    large: "text-3xl",
+  };
+
+  const px = sizePx[size] ?? 36;
+
   return (
-    <div className={`relative flex items-center justify-center ${className} group cursor-pointer`}>
-      {/* Ethereal Glow */}
-      <motion.div
-        className="absolute inset-0 bg-white/20 rounded-xl blur-lg"
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.3, 0.6, 0.3],
-        }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <Image
+        src="/images/Logo.png"
+        alt="ZPAY Logo"
+        width={px}
+        height={px}
+        className="rounded-full object-cover drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"
+        priority
       />
-      
-      {/* Solid Black Glass Block */}
-      <div className="relative w-full h-full bg-black rounded-xl border border-white/20 flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:border-white/40 transition-colors duration-300">
-        
-        {/* Animated Light Sweep (Shimmer) */}
-        <motion.div
-          className="absolute top-0 w-[50px] h-[200%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-45deg]"
-          animate={{ left: ["-100%", "200%"] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-          style={{ left: "-100%" }}
-        />
-        
-        {/* The 'Z' */}
-        <svg 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="w-3/5 h-3/5 text-white relative z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+      {showText && (
+        <span
+          className={`text-white font-black ${textSizeClass[size]} tracking-tighter`}
+          style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          <path 
-            d="M6 7H18L6 17H18" 
-            stroke="currentColor" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
+          ZPAY
+        </span>
+      )}
     </div>
+  );
+}
+
+/**
+ * Standalone logo icon (no wordmark) — for compact spaces.
+ */
+export function LogoIcon({
+  className = "",
+  size = "default",
+}: {
+  className?: string;
+  size?: "small" | "default" | "large";
+}) {
+  const sizePx: Record<string, number> = {
+    small: 24,
+    default: 32,
+    large: 40,
+  };
+
+  const px = sizePx[size] ?? 32;
+
+  return (
+    <Image
+      src="/images/Logo.png"
+      alt="ZPAY"
+      width={px}
+      height={px}
+      className={`rounded-full object-cover drop-shadow-[0_0_8px_rgba(212,175,55,0.35)] ${className}`}
+      priority
+    />
   );
 }
