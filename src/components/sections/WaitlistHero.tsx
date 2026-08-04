@@ -31,6 +31,7 @@ const WaitlistHero = () => {
   const [email, setEmail] = useState('');
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAlready, setIsAlready] = useState(false);
   const [error, setError] = useState('');
 
   // Three.js Background Effect
@@ -111,6 +112,7 @@ const WaitlistHero = () => {
       if (!res.ok || data.error) {
         setError(data.error || 'Something went wrong. Please try again.');
       } else {
+        setIsAlready(Boolean(data.already));
         setStep('success');
         setEmail('');
       }
@@ -168,9 +170,13 @@ const WaitlistHero = () => {
                     <CheckCircle2 className="w-7 h-7 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Request Received!</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {isAlready ? 'Application Already on File!' : 'Request Received!'}
+                    </h3>
                     <p className="text-white/60 text-sm leading-relaxed max-w-sm">
-                      Thanks for your interest. We review applications in batches. <strong className="text-white">If you are selected, you will receive an access code via email</strong> to activate your account.
+                      {isAlready
+                        ? "Your email is already registered on our private beta waitlist. We review applications in batches — if selected, your access code will be emailed to you."
+                        : "Thanks for your interest. We review applications in batches. If you are selected, you will receive an access code via email to activate your account."}
                     </p>
                   </div>
                   <a

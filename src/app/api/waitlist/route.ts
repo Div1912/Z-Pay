@@ -71,8 +71,19 @@ export async function POST(req: Request) {
       }]);
 
     if (insertError) {
+      // If already exists (unique constraint violation code 23505)
+      const isDuplicate = 
+        insertError.code === '23505' || 
+        insertError.message?.includes('duplicate key') || 
+        insertError.message?.includes('unique constraint') ||
+        insertError.message?.includes('waitlists_email_key');
+
+      if (isDuplicate) {
+        return NextResponse.json({ success: true, already: true });
+      }
+
       console.error('Waitlist insert error:', insertError);
-      return NextResponse.json({ error: insertError.message }, { status: 500 });
+      return NextResponse.json({ error: 'Unable to submit request. Please try again.' }, { status: 500 });
     }
 
     // Send the invite email
@@ -81,7 +92,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error('Waitlist API error:', err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: 'Unable to submit request. Please try again.' }, { status: 500 });
   }
 }
 
