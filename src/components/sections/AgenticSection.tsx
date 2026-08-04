@@ -99,34 +99,8 @@ export default function AgenticSection() {
             </h2>
 
             <p className="mt-4 lg:mt-6 text-neutral-400 text-base lg:text-xl max-w-lg leading-relaxed font-medium">
-              Z-Pay exposes a standard Model Context Protocol (MCP) server. Fuse it with any AI terminal like Claude Desktop or Cursor to give your AI agents the power to execute split contracts, bypass X402 paywalls, and audit on-chain history.
+              ZPAY exposes a standard Model Context Protocol (MCP) server. Connect it with any AI environment like Claude Desktop or Cursor to give your AI agents the capability to execute payments, query balances, and manage on-chain contracts autonomously.
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-              <div className="group relative p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-500 overflow-hidden">
-                <div className="flex flex-col gap-3 relative z-10">
-                  <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                    <Terminal className="w-5 h-5 text-white/80" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white">Universal Standard</h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed">
-                    Connect via stdio to any MCP-compatible client. No complicated setup—just add our config file to your AI agent's environment.
-                  </p>
-                </div>
-              </div>
-
-              <div className="group relative p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-500 overflow-hidden">
-                <div className="flex flex-col gap-3 relative z-10">
-                  <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-white/80" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white">Advanced Contracts</h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed">
-                    Empower your agents to natively build atomic split-revenue transactions and time-locked escrow contracts on Stellar.
-                  </p>
-                </div>
-              </div>
-            </div>
 
             {/* Call to action */}
             <div className="mt-8 lg:mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -155,7 +129,7 @@ export default function AgenticSection() {
                 <div className="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_10px_rgba(34,197,94,0.4)]" />
                 <div className="flex-1 flex justify-center items-center gap-2 text-neutral-500 text-xs font-medium pr-10">
                   <Code2 className="w-3 h-3" />
-                  <span>zpay-mcp-server — bash</span>
+                  <span>zpay mcp server: bash</span>
                 </div>
               </div>
 

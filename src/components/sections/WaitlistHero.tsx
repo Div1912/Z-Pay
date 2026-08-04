@@ -151,7 +151,7 @@ const WaitlistHero = () => {
           </h1>
 
           <p className="mt-4 text-neutral-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-medium mx-auto">
-            ZPAY is currently in <strong className="text-white">private beta</strong>. Request access — we'll email you a unique invite code to activate your account.
+            ZPAY is currently in <strong className="text-white">private beta</strong>. Submit your request below. If you are selected, you will receive an access code by email to activate your account.
           </p>
 
           {/* Form / Success state */}
@@ -162,23 +162,22 @@ const WaitlistHero = () => {
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="p-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 flex flex-col items-center gap-4"
+                  className="p-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 flex flex-col items-center gap-4 text-center"
                 >
                   <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                     <CheckCircle2 className="w-7 h-7 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Check your inbox!</h3>
-                    <p className="text-white/50 text-sm leading-relaxed">
-                      We've sent your <strong className="text-gold">unique access code</strong> to your email.<br />
-                      Use it at sign up to activate your ZPAY account.
+                    <h3 className="text-xl font-bold text-white mb-2">Request Received!</h3>
+                    <p className="text-white/60 text-sm leading-relaxed max-w-sm">
+                      Thanks for your interest. We review applications in batches. <strong className="text-white">If you are selected, you will receive an access code via email</strong> to activate your account.
                     </p>
                   </div>
                   <a
-                    href="/auth/signup"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 transition-all mt-2"
+                    href="/"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/15 bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all mt-2"
                   >
-                    Go to Sign Up <ArrowRight className="w-4 h-4" />
+                    Return to Home
                   </a>
                 </motion.div>
               ) : (

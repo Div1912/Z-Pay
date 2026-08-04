@@ -64,12 +64,6 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-4">
               <Link
-                href="/auth/login"
-                className="px-6 h-11 flex items-center justify-center text-[13px] font-bold uppercase tracking-widest text-white/80 hover:text-white transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
                 href="/waitlist"
                 className="px-8 h-11 rounded-full bg-gold text-black text-[13px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
               >
@@ -122,13 +116,6 @@ const Navbar = () => {
                 transition={{ duration: 0.4, delay: 0.4 }}
                 className="flex flex-col gap-4 w-full pt-10 border-t border-white/10"
               >
-                <Link
-                  href="/auth/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full h-16 flex items-center justify-center rounded-full border border-white/15 text-white font-black uppercase tracking-widest text-sm"
-                >
-                  Sign In
-                </Link>
                 <Link
                   href="/waitlist"
                   onClick={() => setMobileMenuOpen(false)}

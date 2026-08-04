@@ -106,7 +106,7 @@ const FooterCTA = () => {
             viewport={{ once: true }}
             className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-lg mb-8 sm:mb-10 md:mb-14"
           >
-            Fast, secure, and borderless payments — powered by ZPAY on Stellar.
+            Fast, secure, and borderless payments powered by ZPAY on Stellar.
           </motion.p>
 
           <motion.div
@@ -128,10 +128,10 @@ const FooterCTA = () => {
               </span>
             </Link>
             <Link
-              href="/auth/login"
+              href="/features"
               className="flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full border border-white/15 px-8 sm:px-10 md:px-12 text-white font-black text-sm sm:text-base uppercase tracking-wider hover:bg-white/5 hover:border-white/25 transition-all duration-300 active:scale-[0.98]"
             >
-              Sign In
+              Explore Features
             </Link>
           </motion.div>
         </div>

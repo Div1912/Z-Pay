@@ -34,7 +34,7 @@ const pillars = [
     border: 'border-white/10',
     bg: 'bg-white/5',
     title: 'Sub-Cent Settlement Fees',
-    desc: 'Execute enterprise escrows or freelance milestones for $0.00001 in network gas — regardless of contract size or capital locked.',
+    desc: 'Execute enterprise escrows or freelance milestones for $0.00001 in network gas regardless of contract size or capital locked.',
   },
 ];
 
@@ -76,7 +76,7 @@ export default function EscrowSection() {
           </h2>
 
           <p className="text-white/55 text-lg sm:text-xl font-medium leading-relaxed max-w-2xl">
-            Lock capital on-chain inside audited Soroban smart contracts. Release funds programmatically when milestone deliverables or API triggers are cryptographically verified — no humans in the loop.
+            Lock capital on-chain inside audited Soroban smart contracts. Release funds programmatically when milestone deliverables or API triggers are cryptographically verified with zero humans in the loop.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export default function EscrowSection() {
                         </div>
                       </div>
                       <div className="text-xs font-mono font-semibold text-emerald-400/80 shrink-0 ml-2">
-                        {isVisible ? m.time : '—'}
+                        {isVisible ? m.time : 'Pending'}
                       </div>
                     </div>
                   );

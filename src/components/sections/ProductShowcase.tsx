@@ -12,8 +12,8 @@ const tabs = [
     label: 'Dashboard',
     icon: LayoutDashboard,
     title: 'Your Financial Command Centre',
-    description: 'Real-time balance, live transaction feed, quick actions — everything at a glance. Built for speed, designed for clarity.',
-    image: '/images/dashboard_hero.png',
+    description: 'Real-time balance, live transaction feed, and quick actions in one unified view. Built for speed, designed for clarity.',
+    image: '/images/showcase_dashboard.png',
     badge: 'Live on Mainnet',
     badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
   },
@@ -22,8 +22,8 @@ const tabs = [
     label: 'P2P Send',
     icon: ArrowLeftRight,
     title: 'Send to Names, Not Addresses',
-    description: 'Type bob@Zp instead of a 56-character Stellar key. Cross-currency sends with live FX quotes locked for 30 seconds.',
-    image: '/images/quick_action_phone.jpg',
+    description: 'Type bob@Zp instead of a 56 character Stellar key. Cross currency sends with live FX quotes locked for 30 seconds.',
+    image: '/images/showcase_p2p.png',
     badge: '~3s Settlement',
     badgeColor: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
   },
@@ -32,8 +32,8 @@ const tabs = [
     label: 'Escrow',
     icon: ShieldCheck,
     title: 'Trustless Escrow Contracts',
-    description: 'Lock funds in a Soroban smart contract, mark delivered, release on completion. Built-in arbiter for dispute resolution.',
-    image: '/images/circuit_nodes.png',
+    description: 'Lock funds in a Soroban smart contract, mark delivered, and release on completion. Built-in arbiter for dispute resolution.',
+    image: '/images/showcase_escrow.png',
     badge: 'On-Chain',
     badgeColor: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
   },
@@ -42,9 +42,9 @@ const tabs = [
     label: 'AI Agents',
     icon: Bot,
     title: 'Autonomous Payment Agents',
-    description: 'AI agents that hold balances, parse smart invoices, and autonomously execute payments on your behalf via the X-402 protocol.',
-    image: '/images/vision_core.png',
-    badge: 'X-402 Protocol',
+    description: 'AI agents that hold balances, parse smart invoices, and autonomously execute payments on your behalf via the x402 protocol.',
+    image: '/images/showcase_agents.png',
+    badge: 'x402 Protocol',
     badgeColor: 'bg-gold/10 border-gold/20 text-gold',
   },
   {
@@ -52,8 +52,8 @@ const tabs = [
     label: 'Vault',
     icon: PiggyBank,
     title: 'On-Chain Yield Vault',
-    description: 'Fixed-term ZPAY staking (30/60/90 days, up to 6%) plus a no-lock XLM yield pool that mints ZPAY rewards daily.',
-    image: '/images/gold_liquidity.png',
+    description: 'Fixed-term ZPAY staking plus an instant XLM yield pool that mints ZPAY rewards daily on-chain.',
+    image: '/images/showcase_vault.png',
     badge: 'Up to 6% APY',
     badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
   },
@@ -98,7 +98,7 @@ export default function ProductShowcase() {
           </h2>
 
           <p className="text-white/50 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Not a mockup. Not a prototype. A fully deployed product running live on Stellar Mainnet — explore every feature below.
+            Not a mockup. Not a prototype. A fully deployed product running live on Stellar Mainnet. Explore key features below.
           </p>
         </motion.div>
 

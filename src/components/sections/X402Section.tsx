@@ -80,7 +80,7 @@ export default function X402Section() {
           </h2>
 
           <p className="text-white/55 text-lg sm:text-xl font-medium leading-relaxed max-w-2xl">
-            Eliminate API subscriptions. Let your AI agents pay fractions of a cent per call, autonomously, via native HTTP 402 header interception — no humans, no credit cards, no friction.
+            Eliminate API subscriptions. Let your AI agents pay fractions of a cent per call autonomously via native HTTP 402 header interception with zero humans, zero credit cards, and zero friction.
           </p>
         </div>
 
@@ -152,11 +152,11 @@ export default function X402Section() {
 
 const client = new ZPay({ apiKey: process.env.ZPAY_SECRET_KEY });
 
-// 3 lines. Your agent now pays per API call — autonomously.
+// 3 lines. Your agent now pays per API call autonomously.
 const response = await client.x402.fetch('https://api.data-vendor.com/v1/query');
 
 // ZPAY intercepts HTTP 402, settles 0.001 USDC via Stellar in 1.8s,
-// and retries the request — all without human intervention.`}
+// and retries the request with zero human intervention.`}
           </pre>
         </div>
 

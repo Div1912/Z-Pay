@@ -118,7 +118,7 @@ export default function SignupPage() {
               <span className="block text-white whitespace-nowrap">
                 {codeStep === 'code' ? 'Enter Your' : 'Join'}
               </span>
-              <span className="block bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="block text-zinc-400 whitespace-nowrap">
                 {codeStep === 'code' ? 'Access Code' : 'ZPAY'}
               </span>
             </motion.h1>

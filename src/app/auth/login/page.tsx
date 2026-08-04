@@ -92,7 +92,7 @@ function LoginInner() {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(2rem,8vw,3.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-3 sm:mb-4"
             >
-              <span className="block bg-gradient-to-r from-gold via-[#FBBF24] to-[#27272a] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="block text-zinc-400 whitespace-nowrap">
                 Welcome
               </span>
               <span className="block text-white whitespace-nowrap">Back</span>

@@ -8,19 +8,19 @@ const steps = [
   {
     number: '01',
     title: 'Create Your ZPAY ID',
-    description: 'Link any bank account or UPI handle in under 60 seconds. Your universal identity on the Stellar network — one ID for every payment on Earth.',
+    description: 'Link any bank account or UPI handle in under 60 seconds. Your universal identity on the Stellar network for every payment on Earth.',
     Icon: UserPlus,
   },
   {
     number: '02',
     title: 'Send or Request',
-    description: 'Transact with anyone worldwide — a colleague in Tokyo, a contractor in Lagos, a merchant in São Paulo. Instant settlement, sub-cent fees, no friction.',
+    description: 'Transact with anyone worldwide including a colleague in Tokyo, a contractor in Lagos, or a merchant in São Paulo. Instant settlement, sub cent fees, and zero friction.',
     Icon: ArrowLeftRight,
   },
   {
     number: '03',
     title: 'AI Agents Transact',
-    description: 'Deploy autonomous AI agents that pay, collect, and reconcile on your behalf — 24/7, fully programmable, with cryptographic receipts for every action.',
+    description: 'Deploy autonomous AI agents that pay, collect, and reconcile on your behalf 24/7 with full programmability and cryptographic receipts for every action.',
     Icon: BotMessageSquare,
   },
 ];
@@ -80,7 +80,7 @@ const HowItWorks = () => {
           </h2>
 
           <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-xl mx-auto leading-relaxed">
-            From setup to autonomous AI transactions — the entire stack in three steps.
+            From setup to autonomous AI transactions across the entire stack in three steps.
           </p>
         </motion.div>
 

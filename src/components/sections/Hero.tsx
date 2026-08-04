@@ -131,9 +131,9 @@ const Hero = () => {
           </h1>
           
           <p className="mt-4 lg:mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-lg leading-relaxed font-medium">
-            Send money to anyone, anywhere — instantly. Your AI agents transact{' '}
+            Send money to anyone worldwide in seconds. Your AI agents transact{' '}
             <span className="text-neutral-200 font-semibold">24/7</span> on your behalf, with{' '}
-            <span className="text-neutral-200 font-semibold">sub-cent fees</span> and zero friction.
+            <span className="text-neutral-200 font-semibold">sub cent fees</span> and zero friction.
           </p>
 
           <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -161,7 +161,7 @@ const Hero = () => {
           {/* Trust badges */}
           <div className="mt-6 lg:mt-8 flex flex-wrap gap-2 sm:gap-3">
             {[
-              { Icon: ShieldCheck, label: 'Bank-Grade Security' },
+              { Icon: ShieldCheck, label: 'Bank Grade Security' },
               { Icon: Zap, label: 'Stellar Network' },
               { Icon: Globe, label: 'Global Settlement' },
             ].map(({ Icon, label }) => (

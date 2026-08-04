@@ -134,8 +134,8 @@ export default function CardsSection() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm sm:text-base">Bank-grade security</p>
-                  <p className="text-white/40 text-xs sm:text-sm">256-bit encryption</p>
+                  <p className="text-white font-bold text-sm sm:text-base">Bank grade security</p>
+                  <p className="text-white/40 text-xs sm:text-sm">256 bit encryption</p>
                 </div>
               </motion.div>
 
