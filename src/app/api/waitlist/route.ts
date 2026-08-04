@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 
+const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY && !process.env.SUPABASE_SERVICE_ROLE_KEY.startsWith('sb_secret'))
+  ? process.env.SUPABASE_SERVICE_ROLE_KEY
+  : (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '');
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  supabaseKey
 );
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 function generateInviteCode(): string {
   // Format: ZPAY-XXXX-XXXX  (uppercase alphanumeric, easy to type)
@@ -82,6 +87,10 @@ export async function POST(req: Request) {
 
 async function sendInviteEmail(email: string, code: string) {
   try {
+    if (!resend) {
+      console.log(`[Waitlist] Saved ${email} with code ${code} (Resend not configured)`);
+      return;
+    }
     await resend.emails.send({
       from: 'ZPAY <noreply@zpayrouter.me>',
       to: email,

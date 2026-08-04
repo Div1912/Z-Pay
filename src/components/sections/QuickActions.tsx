@@ -180,28 +180,51 @@ export default function QuickActions() {
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div 
                 ref={phoneRef}
-                className="relative w-[260px] sm:w-[300px] md:w-[330px] lg:w-[350px]"
+                className="relative w-[270px] sm:w-[310px] md:w-[340px] lg:w-[360px]"
                 style={{ perspective: '1000px' }}
               >
-                {/* Ambient glow behind smartphone */}
-                <div className="absolute -inset-10 sm:-inset-14 md:-inset-16 bg-gradient-to-b from-gold/15 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[70px] sm:blur-[90px] opacity-70" />
+                {/* Ambient gold glow behind iPhone */}
+                <div className="absolute -inset-10 sm:-inset-16 bg-gradient-to-b from-gold/20 via-white/5 to-transparent rounded-[90px] blur-[80px] opacity-75 pointer-events-none" />
                 
-                {/* Smartphone Device Frame */}
-                <div className="relative w-full aspect-[1074/2061] rounded-[42px] sm:rounded-[48px] md:rounded-[54px] p-2 sm:p-2.5 bg-gradient-to-b from-[#2a2a2a] via-[#1a1a1a] to-[#121212] border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]">
-                  {/* Screen viewport */}
-                  <div className="relative w-full h-full rounded-[34px] sm:rounded-[40px] md:rounded-[46px] overflow-hidden bg-black">
-                    <Image
-                      src="/images/quick_action_phone.jpg"
-                      alt="ZPAY Quick Actions Mobile App"
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 768px) 300px, 350px"
-                      priority
-                      unoptimized
-                    />
+                {/* iPhone 15 Pro Max Outer Chassis (Titanium Frame with Side Buttons) */}
+                <div className="relative">
+                  {/* Left Side Buttons: Action Button & Volume */}
+                  <div className="absolute -left-[3px] top-[95px] sm:top-[110px] w-[3px] h-[22px] sm:h-[26px] bg-[#3a3a3c] rounded-l-sm z-30" />
+                  <div className="absolute -left-[3px] top-[130px] sm:top-[150px] w-[3px] h-[44px] sm:h-[50px] bg-[#3a3a3c] rounded-l-sm z-30" />
+                  <div className="absolute -left-[3px] top-[185px] sm:top-[210px] w-[3px] h-[44px] sm:h-[50px] bg-[#3a3a3c] rounded-l-sm z-30" />
+                  
+                  {/* Right Side Button: Power / Lock */}
+                  <div className="absolute -right-[3px] top-[140px] sm:top-[160px] w-[3px] h-[65px] sm:h-[75px] bg-[#3a3a3c] rounded-r-sm z-30" />
+
+                  {/* Titanium Phone Body */}
+                  <div className="relative w-full aspect-[1074/2061] rounded-[48px] sm:rounded-[54px] md:rounded-[60px] p-[6px] sm:p-[8px] bg-gradient-to-b from-[#3a3a3c] via-[#1c1c1e] to-[#121214] border-[2.5px] border-[#48484a] shadow-[0_40px_90px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.12)]">
                     
-                    {/* Subtle glass reflection */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-white/[0.07]" />
+                    {/* Inner Black Bezel Frame */}
+                    <div className="relative w-full h-full rounded-[42px] sm:rounded-[48px] md:rounded-[52px] overflow-hidden bg-black border border-white/[0.08]">
+                      
+                      {/* Dynamic Island */}
+                      <div className="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 w-[90px] sm:w-[105px] h-[24px] sm:h-[28px] bg-black rounded-full z-40 flex items-center justify-between px-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.8)] border border-white/5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#0a0a14] border border-[#1f1f2e] shadow-inner" />
+                        <div className="w-2 h-2 rounded-full bg-[#0d0d18] border border-[#1a1a24]" />
+                      </div>
+
+                      {/* Screen Content Image */}
+                      <Image
+                        src="/images/quick_action_phone.jpg"
+                        alt="ZPAY iPhone 15 Pro Max Quick Actions"
+                        fill
+                        className="object-cover object-top"
+                        sizes="(max-width: 768px) 310px, 360px"
+                        priority
+                        unoptimized
+                      />
+                      
+                      {/* Realistic Glass Reflection Overlay */}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-white/[0.08] z-20" />
+
+                      {/* iOS Home Indicator Bar */}
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 sm:w-32 h-[3.5px] rounded-full bg-white/40 z-30 pointer-events-none backdrop-blur-sm" />
+                    </div>
                   </div>
                 </div>
               </div>
