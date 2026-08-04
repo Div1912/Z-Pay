@@ -3,6 +3,7 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import StatsBar from "@/components/sections/StatsBar";
+import ProductShowcase from "@/components/sections/ProductShowcase";
 import QuickActions from "@/components/sections/QuickActions";
 import AgenticSection from "@/components/sections/AgenticSection";
 import EscrowSection from "@/components/sections/EscrowSection";
@@ -21,6 +22,7 @@ export default function LandingPage() {
       <Navbar />
       <Hero />
       <StatsBar />
+      <ProductShowcase />
       <QuickActions />
       <AgenticSection />
       <EscrowSection />

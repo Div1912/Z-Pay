@@ -179,8 +179,52 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right: Spline 3D Scene / Cyber Agent Visual */}
+        {/* Right: Spline 3D Scene with CSS fallback visual */}
         <div className="w-full lg:w-1/2 h-[45vh] min-h-[350px] lg:h-[80vh] relative lg:ml-6 flex items-center justify-center">
+          {/* Fallback visual — always visible behind Spline */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* Animated rings */}
+            <div className="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] lg:w-[380px] lg:h-[380px]">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="absolute inset-0 rounded-full border border-white/[0.08]"
+                  style={{
+                    margin: `${i * 40}px`,
+                    animation: `spin ${18 + i * 6}s linear infinite ${i % 2 === 0 ? '' : 'reverse'}`,
+                  }}
+                />
+              ))}
+              {/* Center Z glyph */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-neutral-100 via-neutral-300 to-neutral-600 p-0.5 shadow-[0_0_60px_rgba(212,175,55,0.25)]">
+                  <div className="w-full h-full rounded-[14px] bg-black flex items-center justify-center">
+                    <span className="text-white font-black text-4xl sm:text-5xl tracking-tighter">Z</span>
+                  </div>
+                </div>
+              </div>
+              {/* Floating payment badges */}
+              <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-md"
+                style={{ animation: 'float1 4s ease-in-out infinite' }}>
+                <span className="text-emerald-400 text-xs font-bold">⚡ ~3s Settlement</span>
+              </div>
+              <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 backdrop-blur-md"
+                style={{ animation: 'float2 5s ease-in-out infinite' }}>
+                <span className="text-gold text-xs font-bold">$0.00001 Fee</span>
+              </div>
+              <div className="absolute top-1/2 -right-8 sm:-right-14 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md -translate-y-1/2"
+                style={{ animation: 'float3 6s ease-in-out infinite' }}>
+                <span className="text-white/60 text-xs font-bold">🌐 140+ Countries</span>
+              </div>
+            </div>
+          </div>
+          <style>{`
+            @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes float1 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+            @keyframes float2 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(10px); } }
+            @keyframes float3 { 0%,100% { transform: translateY(-50%) translateX(0px); } 50% { transform: translateY(-50%) translateX(6px); } }
+          `}</style>
+          {/* Spline loads on top — overlays fallback when ready */}
           <SplineScene 
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
             className="w-full h-full relative z-10"

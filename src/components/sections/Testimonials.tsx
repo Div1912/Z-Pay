@@ -14,32 +14,32 @@ const testimonials = [
     name: "Arjun Mehta",
     role: "CTO",
     company: "Razorpay Alumni",
-    avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/MTCdyknEZ6K2ax3LLBbVHtBM7M-5.jpg",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ArjunMehta&backgroundColor=b6e3f4&radius=50",
     content: "We integrated ZPAY's agent API into our payroll system. 40,000 contractor payments settled in under 3 seconds each. Nothing else in the ecosystem comes close to this throughput.",
   },
   {
     name: "Sarah Chen",
     role: "Head of Finance",
     company: "Stripe Atlas",
-    avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2AdjhgGSRqD2VZDKSrMJb5N9Q6E-6.jpg",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen&backgroundColor=ffd5dc&radius=50",
     content: "Cross-border invoicing used to take 3–5 banking days. With ZPAY on Stellar, our international contractors are paid in under 30 seconds. Genuinely game-changing for global ops.",
   },
   {
     name: "Rohan Verma",
     role: "Founder",
     company: "IndieStack",
-    avatar: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2GAIa4aljQ4HQPQHRXkDzyxibQ-8.jpg",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RohanVerma&backgroundColor=c0aede&radius=50",
     content: "Built my entire SaaS billing layer on ZPAY's agent infrastructure. Zero payment failures in 8 months. The reliability and auditability of every transaction is simply unreal.",
   }
 ];
 
 const floatingAvatars = [
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/ep3WtFJc4KygwxgrK2Xxrs95gYU-12.jpg", x: -220, y: -100, size: 50, delay: 0 },
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/TNtuoxBc6yC6iK5VvRwJGjVCE-9.jpg", x: 240, y: -80, size: 56, delay: 0.1 },
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/ZpKTVWIekOOBsA7RAV6WGYM9P5g-10.jpg", x: -260, y: 50, size: 44, delay: 0.2 },
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/MTCdyknEZ6K2ax3LLBbVHtBM7M-5.jpg", x: 280, y: 70, size: 48, delay: 0.3 },
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2AdjhgGSRqD2VZDKSrMJb5N9Q6E-6.jpg", x: -160, y: 120, size: 40, delay: 0.4 },
-  { src: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/444e51b9-051c-45a2-817e-a2beaf675512-payer-framer-website/assets/images/2GAIa4aljQ4HQPQHRXkDzyxibQ-8.jpg", x: 180, y: 130, size: 36, delay: 0.5 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user1&backgroundColor=b6e3f4", x: -220, y: -100, size: 50, delay: 0 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user2&backgroundColor=ffd5dc", x: 240, y: -80, size: 56, delay: 0.1 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user3&backgroundColor=c0aede", x: -260, y: 50, size: 44, delay: 0.2 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user4&backgroundColor=d1f4e0", x: 280, y: 70, size: 48, delay: 0.3 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user5&backgroundColor=ffe4c4", x: -160, y: 120, size: 40, delay: 0.4 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user6&backgroundColor=f0d9ff", x: 180, y: 130, size: 36, delay: 0.5 },
 ];
 
 const Testimonials = () => {

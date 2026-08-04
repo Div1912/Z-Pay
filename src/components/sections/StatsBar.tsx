@@ -11,9 +11,9 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { prefix: '$', value: 2, suffix: 'B+', label: 'Transacted' },
-  { prefix: '', value: 140, suffix: '+', label: 'Countries' },
-  { prefix: '', value: 500, suffix: 'K+', label: 'Active Users' },
+  { prefix: '', value: 50, suffix: '+', label: 'Mainnet Users' },
+  { prefix: '', value: 140, suffix: '+', label: 'Countries Supported' },
+  { prefix: '', value: 3, suffix: 's', label: 'Avg. Settlement' },
   { prefix: '', value: 99.99, suffix: '%', label: 'Uptime SLA' },
 ];
 

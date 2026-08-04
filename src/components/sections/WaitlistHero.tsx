@@ -1,205 +1,105 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
-import { 
-  Scene, 
-  PerspectiveCamera, 
-  WebGLRenderer, 
-  QuadraticBezierCurve3, 
-  Vector3, 
-  TubeGeometry, 
-  ShaderMaterial, 
-  Mesh, 
-  AdditiveBlending, 
-  DoubleSide 
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  QuadraticBezierCurve3,
+  Vector3,
+  TubeGeometry,
+  ShaderMaterial,
+  Mesh,
+  AdditiveBlending,
+  DoubleSide
 } from "three";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Spotlight } from "@/components/ui/spotlight";
+import { Mail, Loader2, CheckCircle2, ArrowRight, Sparkles, Users, Zap, ShieldCheck } from 'lucide-react';
+
+const perks = [
+  { icon: Zap, label: '~3s settlements on Stellar' },
+  { icon: ShieldCheck, label: 'Soroban escrow contracts' },
+  { icon: Users, label: 'Split bills & group payments' },
+  { icon: Sparkles, label: 'AI agents via X-402 protocol' },
+];
 
 const WaitlistHero = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const animationIdRef = useRef<number>(0);
-  
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 8,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [email, setEmail] = useState('');
+  const [step, setStep] = useState<'form' | 'success'>('form');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   // Three.js Background Effect
   useEffect(() => {
     if (!canvasRef.current) return;
-
     const scene = new Scene();
     const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new WebGLRenderer({
-      antialias: true,
-      alpha: true,
-    });
-
+    const renderer = new WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 1);
     canvasRef.current.appendChild(renderer.domElement);
 
     const curve = new QuadraticBezierCurve3(
-      new Vector3(-15, -4, 0), 
-      new Vector3(2, 3, 0), 
+      new Vector3(-15, -4, 0),
+      new Vector3(2, 3, 0),
       new Vector3(18, 0.8, 0)
     );
 
-    const tubeGeometry = new TubeGeometry(curve, 200, 0.8, 32, false);
-
     const vertexShader = `
       varying vec2 vUv;
-      varying vec3 vPosition;
-      void main() {
-        vUv = uv;
-        vPosition = position;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
+      void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
     `;
-
     const fragmentShader = `
-      uniform float time;
-      varying vec2 vUv;
-      varying vec3 vPosition;
+      uniform float time; varying vec2 vUv;
       void main() {
-        vec3 color1 = vec3(0.8, 0.8, 0.8); // Silver
-        vec3 color2 = vec3(0.3, 0.3, 0.3); // Dark Gray
-        vec3 color3 = vec3(1.0, 1.0, 1.0); // White
-        
-        vec3 finalColor = mix(color1, color2, vUv.x);
-        finalColor = mix(finalColor, color3, vUv.x * 0.7);
-        
-        float glow = 1.0 - abs(vUv.y - 0.5) * 2.0;
-        glow = pow(glow, 2.0);
-        
-        float fade = 1.0;
-        if (vUv.x > 0.85) {
-          fade = 1.0 - smoothstep(0.85, 1.0, vUv.x);
-        }
-        
+        vec3 col = mix(vec3(0.8,0.8,0.8), vec3(1.0,1.0,1.0), vUv.x * 0.7);
+        float glow = pow(1.0 - abs(vUv.y - 0.5) * 2.0, 2.0);
+        float fade = vUv.x > 0.85 ? 1.0 - smoothstep(0.85, 1.0, vUv.x) : 1.0;
         float pulse = sin(time * 2.0) * 0.1 + 0.9;
-        gl_FragColor = vec4(finalColor * glow * pulse * fade, glow * fade * 0.4);
+        gl_FragColor = vec4(col * glow * pulse * fade, glow * fade * 0.4);
       }
     `;
 
-    const material = new ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms: { time: { value: 0 } },
-      transparent: true,
-      blending: AdditiveBlending,
-      side: DoubleSide,
-    });
-
-    const lightStreak = new Mesh(tubeGeometry, material);
-    scene.add(lightStreak);
-
-    const glowGeometry = new TubeGeometry(curve, 200, 2.0, 32, false);
-    const glowMaterial = new ShaderMaterial({
-      vertexShader,
-      fragmentShader: `
-        uniform float time;
-        varying vec2 vUv;
-        varying vec3 vPosition;
-        void main() {
-          vec3 color1 = vec3(0.4, 0.4, 0.4);
-          vec3 color2 = vec3(0.1, 0.1, 0.1);
-          vec3 finalColor = mix(color1, color2, vUv.x);
-          
-          float glow = 1.0 - abs(vUv.y - 0.5) * 2.0;
-          glow = pow(glow, 4.0);
-          
-          float fade = 1.0;
-          if (vUv.x > 0.85) {
-            fade = 1.0 - smoothstep(0.85, 1.0, vUv.x);
-          }
-          float pulse = sin(time * 1.5) * 0.05 + 0.95;
-          gl_FragColor = vec4(finalColor * glow * pulse * fade, glow * fade * 0.15);
-        }
-      `,
-      uniforms: { time: { value: 0 } },
-      transparent: true,
-      blending: AdditiveBlending,
-      side: DoubleSide,
-    });
-
-    const glowLayer = new Mesh(glowGeometry, glowMaterial);
-    scene.add(glowLayer);
+    const mat = new ShaderMaterial({ vertexShader, fragmentShader, uniforms: { time: { value: 0 } }, transparent: true, blending: AdditiveBlending, side: DoubleSide });
+    const mesh = new Mesh(new TubeGeometry(curve, 200, 0.8, 32, false), mat);
+    scene.add(mesh);
 
     camera.position.z = 7;
     camera.position.y = -0.8;
 
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate);
-      const time = Date.now() * 0.001;
-      material.uniforms.time.value = time;
-      glowMaterial.uniforms.time.value = time;
-
-      lightStreak.rotation.z = Math.sin(time * 0.2) * 0.02;
-      glowLayer.rotation.z = Math.sin(time * 0.2) * 0.02;
-
+      mat.uniforms.time.value = Date.now() * 0.001;
+      mesh.rotation.z = Math.sin(Date.now() * 0.0002) * 0.02;
       renderer.render(scene, camera);
     };
     animate();
 
     const handleResize = () => {
-      if (!camera || !renderer) return;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
-      if (canvasRef.current && renderer.domElement) {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationIdRef.current);
+      if (canvasRef.current && renderer.domElement.parentNode === canvasRef.current) {
         canvasRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      tubeGeometry.dispose();
-      glowGeometry.dispose();
-      material.dispose();
-      glowMaterial.dispose();
     };
-  }, []);
-
-  // Countdown timer
-  useEffect(() => {
-    const TARGET_DATE = new Date("2026-07-27T00:00:00+05:30").getTime();
-
-    const calculateTimeLeft = () => {
-      const difference = TARGET_DATE - Date.now();
-      if (difference <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-      
-      return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      };
-    };
-
-    setTimeLeft(calculateTimeLeft());
-
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    
-    return () => clearInterval(timer);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-
+    setError('');
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/waitlist', {
@@ -207,124 +107,175 @@ const WaitlistHero = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      if (res.ok) {
-        setSubmitted(true);
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        setError(data.error || 'Something went wrong. Please try again.');
+      } else {
+        setStep('success');
         setEmail('');
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setError('Network error. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="relative min-h-screen w-full bg-black overflow-hidden flex flex-col items-center justify-center pt-32 pb-20">
+    <section className="relative min-h-screen w-full bg-black overflow-hidden flex flex-col items-center justify-center pt-28 pb-20">
       {/* Three.js Background */}
       <div ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} />
-
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
-      
-      <div className="flex flex-col w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center text-center">
-        <div className="relative backdrop-blur-[2px] bg-black/20 rounded-[2rem] sm:rounded-[3rem] p-5 sm:p-8 md:p-16 w-full max-w-4xl shadow-2xl border border-white/5 overflow-hidden">
+
+      {/* Gold ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] rounded-full opacity-10"
+          style={{ background: 'radial-gradient(ellipse, rgba(212,175,55,0.6) 0%, transparent 70%)', filter: 'blur(80px)', transform: 'translateX(-50%) translateY(40%)' }} />
+      </div>
+
+      <div className="flex flex-col w-full max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center text-center gap-16">
+
+        {/* Main card */}
+        <div className="relative backdrop-blur-sm bg-black/30 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-10 md:p-16 w-full max-w-3xl border border-white/[0.07] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
           <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
-          
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl w-fit mb-8 shadow-2xl mx-auto">
-            <div className="w-2 h-2 rounded-full bg-zinc-300 shadow-[0_0_8px_#d4d4d8] animate-pulse" />
-            <span className="text-white/80 text-[10px] lg:text-[11px] font-bold tracking-widest uppercase">
-              Early Access
-            </span>
+
+          {/* Private beta badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 backdrop-blur-xl w-fit mb-8 mx-auto">
+            <div className="w-2 h-2 rounded-full bg-gold shadow-[0_0_8px_rgba(212,175,55,0.8)] animate-pulse" />
+            <span className="text-gold text-[10px] lg:text-[11px] font-bold tracking-widest uppercase">Private Beta · Invite Only</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6rem] font-extrabold leading-[1.05] tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-500 pb-4">
-            The Future of <br />
-            Payments is <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">Agentic</span>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-500 pb-4 mb-2">
+            The Future of<br />Payments is<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500">Agentic</span>
           </h1>
-          
-          <p className="mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-2xl leading-relaxed font-medium mx-auto">
-            Be the first to experience zero friction, autonomous transactions. Join the waitlist for exclusive early access to Z-Pay.
+
+          <p className="mt-4 text-neutral-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-medium mx-auto">
+            ZPAY is currently in <strong className="text-white">private beta</strong>. Request access — we'll email you a unique invite code to activate your account.
           </p>
 
-          <div className="mt-12 w-full max-w-lg mx-auto">
-            {submitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl flex flex-col items-center justify-center gap-4 shadow-2xl"
-              >
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-1">You're on the list.</h3>
-                  <p className="text-white/60 font-medium text-sm">
-                    We'll be in touch very soon.
-                  </p>
-                </div>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center justify-center relative w-full">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your work email"
-                  required
-                  disabled={isSubmitting}
-                  className="w-full sm:flex-1 h-14 min-h-[56px] rounded-full border border-white/10 bg-white/[0.03] px-6 text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all backdrop-blur-md text-base shrink-0"
-                />
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group relative h-14 min-h-[56px] rounded-full bg-white text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] overflow-hidden w-full sm:w-auto shrink-0 disabled:opacity-75 disabled:hover:scale-100"
+          {/* Form / Success state */}
+          <div className="mt-10 w-full max-w-lg mx-auto">
+            <AnimatePresence mode="wait">
+              {step === 'success' ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 flex flex-col items-center gap-4"
                 >
-                  <span className="relative z-10 flex items-center gap-2 tracking-wide">
-                    {isSubmitting ? 'JOINING...' : 'GET ACCESS'}
-                    {!isSubmitting && (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
-                        <path d="M5 12h14m-7-7 7 7-7 7" />
-                      </svg>
-                    )}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-white to-gray-200 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
-              </form>
-            )}
+                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-7 h-7 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Check your inbox!</h3>
+                    <p className="text-white/50 text-sm leading-relaxed">
+                      We've sent your <strong className="text-gold">unique access code</strong> to your email.<br />
+                      Use it at sign up to activate your ZPAY account.
+                    </p>
+                  </div>
+                  <a
+                    href="/auth/signup"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 transition-all mt-2"
+                  >
+                    Go to Sign Up <ArrowRight className="w-4 h-4" />
+                  </a>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-3"
+                >
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="relative flex-1">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email address"
+                        required
+                        disabled={isSubmitting}
+                        className="w-full h-14 rounded-full border border-white/10 bg-white/[0.04] pl-11 pr-5 text-white placeholder:text-white/30 focus:outline-none focus:border-gold/40 focus:bg-white/[0.07] transition-all backdrop-blur-md text-sm"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group relative h-14 rounded-full bg-gold text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] disabled:opacity-70 disabled:hover:scale-100 whitespace-nowrap"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          Request Access
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        </span>
+                      )}
+                    </button>
+                  </div>
+
+                  {error && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-400 text-xs text-center px-4"
+                    >
+                      {error}
+                    </motion.p>
+                  )}
+
+                  <p className="text-white/25 text-xs text-center mt-1">
+                    We'll email you a unique code · No spam, ever
+                  </p>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </div>
 
-          <div className="mt-12 flex flex-col items-center justify-center gap-4">
-            <span className="text-white/40 text-xs font-bold uppercase tracking-[0.2em]">Launching In</span>
-            <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-8 text-center bg-white/[0.02] border border-white/5 rounded-2xl px-3 sm:px-8 py-3 sm:py-4 backdrop-blur-md w-full max-w-[400px] sm:max-w-none mx-auto overflow-hidden">
-              <div>
-                <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.days.toString().padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Days</div>
+          {/* Already have a code? */}
+          {step === 'form' && (
+            <p className="mt-6 text-white/30 text-sm">
+              Already have an access code?{' '}
+              <a href="/auth/signup" className="text-white/60 hover:text-white underline underline-offset-4 transition-colors font-medium">
+                Sign up now
+              </a>
+            </p>
+          )}
+        </div>
+
+        {/* Perks row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-3xl">
+          {perks.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/[0.12] hover:bg-white/[0.04] transition-all">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
+                <Icon className="w-5 h-5 text-white/60" />
               </div>
-              <div className="text-white/20 text-3xl font-light mb-4">:</div>
-              <div>
-                <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.hours.toString().padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Hours</div>
-              </div>
-              <div className="text-white/20 text-3xl font-light mb-4">:</div>
-              <div>
-                <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.minutes.toString().padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Mins</div>
-              </div>
-              <div className="text-white/20 text-3xl font-light mb-4">:</div>
-              <div>
-                <div className="text-3xl sm:text-4xl font-light text-white font-mono">{timeLeft.seconds.toString().padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-widest mt-1">Secs</div>
-              </div>
+              <span className="text-white/50 text-xs font-medium text-center leading-snug">{label}</span>
             </div>
+          ))}
+        </div>
+
+        {/* Social proof */}
+        <div className="flex items-center gap-3">
+          <div className="flex -space-x-2">
+            {['seed=u1', 'seed=u2', 'seed=u3', 'seed=u4'].map((s) => (
+              <div key={s} className="w-8 h-8 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`https://api.dicebear.com/7.x/avataaars/svg?${s}&backgroundColor=b6e3f4,ffd5dc,c0aede`} alt="beta user" className="w-full h-full object-cover" />
+              </div>
+            ))}
           </div>
-          
+          <p className="text-white/40 text-sm font-medium">
+            <span className="text-white font-bold">50+</span> users already on Stellar Mainnet
+          </p>
         </div>
       </div>
-      
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-black/80 to-transparent z-20 pointer-events-none" />
+
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
     </section>
   );
 };
