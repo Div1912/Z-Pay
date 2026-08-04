@@ -11,35 +11,49 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: "Arjun Mehta",
-    role: "CTO",
-    company: "Razorpay Alumni",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ArjunMehta&backgroundColor=b6e3f4&radius=50",
-    content: "We integrated ZPAY's agent API into our payroll system. 40,000 contractor payments settled in under 3 seconds each. Nothing else in the ecosystem comes close to this throughput.",
+    name: "Rahul Sharma",
+    role: "Indie Developer",
+    company: "Bangalore, India",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RahulSharma&backgroundColor=b6e3f4&radius=50&skinColor=brown&hair=shortRounded",
+    content: "Sent ₹45,000 to my contractor in 3 seconds flat. No SWIFT fees, no waiting. ZPAY on Stellar is genuinely the future of Indian fintech.",
   },
   {
-    name: "Sarah Chen",
-    role: "Head of Finance",
-    company: "Stripe Atlas",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen&backgroundColor=ffd5dc&radius=50",
-    content: "Cross-border invoicing used to take 3–5 banking days. With ZPAY on Stellar, our international contractors are paid in under 30 seconds. Genuinely game-changing for global ops.",
+    name: "Priya Krishnan",
+    role: "Startup Founder",
+    company: "Chennai, India",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=PriyaKrishnan&backgroundColor=ffd5dc&radius=50&skinColor=brown",
+    content: "Used the escrow feature to pay a freelancer across 3 milestones. The Soroban contract released funds automatically on delivery — zero disputes, zero friction.",
   },
   {
-    name: "Rohan Verma",
-    role: "Founder",
-    company: "IndieStack",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RohanVerma&backgroundColor=c0aede&radius=50",
-    content: "Built my entire SaaS billing layer on ZPAY's agent infrastructure. Zero payment failures in 8 months. The reliability and auditability of every transaction is simply unreal.",
-  }
+    name: "Vikram Patel",
+    role: "CFO",
+    company: "Mumbai, India",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=VikramPatel&backgroundColor=c0aede&radius=50&skinColor=brown&hair=shortFlat",
+    content: "Our treasury team settled vendor payments across 6 countries. ZPAY handled FX and routing automatically. Saved us 2.4% on exchange fees alone.",
+  },
+  {
+    name: "Sneha Reddy",
+    role: "Product Manager",
+    company: "Hyderabad, India",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SnehaReddy&backgroundColor=d1f4e0&radius=50&skinColor=brown",
+    content: "The AI agent paid my SaaS subscriptions automatically this month. I topped up once and it handled everything. This is what autonomous finance should feel like.",
+  },
+  {
+    name: "Aryan Singh",
+    role: "Web3 Builder",
+    company: "Delhi, India",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AryanSingh&backgroundColor=ffe4c4&radius=50&skinColor=brown&hair=shortCurly",
+    content: "Integrated ZPAY's X-402 endpoint into my dApp in under an hour. First payment hit in 3 seconds. The developer experience is miles ahead of anything else I've tried.",
+  },
 ];
 
 const floatingAvatars = [
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user1&backgroundColor=b6e3f4", x: -220, y: -100, size: 50, delay: 0 },
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user2&backgroundColor=ffd5dc", x: 240, y: -80, size: 56, delay: 0.1 },
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user3&backgroundColor=c0aede", x: -260, y: 50, size: 44, delay: 0.2 },
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user4&backgroundColor=d1f4e0", x: 280, y: 70, size: 48, delay: 0.3 },
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user5&backgroundColor=ffe4c4", x: -160, y: 120, size: 40, delay: 0.4 },
-  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=user6&backgroundColor=f0d9ff", x: 180, y: 130, size: 36, delay: 0.5 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=RahulSharma&backgroundColor=b6e3f4", x: -220, y: -100, size: 50, delay: 0 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=PriyaKrishnan&backgroundColor=ffd5dc", x: 240, y: -80, size: 56, delay: 0.1 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=VikramPatel&backgroundColor=c0aede", x: -260, y: 50, size: 44, delay: 0.2 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=SnehaReddy&backgroundColor=d1f4e0", x: 280, y: 70, size: 48, delay: 0.3 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=AryanSingh&backgroundColor=ffe4c4", x: -160, y: 120, size: 40, delay: 0.4 },
+  { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=NehaChoudhary&backgroundColor=f0d9ff", x: 180, y: 130, size: 36, delay: 0.5 },
 ];
 
 const Testimonials = () => {
@@ -134,7 +148,7 @@ const Testimonials = () => {
             
             <h2 className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6">
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Trusted by</span>
-              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">500,000+</span>
+              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">50+ Beta</span>
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Users</span>
             </h2>
             
@@ -144,7 +158,7 @@ const Testimonials = () => {
           </div>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {testimonials.map((testimonial, idx) => (
             <div
               key={idx}

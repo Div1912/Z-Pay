@@ -61,10 +61,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Redirect non-logged-in users away from protected pages
+  // Redirect non-logged-in users away from protected pages → to waitlist
   if (!user && (isDashboardPage || isOnboardingPage || isUpdatePasswordPage)) {
     const url = request.nextUrl.clone();
-    url.pathname = '/auth/login';
+    url.pathname = '/waitlist';
     return NextResponse.redirect(url);
   }
 

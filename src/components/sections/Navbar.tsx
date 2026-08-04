@@ -70,10 +70,10 @@ const Navbar = () => {
                 Sign In
               </Link>
               <Link
-                href="/auth/signup"
+                href="/waitlist"
                 className="px-8 h-11 rounded-full bg-gold text-black text-[13px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
               >
-                Get Started
+                Request Access
               </Link>
             </div>
 
@@ -130,11 +130,11 @@ const Navbar = () => {
                   Sign In
                 </Link>
                 <Link
-                  href="/auth/signup"
+                  href="/waitlist"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full h-16 flex items-center justify-center rounded-full bg-gold text-black font-black uppercase tracking-widest text-sm"
                 >
-                  Get Started
+                  Request Access
                 </Link>
               </motion.div>
             </div>
