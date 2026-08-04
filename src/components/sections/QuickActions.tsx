@@ -180,109 +180,28 @@ export default function QuickActions() {
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div 
                 ref={phoneRef}
-                className="relative w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px]"
+                className="relative w-[260px] sm:w-[300px] md:w-[330px] lg:w-[350px]"
                 style={{ perspective: '1000px' }}
               >
-                <div className="absolute -inset-12 sm:-inset-16 md:-inset-20 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[80px] sm:blur-[100px] opacity-60" />
+                {/* Ambient glow behind smartphone */}
+                <div className="absolute -inset-10 sm:-inset-14 md:-inset-16 bg-gradient-to-b from-gold/15 via-white/5 to-transparent rounded-[80px] sm:rounded-[100px] blur-[70px] sm:blur-[90px] opacity-70" />
                 
-                <div className="relative w-full aspect-[9/19.5] rounded-[36px] sm:rounded-[42px] md:rounded-[48px] overflow-hidden bg-[#050505] border-[5px] sm:border-[6px] md:border-[7px] border-[#151515] shadow-[0_40px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.05)] flex flex-col">
-                  
-                  {/* Status Bar Header */}
-                  <div className="relative w-full bg-[#000000] pt-3.5 sm:pt-4 md:pt-4 pb-2.5 sm:pb-3 px-5 sm:px-6 md:px-7 flex justify-between items-center z-20 shrink-0">
-                    {/* The Notch */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[22px] sm:h-[25px] md:h-[28px] bg-black rounded-b-[18px] sm:rounded-b-[20px] md:rounded-b-[24px] z-50 shadow-[0_2px_10px_rgba(0,0,0,0.5)]" />
+                {/* Smartphone Device Frame */}
+                <div className="relative w-full aspect-[1074/2061] rounded-[42px] sm:rounded-[48px] md:rounded-[54px] p-2 sm:p-2.5 bg-gradient-to-b from-[#2a2a2a] via-[#1a1a1a] to-[#121212] border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]">
+                  {/* Screen viewport */}
+                  <div className="relative w-full h-full rounded-[34px] sm:rounded-[40px] md:rounded-[46px] overflow-hidden bg-black">
+                    <Image
+                      src="/images/quick_action_phone.jpg"
+                      alt="ZPAY Quick Actions Mobile App"
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 768px) 300px, 350px"
+                      priority
+                      unoptimized
+                    />
                     
-                    {/* Time */}
-                    <span className="text-[11px] sm:text-[12px] md:text-[13px] font-bold text-white tracking-wide z-10 relative mt-0.5">9:41</span>
-                    
-                    {/* Wifi & Battery */}
-                    <div className="flex gap-1.5 items-center z-10 relative mt-0.5">
-                      <svg width="16" height="11" viewBox="0 0 17 12" fill="none" className="w-[14px] sm:w-[15px]">
-                        <path d="M1 4.5C2.5 2.5 5 1 8.5 1C12 1 14.5 2.5 16 4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                        <path d="M3 7C4 5.5 6 4.5 8.5 4.5C11 4.5 13 5.5 14 7" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                        <circle cx="8.5" cy="10" r="1.5" fill="white"/>
-                      </svg>
-                      <div className="w-[20px] sm:w-[22px] h-[9px] sm:h-[10px] border-[1.5px] border-white/80 rounded-[3px] relative flex items-center justify-start p-[1px]">
-                        <div className="h-full w-[80%] bg-white rounded-[1px]" />
-                        <div className="absolute -right-[3px] top-1/2 -translate-y-1/2 w-[2px] h-[4px] bg-white/80 rounded-r-[1px]" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Phone Content (Live Interactive Dashboard Mockup) */}
-                  <div className="relative flex-1 w-full z-0 bg-[#070707] p-4 flex flex-col justify-between overflow-hidden font-[family-name:var(--font-jakarta)]">
-                    
-                    {/* App Header */}
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-[10px] font-black text-gold">ZP</div>
-                          <span className="text-xs font-bold text-white tracking-tight">alice@zpay</span>
-                        </div>
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-semibold">Stellar Mainnet</span>
-                      </div>
-
-                      {/* Main Balance Card */}
-                      <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.02] p-4 mb-4">
-                        <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider block mb-1">Total Balance</span>
-                        <div className="text-2xl font-black text-white tracking-tight mb-2">$142,850.00 <span className="text-xs font-normal text-white/40">USDC</span></div>
-                        
-                        <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px]">
-                          <span className="text-emerald-400 font-semibold flex items-center gap-1">↑ +14.2% <span className="text-white/40">this week</span></span>
-                          <span className="text-white/40 font-mono">0.00001 XLM fee</span>
-                        </div>
-                      </div>
-
-                      {/* Agent Active Pill */}
-                      <div className="rounded-xl border border-gold/30 bg-gold/5 p-2.5 mb-4 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-                        <div className="text-[10px] text-white/80 font-medium leading-tight flex-1">
-                          <span className="font-bold text-gold">Agent Alpha:</span> Auto-routing via Stellar DEX
-                        </div>
-                      </div>
-
-                      {/* Action Grid */}
-                      <div className="grid grid-cols-4 gap-2 mb-4">
-                        {[
-                          { label: 'Send', color: 'bg-gold text-black font-bold' },
-                          { label: 'Receive', color: 'bg-white/10 text-white' },
-                          { label: 'Split', color: 'bg-white/10 text-white' },
-                          { label: 'Escrow', color: 'bg-white/10 text-white' },
-                        ].map((act) => (
-                          <div key={act.label} className={`py-2 rounded-xl text-[10px] text-center font-semibold ${act.color}`}>
-                            {act.label}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Recent Transactions List */}
-                    <div className="space-y-2">
-                      <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest block">Recent Activity</span>
-                      
-                      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-2.5 flex items-center justify-between">
-                        <div>
-                          <div className="text-[11px] font-bold text-white">Sent to bob@zpay</div>
-                          <div className="text-[9px] text-white/40">Stellar Path • 1.8s finality</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-[11px] font-bold text-white">-$50.00</div>
-                          <div className="text-[9px] text-emerald-400 font-mono">Settled</div>
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-2.5 flex items-center justify-between">
-                        <div>
-                          <div className="text-[11px] font-bold text-white">x402 Micro-API Call</div>
-                          <div className="text-[9px] text-white/40">Pay-per-query • Auto</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-[11px] font-bold text-gold">-$0.001</div>
-                          <div className="text-[9px] text-emerald-400 font-mono">Unlocked</div>
-                        </div>
-                      </div>
-                    </div>
-
+                    {/* Subtle glass reflection */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-white/[0.07]" />
                   </div>
                 </div>
               </div>
