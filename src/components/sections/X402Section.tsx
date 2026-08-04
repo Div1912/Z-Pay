@@ -62,11 +62,6 @@ export default function X402Section() {
     <section className="relative w-full bg-black py-24 lg:py-32 overflow-hidden border-t border-white/5 font-[family-name:var(--font-jakarta)]">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-      {/* Background Glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[60vw] max-w-[700px] aspect-square rounded-full bg-gradient-to-tl from-blue-600/8 via-purple-600/4 to-transparent blur-[160px]" />
-      </div>
-
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
@@ -79,7 +74,7 @@ export default function X402Section() {
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight text-white mb-6">
             The Native{' '}
             <br />
-            <span className="bg-gradient-to-r from-blue-400 via-purple-300 to-white bg-clip-text text-transparent">
+            <span className="text-zinc-400">
               x402 Protocol
             </span>
           </h2>

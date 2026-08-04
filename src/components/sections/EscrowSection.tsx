@@ -70,7 +70,7 @@ export default function EscrowSection() {
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight text-white mb-6">
             Trustless Escrows.{' '}
             <br />
-            <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-white bg-clip-text text-transparent">
+            <span className="text-zinc-400">
               Zero Counterparty Risk.
             </span>
           </h2>
@@ -120,9 +120,6 @@ export default function EscrowSection() {
           <div className="lg:col-span-7">
             <div className="relative rounded-[2rem] border border-white/[0.09] bg-[#080808] p-6 sm:p-10 shadow-2xl overflow-hidden">
 
-              {/* Subtle inner glow */}
-              <div className="absolute inset-0 pointer-events-none rounded-[2rem] bg-gradient-to-br from-amber-500/4 to-transparent" />
-
               {/* Header */}
               <div className="flex items-center justify-between pb-6 border-b border-white/[0.07] mb-8 relative z-10">
                 <div>
@@ -136,7 +133,7 @@ export default function EscrowSection() {
               </div>
 
               {/* Locked Balance */}
-              <div className="rounded-2xl border border-white/[0.07] bg-gradient-to-r from-amber-500/8 via-white/[0.02] to-transparent p-6 mb-8 flex items-center justify-between relative z-10">
+              <div className="rounded-2xl border border-white/[0.07] bg-[#0d0d0d] p-6 mb-8 flex items-center justify-between relative z-10">
                 <div>
                   <span className="text-[10px] text-white/35 uppercase font-semibold tracking-wider block mb-1.5">Total Capital Settled</span>
                   <div className="text-3xl sm:text-4xl font-black text-white">

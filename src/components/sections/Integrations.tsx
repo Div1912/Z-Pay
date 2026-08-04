@@ -203,7 +203,7 @@ const Integrations = () => {
           
           <h2 className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8">
             <span className="block text-white text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">Integrate with</span>
-            <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">any apps</span>
+            <span className="block text-zinc-400 text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[5rem]">any apps</span>
           </h2>
           
           <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed">
@@ -211,10 +211,10 @@ const Integrations = () => {
           </p>
           
           <Link
-            href="/auth/signup"
+            href="/waitlist"
             className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-gold text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(212,175,55,0.2)]"
           >
-            Get the app
+            Request Access
           </Link>
         </motion.div>
 
@@ -275,7 +275,7 @@ const Integrations = () => {
             viewport={{ once: true }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
           >
-            <div className="w-16 sm:w-20 md:w-24 lg:w-28 aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-zinc-100 via-neutral-300 to-neutral-600 flex items-center justify-center shadow-[0_15px_30px_rgba(255,255,255,0.1)] p-0.5 sm:p-1">
+            <div className="w-16 sm:w-20 md:w-24 lg:w-28 aspect-square rounded-2xl sm:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center shadow-[0_15px_30px_rgba(255,255,255,0.05)] p-0.5 sm:p-1">
               <div className="w-full h-full rounded-[14px] sm:rounded-[20px] bg-[#0A0A0A] flex items-center justify-center">
                 <span className="text-white font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl">Z</span>
               </div>

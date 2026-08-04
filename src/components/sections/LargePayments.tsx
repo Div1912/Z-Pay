@@ -144,7 +144,7 @@ const LargePayments = () => {
                       </div>
                     </div>
 
-                    <button className="w-full h-12 sm:h-14 md:h-16 rounded-full bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 text-black font-black text-xs sm:text-sm md:text-base uppercase tracking-wide sm:tracking-wider flex items-center justify-center gap-2 sm:gap-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(255,255,255,0.1)]">
+                    <button className="w-full h-12 sm:h-14 md:h-16 rounded-full bg-white text-black font-black text-xs sm:text-sm md:text-base uppercase tracking-wide sm:tracking-wider flex items-center justify-center gap-2 sm:gap-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(255,255,255,0.1)]">
                       Confirm & Send
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 sm:w-5">
                         <path d="M5 12h14m-7-7 7 7-7 7" />
@@ -166,8 +166,8 @@ const LargePayments = () => {
               className="font-black leading-[0.9] tracking-tight mb-5 sm:mb-6 md:mb-8"
 
             >
-              <span className="block bg-gradient-to-r from-zinc-100 to-neutral-400 bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Large</span>
-              <span className="block bg-gradient-to-r from-[#e5e5e5] to-[#a3a3a3] bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Payments</span>
+              <span className="block text-white text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Large</span>
+              <span className="block text-zinc-400 text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5.5vw] xl:text-[4.5rem]">Payments</span>
             </h2>
             
             <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 md:mb-10 leading-relaxed">

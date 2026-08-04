@@ -145,9 +145,9 @@ const WaitlistHero = () => {
             <span className="text-gold text-[10px] lg:text-[11px] font-bold tracking-widest uppercase">Private Beta · Invite Only</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-500 pb-4 mb-2">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] tracking-tight text-white pb-4 mb-2">
             The Future of<br />Payments is<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500">Agentic</span>
+            <span className="text-zinc-400">Agentic</span>
           </h1>
 
           <p className="mt-4 text-neutral-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-medium mx-auto">

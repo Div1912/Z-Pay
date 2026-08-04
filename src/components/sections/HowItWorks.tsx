@@ -74,7 +74,7 @@ const HowItWorks = () => {
             <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">
               Three steps to
             </span>
-            <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">
+            <span className="block text-zinc-400 text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">
               smarter payments
             </span>
           </h2>
@@ -92,27 +92,16 @@ const HowItWorks = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 relative"
         >
           {/* Connector line */}
-          <div className="hidden md:block absolute top-[76px] left-[calc(16.66%+28px)] right-[calc(16.66%+28px)] h-px bg-gradient-to-r from-white/[0.05] via-white/[0.12] to-white/[0.05] pointer-events-none" />
+          <div className="hidden md:block absolute top-[76px] left-[calc(16.66%+28px)] right-[calc(16.66%+28px)] h-px bg-white/[0.08] pointer-events-none" />
 
           {steps.map((step, idx) => {
             const { Icon } = step;
             return (
               <motion.div key={step.number} variants={cardVariants} className="group relative">
-                {/* Glowing Premium Border Halo */}
-                <div className="absolute -inset-[1px] rounded-2xl sm:rounded-3xl bg-gradient-to-r from-gold/40 via-amber-500/20 to-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px] pointer-events-none" />
-                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
-
                 <div className="relative h-full bg-[#0c0c0c] border border-white/[0.08] group-hover:border-gold/40 rounded-2xl sm:rounded-3xl p-7 sm:p-8 md:p-10 transition-all duration-500 hover:-translate-y-1.5 shadow-[0_0_0_1px_rgba(212,175,55,0.05)] group-hover:shadow-[0_10px_40px_rgba(212,175,55,0.15)]">
                   {/* Step number + icon */}
                   <div className="flex items-start justify-between mb-7 sm:mb-8">
-                    <span className="text-6xl sm:text-7xl font-black leading-none tracking-tighter select-none"
-                      style={{ 
-                        background: 'linear-gradient(180deg, rgba(212,175,55,0.4) 0%, rgba(255,255,255,0.03) 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                      }}
-                    >
+                    <span className="text-6xl sm:text-7xl font-black leading-none tracking-tighter text-white/20 select-none">
                       {step.number}
                     </span>
 

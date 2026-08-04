@@ -76,16 +76,7 @@ export default function ProductShowcase() {
     >
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[1000px] h-[600px] rounded-full opacity-15"
-          style={{
-            background: 'radial-gradient(ellipse, rgba(212,175,55,0.4) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-          }}
-        />
-      </div>
+
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px]">
         {/* Section header */}
@@ -103,7 +94,7 @@ export default function ProductShowcase() {
 
           <h2 className="font-black leading-[0.9] tracking-tight mb-5">
             <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[6vw] lg:text-[4.5rem]">See it</span>
-            <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[6vw] lg:text-[4.5rem]">in action.</span>
+            <span className="block text-zinc-400 text-[10vw] sm:text-[8vw] md:text-[6vw] lg:text-[4.5rem]">in action.</span>
           </h2>
 
           <p className="text-white/50 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

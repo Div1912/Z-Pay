@@ -133,7 +133,7 @@ export default function QuickActions() {
                   className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6 uppercase"
                 >
                   <span className="block text-white text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Quick</span>
-                  <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Actions</span>
+                  <span className="block text-zinc-400 text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[5vw] xl:text-[4.5rem]">Actions</span>
                 </h2>
                 <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl font-medium max-w-md leading-relaxed">
                   All major actions are just a tap away. Frictionless payments for the modern age.
@@ -146,11 +146,11 @@ export default function QuickActions() {
                     return (
                       <div
                         key={feature.title}
-                        onClick={() => router.push('/auth/signup')}
+                        onClick={() => router.push('/waitlist')}
                         className="feature-card group relative p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-500 cursor-pointer overflow-hidden"
                       >
-                      <div className="absolute inset-0 bg-gradient-to-r from-zinc-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-zinc-100 to-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute top-0 left-0 w-1 h-full bg-gold opacity-0 group-hover:opacity-100 transition-opacity" />
                       
                       <div className="relative flex items-center gap-4 sm:gap-5">
                         <div 

@@ -84,18 +84,6 @@ const FooterCTA = () => {
     >
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       
-      {/* Purple glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div 
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100vw] max-w-[1200px] h-[400px] sm:h-[500px] rounded-full opacity-20"
-          style={{
-            background: 'radial-gradient(ellipse, rgba(198,148,249,0.5) 0%, rgba(148,161,249,0.25) 40%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translateX(-50%) translateY(45%)',
-          }}
-        />
-      </div>
-
       {/* ── CTA Block ── */}
       <div className="py-20 sm:py-28 md:py-36 lg:py-44">
         <div ref={titleRef} className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px] flex flex-col items-center text-center">
@@ -106,7 +94,7 @@ const FooterCTA = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-black leading-[0.85] tracking-tight mb-5 sm:mb-6 md:mb-8">
-              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">Get</span>
+              <span className="block text-zinc-400 text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">Get</span>
               <span className="block text-white text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[8vw] xl:text-[7rem]">Started.</span>
             </h2>
           </motion.div>
@@ -129,11 +117,11 @@ const FooterCTA = () => {
             className="flex flex-col sm:flex-row gap-3 sm:gap-4"
           >
             <Link
-              href="/auth/signup"
+              href="/waitlist"
               className="group flex h-12 sm:h-14 md:h-16 items-center justify-center rounded-full bg-gold px-8 sm:px-10 md:px-12 transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.35)] hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="text-sm sm:text-base font-black text-black flex items-center gap-2 uppercase tracking-wider">
-                Create Account
+                Request Access
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
                   <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>

@@ -124,10 +124,10 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-widest bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 pb-2">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-tight text-white pb-2">
             Agentic <br />
             Payment <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-500">Router</span>
+            <span className="text-gold">Router</span>
           </h1>
           
           <p className="mt-4 lg:mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-lg leading-relaxed font-medium">
@@ -138,11 +138,11 @@ const Hero = () => {
 
           <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Link 
-              href="/auth/signup" 
+              href="/waitlist" 
               className="group relative h-12 lg:h-14 rounded-full bg-gold text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                GET STARTED
+              <span className="relative z-10 flex items-center gap-2 uppercase tracking-wider">
+                REQUEST ACCESS
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
                   <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
@@ -163,19 +163,16 @@ const Hero = () => {
             {[
               { Icon: ShieldCheck, label: 'Bank-Grade Security' },
               { Icon: Zap, label: 'Stellar Network' },
-              { Icon: Globe, label: '140+ Countries' },
-            ].map((b) => {
-              const Icon = b.Icon;
-              return (
-                <div
-                  key={b.label}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md hover:border-gold/30 hover:bg-white/[0.08] transition-all"
-                >
-                  <Icon className="w-3.5 h-3.5 text-gold" />
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-white/60 tracking-wide">{b.label}</span>
-                </div>
-              );
-            })}
+              { Icon: Globe, label: 'Global Settlement' },
+            ].map(({ Icon, label }) => (
+              <div 
+                key={label}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] text-xs text-neutral-400 font-medium"
+              >
+                <Icon className="w-3.5 h-3.5 text-neutral-300" />
+                <span>{label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -197,7 +194,7 @@ const Hero = () => {
               ))}
               {/* Center Z glyph */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-neutral-100 via-neutral-300 to-neutral-600 p-0.5 shadow-[0_0_60px_rgba(212,175,55,0.25)]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-white/20 bg-zinc-900 p-0.5 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
                   <div className="w-full h-full rounded-[14px] bg-black flex items-center justify-center">
                     <span className="text-white font-black text-4xl sm:text-5xl tracking-tighter">Z</span>
                   </div>
@@ -232,7 +229,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-black z-20 pointer-events-none" />
     </section>
   );
 };

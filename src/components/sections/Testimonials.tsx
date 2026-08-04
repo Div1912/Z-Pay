@@ -148,7 +148,7 @@ const Testimonials = () => {
             
             <h2 className="font-black leading-[0.9] tracking-tight mb-4 sm:mb-6">
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Trusted by</span>
-              <span className="block bg-gradient-to-r from-zinc-100 via-neutral-300 to-neutral-600 bg-clip-text text-transparent text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">50+ Beta</span>
+              <span className="block text-zinc-400 text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">50+ Beta</span>
               <span className="block text-white text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[5vw] xl:text-[4rem]">Users</span>
             </h2>
             
