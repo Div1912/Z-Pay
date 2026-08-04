@@ -127,7 +127,7 @@ const Hero = () => {
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-tight text-white pb-2">
             Agentic <br />
             Payment <br />
-            <span className="text-gold">Router</span>
+            <span className="text-zinc-400">Router</span>
           </h1>
           
           <p className="mt-4 lg:mt-6 text-neutral-400 text-sm sm:text-base lg:text-xl max-w-lg leading-relaxed font-medium">

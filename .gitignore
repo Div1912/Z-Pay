@@ -43,3 +43,8 @@ next-env.d.ts
 mcp-server/node_modules/
 target/
 node_modules/
+/scripts/
+*.js.map
+fetch_emails.js
+replace_colors.js
+update_zindex.js
