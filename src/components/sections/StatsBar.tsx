@@ -80,7 +80,7 @@ const StatsBar = () => {
         }}
       />
 
-      <div ref={ref} className="relative py-12 sm:py-14 md:py-16">
+      <div ref={ref} className="relative py-8 sm:py-10 md:py-12">
         <div
           className="flex items-center justify-center flex-wrap gap-y-6 transition-all duration-700"
           style={{

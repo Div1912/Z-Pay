@@ -87,10 +87,8 @@ const Hero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full bg-black overflow-hidden"
+      className="relative min-h-[80vh] lg:min-h-[85vh] w-full bg-black overflow-hidden flex flex-col justify-center"
     >
-
-
       {/* Background video */}
       <video
         autoPlay
@@ -105,15 +103,15 @@ const Hero = () => {
       <div className="pointer-events-none absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.7] mix-blend-overlay" />
 
       {/* Gradient overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/90" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90" />
       
       <div 
         ref={contentRef}
-        className="flex flex-col lg:flex-row min-h-[100dvh] w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 items-center justify-between pt-28 lg:pt-20 pb-16 lg:pb-0"
+        className="flex flex-col w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 justify-center pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16"
         style={{ willChange: 'transform, opacity' }}
       >
         {/* Left: Typography + CTA */}
-        <div className="w-full lg:w-2/3 xl:w-1/2 flex flex-col justify-center py-4 lg:py-0 relative z-20">
+        <div className="w-full lg:w-2/3 xl:w-1/2 flex flex-col justify-center py-2 relative z-20">
           
           {/* Live badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit mb-6 lg:mb-8">
@@ -166,7 +164,7 @@ const Hero = () => {
 
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-black z-20 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
     </section>
   );
 };
