@@ -2,6 +2,7 @@
 
 import React, { useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
+import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';

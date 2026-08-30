@@ -1,4 +1,5 @@
 "use client";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
@@ -136,18 +137,7 @@ const Hero = () => {
           </p>
 
           <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <Link 
-              href="/waitlist" 
-              className="group relative h-12 lg:h-14 rounded-full bg-gold text-black font-bold text-sm flex items-center justify-center px-8 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-[0_0_40px_rgba(212,175,55,0.3)] overflow-hidden w-full sm:w-auto"
-            >
-              <span className="relative z-10 flex items-center gap-2 uppercase tracking-wider">
-                REQUEST ACCESS
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
-                  <path d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
-              </span>
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
-            </Link>
+            <LiquidMetalButton label="REQUEST ACCESS" href="/waitlist" />
             
             <Link 
               href="/features"

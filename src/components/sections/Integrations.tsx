@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
+import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 import { Spotlight } from "@/components/ui/spotlight";
 import Link from 'next/link';
 
@@ -212,12 +213,7 @@ const Integrations = () => {
             Connect with your favorite payment platforms, banks, and crypto networks seamlessly.
           </p>
           
-          <Link
-            href="/waitlist"
-            className="inline-flex items-center justify-center px-6 sm:px-8 md:px-10 h-12 sm:h-14 md:h-16 rounded-full bg-gold text-black font-black text-sm sm:text-base uppercase tracking-wide sm:tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(212,175,55,0.2)]"
-          >
-            Request Access
-          </Link>
+          <LiquidMetalButton label="Request Access" href="/waitlist" />
         </motion.div>
 
         {/* Orbit container — pure CSS rotation, no JS timers */}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
+import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 
 
 const Navbar = () => {
@@ -63,12 +64,7 @@ const Navbar = () => {
             </ul>
 
             <div className="hidden md:flex items-center gap-4">
-              <Link
-                href="/waitlist"
-                className="px-8 h-11 rounded-full bg-gold text-black text-[13px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
-              >
-                Request Access
-              </Link>
+              <LiquidMetalButton label="Request Access" href="/waitlist" />
             </div>
 
             <button

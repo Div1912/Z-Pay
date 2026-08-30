@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
+import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Spotlight } from "@/components/ui/spotlight";
 import { LayoutDashboard, ArrowLeftRight, ShieldCheck, Bot, PiggyBank } from 'lucide-react';
@@ -222,18 +223,7 @@ export default function ProductShowcase() {
           viewport={{ once: true }}
           className="mt-14 sm:mt-20 text-center"
         >
-          <a
-            href="https://zpayrouter.me"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 bg-white/5 text-white font-bold text-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-md group"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-            Try the live demo at zpayrouter.me
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
-              <path d="M5 12h14m-7-7 7 7-7 7" />
-            </svg>
-          </a>
+          <LiquidMetalButton label="Explore the App" href="https://zpayrouter.me" />
         </motion.div>
       </div>
     </section>
