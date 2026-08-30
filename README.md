@@ -48,7 +48,7 @@ Zpay turns wallet addresses into human-readable Universal IDs (`alice@Zp`), sett
 
 ### Landing page
 
-<img width="800" alt="Landing page" src="./assets/screenshots/Dashboard overview.png" />
+<img width="800" alt="Landing page" src="./screenshots/Dashboard overview.png" />
 
 ### 1 · Dashboard overview
 
