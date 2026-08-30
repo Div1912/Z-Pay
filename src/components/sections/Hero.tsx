@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 import { ShieldCheck, Zap, Globe } from 'lucide-react';
 
@@ -221,11 +220,6 @@ const Hero = () => {
             @keyframes float2 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(10px); } }
             @keyframes float3 { 0%,100% { transform: translateY(-50%) translateX(0px); } 50% { transform: translateY(-50%) translateX(6px); } }
           `}</style>
-          {/* Spline loads on top — overlays fallback when ready */}
-          <SplineScene 
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full relative z-10"
-          />
         </div>
       </div>
       
