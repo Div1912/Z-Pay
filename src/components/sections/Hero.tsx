@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Spotlight } from "@/components/ui/spotlight";
+
 import { ShieldCheck, Zap, Globe } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -91,22 +91,21 @@ const Hero = () => {
     >
 
 
-      {/* Mouse Orb - GPU accelerated */}
-      {isMounted && (
-        <div
-          ref={orbRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] rounded-full hidden lg:block opacity-40"
-          style={{
-            background: 'radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(255,255,255,0) 70%)',
-            filter: 'blur(50px)',
-            willChange: 'transform',
-            transform: 'translate3d(0,0,0)',
-          }}
-        />
-      )}
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+      />
 
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      {/* Noise overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.7] mix-blend-overlay" />
+
+      {/* Gradient overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/90" />
       
       <div 
         ref={contentRef}
@@ -114,7 +113,7 @@ const Hero = () => {
         style={{ willChange: 'transform, opacity' }}
       >
         {/* Left: Typography + CTA */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center py-4 lg:py-0 relative z-20">
+        <div className="w-full lg:w-2/3 xl:w-1/2 flex flex-col justify-center py-4 lg:py-0 relative z-20">
           
           {/* Live badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit mb-6 lg:mb-8">
@@ -165,52 +164,6 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right: Spline 3D Scene with CSS fallback visual */}
-        <div className="w-full lg:w-1/2 h-[45vh] min-h-[350px] lg:h-[80vh] relative lg:ml-6 flex items-center justify-center">
-          {/* Fallback visual — always visible behind Spline */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {/* Animated rings */}
-            <div className="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] lg:w-[380px] lg:h-[380px]">
-              {[0, 1, 2].map((i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 rounded-full border border-white/[0.08]"
-                  style={{
-                    margin: `${i * 40}px`,
-                    animation: `spin ${18 + i * 6}s linear infinite ${i % 2 === 0 ? '' : 'reverse'}`,
-                  }}
-                />
-              ))}
-              {/* Center Z glyph */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-white/20 bg-zinc-900 p-0.5 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
-                  <div className="w-full h-full rounded-[14px] bg-black flex items-center justify-center">
-                    <span className="text-white font-black text-4xl sm:text-5xl tracking-tighter">Z</span>
-                  </div>
-                </div>
-              </div>
-              {/* Floating payment badges */}
-              <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-md"
-                style={{ animation: 'float1 4s ease-in-out infinite' }}>
-                <span className="text-emerald-400 text-xs font-bold">⚡ ~3s Settlement</span>
-              </div>
-              <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 backdrop-blur-md"
-                style={{ animation: 'float2 5s ease-in-out infinite' }}>
-                <span className="text-gold text-xs font-bold">$0.00001 Fee</span>
-              </div>
-              <div className="absolute top-1/2 -right-8 sm:-right-14 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md -translate-y-1/2"
-                style={{ animation: 'float3 6s ease-in-out infinite' }}>
-                <span className="text-white/60 text-xs font-bold">🌐 140+ Countries</span>
-              </div>
-            </div>
-          </div>
-          <style>{`
-            @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-            @keyframes float1 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-            @keyframes float2 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(10px); } }
-            @keyframes float3 { 0%,100% { transform: translateY(-50%) translateX(0px); } 50% { transform: translateY(-50%) translateX(6px); } }
-          `}</style>
-        </div>
       </div>
       
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-black z-20 pointer-events-none" />
